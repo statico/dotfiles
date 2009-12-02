@@ -19,11 +19,11 @@ function has() {
 }
 
 function note() {
-    echo "[32;1m$*[0m"
+    echo "[32;1m * [0m$*"
 }
 
 function warn() {
-    echo "[31;1m$*[0m"
+    echo "[31;1m * [0m$*"
 }
 
 function die() {
@@ -34,7 +34,7 @@ function die() {
 function install() {
     src=$1
     dest=$2
-    if [ -e $dest && ! -s $dest ]; then
+    if [ -e $dest ] && [ ! -s $dest ]; then
         # Rename files with a ".old" extension.
         warn "$dest file already exists, renaming to $dest.old"
         backup=$dest.old
@@ -75,6 +75,8 @@ fi
 # Symlink all dotfiles.
 note "Installing dotfiles..."
 for path in .*; do
+    [ $path == . ] && continue;
+    [ $path == .. ] && continue;
     install $basedir/$path $HOME/$path
 done
 

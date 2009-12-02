@@ -1,13 +1,11 @@
 [user]
 	name = Ian Langworth
-	email = ian@langworth.com
 [core]
 	editor = vim
 	pager = less -FRX
 	excludesfile = /home/ian/.gitignore
 [github]
 	user = statico
-	token = 75ce1702c31b7bcf550f4732b53e05ce
 [alias]
 	up = pull origin
 	st = status
