@@ -1,0 +1,4 @@
+cvs -z9 -q
+diff -Nuw
+update -P -d
+remove -f
