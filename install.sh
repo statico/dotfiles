@@ -17,8 +17,16 @@ function has() {
     return $( which $1 >/dev/null )
 }
 
+function note() {
+    echo "[32;1m$*[0m"
+}
+
+function warn() {
+    echo "[31;1m$*[0m"
+}
+
 function die() {
-    echo $*
+    warn $*
     exit 1
 }
 
@@ -33,16 +41,37 @@ if [ ! -e $basedir ]; then
     else
         tempfile=TEMP.tar.gz
         if has curl; then
-            curl -s $tarball >$tempfile
+            curl $tarball >$tempfile
         elif has wget; then
-            wget -q -O $tempfile $tarball
+            wget -O $tempfile $tarball
         else:
             die "Can't download tarball."
         fi
-        tar --strip-components 1 -zxf $tempfile
+        tar --strip-components 1 -zxvf $tempfile
+        rm -v $tempfile
     fi
 fi
 
+# Symlink all files in place.
+for path in $( find . ); do
+    if [ -d $path ]; then
+        mkdir -v -p "$HOME/$( dirname $path )"
+    else
+        src=$basedir/$path
+        dest=$HOME/$path
 
+        if [ -f $dest ]; then
+            # Rename files with a ".old" extension.
+            warn "$dest file already exists, renaming to $dest.old"
+            backup=$dest.old
+            if [ -e $backup ]; then
+                die "$backup already exists. Aborting."
+            fi
+            mv -v $dest $backup
+        fi
 
+        ln -s -f $src $dest
+    fi
+done
 
+note "Done."
