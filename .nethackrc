@@ -1,0 +1,10 @@
+OPTIONS=name:Ian,role:valkyrie,race:human,align:lawful
+
+OPTIONS=pettype:cat,catname:Snowball,dogname:Santas Little Helper,horsename:Princess,fruit:kumquat
+OPTIONS=msghistory:2000,!legacy,!autopickup,pushweapon,runmode:walk
+OPTIONS=autodig
+
+OPTIONS=color
+OPTIONS=IBMgraphics
+
+#OPTIONS=autopickup,pickuptypes:$
