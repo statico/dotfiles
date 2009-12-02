@@ -8,6 +8,7 @@
 #
 #   ~/.dotfiles/install.sh
 #
+# (It doesn't descend into directories.)
 
 basedir=$HOME/.dotfiles
 bindir=$HOME/bin
@@ -34,6 +35,7 @@ function die() {
 function install() {
     src=$1
     dest=$2
+
     if [ -e $dest ] && [ ! -s $dest ]; then
         # Rename files with a ".old" extension.
         warn "$dest file already exists, renaming to $dest.old"
@@ -45,46 +47,80 @@ function install() {
     fi
 
     # Update existing or create new symlinks.
-    ln -v -s -f $src $dest
+    ln -vsf $src $dest
 }
 
-mkdir -p $basedir
-cd $basedir
+function unpack_tarball() {
+    note "Downloading tarball..."
+    mkdir -vp $basedir
+    cd $basedir
+    tempfile=TEMP.tar.gz
+    if has curl; then
+        curl -L $tarball >$tempfile
+    elif has wget; then
+        wget -O $tempfile $tarball
+    else:
+        die "Can't download tarball."
+    fi
+    tar --strip-components 1 -zxvf $tempfile
+    rm -v $tempfile
+}
 
-if [ ! -e $basedir ]; then
+if [ -e $basedir ]; then
+    # Basedir exists. Update it.
+    cd $basedir
+    if [ -e .git ]; then
+        note "Updating dotfiles from git..."
+        git pull origin master
+    else
+        unpack_tarball
+    fi
+else
     # .dotfiles directory needs to be installed. Try downloading first with
     # git, then use tarballs.
     if has git; then
         note "Cloning from git..."
         git clone $gitbase $basedir
+        cd $basedir
     else
-        note "Downloading tarball..."
-        tempfile=TEMP.tar.gz
-        if has curl; then
-            curl $tarball >$tempfile
-        elif has wget; then
-            wget -O $tempfile $tarball
-        else:
-            die "Can't download tarball."
-        fi
-        tar --strip-components 1 -zxvf $tempfile
-        rm -v $tempfile
+        unpack_tarball
     fi
 fi
 
-# Symlink all dotfiles.
 note "Installing dotfiles..."
-for path in .*; do
-    [ $path == . ] && continue;
-    [ $path == .. ] && continue;
-    install $basedir/$path $HOME/$path
+for path in .* ; do
+    case $path in
+        .|..|.git)
+            continue
+            ;;
+        *)
+            install $basedir/$path $HOME/$path
+            ;;
+    esac
 done
 
-# Install any utilities into ~/bin.
 note "Installing bin/ directory..."
 mkdir -v -p $bindir
-for path in ./bin/*; do
-    install $basedir/$path $bindir/$path
+for path in bin/* ; do
+    relpath=$( basename $path )
+    install $basedir/$path $bindir/$relpath
 done
+
+note "Symlinking Vim configurations..."
+for rc in vim gvim; do
+    ln -vsf $basedir/.vim/${rc}rc $HOME/.${rc}rc
+    if [ ! -e $HOME/.${rc}local ]; then
+        touch $HOME/.${rc}local
+    fi
+done
+ln -vsf $basedir/.vim/_vimoutliner $HOME/.vimoutliner
+ln -vsf $basedir/.vim/_vimoutlinerrc $HOME/.vimoutlinerrc
+
+note "Running post-install script, if any..."
+postinstall=$HOME/.postinstall
+if [ -e $postinstall ]; then
+    # A post-install script can the use functions defined above.
+    . $postinstall
+fi
 
 note "Done."
