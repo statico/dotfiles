@@ -32,7 +32,7 @@ function die() {
     exit 1
 }
 
-function install() {
+function link() {
     src=$1
     dest=$2
 
@@ -99,7 +99,7 @@ for path in .* ; do
             continue
             ;;
         *)
-            install $basedir/$path $HOME/$path
+            link $basedir/$path $HOME/$path
             ;;
     esac
 done
@@ -108,22 +108,23 @@ note "Installing bin/ directory..."
 mkdir -v -p $bindir
 for path in bin/* ; do
     relpath=$( basename $path )
-    install $basedir/$path $bindir/$relpath
+    link $basedir/$path $bindir/$relpath
 done
 
 note "Symlinking Vim configurations..."
 for rc in vim gvim; do
-    install $basedir/.vim/${rc}rc $HOME/.${rc}rc
+    link $basedir/.vim/${rc}rc $HOME/.${rc}rc
     if [ ! -e $HOME/.${rc}local ]; then
         touch $HOME/.${rc}local
     fi
 done
-install $basedir/.vim/_vimoutliner $HOME/.vimoutliner
-install $basedir/.vim/_vimoutlinerrc $HOME/.vimoutlinerrc
+link $basedir/.vim/_vimoutliner $HOME/.vimoutliner
+link $basedir/.vim/_vimoutlinerrc $HOME/.vimoutlinerrc
 
 note "Initializing tools..."
 if has git; then
-    git config --global core.excludesfile $HOME/.gitignore
+    # Post-install scripts might customize this further.
+    cp -v $basedir/.gitconfig.base $HOME/.gitconfig
 fi
 
 note "Running post-install script, if any..."

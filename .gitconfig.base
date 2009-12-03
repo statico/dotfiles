@@ -3,7 +3,7 @@
 [core]
 	editor = vim
 	pager = less -FRX
-	excludesfile = /home/ian/.gitignore
+	excludesfile = ~/.gitignore
 [github]
 	user = statico
 [alias]
