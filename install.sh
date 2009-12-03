@@ -36,14 +36,19 @@ function install() {
     src=$1
     dest=$2
 
-    if [ -e $dest ] && [ ! -s $dest ]; then
-        # Rename files with a ".old" extension.
-        warn "$dest file already exists, renaming to $dest.old"
-        backup=$dest.old
-        if [ -e $backup ]; then
-            die "$backup already exists. Aborting."
+    if [ -e $dest ]; then
+        if [ -s $dest ]; then
+            # Already symlinked -- I'll assume correctly.
+            return
+        else
+            # Rename files with a ".old" extension.
+            warn "$dest file already exists, renaming to $dest.old"
+            backup=$dest.old
+            if [ -e $backup ]; then
+                die "$backup already exists. Aborting."
+            fi
+            mv -v $dest $backup
         fi
-        mv -v $dest $backup
     fi
 
     # Update existing or create new symlinks.
@@ -108,13 +113,18 @@ done
 
 note "Symlinking Vim configurations..."
 for rc in vim gvim; do
-    ln -vsf $basedir/.vim/${rc}rc $HOME/.${rc}rc
+    install $basedir/.vim/${rc}rc $HOME/.${rc}rc
     if [ ! -e $HOME/.${rc}local ]; then
         touch $HOME/.${rc}local
     fi
 done
-ln -vsf $basedir/.vim/_vimoutliner $HOME/.vimoutliner
-ln -vsf $basedir/.vim/_vimoutlinerrc $HOME/.vimoutlinerrc
+install $basedir/.vim/_vimoutliner $HOME/.vimoutliner
+install $basedir/.vim/_vimoutlinerrc $HOME/.vimoutlinerrc
+
+note "Initializing tools..."
+if has git; then
+    git config --global core.excludesfile $HOME/.gitignore
+fi
 
 note "Running post-install script, if any..."
 postinstall=$HOME/.postinstall
