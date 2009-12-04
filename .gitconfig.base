@@ -17,6 +17,8 @@
 	b = branch
 	sta = stash
 	rewind-one = reset --hard HEAD^
+	svnprep = rebase -i git-svn
+	last = log -1
 [color]
 	diff = auto
 	status = auto
