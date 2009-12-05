@@ -7,23 +7,24 @@
 [github]
 	user = statico
 [alias]
-	up = pull origin
-	st = status
-	co = checkout
-	ci = commit
-	civ = commit -v
-	cia = commit -a
-	civa = commit -v -a
-	cim = commit -m
 	b = branch
-	sta = stash
-	rewind-one = reset --hard HEAD^
-	svnprep = rebase -i git-svn
-	svnup = svn rebase
-	svnci = svn dcommit
+	bnew = checkout -b
+	ci = commit
+	cia = commit -a
+	cim = commit -m
+	civ = commit -v
+	civa = commit -v -a
+	co = checkout
 	last = log -1
 	newb = checkout -b
-	bnew = checkout -b
+	rewind-one = reset --hard HEAD^
+	st = status
+	sta = stash
+	svnci = svn dcommit
+	svnprep = rebase -i git-svn
+	svnup = svn rebase
+	unstage = reset HEAD
+	up = pull origin
 [color]
 	diff = auto
 	status = auto
