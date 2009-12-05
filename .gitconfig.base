@@ -19,6 +19,8 @@
 	rewind-one = reset --hard HEAD^
 	svnprep = rebase -i git-svn
 	last = log -1
+	newb = checkout -b
+	bnew = checkout -b
 [color]
 	diff = auto
 	status = auto
