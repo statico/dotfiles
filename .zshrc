@@ -60,6 +60,7 @@ export HOSTTYPE
 # PAGER
 if _has less; then
     export PAGER=less
+    export LESS='-R'
 fi
 
 # EDITOR
@@ -68,10 +69,6 @@ if _has vim; then
 elif _has vi; then
     export EDITOR=vi VISUAL=vi
 fi
-
-# petdance.com's Ack (a better grep)
-export ACK_COLOR_FILENAME='bold red'
-export ACK_COLOR_MATCH='bold green'
 
 # GNU grep
 export GREP_OPTIONS='--color=auto'
@@ -144,7 +141,6 @@ alias gpgrk='gpg --recv-keys'
 alias k='tree'
 alias l="ls -lh"
 alias ll="l -a"
-alias lr='less -r'
 alias ltr='ls -ltr'
 alias man='LANG= man'
 alias netwhat='lsof -i +c 40'
@@ -155,7 +151,7 @@ alias pd='perldoc'
 alias pt='pstree -pul'
 alias px='pilot-xfer -i'
 alias r='screen -D -R'
-alias ri='LESS="${LESS}r" ri -f ansi'
+alias ri='ri -f ansi'
 alias rls='screen -ls'
 alias rsync-usual='rsync -azv -e ssh --delete --progress'
 alias rxvt-invert="echo -n '[?5t'"
