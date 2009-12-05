@@ -14,10 +14,13 @@
 	civ = commit -v
 	cia = commit -a
 	civa = commit -v -a
+	cim = commit -m
 	b = branch
 	sta = stash
 	rewind-one = reset --hard HEAD^
 	svnprep = rebase -i git-svn
+	svnup = svn rebase
+	svnci = svn dcommit
 	last = log -1
 	newb = checkout -b
 	bnew = checkout -b
