@@ -12,6 +12,7 @@
 	ci = commit
 	cia = commit -a
 	cim = commit -m
+	cima = commit -a -m
 	civ = commit -v
 	civa = commit -v -a
 	co = checkout
