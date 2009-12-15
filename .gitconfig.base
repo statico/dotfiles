@@ -1,34 +1,28 @@
-[user]
-	name = Ian Langworth
 [core]
-	editor = vim
-	pager = less -FRX
-	excludesfile = ~/.gitignore
-[github]
-	user = statico
+  editor = vim
+  whitespace = trailing-space,space-before-tab
+[user]
+	name = Will Nowak
+	email = compbrain@gmail.com
+  editor = vim
 [alias]
-	b = branch
-	bnew = checkout -b
-	ci = commit
-	cia = commit -a
-	cim = commit -m
-	cima = commit -a -m
-	civ = commit -v
-	civa = commit -v -a
-	co = checkout
-	last = log -1
-	newb = checkout -b
-	rewind-one = reset --hard HEAD^
-	st = status
-	sta = stash
-	svnci = svn dcommit
-	svnprep = rebase -i git-svn
-	svnup = svn rebase
-	unstage = reset HEAD
-	up = pull origin
-[color]
-	diff = auto
-	status = auto
-	branch = auto
+  st = status
+  di = diff
+  ci = commit
+  co = checkout
+  br = branch
+  desc = describe
+  pick = cherry-pick
+[diff]
+  color = auto
+[status] 
+  color = auto
 [branch]
-	autosetuprebase = remote
+  autosetuprebase = remote
+[push]
+  default = tracking
+[sendemail]
+  envelopesender = compbrain@gmail.com
+[apply]
+  whitespace = fix
+

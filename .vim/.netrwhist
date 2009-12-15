@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/wan/Music'
+let g:netrw_dirhist_2='/home/wan/git/movielists/static/js'
+let g:netrw_dirhist_3='/home/wan/git/movielists/static'
+let g:netrw_dirhist_4='/home/wan/git/movielists/static/js'
+let g:netrw_dirhist_5='/home/wan/git/movielists/static/css'
+let g:netrw_dirhist_6='/home/wan/git/backend/dds/orwell/templates'
+let g:netrw_dirhist_7='/home/wan/.dds/slides/10000'

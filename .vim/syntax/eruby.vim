@@ -32,7 +32,7 @@ syn region erubyBlock matchgroup=erubyRubyDelim start=#<%=\?# end=#%># keepend c
 syn region erubyComment start=+<%#+ end=#%># keepend
 syn match erubyEnd #\<end\>#
 
-hi link erubyRubyDelim PreProc
+hi link erubyRubyDelim todo
 hi link erubyComment comment
 hi link erubyEnd rubyControl
 

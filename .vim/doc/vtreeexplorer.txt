@@ -1,0 +1,194 @@
+*vtreeexplorer.txt*	Vim Tree Explorer		April 5, 2002
+
+Authors:  T. Scott Urban  <tsurban@HORMELcomcast.net>
+
+	  (remove HORMEL from my email first)
+
+0. DESCRIPTION					*vtreeexplorer*
+
+This plugin creates a tree based file explorer within vim.  The tree view is
+similar to the output of the unix 'tree' command, with the addition that
+directories are foldable and the tree is lazy loaded as you navigate the tree.
+The tree is highlighted and several mapping are created for naviagation and
+opening files from the tree.
+
+==============================================================================
+1. CONTENTS					*vtreeexplorer-contents*
+
+	0. DESCRIPTION ..................: |vtreeexplorer|
+	1. CONTENTS......................: |vtreeexplorer-contents|
+	2. VTREEEXPLORER INSTALLATION ...: |vtreeexplorer-install|
+	3. VTREEEXPLORER CONFIGURATION ..: |vtreeexplorer-config|
+	4. VTREEEXPLORER TERMS ..........: |vtreeexplorer-terms|
+	5. VTREEEXPLORER MAPPINGS .......: |vtreeexplorer-mapping|
+	     '<enter>' ..................: |vtreeexplorer-enter|
+	     'o' ........................: |vtreeexplorer-o|
+	     'X' ........................: |vtreeexplorer-X|
+	     'E' ........................: |vtreeexplorer-E|
+	     'C' ........................: |vtreeexplorer-C|
+	     'H' ........................: |vtreeexplorer-H|
+	     'u' ........................: |vtreeexplorer-u|
+	     'p' ........................: |vtreeexplorer-p|
+	     'r' ........................: |vtreeexplorer-r|
+	     'R' ........................: |vtreeexplorer-R|
+	     'S' ........................: |vtreeexplorer-S|
+	     'D' ........................: |vtreeexplorer-D|
+	     'a' ........................: |vtreeexplorer-a|
+	     '?' ........................: |vtreeexplorer-?|
+	6. VTREEEXPLORER COMMANDS .......: |vtreeexplorer-commands|
+	     :CD ........................: |vtreeexplorer-CD|
+	     :Yank ......................: |vtreeexplorer-Yank|
+
+==============================================================================
+2. VTREEEXPLORER INSTALLATION			*vtreeexplorer-install*
+
+To install, un-gzip and un-tar in your $HOME/.vim or $VIMRUNTIME directory, or
+the equivalent for the OS you are using.  To add this documentation to the
+searchable help index, do ":helptags ~/.vim/doc" or equivalent.
+
+==============================================================================
+3. VTREEEXPLORER CONFIGURATION			*vtreeexplorer-config*
+
+There are four global variables that affect vtreeexplorer on startup.  These
+variables only affect the initial behavior after using |VTreeExplore| or
+|VSTreeExplore| to start the tree explorer.  Setting these variables after the
+start of the tree explorer with those commands will have no affect on
+currently running tree explorers.  Settings can be changed with the
+commands/functions/mappings in running tree explorers.  This allows for the
+creation of mutliple tree explorer windows with different settings.  The
+global variables affecting tree explorer startup are:
+
+treeExplVertical				*treeExplVertical*
+
+Set this variable in your vimrc to use a vertical split when using the
+splitting version of the explorer |VSTreeExplore|.
+
+treeExplWinSize					*treeExplWinSize*
+
+Set this variable to a number in your vimrc to control the windows size (width
+or height, depending on |treeExplVertical| when using the splitting version of
+the explorer |VSTreeExplore|.
+
+treeExplHidden					*treeExplHidden*
+
+Set this variable in your vimrc to start the exlorer with hidden files shown.
+Otherwise, the explorer will be started with hidden files (start with '.' for
+Unix) not shown.
+
+This setting can be be toggled with the 'a' mapping (|vtreeexplorer-a|.
+
+treeExplDirSort					*treeExplDirSort*
+
+Set this variable in your vimrc to start the explorer with the desired
+directory sorting. Possible values:
+
+	 0 : no directory sorting
+	 1 : directories sorted first
+	-1 : directories sorted last
+
+This setting can be switched with the 'D' mapping (|vtreeexplorer-D|.
+
+==============================================================================
+4. VTREEEXPLORER TERMS				*vtreeexplorer-terms*
+
+The following terms are defined for brevity in the remainder of the
+documentation:
+
+cursordir					*vtreeexplorer-cursordir*
+
+This term refers to the directory where the cursor is in the explorer.  If the
+cursor is on a line with a directory, that is the cursordir.  If the cursor is
+on a file, then the cursor dir is the parent directory of the file on the
+cursor line.
+
+topdir						*vtreeexplorer-topdir*
+
+This term refers to the directory where the tree explorerer is rooted - that
+is, the top-most directory shown in the tree.
+
+==============================================================================
+5. VTREEEXPLORER MAPPINGS			*vtreeexplorer-mappings*
+
+'<enter>'					*vtreeexplorer-enter*
+
+Same as |vtreeexplorer-o| below.
+
+'o'						*vtreeexplorer-o*
+
+If the cursor is on a line with a file, open that file in another window.  The
+last window visitied is where the file will be opened, unless the previous
+window contains an unmodified buffer or there is only one window, in which
+case a new window will be opened for the file.
+
+If the cursor is on a line with a directory, load the directory if it isn't
+loaded, or toggle the fold for that directory, if the directory is loaded.
+
+'X'						*vtreeexplorer-X*
+
+Recursively expand the |vtreeexplorer-cursordir|.
+
+'E'						*vtreeexplorer-E*
+
+Open the standard vim |file-explorer| on the |vtreeexplorer-cursordir|.
+
+'C'						*vtreeexplorer-C*
+
+Change the |vtreeexplorer-topdir| to the |vtreeexplorer-cursordir|.
+
+'H'						*vtreeexplorer-H*
+
+Change the |vtreeexplorer-topdir| to your home directory, defined by the
+environement variable $HOME.
+
+'u'						*vtreeexplorer-u*
+
+Change the |vtreeexplorer-topdir| up one level, to the parent directory of the
+current topdir.
+
+'p'						*vtreeexplorer-p*
+
+Move the cursor to the parent directory of the |vtreeexplorer-cursordir|.
+Hitting 'p' mutliple times will quickly take you to the top of the tree.
+
+'r'						*vtreeexplorer-r*
+
+Refresh the |vtreeexplorer-cursordir|.  This command might unload
+subdirectories of the cursordir, depending on current expansion.
+
+'R'						*vtreeexplorer-R*
+
+Refresh the |vtreeexplorer-topdir|.This command might unload subdirectories of
+the cursordir, depending on current expansion.
+
+'S'						*vtreeexplorer-S*
+
+Start a shell in the |vtreeexplorer-cursordir|.
+
+'D'						*vtreeexplorer-D*
+
+Switch between the three directory sorting modes, described at
+|treeExplDirSort|.  Initial value can be set with global variable
+|treeExplDirSort|.
+
+'a'						*vtreeexplorer-a*
+
+Toggle showing hidden files.  Initial value can be set with global variable
+|treeExplHidden|.
+
+'?'						*vtreeexplorer-?*
+
+Toggle long help display at top of window.
+
+==============================================================================
+5. VTREEEXPLORER COMMANDS			*vtreeexplorer-commands*
+
+:CD						*vtreeexplorer-CD*
+
+Change |vtreeexplorer-topdir| to argument of command.
+
+:Yank						*vtreeexplorer-Yank*
+
+Yank selection of tree with foldmarkers stripped from register.
+
+vim:tw=78:ts=8:ft=help
+

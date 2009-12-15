@@ -1,8 +1,8 @@
 #!/bin/sh -e
 #
-# Ian's dotfile installer. Usage:
+# Wan's dotfile installer. Usage:
 #
-#   curl http://github.com/statico/dotfiles/raw/master/install.sh | sh
+#   curl http://github.com/compbrain/dotfiles/raw/master/install.sh | sh
 #
 # or:
 #
@@ -12,8 +12,8 @@
 
 basedir=$HOME/.dotfiles
 bindir=$HOME/bin
-gitbase=git://github.com/statico/dotfiles.git
-tarball=http://github.com/statico/dotfiles/tarball/master
+gitbase=git://github.com/compbrain/dotfiles.git
+tarball=http://github.com/compbrain/dotfiles/tarball/master
 
 function has() {
     return $( which $1 >/dev/null )

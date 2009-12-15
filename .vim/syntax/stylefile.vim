@@ -13,4 +13,6 @@ nmap <buffer> <leader>w i{<Esc>ea}<Esc>b
 call setreg('/','{[^}]\+}')
 nohlsearch
 
-set tw=80 wrap et nolist nocin fo+=a
+set nowrap
+set tw=0
+
