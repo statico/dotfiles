@@ -30,3 +30,5 @@
 	diff = auto
 	status = auto
 	branch = auto
+[branch]
+	autosetuprebase = remote
