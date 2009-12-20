@@ -127,6 +127,7 @@ alias ZshInstall='~/.dotfiles/install.sh'
 alias ZshRehash='. ~/.zshrc'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
+alias ckpt="git add -A ; git st ; git cim 'checkpoint'"
 alias df='df -H'
 alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
@@ -359,6 +360,13 @@ function svclean () {
 function svnaddall () {
     svn status | grep \? | f2 | xargs svn add
     svn status | grep \! | f2 | xargs svn rm
+}
+
+# Quick git checkin
+function ci () {
+  git add -A
+  git status
+  git cim "$*"
 }
 
 # Make a new command.
