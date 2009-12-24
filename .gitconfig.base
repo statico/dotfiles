@@ -30,5 +30,18 @@
 	diff = auto
 	status = auto
 	branch = auto
+[color "diff"]
+	meta = blue
+	frag = black
+	old = red
+	new = green
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = cyan
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
 [branch]
 	autosetuprebase = remote

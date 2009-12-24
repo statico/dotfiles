@@ -316,6 +316,9 @@ function st () {
         svn status $@
     elif [ -d CVS ]; then
         cvs -n update
+    elif _try git show; then
+        git add -A
+        git status
     else
         echo "no versioning information found" >&2
         return 1
@@ -326,6 +329,9 @@ function stv () {
         svn diff | vim -R -
     elif [ -d CVS ]; then
         cvs diff | vim -R -
+    elif _try git show; then
+        git add -A
+        git diff --cached
     else
         echo "no versioning information found" >&2
         return 1
@@ -340,6 +346,10 @@ function sci () {
         svn ci -m "$*"
     elif [ -d CVS ]; then
         cvs ci -m "$*"
+    elif _try git show; then
+        git add -A
+        git status
+        git cim "$*"
     else
         echo "no versioning information found" >&2
         return 1
@@ -360,13 +370,6 @@ function svclean () {
 function svnaddall () {
     svn status | grep \? | f2 | xargs svn add
     svn status | grep \! | f2 | xargs svn rm
-}
-
-# Quick git checkin
-function ci () {
-  git add -A
-  git status
-  git cim "$*"
 }
 
 # Make a new command.
