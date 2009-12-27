@@ -9,6 +9,7 @@ au BufNewFile,BufRead *.csv     setf csv
 au BufNewFile,BufRead *.flr     setf actionscript
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
+au BufNewFile,BufRead *.md      setf mkd
 au BufNewFile,BufRead *.plist   setf xml
 au BufNewFile,BufRead *.rb      setlocal noai
 au BufNewFile,BufRead *.rhtm    setf eruby
