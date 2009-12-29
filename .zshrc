@@ -135,7 +135,6 @@ alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
-alias gg='gitk --all &!'
 alias gpgdecrypt='gpg --decrypt-files'
 alias gpge='gpg --edit-key'
 alias gpgencrypt='gpg --default-recipient-self --armor --encrypt-files'
@@ -365,6 +364,15 @@ function svclean () {
         return 1
     fi
 }
+
+function gg () {
+    gitk --all &!
+    if _is Darwin; then
+        # gitk on OS X doesn't appear in the foreground automatically
+        osascript -e 'tell app "Wish" to activate' >/dev/null 2>&1
+    fi
+}
+
 
 # Do you miss `git add -A` ?
 function svnaddall () {
