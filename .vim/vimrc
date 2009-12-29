@@ -412,19 +412,14 @@ endfunction
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
 
+" CSApprox
+let g:CSApprox_verbose_level = 0
+let g:CSApprox_attr_map = { 'bold' : '', 'italic' : '', 'sp' : 'fg' }
+
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
 
 " make sure colored syntax mode is on
-if has("terminfo")
-  set t_Co=8
-  set t_Sf=[3%p1%dm
-  set t_Sb=[4%p1%dm
-else
-  set t_Co=8
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-endif
 syntax on
 colorscheme default
 
