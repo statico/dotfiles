@@ -310,13 +310,14 @@ function psl () {
 }
 
 # RCS helper functions
+# TODO: Replade 'add .' with 'add -A' when all workstations have a newer Git.
 function st () {
     if [ -d .svn ]; then
         svn status $@
     elif [ -d CVS ]; then
         cvs -n update
     elif _try git show; then
-        git add -A
+        git add .
         git status
     else
         echo "no versioning information found" >&2
@@ -329,7 +330,7 @@ function stv () {
     elif [ -d CVS ]; then
         cvs diff | vim -R -
     elif _try git show; then
-        git add -A
+        git add .
         git diff --cached
     else
         echo "no versioning information found" >&2
@@ -346,7 +347,7 @@ function sci () {
     elif [ -d CVS ]; then
         cvs ci -m "$*"
     elif _try git show; then
-        git add -A
+        git add .
         git status
         git cim "$*"
     else
