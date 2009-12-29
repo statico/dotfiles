@@ -16,14 +16,37 @@ XTerm*color12: #9badff
 XTerm*color13: #ff58ff
 XTerm*color14: #71ffff
 XTerm*color15: #ffffff
-!XTerm*font:             -*-profont-*-*-*-*-11-*-*-*-*-*-*-*
-!XTerm*boldFont:         -*-profont-*-*-*-*-11-*-*-*-*-*-*-*
 XTerm*vt100.geometry:   84x30
 XTerm*geometry:         84x30
 XTerm*visualbell:       true
 XTerm*scrollBar:        false
 XTerm*scrollBar_right:  true
 XTerm*saveLines:        3000
+
+UXTerm*foreground: #ffffff
+UXTerm*background: #000000
+UXTerm*color0: #585858
+UXTerm*color1: #ff5858
+UXTerm*color2: #00ff00
+UXTerm*color3: #ffff00
+UXTerm*color4: #7991ff
+UXTerm*color5: #ff00ff
+UXTerm*color6: #00ffff
+UXTerm*color7: #d1d1d1
+UXTerm*color8: #9a9a9a
+UXTerm*color9: #ff8e8e
+UXTerm*color10: #88ff88
+UXTerm*color11: #ffff71
+UXTerm*color12: #9badff
+UXTerm*color13: #ff58ff
+UXTerm*color14: #71ffff
+UXTerm*color15: #ffffff
+UXTerm*vt100.geometry:   84x30
+UXTerm*geometry:         84x30
+UXTerm*visualbell:       true
+UXTerm*scrollBar:        false
+UXTerm*scrollBar_right:  true
+UXTerm*saveLines:        3000
 
 URxvt*foreground: #ffffff
 URxvt*background: #000000
@@ -43,11 +66,10 @@ URxvt*color12: #9badff
 URxvt*color13: #ff58ff
 URxvt*color14: #71ffff
 URxvt*color15: #ffffff
-!URxvt*font:             -*-profont-*-*-*-*-11-*-*-*-*-*-*-*
-!URxvt*boldFont:         -*-profont-*-*-*-*-11-*-*-*-*-*-*-*
 URxvt*vt100.geometry:   84x30
 URxvt*geometry:         84x30
 URxvt*visualbell:       true
 URxvt*scrollBar:        false
 URxvt*scrollBar_right:  true
 URxvt*saveLines:        3000
+
