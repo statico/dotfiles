@@ -127,7 +127,6 @@ alias ZshInstall='~/.dotfiles/install.sh'
 alias ZshRehash='. ~/.zshrc'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
-alias ckpt="git add -A ; git st ; git cim 'checkpoint'"
 alias df='df -H'
 alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
@@ -285,6 +284,7 @@ function {
 
 # Quick commands to sync CWD between terminals.
 function pin () {
+    rm -f ~/.pindir
     echo $PWD >~/.pindir
     chmod 0600 ~/.pindir >/dev/null 2>&1
 }
@@ -363,6 +363,14 @@ function svclean () {
     else
         echo "no versioning information found" >&2
         return 1
+    fi
+}
+function ckpt () {
+    if _try git show; then
+      sci 'checkpoint'
+    else
+      echo "Be more specific with other versioning systems."
+      echo "(I.e., when you can't squash commits before pushing.)"
     fi
 }
 
