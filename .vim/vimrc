@@ -30,19 +30,20 @@ nmap \i i<CR><CR>> <Esc><Up><Up>gqapo<CR><Up>
 nmap \I S<Esc><Up>gqapo<CR><Up>
 nmap \j :CMiniBufExplorer<CR>:NERDTreeToggle<CR>
 nmap \k :execute "!perl -c %"<CR>
-nmap \l :set number!<CR>:set number?<CR>
+nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
 nmap \q :nohlsearch<CR>
 "nmap \r mt?^-- $<CR>O<Esc>'tVG{kdO<Esc>kgqap:nohlsearch<CR>O
-nmap \r mto<Esc>'tVG{kdO<Esc>kgqap:nohlsearch<CR>O
+"nmap \r mto<Esc>'tVG{kdO<Esc>kgqap:nohlsearch<CR>O
+nmap \r ggj}kessquashjkk0
 nmap \s :setlocal invspell<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
-nmap \u :set list!<CR>:set list?<CR>
+nmap \u :setlocal list!<CR>:setlocal list?<CR>
 nmap \v :call ToggleMiniBufVerticalness()<CR>
-nmap \w :set wrap!<CR>:set wrap?<CR>
+nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nmap \x :w<CR>:%! xmllint --format - <CR>
 nmap \Y :vertical resize 40<CR>:wincmd l<CR>
 nmap \y :exec "vertical resize " . (80 + (&number * &numberwidth))<CR>:wincmd l<CR>
