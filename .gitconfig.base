@@ -24,6 +24,7 @@
 	svnci = svn dcommit
 	svnprep = rebase -i git-svn
 	svnup = svn rebase
+	today = diff --stat 'HEAD@{5am}..'
 	unstage = reset HEAD
 	up = pull origin
 [color]
