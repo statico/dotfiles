@@ -50,8 +50,8 @@ function! PyGetDocstringFromArgs(text)
     let indent  = PyGetIndentString()
     let st      = g:snip_start_tag
     let et      = g:snip_end_tag
-    let docvars = map(split(text), 'v:val." -- ".st.et')
-    return '\n'.indent.join(docvars, '\n'.indent).'\n'.indent
+    let docvars = map(split(text), 'indent.v:val.": ".st.et')
+    return '\n'.indent.'Args:\n'.indent.join(docvars, '\n'.indent).'\n'.indent
 endfunction
 
 " Given a string containing a list of arguments (e.g. "one = 'test', *args,
