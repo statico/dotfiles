@@ -76,7 +76,7 @@ if [ -e $basedir ]; then
     cd $basedir
     if [ -e .git ]; then
         note "Updating dotfiles from git..."
-        git pull origin master
+        git rebase origin
     else
         unpack_tarball
     fi
