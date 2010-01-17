@@ -26,7 +26,7 @@
 	svnup = svn rebase
 	today = diff --stat 'HEAD@{5am}..'
 	unstage = reset HEAD
-	up = pull origin
+	up = pull --rebase origin
 [color]
 	diff = auto
 	status = auto
