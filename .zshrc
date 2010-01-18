@@ -316,8 +316,10 @@ function st () {
         svn status $@
     elif [ -d CVS ]; then
         cvs -n update
-    elif _try git show; then
-        git add .
+    elif _try git add -A; then
+        git status
+    elif _try git add .; then
+        echo "# Note: this git doesn't support -A"
         git status
     else
         echo "no versioning information found" >&2
@@ -329,8 +331,10 @@ function stv () {
         svn diff | vim -R -
     elif [ -d CVS ]; then
         cvs diff | vim -R -
-    elif _try git show; then
-        git add .
+    elif _try git add -A; then
+        git diff --cached
+    elif _try git add .; then
+        echo "# Note: this git doesn't support -A"
         git diff --cached
     else
         echo "no versioning information found" >&2
@@ -346,9 +350,14 @@ function sci () {
         svn ci -m "$*"
     elif [ -d CVS ]; then
         cvs ci -m "$*"
-    elif _try git show; then
-        git add .
+    elif _try git add -A; then
         git status
+        echo "# ----------- committing -----------"
+        git cim "$*"
+    elif _try git add .; then
+        echo "# Note: this git doesn't support -A"
+        git status
+        echo "# ----------- committing -----------"
         git cim "$*"
     else
         echo "no versioning information found" >&2
