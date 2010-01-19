@@ -69,6 +69,9 @@ nmap <C-e> :e#<CR>
 map <C-n> :MBEbn<CR>
 map <C-p> :MBEbp<CR>
 
+" Let's try this new FuzzyFinder plugin...
+nmap ; :FufFileWithFullCwd<CR>
+
 " missing emacs-like bindings in insert mode
 imap <C-e> <C-o>$
 
@@ -92,7 +95,6 @@ nmap <Esc>d :!w3m -dump http://dictionary.reference.com/browse/<cword> \| perl -
 if !has('gui_running')
     nmap - :call WriteAndSuspend()<CR>
 endif
-nmap ; :call WriteIfPossible()<CR>
 function! WriteIfPossible()
     if &buftype != 'hidden' && !&readonly
         if bufname('%') != ""
@@ -414,6 +416,11 @@ endfunction
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
 
+" fuf.vim
+let g:fuf_infoFile = ''
+let g:fuf_file_prompt = '>File[]> '
+let g:fuf_file_exclude = '\v\~$|\.(o|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
 
@@ -480,6 +487,9 @@ highlight def link treeRO treeFile
 
 " make trailing spaces visible
 highlight SpecialKey ctermbg=Yellow guibg=Yellow
+
+" make menu selections visible
+highlight PmenuSel ctermfg=white ctermbg=magenta cterm=reverse
 
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------
