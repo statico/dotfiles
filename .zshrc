@@ -282,6 +282,12 @@ function {
 
 # FUNCTIONS {{{1
 
+# ack is really useful. I usually look for code and then edit all of the files
+# containing that code. Changing `ack' to `vack' does this for me.
+function vack () {
+  $EDITOR `ack -l $@`
+}
+
 # Quick commands to sync CWD between terminals.
 function pin () {
     rm -f ~/.pindir
