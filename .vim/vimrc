@@ -419,7 +419,7 @@ let NERDTreeIgnore = ['\~$', '\.pyc$']
 " fuf.vim
 let g:fuf_infoFile = ''
 let g:fuf_file_prompt = '>File[]> '
-let g:fuf_file_exclude = '\v\~$|\.(o|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+let g:fuf_file_exclude = '\v\~$|\.(o|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
