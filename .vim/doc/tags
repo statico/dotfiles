@@ -313,6 +313,7 @@ taglist-install	taglist.txt	/*taglist-install*
 taglist-internet	taglist.txt	/*taglist-internet*
 taglist-intro	taglist.txt	/*taglist-intro*
 taglist-keys	taglist.txt	/*taglist-keys*
+taglist-license	taglist.txt	/*taglist-license*
 taglist-menu	taglist.txt	/*taglist-menu*
 taglist-options	taglist.txt	/*taglist-options*
 taglist-requirements	taglist.txt	/*taglist-requirements*
