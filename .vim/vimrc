@@ -70,7 +70,7 @@ map <C-n> :MBEbn<CR>
 map <C-p> :MBEbp<CR>
 
 " Let's try this new FuzzyFinder plugin...
-nmap ; :FufFileWithFullCwd<CR>
+nmap ; :FufFile<CR>
 
 " missing emacs-like bindings in insert mode
 imap <C-e> <C-o>$
