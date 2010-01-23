@@ -27,6 +27,7 @@
 	today = diff --stat 'HEAD@{5am}..'
 	unstage = reset HEAD
 	up = pull --rebase origin
+	forkup = pull --rebase upstream
 [color]
 	diff = auto
 	status = auto
