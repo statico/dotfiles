@@ -420,7 +420,6 @@ let NERDTreeIgnore = ['\~$', '\.pyc$']
 let g:fuf_infoFile = ''
 let g:fuf_file_prompt = '>File[]> '
 let g:fuf_file_exclude = '\v\~$|\.(o|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
-let g:fuf_abbrevMap = {"^": ["**/"]}
 
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
