@@ -33,6 +33,7 @@ bind g focus top
 bind G focus bottom
 bind E hardstatus ignore
 bind e hardstatus alwayslastline
+bind H resize 20
 
 #termcap  xterm|dtterm|rxvt|fptwist hs@:cs=\E[%i%d;%dr:im=\E[6h:ei=\E[4l
 #terminfo xterm|dtterm|rxvt|fptwist hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
