@@ -357,14 +357,18 @@ function sci () {
     elif [ -d CVS ]; then
         cvs ci -m "$*"
     elif _try git add -A; then
+        echo "# ------------ staging -------------"
         git status
         echo "# ----------- committing -----------"
         git cim "$*"
+        echo "# -------------- done --------------"
     elif _try git add .; then
+        echo "# ------------ staging -------------"
         echo "# Note: this git doesn't support -A"
         git status
         echo "# ----------- committing -----------"
         git cim "$*"
+        echo "# -------------- done --------------"
     else
         echo "no versioning information found" >&2
         return 1
