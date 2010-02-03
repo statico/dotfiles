@@ -25,8 +25,6 @@ ip = IPython.ipapi.get()
 # import ipy_defaults
 
 import os
-import sys
-import datetime
 
 def main():
 
@@ -104,6 +102,11 @@ def main():
     #import readline
     #readline.parse_and_bind('set completion-query-items 1000')
     #readline.parse_and_bind('set page-completions no')
+
+    ip.ex('import os')
+    ip.ex('import sys')
+    ip.ex('import datetime')
+    ip.ex('import datetime as dt')
 
 
 # some config helper functions you can use
