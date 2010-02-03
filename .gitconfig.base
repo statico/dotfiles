@@ -1,5 +1,6 @@
 [user]
 	name = Ian Langworth
+	email = ian@langworth.com
 [core]
 	editor = vim
 	pager = less -FRX
