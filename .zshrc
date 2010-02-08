@@ -394,10 +394,14 @@ function ckpt () {
 }
 
 function gg () {
-    gitk --all &!
-    if _is Darwin; then
-        # gitk on OS X doesn't appear in the foreground automatically
-        osascript -e 'tell app "Wish" to activate' >/dev/null 2>&1
+    if _has gitx; then
+        gitx
+    else
+        gitk --all &!
+        if _is Darwin; then
+            # gitk on OS X doesn't appear in the foreground automatically
+            osascript -e 'tell app "Wish" to activate' >/dev/null 2>&1
+        fi
     fi
 }
 
