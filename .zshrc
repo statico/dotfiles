@@ -395,7 +395,8 @@ function ckpt () {
 
 function gg () {
     if _has gitx; then
-        gitx
+        # On OS X? Try GitX.app
+        gitx --all
     else
         gitk --all &!
         if _is Darwin; then
