@@ -29,7 +29,7 @@ nmap \H :%!tidy -icq -asxhtml -w 80 -utf8<CR>
 nmap \i i<CR><CR>> <Esc><Up><Up>gqapo<CR><Up>
 nmap \I S<Esc><Up>gqapo<CR><Up>
 nmap \j :CMiniBufExplorer<CR>:NERDTreeToggle<CR>
-nmap \k :execute "!perl -c %"<CR>
+nmap \k :TlistToggle<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
