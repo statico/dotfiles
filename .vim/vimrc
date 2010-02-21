@@ -219,6 +219,7 @@ iab utm;  use Test::More 'no_plan';<CR>use strict;<CR>use warnings;<CR>
 "--------------------------------------------------------------------------
 
 set autoindent              " Carry over indenting from previous line
+set autoread                " Don't bother me hen a file changes
 set backspace=indent,eol,start
                             " Allow backspace beyond insertion point
 set cindent                 " Automatic program indenting
@@ -261,6 +262,7 @@ set scroll=4                " Number of lines to scroll with ^U/^D
 set scrolloff=15            " Keep cursor away from this many chars top/bot
 set shiftround              " Shift to certain columns, not just n spaces
 set shiftwidth=4            " Number of spaces to shift for autoindent or >,<
+set shortmess+=A            " Don't bother me when a swapfile exists
 set showbreak=              " Show for lines that have been wrapped, like Emacs
 set showmatch               " Hilight matching braces/parens/etc.
 set sidescrolloff=3         " Keep cursor away from this many chars left/right
