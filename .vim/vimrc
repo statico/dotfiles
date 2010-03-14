@@ -37,7 +37,7 @@ nmap \o :set paste!<CR>:set paste?<CR>
 nmap \q :nohlsearch<CR>
 "nmap \r mt?^-- $<CR>O<Esc>'tVG{kdO<Esc>kgqap:nohlsearch<CR>O
 "nmap \r mto<Esc>'tVG{kdO<Esc>kgqap:nohlsearch<CR>O
-nmap \r ggj<C-v>}kessquash<Esc>k0
+nmap \r ggj<C-v>}kecsquash<Esc>k0
 nmap \s :setlocal invspell<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
