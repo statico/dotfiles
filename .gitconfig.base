@@ -49,3 +49,6 @@
 	remote = green
 [branch]
 	autosetuprebase = remote
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
