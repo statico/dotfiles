@@ -123,6 +123,7 @@ alias Ar='sudo apt-get remove'
 alias Arp='sudo apt-get remove --purge'
 alias As='apt-cache search'
 alias ZR=ZshRehash
+alias ZL='vi ~/.zshlocal'
 alias ZshInstall='~/.dotfiles/install.sh'
 alias ZshRehash='. ~/.zshrc'
 alias bc='bc -l'
