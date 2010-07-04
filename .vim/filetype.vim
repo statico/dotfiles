@@ -15,8 +15,10 @@ au BufNewFile,BufRead *.rb      setlocal noai
 au BufNewFile,BufRead *.rhtm    setf eruby
 au BufNewFile,BufRead *.rhtml   setf eruby
 au BufNewFile,BufRead *.rxml    setf ruby
+au BufNewFile,BufRead *.sass    setf sass
 au BufNewFile,BufRead *.sch     setf scheme
 au BufNewFile,BufRead *.scm     setf scheme
+au BufNewFile,BufRead *.scss    setf scss
 au BufNewFile,BufRead *.ss      setf scheme
 au BufNewFile,BufRead *.t       setf perl
 au BufNewFile,BufRead *.ttml    setf xml
