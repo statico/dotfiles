@@ -9,7 +9,7 @@ au BufNewFile,BufRead *.csv     setf csv
 au BufNewFile,BufRead *.flr     setf actionscript
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
-au BufNewFile,BufRead *.md      setlocal ft=md nolist spell
+au BufNewFile,BufRead *.md      setlocal ft=mkd nolist spell
 au BufNewFile,BufRead *.plist   setf xml
 au BufNewFile,BufRead *.rb      setlocal noai
 au BufNewFile,BufRead *.rhtm    setf eruby
