@@ -2,6 +2,10 @@
 ;; Ian's init.el as he learns Emacs
 ;;
 
+;; ----------------------------------------------------------------------------
+;; Packages
+;; ----------------------------------------------------------------------------
+
 (require 'cl)         ;; Common Lisp Extensions
 (require 'ffap)       ;; Find File improvements
 (require 'uniquify)   ;; Unique buffer names
@@ -20,6 +24,10 @@
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 (add-to-list 'load-path (concat dotfiles-dir "/non-elpa"))
+
+;; ----------------------------------------------------------------------------
+;; Options
+;; ----------------------------------------------------------------------------
 
 ;; Save locations between files
 (require 'saveplace)
