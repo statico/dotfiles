@@ -44,8 +44,11 @@
 (require 'ansi-color)
 (require 'recentf)
 
-(setq viper-mode t)
-(require 'viper)
+;; (setq viper-mode t)
+;; (require 'viper)
+
+;; Command key becomes meta.
+(setq mac-command-modifier 'meta)
 
 ;; backport some functionality to Emacs 22 if needed
 (require 'dominating-file)
@@ -64,6 +67,19 @@
 
 (regen-autoloads)
 (load custom-file 'noerror)
+
+;; Color is nice.
+(color-theme-zenburn)
+
+;; No backup files, thanks.
+(setq make-backup-files nil)
+
+;; No tabs, 2 spaces per tab.
+(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+
+;; Use C-x/C-c/C-v as cut/copy/paste.
+;; (cua-mode t)
 
 ;; You can keep system- or user-specific customizations here
 (setq system-specific-config (concat dotfiles-dir system-name ".el")
