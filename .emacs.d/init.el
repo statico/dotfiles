@@ -44,8 +44,9 @@
 (require 'ansi-color)
 (require 'recentf)
 
-;; (setq viper-mode t)
-;; (require 'viper)
+(setq viper-mode t)
+(setq viper-expert-level 4)
+(require 'viper)
 
 ;; Command key becomes meta.
 (setq mac-command-modifier 'meta)
@@ -69,7 +70,9 @@
 (load custom-file 'noerror)
 
 ;; Color is nice.
-(color-theme-zenburn)
+(if window-system
+  (color-theme-zenburn)
+  )
 
 ;; No backup files, thanks.
 (setq make-backup-files nil)
