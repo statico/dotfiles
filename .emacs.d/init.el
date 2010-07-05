@@ -8,6 +8,14 @@
 (require 'ansi-color) ;; Support ANSI color when running commands
 (require 'recentf)    ;; Recent files
 
+;;; This was installed by package-install.el.
+;;; This provides support for the package system and
+;;; interfacing with ELPA, the package archive.
+(when
+  (load
+    (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
+
 ;; Save locations between files
 (require 'saveplace)
 (setq-default save-place t)
