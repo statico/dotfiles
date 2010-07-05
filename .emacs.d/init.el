@@ -12,35 +12,9 @@
 (require 'ansi-color) ;; Support ANSI color when running commands
 (require 'recentf)    ;; Recent files
 
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-(when
-  (load
-    (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
-
-;; Make sure some useful packages are loaded via ELPA.
-(defvar elpa-packages (list 'idle-highlight
-                            'css-mode
-                            'yaml-mode
-                            'magit))
-
-(defun install-elpa-packages ()
-  "Install all starter-kit packages that aren't installed."
-  (interactive)
-  (dolist (package elpa-packages)
-    (unless (or (member package package-activated-list)
-                (functionp package))
-      (message "Installing %s" (symbol-name package))
-      (package-install package)
-      (require package))))
-
-
-;; Load non-ELPA packages.
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path (concat dotfiles-dir "/non-elpa"))
+(add-to-list 'load-path (concat dotfiles-dir "/packages"))
 
 ;; ----------------------------------------------------------------------------
 ;; Options
