@@ -1,0 +1,158 @@
+dictionary (1.8.7-1) unstable; urgency=low
+
+  * fixed decoding problem when selecting dictionary (problem reported by
+    Kuno Strassmann)
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Sat,  2 Oct 2004 08:05:37 +0200
+
+dictionary (1.8.6-1) unstable; urgency=low
+
+  * added patch fixing the wrong display of dictionary description
+    (provided by Sergei Pokrovsky)
+  * added dictionary-description-open-delimiter and
+    dictionary-description-close-delimiter (suggested by Sergei Pokrovsky)
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Sat, 25 Sep 2004 17:05:51 +0200
+
+dictionary (1.8.5-1) unstable; urgency=low
+
+  * added variable dictionary-use-single-buffer to allow selecting
+    between single/multiple buffers for dictionary access
+  * added tooltip support for XEmacs based on balloon-help
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Sat, 21 Jun 2003 18:55:54 +0200
+
+dictionary (1.8.4-1) unstable; urgency=low
+
+  * install-pkg was missing in the last tarball
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Sat, 12 Oct 2002 11:58:32 +0200
+
+dictionary (1.8.3-1) unstable; urgency=low
+
+  * Fixed multiple defined function in dictionary.el
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Fri, 20 Sep 2002 22:19:06 +0200
+
+dictionary (1.8.2-1) unstable; urgency=low
+
+  * fixed Makefile
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Fri, 14 Jun 2002 19:31:53 +0200
+
+dictionary (1.8-1) unstable; urgency=low
+
+  * added search for similiar words when the searched word is not found.
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Wed, 20 Mar 2002 21:27:54 +0100
+
+dictionary (1.7.4-1) unstable; urgency=low
+
+  * dictionary.el (dictionary-do-matching): removed quotes around
+    dictionary name and match strategy
+	
+  * dictionary.el (dictionary-do-search): removed quotes around dictionary
+    name
+	
+  * dictionary.el (dictionary-display-more-info): removed quotes around
+    dictionary name
+
+  This problem (occurring with jdictd) was reported by E C Vijil
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Fri, 15 Mar 2002 21:19:23 +0100
+
+dictionary (1.7.3-1) unstable; urgency=low
+
+  * dictionary.el (dictionary-default-popup-strategy): added this
+    variable and changed dictionary-popup-matching-words to use
+    this as matching strategy (suggested by Renaud Pons)
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Tue, 29 Jan 2002 10:27:49 +0100
+
+dictionary (1.7.2-1) unstable; urgency=low
+
+  * link.el (link-initialize-keymap): fixed keybinding bug (reported by
+    David A. Panariti)
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Fri, 21 Dec 2001 18:50:20 +0100
+
+dictionary (1.7.1-1) unstable; urgency=low
+
+  * Fixed bug in dictionary-coding-system, the detection of non-mule
+    Emacsen was not correct
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Sat, 15 Dec 2001 14:29:29 +0100
+
+dictionary (1.7-1) unstable; urgency=low
+
+  * Added first support for dictionaries with different encodings than
+    utf-8.
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Sun,  9 Dec 2001 14:21:57 +0100
+
+dictionary (1.6-1) unstable; urgency=low
+
+  * added HTTP proxy support using the CONNECT request type
+
+ -- Torsten Hilbrich <dictionary@myrkr.in-berlin.de>  Tue,  4 Dec 2001 20:22:03 +0100
+
+dictionary (1.5.3-1) unstable; urgency=low
+
+  * changed name of "select dictionary" button
+  * "select dictionary" and "select matching strategie" now has a better
+    feedback (by returning to the previous state)
+  * added support for non-colored display, the links are surrounded by
+    braces
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Sun, 14 Oct 2001 16:08:12 +0200
+
+dictionary (1.5.2-1) unstable; urgency=low
+
+  * popup menu now correctly records the selected window
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Sun,  2 Sep 2001 10:40:59 +0200
+
+dictionary (1.5.1-1) unstable; urgency=low
+
+  * corrected bug with dictionary-previous (found by Rui Zhu)
+  * corrected key bindings in link.el
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Tue, 17 Jul 2001 20:47:58 +0200
+
+dictionary (1.5-1) unstable; urgency=low
+
+  * added tooltip support for emacs
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Sun,  8 Jul 2001 21:01:12 +0200
+
+dictionary (1.4.1-1) unstable; urgency=low
+
+  * changed recognition of utf-8 support (suggested by Enrico Scholz)
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Fri,  6 Jul 2001 23:08:48 +0200
+
+dictionary (1.4-1) unstable; urgency=low
+
+  * support for popup menus
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Fri,  6 Jul 2001 19:54:54 +0200
+
+dictionary (1.3.3-1) unstable; urgency=low
+
+  * added support for xemacs 21 packages (no changes for debian)
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Wed, 27 Jun 2001 17:56:44 +0200
+
+dictionary (1.3.2-1) unstable; urgency=low
+
+  * removed use of set-text-properties in link.el
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Fri, 22 Jun 2001 21:39:47 +0200
+
+dictionary (1.3.1-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Torsten Hilbrich <Torsten.Hilbrich@gmx.net>  Sun, 13 May 2001 09:55:20 +0200
+
+

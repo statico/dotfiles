@@ -1,0 +1,5 @@
+#!/bin/sh
+
+PACKAGE=dictionary
+
+/usr/lib/emacsen-common/emacs-package-remove $PACKAGE

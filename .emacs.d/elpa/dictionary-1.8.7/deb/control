@@ -1,0 +1,18 @@
+Source: dictionary
+Section: unofficial
+Priority: optional
+Maintainer: Torsten Hilbrich <dictionary@myrkr.in-berlin.de>
+Build-Depends: dpkg-dev, debmake
+Standards-Version: 3.2.1
+
+Package: dictionary
+Architecture: all
+Depends: emacsen
+Description: dictionary client for emacs 
+ This dictionary client provides access to a dictionary server
+ (as defined in RFC 2229) from within Emacs or XEmacs.
+ .
+ It supports utf-8 (currently available in Emacs 21) and allows
+ to follow links (marked by {braces}) within the definitions.
+ .
+ This is an unofficial debian package.

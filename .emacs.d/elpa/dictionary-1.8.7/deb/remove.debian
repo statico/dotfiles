@@ -1,0 +1,17 @@
+#!/bin/sh
+PACKAGE=dictionary
+FLAVOUR=$1
+ELCDIR=/usr/share/$FLAVOUR/site-lisp/
+
+SOURCE="connection.el dictionary.el link.el"
+CONFFILE=/etc/$FLAVOUR/site-start.d/50${PACKAGE}.el
+
+case "$FLAVOUR" in
+  emacs) echo "install/$PACKAGE: Ignoring emacs";;
+      *) echo -n "remove/$PACKAGE: Removing for $FLAVOUR..."
+         cd $ELCDIR
+         for i in $SOURCE; do rm -f ${i}c; done
+         rm ${CONFFILE}
+         echo " done."
+	 ;;
+esac
