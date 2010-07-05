@@ -16,6 +16,11 @@
     (expand-file-name "~/.emacs.d/elpa/package.el"))
   (package-initialize))
 
+;; Load non-ELPA packages.
+(setq dotfiles-dir (file-name-directory
+                    (or (buffer-file-name) load-file-name)))
+(add-to-list 'load-path (concat dotfiles-dir "/non-elpa"))
+
 ;; Save locations between files
 (require 'saveplace)
 (setq-default save-place t)
@@ -29,3 +34,8 @@
 ;; No tabs, 2 spaces per tab.
 (setq tab-width 4)
 (setq-default indent-tabs-mode nil)
+
+;; Color theming
+(require 'color-theme)
+(color-theme-initialize)
+(if window-system (color-theme-desert))
