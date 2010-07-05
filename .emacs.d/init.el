@@ -6,22 +6,38 @@
 ;; Packages
 ;; ----------------------------------------------------------------------------
 
+(setq dotfiles-dir (file-name-directory
+                    (or (buffer-file-name) load-file-name)))
+(add-to-list 'load-path (concat dotfiles-dir "/packages"))
+
 (require 'cl)         ;; Common Lisp Extensions
 (require 'ffap)       ;; Find File improvements
 (require 'uniquify)   ;; Unique buffer names
 (require 'ansi-color) ;; Support ANSI color when running commands
 (require 'recentf)    ;; Recent files
+(require 'saveplace)
 
-(setq dotfiles-dir (file-name-directory
-                    (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path (concat dotfiles-dir "/packages"))
+(require 'color-theme)
+(require 'cperl-mode)
+(require 'css-mode)
+(require 'diff-git)
+(require 'eshell-vc)
+(require 'espresso)
+(require 'highlight-parentheses)
+(require 'highline)
+(require 'idle-highlight)
+(require 'magit)
+(require 'markdown-mode)
+(require 'nav)
+(require 'yaml-mode)
+(require 'zenburn)
+
 
 ;; ----------------------------------------------------------------------------
 ;; Options
 ;; ----------------------------------------------------------------------------
 
 ;; Save locations between files
-(require 'saveplace)
 (setq-default save-place t)
 
 ;; Command key is Meta on OS X
@@ -35,7 +51,5 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Color theming
-(require 'color-theme)
-(require 'zenburn)
 (color-theme-initialize)
 (if window-system (color-theme-zenburn))
