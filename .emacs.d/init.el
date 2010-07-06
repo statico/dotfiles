@@ -10,9 +10,8 @@
 ;; Packages
 ;; ----------------------------------------------------------------------------
 
-(setq dotfiles-dir (file-name-directory
-                    (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path (concat dotfiles-dir "/vendor"))
+(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/vendor")
 
 (require 'cl)         ;; Common Lisp Extensions
 (require 'ffap)       ;; Find File improvements
@@ -63,8 +62,12 @@
 ;; Command key is Meta on OS X
 (setq mac-command-modifier 'meta)
 
+;; Stop beeping
+(setq visible-bell t)
+
 ;; No backup files, thanks
 (setq make-backup-files nil)
+(setq auto-save-default nil)
 
 ;; No tabs, 4 spaces per tab
 (setq tab-width 4)
@@ -93,6 +96,12 @@
 (yas/load-directory yas/root-directory)
 
 ;; ----------------------------------------------------------------------------
+;; Python
+;; ----------------------------------------------------------------------------
+
+(require 'init-python)
+
+;; ----------------------------------------------------------------------------
 ;; Bindings
 ;; ----------------------------------------------------------------------------
 
@@ -113,20 +122,3 @@
                                 (face-attribute 'default :height)))))
 (global-set-key (kbd "C-M-+") 'custom/increase-font-size)
 (global-set-key (kbd "C-M--") 'custom/decrease-font-size)
-
-;; ----------------------------------------------------------------------------
-;; Python
-;; ----------------------------------------------------------------------------
-
-;; "This automatically indents newlines and attempts to locate the
-;; cursor at the appropriate, whitespace-sensitive location whenever
-;; you press Return."
-(add-hook 'python-mode-hook '(lambda ()
-                               (define-key python-mode-map "\C-m"
-                                 'newline-and-indent)))
-
-(setenv "PYTHONPATH"
- (concat (getenv "PYTHONPATH") ":" (expand-file-name "~/.emacs.d/python")))
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
-
