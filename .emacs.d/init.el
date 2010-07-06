@@ -30,6 +30,7 @@
 (require 'magit)
 (require 'markdown-mode)
 (require 'nav)
+(require 'whitespace)
 (require 'yaml-mode)
 (require 'zenburn)
 
@@ -52,7 +53,7 @@
 
 ;; Color theming
 (color-theme-initialize)
-(if window-system (color-theme-zenburn))
+(if window-system (color-theme-tango))
 
 ;; Improved buffer switching and stuff
 (ido-mode t)
