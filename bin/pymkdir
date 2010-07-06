@@ -8,9 +8,17 @@ if len(sys.argv) != 2:
 
 path = sys.argv[1]
 
-cur = ''
+curdir = ''
 for subdir in os.path.split(path):
-  cur = os.path.join(cur, subdir)
-  if not os.path.isdir(cur):
-    os.mkdir(cur)
-  file(os.path.join(cur, '__init__.py'), 'w').close()
+  curdir = os.path.join(curdir, subdir)
+  if os.path.isdir(curdir):
+    print curdir, 'already exists'
+  else:
+    print curdir, 'created'
+    os.mkdir(curdir)
+  curfile = os.path.join(curdir, '__init__.py')
+  if os.path.exists(curfile):
+    print curfile, 'already exists'
+  else:
+    print curfile, 'touched'
+    file(curfile, 'w').close()
