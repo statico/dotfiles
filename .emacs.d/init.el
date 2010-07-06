@@ -80,6 +80,13 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/ac-dict")
 (ac-config-default)
 
+;; Make it a little easier to move between window
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings 'meta))
+
+;; Make C-x/c/v into cut-copy-paste when text is selected
+(cua-mode t)
+
 ;; ----------------------------------------------------------------------------
 ;; Bindings
 ;; ----------------------------------------------------------------------------
