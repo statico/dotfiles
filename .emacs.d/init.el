@@ -8,7 +8,7 @@
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path (concat dotfiles-dir "/packages"))
+(add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
 (require 'cl)         ;; Common Lisp Extensions
 (require 'ffap)       ;; Find File improvements
