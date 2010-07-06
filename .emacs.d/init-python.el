@@ -1,32 +1,59 @@
 ;;
 ;; Make Pymacs, Rope, Ropemacs and YASnippet just work in GNU Emacs 23.
 ;;
-;; Inspired by and partialy stolen from:
+;; See also the python/ directory in this dir.
+;;
+;; Inspired by and mostly stolen from:
 ;; - http://bit.ly/bzr15C
 ;; - http://github.com/EnigmaCurry/emacs/blob/master/ryan-python.el
 ;;
 
+;; ----------------------------------------------------------------------------
+;; Initialization
+;; ----------------------------------------------------------------------------
+
 ;; Use Dave Love's newer python.el instead of the older python-mode.el
 (require 'python)
+
+;; Only load Python bits when we need 'em
+(autoload 'python-mode "python-mode" "Python Mode." t)
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
 ;; ----------------------------------------------------------------------------
 ;; Bindings
 ;; ----------------------------------------------------------------------------
 
-;; "This automatically indents newlines and attempts to locate the
-;; cursor at the appropriate, whitespace-sensitive location whenever
-;; you press Return."
-(add-hook 'python-mode-hook '(lambda ()
-                               (define-key python-mode-map "\C-m"
-                                 'newline-and-indent)))
+(setq interpreter-mode-alist
+      (cons '("python" . python-mode) interpreter-mode-alist)
+      python-mode-hook
+      '(lambda () (progn
 
-;; Don't map <Tab> to YASnippet. In fact, set it to something we'll never use
-;; because we'll only ever trigger it indirectly.
-(setq yas/trigger-key (kbd "C-c <kp-multiply>"))
-(yas/initialize)
+                    ;;(set-variable 'py-indent-offset 2)
+                    (set-variable 'py-smart-indentation t)
+                    (set-variable 'indent-tabs-mode nil)
 
-;; Instead, map <Tab> to Ryan's python auto-completer.
-(define-key python-mode-map "\t" 'ryan-python-tab)
+                    ;; "This automatically indents newlines and attempts to
+                    ;; locate the cursor at the appropriate,
+                    ;; whitespace-sensitive location whenever you press
+                    ;; Return."
+                    (define-key python-mode-map "\C-m" 'newline-and-indent)
+
+                    ;; Don't map <Tab> to YASnippet. In fact, set it to
+                    ;; something we'll never use because we'll only ever
+                    ;; trigger it indirectly.
+                    (setq yas/trigger-key (kbd "C-c <kp-multiply>"))
+                    (yas/initialize)
+
+                    ;; Instead, map <Tab> to Ryan's python auto-completer.
+                    (define-key python-mode-map "\t" 'ryan-python-tab)
+
+                    ;; Not sure what these do...
+                    ;(pabbrev-mode)
+                    ;(abbrev-mode)
+                    )
+         )
+      )
 
 ;; ----------------------------------------------------------------------------
 ;; Environment

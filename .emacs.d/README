@@ -7,3 +7,4 @@ The best OS X port seems to be http://emacsformacosx.com/
 TODO:
 - Configure Viper
 - Use ELPA for package management
+- C-u 0 M-x byte-recompile-directory
