@@ -1,0 +1,578 @@
+2008-02-14  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el: Avoid with-local-quit, not portable to Emacs 21.
+	Reported by Ali Gholami Rudi.
+
+	* pymacs.py (zombie): Correct two bugs.
+	Reported by Ali Gholami Rudi.
+
+2008-02-11  François Pinard  <pinard@iro.umontreal.ca>
+
+	* contrib/Perez: New.
+	Contributed by Fernando Pérez.
+
+	* : Turn dreaded zombies into kind zombies, by default.
+	Reported by Ali Gholami Rudi.
+
+	* : Correctly escape \r.
+	Reported by Ali Gholami Rudi.
+
+2008-02-10  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Add Unicode support, which was needed around some bugs.
+	Reported by Ali Gholami Rudi and Greg Detre.
+
+	* pymacs.py (Let): Stack and code simplified.
+	Reported by Eyal Lotem.
+
+2008-02-08  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Have documentation files created at top-level, not in web/.
+	Reported by Ulrich Müller.
+
+	* pytest: Make it work in Unicode-hostile Python environments.
+	Reported by Neal Becker and Ulrich Müller.
+
+	* : Propagate version from setup.py instead of from Makefile.
+	Reported by Giorgi Giovanni.
+
+2008-02-07  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Handle both old-style and new-style exceptions.
+	Reported by Ali Gholami Rudi and Marco Gidde.
+
+	* : Add an optional, ignored argument to pymacs-schedule-gc,
+	as XEmacs provides one.
+	Reported by Neal Becker and Skip Montanaro.
+
+2008-02-06  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Generate lisp["SYMBOL"] always, never lisp.SYMBOL.
+	This solves the case when SYMBOL is a Python keyword.
+	Reported by Ali Gholami Rudi and Lukasz Pankowski.
+
+	* : pymacs-defun always needs a second argument.
+	Reported by Marco Gidde, Nirmal J. Patel, Sebastian Waschik,
+	Stéphane Rollandin and Syver Enstad.
+
+2008-02-05  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Support bool constants.
+	Reported by Ali Gholami Rudi.
+
+2008-02-03  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs-services: Deleted.  Use "python -c" instead.
+	Reported by Ali Gholami Rudi.
+
+2008-01-17  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Pymacs now under git control.  Some generic changes are reported
+	below all at once, instead of using lots of ChangeLog entries.
+
+	* COPYING: New, this is the latest GPLv2.
+
+	* README, pymacs.rst.in: Documentation rewritten using reST, and
+	extended.  PDF and PostScript files no longer distributed (only
+	available through the Web site).
+	* doc/: Removed.  Everything Allout also removed.
+
+	* scripts/: Removed.
+
+	* : Drop compatibility with Python 1.5.2.  Aim 2.2 and upwards.
+	* : Add or adjust Python coding cookies.
+	* : All files converted from ISO Latin-1 to UTF-8.
+	* : Stick to spaces.  Tabs only for Makefiles and ChangeLogs.
+
+	* contrib/misc-jj/: New.
+	Contributed by Giovanni Giorgi.
+
+	* contrib/nn, contrib/rebox: New place for old examples.
+
+	* Makefile: Ajusted, and extended.  The version number is now
+	propagated from the Makefile instead of from Pymacs/__init__.py.
+	* emacs.el.in: New name for emacs.el.
+
+	* tests/: New validation suite, or some start of it.
+
+2003-06-30  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.22.
+
+	* setup: Simplified a bit, substitutions now made by other means.
+	* Makefile: Simplified, distribution now made by other means.
+
+2003-06-29  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-round-trip): Handle pymacs-trace-transit being
+	a cons cell.
+
+2003-05-19  François Pinard  <pinard@iro.umontreal.ca>
+
+	* setup.py: Install Pymacs.Nn.
+	Reported by Carel Fellinger.
+
+2003-05-18  François Pinard  <pinard@iro.umontreal.ca>
+
+	* setup (main): Correctly process -n option.
+	Reported by Carel Fellinger.
+
+	* scripts: New directory for receiving scripts, so Allout and
+	allout do not conflict on some operating systems ignoring case.
+	* doc/Makefile: Adjusted.
+	Reported by Carel Fellinger.
+
+2003-05-17  François Pinard  <pinard@iro.umontreal.ca>
+
+	* doc: New directory to hold the manual, extracted from README.
+	* README: Simplified.
+	* Allout: New sub-package to help processing documentation.
+	* allout: New script.
+
+	* Pymacs/Rebox: New sub-package to hold only rebox.py.
+	* rebox: Adjusted.
+
+	* Pymacs/Nn: New sub-package for receiving another example.
+
+	* MANIFEST, setup.py: Adjusted.
+
+2003-05-16  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-call): Call pymacs-server-until-reply directly,
+	instead of going through pymacs-apply.  Merely cosmetic, no bug.
+
+2002-12-24  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-print-for-eval): Increase counter while
+	printing vectors.
+	Reported by Marco Gidde.
+
+2002-12-14  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.21.
+
+	* Pymacs/__init__.py (__package__, __version__): New names for
+	package and version.
+	* setup, setup.py, Pymacs/pymacs.py: Adjusted.
+
+	* pymacs.el (pymacs-print-for-eval): In the case of pymacs-python,
+	done was not set to t, causing spurious text when passing opaque
+	Python references back to Python.
+	Reported by Marco Gidde.
+
+2002-11-23  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.20.
+
+	* Pymacs/__init__.py: Integrate version.py.
+	* Pymacs/version.py: Deleted.
+	* setup, setup.py, Pymacs/pymacs.py: Adjusted.
+
+2002-11-15  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-python-reference): Handle when function is
+	defined as a mere variable, or when a function is being advised.
+
+2002-11-14  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.19.
+
+	* Pymacs/pymacs.py (List.__getitem__): Raise IndexError when
+	out of bounds.  This should allow for iterating over a list.
+
+	* README.html: New, merely a template for Webert.
+
+2002-11-13  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-call): New.  Use it whenever adequate.
+
+2002-09-26  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Makefile (publish): Revised.
+
+2002-08-18  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.18.
+
+2002-08-09  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/rebox.py (Emacs_Rebox.find_comment): Correctly spell
+	backward_char, not backward-char.
+
+2002-08-08  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/rebox.py (pymacs_load_hook): Compute the interactions
+	map from the bound methods, instead of from the generic ones.
+
+2002-07-14  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/pymacs.py (Lisp_Interface.__call__): Wrap argument in
+	progn, so lisp() could accept a sequence of expressions.
+
+2002-07-01  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-start-services): Disable undo for *Pymacs*.
+
+2002-06-25  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.17.
+
+	* pymacs.py: Deleted, this was the compatibility module.
+	* setup: Simplified to handle the Emacs Lisp part only.
+	Deleted -P, -p and -x, as well as compile_python.
+
+	* Makefile: Adjusted.  Removed pythondir and pymacsdir.
+	* pymacs.el (pymacs-load-path): Merely preset to nil.
+
+	* setup: Changes for easing installation on Win32.
+	Reported by Syver Enstad.
+
+	* Pymacs/pymacs.py (print_lisp): Produce Emacs strings more
+	explicitly, avoiding hexadecimal sequences generated by Python
+	2.2.  Those hexadecimal sequences confused Emacs when immediately
+	followed by more hexadecimal looking characters.
+
+2002-01-30  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-load-path): Initialise with pymacsdir.
+	* pymacs-services: Do not handle a patched pymacsdir anymore.
+	* setup (complete_install): Set pymacsdir for Lisp, not Python.
+	Do not accept a -b option anymore, do not install pymacs-services,
+	as this is now to be done through setup.py.
+	* Makefile (install): Do not use -b while calling setup.
+
+2002-01-29  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.16.
+
+	* Pymacs/pymacs.py: New file, previously top-level.
+	* pymacs.py: Now a mere bootstrap for Pymacs/pymacs.py.
+	* Pymacs/__init__.py: Define lisp and Let.
+	* Makefile (pythondir): Documentation amended.
+	* setup: Distinguish between empty arguments, which ask for
+	autoconfiguration, and None arguments, which inhibit it.
+	* pymacs-services: Import pymacs from Pymacs.
+
+	* Pymacs/version.py: New file.  Rename pymacs to Pymacs.
+	* setup, setup.py, Pymacs/pymacs.py (main): Use it.
+
+	* setup: Substitute None for pymacsdir instead of the empty string.
+	* pymacs-services: Adjusted.
+
+	* Pymacs/pymacs.py (Let): Have all push_* methods to return self.
+
+2002-01-20  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el, pymacs.el: Replace LISP by Lisp in comments.
+	Reported by Paul Foley.
+
+2002-01-10  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.15.
+
+	* pymacs.el (pymacs-start-services): Properly diagnose a timeout,
+	using the timeout parameter value instead of a fixed string.
+
+2002-01-07  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.14.
+
+	* pymacs.py: Set various __repr__() to yield Python code,
+	containing the corresponding expanded Lisp expression.
+	Set various __str__() to yield mutable Lisp code.
+
+	* pymacs.py (Let): Point markers to nowhere once done with them.
+
+2002-01-06  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.13.
+
+	* pymacs.el (pymacs-load): Imply prefix correctly when the module
+	is part of a package, that is, when its name has at least one dot.
+	* pymacs.py (pymacs_load_helper): Idem.
+
+	* pymacs.py (Protocol): New name for Server.
+
+	* pymacs.py (pymacs_load_helper): Implement pymacs_load_hook.
+
+	* MANIFEST.in, setup.py, Pymacs/__init__.py: New files.
+	* Makefile: Adjusted and simplified.
+
+2002-01-03  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.py (pymacs_load_helper): Handle module within package.
+	Reported by Syver Enstad.
+
+2001-12-18  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.bat: New file.
+
+2001-11-29  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.12.
+
+	* pymacs.el (pymacs-timeout-at-start, pymacs-timeout-at-reply,
+	pymacs-timeout-at-line): New variables.  Use them.
+
+2001-10-17  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.py (pymacs_load_helper): Check the function attribute
+	before the interactions dictionary, for people having Python 2.x.
+	Reported by Carel Fellinger.
+
+	* pymacs.el, pymacs.py, pymacs-services: Add the usual GPL notices.
+	Reported by Richard Stallman.
+
+2001-10-16  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.11.
+
+	* pymacs.el (pymacs-defuns): Accept interaction specifications.
+	(pymacs-defun): Process an interaction specification.
+	(pymacs-python-reference): Adjust for interactive functions.
+	* pymacs.py (pymacs_load_helper): Transmit interaction specifications.
+	Reported by Christian Tanzer and Stefan Reichör.
+
+2001-10-15  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.py (pymacs_load_helper): Accept dashed module names.
+	Reported by Stefan Reichör.
+
+	* pymacs.el (pymacs-python-reference): Rewrite, as it was broken.
+	(documentation): Say it is a Python function, even if no docstring.
+	Reported by Stefan Reichör.
+
+2001-10-12  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.10.
+
+	* pymacs.el (pymacs-print-for-eval): Handle multi-line strings.
+	Reported by Dave Sellars.
+
+	* pymacs.el (pymacs-print-for-eval): Remove string text properties.
+	Reported by Eli Zaretskii.
+
+2001-10-06  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.py (Let.__nonzero__): New.
+
+2001-09-28  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.9.
+
+2001-09-26  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.py (Let.push): Save the value of the symbol, not the
+	symbol itself.
+
+2001-09-25  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.8.
+
+	* pymacs.py (Let): New class.
+
+	* pymacs.el: New variable pymacs-use-hash-tables, set to t when
+	hash tables are available, or nil otherwise.  Use it.  This is so
+	older Emacs would work.
+	Reported by Dirk Vleugels.
+
+2001-09-21  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-defun): Ensure the function is registered
+	at definition, not at call time.  Otherwise, it would never be
+	garbage-collected if it is never called.
+
+2001-09-20  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.7.
+
+	* pymacs.el (pymacs-print-for-apply): Also accept Python objects
+	for a function, instead of requiring strings.
+	(pymacs-defun): Use a Python object, not an explicit string reference.
+	(pymacs-python): Merge pymacs-save-index.
+	(pymacs-save-index): Deleted.
+
+2001-09-18  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-load): Accept a noerror argument.
+
+2001-09-17  François Pinard  <pinard@iro.umontreal.ca>
+
+	* setup: New script.
+	* Makefile: Use it.
+
+	* pymacs.py (Symbol.set): Make things simpler when value is None.
+
+	* pymacs.el (pymacs-print-for-eval): Use Python lists to represent
+	Lisp proper lists and Python tuples to represent Lisp vectors,
+	instead of the other way around.
+	* pymacs.py (pymacs_load_helper, print_lisp): Similar changes.
+	Reported by John Wiegley.
+
+2001-09-16  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.6.
+
+	* pymacs.el (pymacs-start-services, pymacs-print-for-eval,
+	pymacs-round-trip): Protect match data.
+
+2001-09-15  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (documentation): Completed.  Now into service.
+	(pymacs-documentation): Deleted.
+	(pymacs-python-reference): New.
+
+	* pymacs.el (pymacs-print-for-eval): Use car-safe.
+
+2001-09-14  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-print-for-eval): replace-regexp-in-string does
+	not exist in older Emacs versions, so use paraphrases.
+	Reported by Carey Evans.
+
+	* pymacs.el (pymacs-start-services): Set pymacs-transit-buffer
+	permanently only at end of the function, in case anything fails.
+	Reported by Carey Evans.
+
+2001-09-13  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.5.
+
+	* pymacs.el (documentation, pymacs-documentation): New, experimental.
+	* pymacs.py (doc_string): New.
+	(pymacs_load_helper): The result should evaluate to the module.
+
+2001-09-12  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.py (pymacs_load_helper): Use reload instead of __import__
+	whenever the module was already loaded.
+
+	* pymacs.py (pymacs_load_helper): Return t when there is nothing
+	to define, instead of returning a noisy pymacs-defuns noop.
+
+	* Makefile (dist): Update a version-less symbolic link.
+
+	* pymacs.el (pymacs-python, pymacs-defun): New functions.
+	(pymacs-defuns): Use pymacs-defun.
+	* pymacs.py (print_lisp): Use the above.
+
+	* pymacs.py (Server): Free all accumulated Lisp indices, while
+	replying for another reason.  This should decrease overhead.
+	(Lisp.__del__): Delay freeing Lisp, do not free one index at a time.
+	* pymacs.el (pymacs-free-lisp): Free many indices at once.
+
+	* pymacs.el (pymacs-start-services, pymacs-round-trip): Recognise
+	reply even when not at beginning of line.  The Python module may
+	print incomplete lines, unrelated to the communication protocol.
+
+2001-09-11  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.4.
+
+	* pymacs.py (zombie): New, so to get a clear diagnostic.
+	(zombie_python): Link objects to the above function.
+	* pymacs.el (pymacs-terminate-services): Ask for confirmation if
+	any object in Lisp space is still in use on the Python side.
+	* pymacs-test.el (try-lisp): Do not terminate the helper.
+
+	* pymacs.py (Buffer): New class, yet empty for now.
+	* pymacs.el (pymacs-print-for-eval): Use it.
+	Reported by Brian McErlean.
+
+	* pymacs.py (Table): New class.
+	* pymacs.el (pymacs-print-for-eval): Use it.
+	Reported by Brian McErlean.
+
+	* pymacs.py (List, Vector): New classes, split out of Lisp class.
+	* pymacs.el (pymacs-print-for-eval): Use them.
+	(pymacs-lisp-length, pymacs-lisp-ref, pymacs-list-set):	Deleted.
+	Reported by Brian McErlean.
+
+	* pymacs.py (Server.loop): Allow keyboard interrupts through.
+
+	* pymacs.el: Use Lisp instead of Handle.  Rename
+	pymacs-handle-length to pymacs-lisp-length, pymacs-handle-ref to
+	pymacs-lisp-ref, pymacs-handle-set o pymacs-lisp-set,
+	pymacs-allocate-handle to pymacs-allocate-lisp and
+	pymacs-free-handle to pymacs-free-lisp.
+
+	* pymacs.py: Rename Lisp to Lisp_Interface, and Handle to Lisp.
+	Adjust for other renamings above.
+
+	* pymacs.el: Rename pymacs-id to pymacs-python.  Ajust for below.
+	* pymacs.py: Rename handles to python, free_handles to
+	free_python, zombie_handles to zombie_python and allocate_handle
+	to allocate_python.
+
+	* pymacs.el (pymacs-proper-list-p): New function.  Use it
+	everywhere instead of listp, which is not what I thought it was!
+
+	* pymacs.el (pymacs-serve-until-reply): In case of Lisp error,
+	transmit a list of one argument, instead of the argument itself,
+	to print-for-apply.  This was preventing proper diagnostic.
+	Correct a similar error for when expansion is requested.
+
+	* pymacs.el (pymacs-print-for-eval):  Do not transmit a symbol
+	by its name, when it comes from another oblist than the main one.
+
+	* pymacs.py (print_lisp): Transmit pymacs-id as a dotted pair.
+	* pymacs.el (pymacs-print-for-eval):  Adjusted.
+
+	* pymacs.el (pymacs-print-for-eval): Use lisp[], not sym[].
+	Avoid double escaping of the transmitted string in this case.
+	Reported by Brian McErlean.
+
+2001-09-10  François Pinard  <pinard@iro.umontreal.ca>
+
+	* : Release 0.3.
+
+	* pymacs.py (Server.send): Ensure an end of line after reply.
+	* pymacs.el (pymacs-round-trip): Do not add one after Python replies.
+
+	* pymacs.el (pymacs-round-trip): Check for vanishing helper process.
+	(pymacs-serve-until-reply): Get text without catching errors, than
+	eval. Else, protocol errors get reported back to Python.
+	* pymacs.py (Server.ProtocolError): New.  Better than AssertError.
+	If it occurs, get out of program, do not keep returning errors.
+	Reported by Carey Evans.
+
+	* pymacs.el (pymacs-round-trip): If point coincides with marker,
+	just keep it that way as the buffer grows.
+
+	* pymacs.el (pymacs-start-services): If the hash table already
+	exists, inform the Python side of IDs that it should not reuse.
+	Otherwise, old lambdas may randomly refer to new Python objects.
+	(pymacs-terminate-services): Remember Python IDs, do not reset them.
+
+	* pymacs.py (zombie_handles): New.
+
+	* Makefile: Transmit $(pymacsdir) to pymacs-services.
+	* pymacs-services: Handle it.
+
+	* pymacs.py (print_lisp): Process an empty tuple properly.
+	Reported by Carey Evans.
+
+	* pymacs.el (pymacs-start-services): With run-at-time, use `20 20'
+	instead of `t 20', so XEmacs is happy.
+	Reported by Carey Evans.
+
+	* pymacs.el (pymacs-start-services, pymacs-terminate-services):
+	Use `post-gc-hook' if available, instead of using a timer.
+	Reported by Gerd Möllman.
+
+	* pymacs.py (Symbol.value, Symbol.copy): Add argument self.
+	(print_lisp): Quote symbols if quoted=1.
+
+2001-09-09  François Pinard  <pinard@iro.umontreal.ca>
+
+	* pymacs.el (pymacs-defuns): New function.
+	* pymacs.py: Use it.  This should allow faster imports.
+
+	* Makefile, pymacs.el, pymacs.py: Use `(pymacs-version VERSION)',
+	not `(started)'.  Check for version discrepancies.
+
+	* Makefile: A bit more parameterization.
+
+	* : Release 0.2, including ideas and suggestions from others.
+	Reported by Brian McErlean, Carel Fellinger, Cedric Adjih,
+	Marcin Qrczak Kowalczyk, Paul Winkler and Steffen Ries.

@@ -1,0 +1,78 @@
+.. role:: code(strong)
+.. role:: file(literal)
+
+================================
+A simple example of Pymacs usage
+================================
+
+.. contents::
+.. sectnum::
+
+This page documents the :file:`contrib/Winkler/` subdirectory of the
+Pymacs distribution.
+
+The problem
+===========
+
+This problem has been submitted by Paul Winkler, and the text below has
+been reformatted from our email exchanges.
+
+Let's say I have a module, call it :file:`manglers.py`, containing this
+simple python function::
+
+  def break_on_whitespace(some_string):
+      words = some_string.split()
+      return '\n'.join(words)
+
+The goal is telling Emacs about this function so that I can call it on a
+region of text and replace the region with the result of the call.  And
+bind this action to a key, of course, let's say :code:`[f7]`.
+
+The Emacs buffer ought to be handled in some way.  If this is not on the
+Emacs Lisp side, it has to be on the Python side, but we cannot escape
+handling the buffer.  So, there is an equilibrium in the work to do for
+the user, that could be displaced towards Emacs Lisp or towards Python.
+
+Python side
+===========
+
+Here is a first draft for the Python side of the problem::
+
+  from Pymacs import lisp
+
+  def break_on_whitespace():
+      start = lisp.point()
+      end = lisp.mark(True)
+      if start > end:
+          start, end = end, start
+      text = lisp.buffer_substring(start, end)
+      words = text.split()
+      replacement = '\n'.join(words)
+      lisp.delete_region(start, end)
+      lisp.insert(replacement)
+
+  interactions = {break_on_whitespace: ''}
+
+For various stylistic reasons, this could be rewritten into::
+
+  from Pymacs import lisp
+  interactions = {}
+
+  def break_on_whitespace():
+      start, end = lisp.point(), lisp.mark(True)
+      words = lisp.buffer_substring(start, end).split()
+      lisp.delete_region(start, end)
+      lisp.insert('\n'.join(words))
+
+  interactions[break_on_whitespace] = ''
+
+The above relies, in particular, on the fact that for those Emacs Lisp
+functions used here, ``start`` and ``end`` may be given in any order.
+
+Emacs side
+==========
+
+On the Emacs side, one would do::
+
+  (pymacs-load "manglers")
+  (global-set-key [f7] 'manglers-break-on-whitespace)

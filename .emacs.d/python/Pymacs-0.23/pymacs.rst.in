@@ -1,0 +1,1507 @@
+.. role:: code(strong)
+.. role:: file(literal)
+.. role:: var(emphasis)
+
+================================================================
+Pymacs version @VERSION@
+================================================================
+
+---------------------------
+Extending Emacs with Python
+---------------------------
+
+  :Author: François Pinard
+  :Email: pinard@iro.umontreal.ca
+  :Copyright: © Progiciels Bourbeau-Pinard inc., Montréal 2003, 2008
+
+.. contents::
+.. sectnum::
+
+Introduction
+============
+
+What is Pymacs?
+---------------
+
+Pymacs is a powerful tool which, once started from Emacs, allows two-way
+communication between Emacs Lisp and Python.  Pymacs aims to employ
+Python as an extension language for Emacs rather than the other way
+around, and this asymmetry is reflected in some design choices.  Within
+Emacs Lisp code, one may load and use Python modules.  Python functions
+may themselves use Emacs services, and handle Emacs Lisp objects kept in
+Emacs Lisp space.
+
+The goals are to write *naturally* in both languages, debug with ease,
+fall back gracefully on errors, and allow full cross-recursion.
+
+It is very easy to install Pymacs, as neither Emacs nor Python need to
+be compiled nor relinked.  Emacs merely starts Python as a subprocess,
+and Pymacs implements a communication protocol between both processes.
+
+Report problems, documentation flaws, or suggestions to François Pinard:
+
+  + mailto:pinard@iro.umontreal.ca
+
+Documentation and examples
+--------------------------
+
+The main Pymacs site conveys the Pymacs documentation (you are reading
+its Pymacs manual right now) and distributions:
+
+  + http://pymacs.progiciels-bpi.ca
+
+I expect average Pymacs users to have a deeper knowledge of Python
+than Emacs Lisp.  People have widely varying approaches in writing
+:file:`.emacs` files, as far as Pymacs is concerned:
+
+  + Some can go and write almost no Emacs Lisp, yet a bit is still
+    necessary for establishing a few loading hooks.  For many simple
+    needs, one can do a lot without having to learn much.
+
+  + On the other hand, for more sophisticated usages, people cannot
+    really escape knowing the Emacs Lisp API to some extent, because they
+    should be programming-wise familiarity with what is a buffer, a point,
+    a mark, etc. and what are the allowed operations on those.
+
+While Pymacs examples are no substitute for a careful reading of the
+Pymacs manual, the contemplation and study of others' nice works may
+well enligthen and deepen your understanding.  A few examples are
+included within the Pymacs distribution, each as a subdirectory of the
+:file:`contrib/` directory, and each haviing its own :file:`README`
+file.  These are listed below, easiest examples first:
+
+  + Paul Winkler's example
+
+    + http://pymacs.progiciels-bpi.ca/Winkler.html
+
+  + Fernando Pérez' examples
+
+    + http://pymacs.progiciels-bpi.ca/Perez.html
+    + http://pymacs.progiciels-bpi.ca/contrib/Perez/
+
+  + Giovanni Giorgi's files
+
+    + http://pymacs.progiciels-bpi.ca/Giorgi.html
+    + http://pymacs.progiciels-bpi.ca/contrib/Giorgi/
+
+  + A reformatter for boxed comments
+
+    + http://pymacs.progiciels-bpi.ca/rebox.html
+    + http://pymacs.progiciels-bpi.ca/contrib/rebox/
+
+A few more substantial examples of Pymacs usage have been brought to my
+attention, and are available externally (listed here in no particular
+order):
+
+  + pymdev -- A Python Emacs Development Module:
+
+    + http://www.toolness.com/pymdev/
+
+  + Ropemacs -- Features like refactoring and code-assists:
+
+    + http://rope.sf.net/
+    + http://rope.sf.net/hg/rpymacs
+
+  + Bicycle Repair Man -- A Refactoring Tool for Python:
+
+    + http://bicyclerepair.sourceforge.net/
+
+  + Emacs Freex -- A personal wiki on steroids:
+
+    + http://www.princeton.edu/%7Egdetre/software/freex/docs/index.html
+
+The QaTeX project was influenced by Pymacs, according to its author:
+
+  + http://qatex.sourceforge.net/
+  + http://www.pytex.org/doc/index.html#eurotex2005
+
+Other resources
+---------------
+
+You are welcome writing to or joining the following mailing list, where
+there are a few people around likely to give you feedback:
+
+  + mailto:pymacs-devel@googlegroups.com
+
+If you have no fear of wider crowds :-), there still is:
+
+  + mailto:python-list@python.org
+
+There are other Web sites specifically about Pymacs. `Giovanni Giorgi`__
+has one of them:
+
+  + http://blog.objectsroot.com/projects/pymacs/
+
+__ http://blog.objectsroot.com/
+
+There is also `revised pymacs`, part of the Ropemacs project:
+
+  + http://rope.sourceforge.net/ropemacs.html
+
+Installation
+============
+
+Select Emacs and Python
+-----------------------
+
+The environment variable ``PYMACS_PYTHON`` is usually left unset or
+empty, in which case ``python`` is implied.  It has the purpose of
+naming the Python interpreter program to be called for starting the
+Pymacs helper.  It may be set to give the full path of the executable if
+the Python program exists at some location outside the program search
+path.  It may also be given when the interpreter name is different,
+for exemple when the Python version is part of the program name.
+
+The similar environment variable ``PYMACS_EMACS`` is usually left unset
+or empty, in which case ``emacs`` is implied.  It has the purpose of
+naming the Emacs editor, yet this is only meaningful for the validation
+(see next section).  For normal Pymacs usage, Emacs is launched by the
+user long before Pymacs is itself started, and consequently, there
+is absolutely no need to tell Pymacs which Emacs is needed.  For the
+validation suite however, it may be set to give the full path of the
+executable if the Emacs program exists at some location outside the
+program search path.  It may also be given when the editor name is
+different, for example when the Emacs version is part of the program
+name, or when this is a different editor (like the value ``xemacs`` to
+call XEmacs).
+
+Check if Pymacs would work
+--------------------------
+
+To know, before installing Pymacs, if it would work on your system,
+try the validation suite by running ``make check``.  The suite is
+fairly elementary, but nevertheless, it is able to detect some common
+show stoppers.  As a convenience for those who want to quickly try
+various Emacs and Python combinations, ``make check emacs=SOME_EMACS
+python=SOME_PYTHON`` temporarily overrides the environment variables
+``PYMACS_EMACS`` and ``PYMACS_PYTHON``.  For example, ``make check
+emacs=xemacs`` runs the validation suite using ``xemacs`` for an editor.
+
+The remaining of this section may be safely be skipped, for mere Pymacs
+installation.
+
+I did not base the validation suite on Junit (the Python unit testing
+framework is a re-implementation of it), but on Codespeak's pylib
+:file:`py.test`, which is much simpler, and still very powerful.  The
+:code:`pylib` project is driven by Holge Kregel, but attracted some
+Python brains, like Armin Rigo (known for Psyco, among other things --
+I think his :code:`lsprof` has also been added to Python 2.5 under the
+name :code:`cProfile`).  This gang addresses overdone/heavy methods in
+Python, and do them better.  Even :file:`py.test` is a bit more complex
+that I would want, and has (or at least had) flaws on the Unicode side,
+so I rewrote my own, as a simple single file.  I merely translated it
+from French to English, to make it more distributable within Pymacs.
+
+It has not been fruitful, trying to use Emacs stdin and stdout for
+communicating expressions to evaluate and getting back results from
+within the validation suite.  After some fight, I reluctantly put this
+avenue aside.  Currently, the suite writes problems in files, for Emacs
+to read, and Emacs writes replies in files, for the suite to check.
+Busy waiting (with small sleep added in the loops) is used on both
+sides.  This is all too heavy, and it slows down the suite.  Hopefully,
+the suite is not run often, this is not a real problem.
+
+Install the Pymacs proper
+-------------------------
+
+Pymacs is a small package.  Putting the documentation and administrative
+files aside, there is one Python file and one Emacs Lisp file to it, to
+be installed in turn.  Always start with the Python file.
+
++ For the Python part
+
+  At the top-level of the Pymacs distribution, then execute ``python
+  setup.py install``.  First, the script copies a few source files while
+  presetting the version strings in them.  Second, it installs the
+  Python package through the Python standard Distutils tool.  To get
+  an option reminder, do ``python setup.py install --help``.  Consult
+  the Distutils documentation if you need more information about this.
+
+  That's all to it.  To check that :file:`pymacs.py` is properly
+  installed, start an interactive Python session and type ``from Pymacs
+  import lisp``: you should not receive any error.
+
++ For the Emacs part
+
+  This is usually done by hand now.  First select some directory along
+  the list kept in your Emacs :code:`load-path`, for which you have
+  write access, and copy file :file:`pymacs.el` in that directory.
+
+  If you want speed, you should ideally byte-compile this file.  To do
+  so, go to that directory, launch Emacs, then give the command ``M-x
+  byte-compile-file RET pymacs.el RET``.  If for some reason you intend
+  to such commands often, you could create a little script to do so.
+  Here is an example of such a script, assuming here that you use Emacs
+  and want to install in directory :file:`~/share/emacs/lisp/`::
+
+    #!/bin/bash
+    cp pymacs.el ~/share/emacs/lisp/
+    emacs -batch -eval '(byte-compile-file "~/share/emacs/lisp/pymacs.el")'
+
+  You should be done now.  To check that :file:`pymacs.el` is properly
+  installed, return to your usual directories, start Emacs and give
+  it the command ``M-x load-library RET pymacs RET``: you should not
+  receive any error.
+
+Some features from previous Pymacs releases have been dropped:
+
++ There used to be a script for installing the Emacs Lisp file.  As it
+  was difficult to get it right in all circumstances; the script grew
+  an interactive mode and lot of options.  This is just not worth the
+  complexity, so this script is now gone.
+
++ Examples were all installed automatically, but at least for some of
+  them, this was more pollution than help.  You may browse the contents of
+  the :file:`contrib/` directory to learn about available examples.
+
+Prepare your :file:`.emacs` file
+--------------------------------
+
+The :file:`.emacs` file is not given in the distribution, you likely
+have one already in your home directory.  You need to add these lines::
+
+  (autoload 'pymacs-apply "pymacs")
+  (autoload 'pymacs-call "pymacs")
+  (autoload 'pymacs-eval "pymacs" nil t)
+  (autoload 'pymacs-exec "pymacs" nil t)
+  (autoload 'pymacs-load "pymacs" nil t)
+  ;;(eval-after-load "pymacs"
+  ;;  '(add-to-list 'pymacs-load-path YOUR-PYMACS-DIRECTORY"))
+
+If you plan to use a special directory to hold your own Pymacs code in
+Python, which should be searched prior to the usual Python import search
+path, then uncomment the last two lines (by removing the semi-colons)
+and replace :var:`YOUR-PYMACS-DIRECTORY` by the name of your special
+directory.  If the file :file:`~/.emacs` does not exist, merely create
+it with the above lines.  You are now all set to use Pymacs.
+
+To check this, start a fresh Emacs session, and type ``M-x
+pymacs-eval RET``.  Emacs should prompt you for a Python expression.
+Try ``repr(2L**111) RET``.  The mini buffer should display
+`"2596148429267413814265248164610048L"`. ``M-x pymacs-load RET`` should
+prompt you for a Python module name.  Reply ``os RET RET`` (the second
+``RET`` is for accepting the default prefix.  This should have the
+effect of importing the Python :code:`os` module within Emacs.  Typing
+``M-: (os-getcwd) RET`` should echo the current directory in the message
+buffer, as returned by the :code:`os.getcwd` Python function.
+
+Porting and caveats
+-------------------
+
+Pymacs has been initially developed on Linux, Python 1.5.2, and Emacs
+20, and currently on Python 2.5, Emacs 22.1 and XEmacs 21.5.  It is
+expected to work out of the box on many flavours of Unix, MS Windows and
+Mac OSX, and also on many version of Python, Emacs and XEmacs.
+
+From Pymacs 0.23 and upwards, Python 2.2 or better is likely needed,
+and for the Pymacs proper, I rely on testers or users for portability
+issues.  However, the validation suite itself requires Python 2.4 or
+better, someone might choose to contribute the back porting.
+
+Pymacs uses Emacs weak hash tables.  It can run without them, but then,
+complex Python objects transmitted to Emacs will tie Python memory
+forever.  It should not be a practical problem in most simple cases.
+Some later versions of Emacs 20 silently create ordinary tables when
+asked for weak hash tables.  Older Emacses do not have hash tables.
+
+The :file:`Pymacs` Python package holds a single :file:`pymacs.py` file
+(and the mandatory :file:`__init__.py`).  Programmers might elect, but
+are not required, to install their own Pymacs applications either as
+sub-modules or sub-packages on :file:`Pymacs`.
+
+Emacs Lisp structures and Python objects
+========================================
+
+Conversions
+-----------
+
+Whenever Emacs Lisp calls Python functions giving them arguments, these
+arguments are Emacs Lisp structures that should be converted into Python
+objects in some way.  Conversely, whenever Python calls Emacs Lisp
+functions, the arguments are Python objects that should be received
+as Emacs Lisp structures.  We need some conventions for doing such
+conversions.
+
+Conversions generally transmit mutable Emacs Lisp structures as mutable
+objects on the Python side, in such a way that transforming the object
+in Python will effectively transform the structure on the Emacs Lisp
+side (strings are handled a bit specially however, see below).  The
+other way around, Python objects transmitted to Emacs Lisp often loose
+their mutability, so transforming the Emacs Lisp structure is not
+reflected on the Python side.
+
+Pymacs sticks to standard Emacs Lisp, it explicitly avoids various Emacs
+Lisp extensions.  One goal for many Pymacs users is taking some distance
+from Emacs Lisp, so Pymacs is not overly pushing users deeper into it.
+
+Simple objects
+--------------
+
+Emacs Lisp :code:`nil` and the equivalent Emacs Lisp ``()`` yield Python
+:code:`None`.  Python :code:`None`, Python :code:`False` and the Python
+empty list ``[]`` are returned as :code:`nil` in Emacs Lisp.  Notice
+the assymetry, in that three different Python objects are mapped into
+a single Emacs Lisp object.  So, neither :code:`False` nor ``[]`` are
+likely produced by automatic conversions from Emacs Lisp to Python.
+
+Emacs Lisp :code:`t` yields Python :code:`True`.  Python :code:`True` is
+returned as :code:`t` in Emacs Lisp.
+
+Emacs Lisp numbers, either integer or floating, are converted in
+equivalent Python numbers.  Emacs Lisp characters are really numbers
+and yield Python numbers.  In the other direction, Python numbers are
+converted into Emacs Lisp numbers, with the exception of long Python
+integers and complex numbers.
+
+Emacs Lisp strings are usually converted into equivalent Python strings.
+As Python strings do not have text properties, these are not reflected.
+This may be changed by setting the :code:`pymacs-mutable-strings`
+option: if this variable is not :code:`nil`, Emacs Lisp strings are
+then transmitted opaquely.  Python strings are always converted into
+Emacs Lisp strings.  Unicode strings are produced on the Python side for
+Emacs Lisp multi-byte strings, but only when they do not fit in ASCII,
+otherwise Python narrow strings are produced.  Conversely, Emacs Lisp
+multi-byte strings are produced for Python Unicode strings, but only
+when they do not fit ASCII, otherwise Emacs Lisp uni-byte strings are
+produced.  Currently, Pymacs behaviour is undefined for users wandering
+outside the limits of Emacs' :code:`utf-8` coding system.
+
+Emacs Lisp symbols yield ``lisp[STRING]`` notations on the Python
+side, where :var:`STRING` names the symbol.  In the other direction,
+Python ``lisp[STRING]`` corresponds to an Emacs Lisp symbol printed
+with that :var:`STRING` which, of course, should then be a valid Emacs
+Lisp symbol name.  As a convenience, ``lisp.SYMBOL`` on the Python side
+yields an Emacs Lisp symbol with underscores replaced with hyphens;
+this convention is welcome, as Emacs Lisp programmers commonly prefer
+using dashes, where Python programmers use underlines.  Of course, this
+``lisp.SYMBOL`` notation is only usable when the :var:`SYMBOL` is a
+valid Python identifier, while not being a Python keyword.
+
+Sequences
+---------
+
+The case of strings has been discussed in the previous section.
+
+Proper Emacs Lisp lists, those for which the :code:`cdr` of last cell
+is :code:`nil`, are normally transmitted opaquely to Python.  If
+:code:`pymacs-forget-mutability` is set, or if Python later asks for
+these to be expanded, proper Emacs Lisp lists get converted into Python
+lists, if we except the empty list, which is always converted as Python
+:code:`None`.  In the other direction, Python lists are always converted
+into proper Emacs Lisp lists.
+
+Emacs Lisp vectors are normally transmitted opaquely to Python.
+However, if :code:`pymacs-forget-mutability` is set, or if Python
+later asks for these to be expanded, Emacs Lisp vectors get converted
+into Python tuples.  In the other direction, Python tuples are always
+converted into Emacs Lisp vectors.
+
+Remember the rule: `Round parentheses correspond to square brackets!`.
+It works for lists, vectors, tuples, seen from either Emacs Lisp or
+Python.
+
+The above choices were debatable.  Since Emacs Lisp proper lists
+and Python lists are the bread-and-butter of algorithms modifying
+structures, at least in my experience, I guess they are more naturally
+mapped into one another, this spares many casts in practice.  While in
+Python, the most usual idiom for growing lists is appending to their
+end, the most usual idiom in Emacs Lisp to grow a list is by cons'ing
+new items at its beginning::
+
+  (setq accumulator (cons 'new-item accumulator))
+
+or more simply::
+
+  (push 'new-item accumulator)
+
+So, in case speed is especially important and many modifications
+happen in a row on the same side, while order of elements ought to
+be preserved, some ``(nreverse ...)`` on the Emacs Lisp side or
+``.reverse()`` on the Python side side might be needed.  Surely, proper
+lists in Emacs Lisp and lists in Python are the normal structure for
+which length is easily modified.
+
+We cannot so easily change the size of a vector, the same as it is a bit
+more of a stunt to *modify* a tuple.  The shape of these objects is
+fixed.  Mapping vectors to tuples, which is admittedly strange, will
+only be done if the Python side requests an expanded copy, otherwise an
+opaque Emacs Lisp object is seen in Python.  In the other direction,
+whenever an Emacs Lisp vector is needed, one has to write
+``tuple(python_list)`` while transmitting the object.  Such
+transmissions are most probably to be unusual, as people are not going
+to blindly transmit whole big structures back and forth between Emacs
+and Python, they would rather do it once in a while only, and do only
+local modifications afterwards.  The infrequent casting to :code:`tuple`
+for getting an Emacs Lisp vector seems to suggest that we did a
+reasonable compromise.
+
+In Python, both tuples and lists have O(1) access, so there is no real
+speed consideration there.  Emacs Lisp is different: vectors have
+O(1) access while lists have O(N) access.  The rigidity of Emacs Lisp
+vectors is such that people do not resort to vectors unless there
+is a speed issue, so in real Emacs Lisp practice, vectors are used
+rather parsimoniously.  So much, in fact, that Emacs Lisp vectors are
+overloaded for what they are not meant: for example, very small vectors
+are used to represent X events in key-maps, programmers only want to
+test vectors for their type, or users just like bracketed syntax.  The
+speed of access is hardly an issue then.
+
+Opaque objects
+--------------
+
+Emacs Lisp handles
+,,,,,,,,,,,,,,,,,,
+
+When a Python function is called from Emacs Lisp, the function arguments
+have already been converted to Python types from Emacs Lisp types and
+the function result is going to be converted back to Emacs Lisp.
+
+Several Emacs Lisp objects do not have Python equivalents, like for
+Emacs windows, buffers, markers, overlays, etc.  It is nevertheless
+useful to pass them to Python functions, hoping that these Python
+functions will *operate* on these Emacs Lisp objects.  Of course, the
+Python side may not itself modify such objects, it has to call for
+Emacs services to do so.  Emacs Lisp handles are a mean to ease this
+communication.
+
+Whenever an Emacs Lisp object may not be converted to a Python object,
+an Emacs Lisp handle is created and used instead.  Whenever that Emacs
+Lisp handle is returned into Emacs Lisp from a Python function, or
+is used as an argument to an Emacs Lisp function from Python, the
+original Emacs Lisp object behind the Emacs Lisp handle is automatically
+retrieved.
+
+Emacs Lisp handles are either instances of the internal :code:`Lisp`
+class, or of one of its subclasses.  If :var:`OBJECT` is an Emacs
+Lisp handle, and if the underlying Emacs Lisp object is an Emacs
+Lisp sequence, then whenever ``OBJECT[INDEX]``, ``OBJECT[INDEX] =
+VALUE`` and ``len(OBJECT)`` are meaningful, these may be used to
+fetch or alter an element of the sequence directly in Emacs Lisp
+space.  Also, if :var:`OBJECT` corresponds to an Emacs Lisp function,
+``OBJECT(ARGUMENTS)`` may be used to apply the Emacs Lisp function over
+the given arguments.  Since arguments have been evaluated the Python
+way on the Python side, it would be conceptual overkill evaluating them
+again the Emacs Lisp way on the Emacs Lisp side, so Pymacs manage to
+quote arguments for defeating Emacs Lisp evaluation.  The same logic
+applies the other way around.
+
+Emacs Lisp handles have a ``value()`` method, which merely returns
+self.  They also have a ``copy()`` method, which tries to *open
+the box* if possible.  Emacs Lisp proper lists are turned into Python
+lists, Emacs Lisp vectors are turned into Python tuples.  Then,
+modifying the structure of the copy on the Python side has no effect on
+the Emacs Lisp side.
+
+For Emacs Lisp handles, ``str()`` returns an Emacs Lisp representation
+of the handle which should be :code:`eq` to the original object if
+read back and evaluated in Emacs Lisp. ``repr()`` returns a Python
+representation of the expanded Emacs Lisp object.  If that Emacs Lisp
+object has an Emacs Lisp representation which Emacs Lisp could read
+back, then ``repr()`` value is such that it could be read back and
+evaluated in Python as well, this would result in another object which
+is :code:`equal` to the original, but not necessarily :code:`eq`.
+
+Python handles
+,,,,,,,,,,,,,,
+
+The same as Emacs Lisp handles are useful for handling Emacs Lisp
+objects on the Python side, Python handles are useful for handling
+Python objects on the Emacs Lisp side.
+
+Many Python objects do not have direct Emacs Lisp equivalents, including
+long integers, complex numbers, modules, classes, instances and surely a
+lot of others.  When such are being transmitted to the Emacs Lisp side,
+Pymacs use Python handles.  These are automatically recovered into the
+original Python objects whenever transmitted back to Python, either as
+arguments to a Python function, as the Python function itself, or as the
+return value of an Emacs Lisp function called from Python.
+
+The objects represented by these Python handles may be inspected or
+modified using the basic library of Python functions.  For example, in::
+
+  (pymacs-exec "import re")
+  (setq matcher (pymacs-eval "re.compile('PATTERN').match"))
+  (pymacs-call matcher ARGUMENT)
+
+the :code:`setq` line above could be decomposed into::
+
+  (setq compiled (pymacs-eval "re.compile('PATTERN')")
+        matcher (pymacs-call "getattr" compiled "match"))
+
+This example shows that one may use :code:`pymacs-call` with
+:code:`getattr` as the function, to get a wanted attribute for a Python
+object.
+
+Usage on the Emacs Lisp side
+============================
+
+:code:`pymacs-exec`
+-------------------
+
+Function ``(pymacs-exec TEXT)`` gets :var:`TEXT` executed as a Python
+statement, and its value is always :code:`nil`.  So, this function may
+only be useful because of its possible side effects on the Python side.
+
+This function may also be called interactively::
+
+  M-x pymacs-exec RET TEXT RET
+
+:code:`pymacs-eval`
+-------------------
+
+Function ``(pymacs-eval TEXT)`` gets :var:`TEXT` evaluated as a Python
+expression, and returns the value of that expression converted back to
+Emacs Lisp.
+
+This function may also be called interactively::
+
+  M-x pymacs-eval RET TEXT RET
+
+:code:`pymacs-call`
+-------------------
+
+Function ``(pymacs-call FUNCTION ARGUMENT...)`` will get Python to
+apply the given :var:`FUNCTION` over zero or more :var:`ARGUMENT`.
+:var:`FUNCTION` is either a string holding Python source code for a
+function (like a mere name, or even an expression), or else, a Python
+handle previously received from Python, and hopefully holding a callable
+Python object.  Each :var:`ARGUMENT` gets separately converted to Python
+before the function is called. :code:`pymacs-call` returns the resulting
+value of the function call, converted back to Emacs Lisp.
+
+:code:`pymacs-apply`
+--------------------
+
+Function ``(pymacs-apply FUNCTION ARGUMENTS)`` will get Python to
+apply the given :var:`FUNCTION` over the given :var:`ARGUMENTS`.
+:var:`ARGUMENTS` is a list containing all arguments, or :code:`nil`
+if there is none.  Besides arguments being bundled together
+instead of given separately, the function acts pretty much like
+:code:`pymacs-call`.
+
+:code:`pymacs-load`
+-------------------
+
+Function ``(pymacs-load MODULE PREFIX)`` imports the Python
+:var:`module` into Emacs Lisp space. :var:`MODULE` is the name of the
+file containing the module, without any :file:`.py` or :file:`.pyc`
+extension.  If the directory part is omitted in :var:`MODULE`, the
+module will be looked into the current Python search path.  Dot notation
+may be used when the module is part of a package.  Each top-level
+function in the module produces a trampoline function in Emacs Lisp
+having the same name, except that underlines in Python names are
+turned into dashes in Emacs Lisp, and that :var:`PREFIX` is uniformly
+added before the Emacs Lisp name (as a way to avoid name clashes).
+:var:`PREFIX` may be omitted, in which case it defaults to base name
+of :var:`MODULE` with underlines turned into dashes, and followed by a
+dash.
+
+Note that :code:`pymacs-load` has the effect of declaring the module
+variables and methods the Emacs Lisp side, but it does *not* declare
+anything on the Python side.  Of course, Python imports the module
+before making it available for Emacs, but there is no Pymacs ready
+variable on the Python side holding that module.  If you need to import
+:var:`MODULE` in a variable on the Python side, the proper incantation
+is ``(pymacs-exec "import MODULE")``.  And of course, that this latter
+statement does not declare anything on the Emacs Lisp side.
+
+Whenever :code:`pymacs_load_hook` is defined in the loaded
+Python module, :code:`pymacs-load` calls it without arguments,
+but before creating the Emacs view for that module.  So, the
+:code:`pymacs_load_hook` function may create new definitions or even add
+:code:`interaction` attributes to functions.
+
+The return value of a successful :code:`pymacs-load` is the module
+object.  An optional third argument, :var:`noerror`, when given and not
+:code:`nil`, will have :code:`pymacs-load` to return :code:`nil` instead
+of raising an error, if the Python module could not be found.
+
+When later calling one of these trampoline functions, all provided
+arguments are converted to Python and transmitted, and the function
+return value is later converted back to Emacs Lisp.  It is left to
+the Python side to check for argument consistency.  However, for an
+interactive function, the interaction specification drives some checking
+on the Emacs Lisp side.  Currently, there is no provision for collecting
+keyword arguments in Emacs Lisp.
+
+This function may also be called interactively::
+
+  M-x pymacs-load RET MODULE RET PREFIX RET
+
+Expected usage
+--------------
+
+We do not expect that :code:`pymacs-exec`, :code:`pymacs-eval`,
+:code:`pymacs-call` or :code:`pymacs-apply` will be much used, if
+ever, in most Pymacs applications.  In practice, the Emacs Lisp side
+of a Pymacs application might call :code:`pymacs-load` a few times for
+linking into the Python modules, with the indirect effect of defining
+trampoline functions for these modules on the Emacs Lisp side, which can
+later be called like usual Emacs Lisp functions.
+
+These imported functions are usually those which are of interest for the
+user, and the preferred way to call Python services with Pymacs.
+
+Special Emacs Lisp variables
+----------------------------
+
+Users could alter the inner working of Pymacs through a few variables,
+these are all documented here.  Except for :code:`pymacs-load-path`,
+which should be set before calling any Pymacs function, the value of
+these variables can be changed at any time.
+
+pymacs-load-path
+,,,,,,,,,,,,,,,,
+
+Users might want to use special directories for holding their Python
+modules, when these modules are meant to be used from Emacs.  Best is to
+preset :code:`pymacs-load-path`, :code:`nil` by default, to a list of
+these directory names.  (Tilde expansions and such occur automatically.)
+
+Here is how it works.  The first time Pymacs is needed from Emacs,
+a Pymacs helper is automatically started as an Emacs subprocess, and
+given as arguments all strings in the :code:`pymacs-load-path` list.
+These arguments are added at the beginning of :code:`sys.path`,
+or moved at the beginning if they were already on :code:`sys.path`.
+So in practice, nothing is removed from :code:`sys.path`.
+
+pymacs-trace-transit
+,,,,,,,,,,,,,,,,,,,,
+
+The :code:`*Pymacs*` buffer, within Emacs, holds a trace of transactions
+between Emacs and Python.  When :code:`pymacs-trace-transit` is
+:code:`nil`, the buffer only holds the last bi-directional transaction
+(a request and a reply).  In this case, it gets erased before each and
+every transaction.  If that variable is :code:`t`, all transactions are
+kept.  This could be useful for debugging, but the drawback is that
+this buffer could grow big over time, to the point of diminishing Emacs
+performance.  As a compromise, that variable may also be a cons cell
+of integers ``(KEEP . LIMIT)``, in which case the buffer is reduced to
+approximately :var:`KEEP` bytes whenever its size exceeds :var:`LIMIT`
+bytes, by deleting an integral number of lines from its beginning.  The
+default setting for :code:`pymacs-trace-transit` is ``(5000 . 30000)``.
+
+pymacs-forget-mutability
+,,,,,,,,,,,,,,,,,,,,,,,,
+
+The default behaviour of Pymacs is to transmit Emacs Lisp objects to
+Python in such a way that they are fully modifiable from the Python
+side, would it mean triggering Emacs Lisp functions to act on them.
+When :code:`pymacs-forget-mutability` is not :code:`nil`, the behaviour
+is changed, and the flexibility is lost.  Pymacs then tries to expand
+proper lists and vectors as full copies when transmitting them on the
+Python side.  This variable, seen as a user setting, is best left to
+:code:`nil`.  It may be temporarily overridden within some functions,
+when deemed useful.
+
+There is no corresponding variable from objects transmitted to Emacs
+from Python.  Pymacs automatically expands what gets transmitted.
+Mutability is preserved only as a side-effect of not having a natural
+Emacs Lisp representation for the Python object.  This asymmetry is on
+purpose, yet debatable.  Maybe Pymacs could have a variable telling that
+mutability is important for Python objects?  That would give Pymacs
+users the capability of restoring the symmetry somewhat, yet so far, in
+our experience, this has never been needed.
+
+pymacs-mutable-strings
+,,,,,,,,,,,,,,,,,,,,,,
+
+Strictly speaking, Emacs Lisp strings are mutable. Yet, it does not
+come naturally to a Python programmer to modify a string *in-place*, as
+Python strings are never mutable.  When :code:`pymacs-mutable-strings`
+is :code:`nil`, which is the default setting, Emacs Lisp strings are
+transmitted to Python as Python strings, and so, loose their mutability.
+Moreover, text properties are not reflected on the Python side.  But
+if that variable is not :code:`nil`, Emacs Lisp strings are rather
+passed as Emacs Lisp handles.  This variable is ignored whenever
+:code:`pymacs-forget-mutability` is set.
+
+Timeout variables
+,,,,,,,,,,,,,,,,,
+
+Emacs needs to protect itself a bit, in case the Pymacs service program,
+which handles the Python side of requests, would not start correctly, or
+maybe later die unexpectedly.  So, whenever Emacs reads data coming from
+that program, it sets a time limit, and take some action whenever that
+time limit expires.  All times are expressed in seconds.
+
+The :code:`pymacs-timeout-at-start` variable defaults to 30 seconds,
+this time should only be increased if a given machine is so heavily
+loaded that the Pymacs service program has not enough of 30 seconds to
+start, in which case Pymacs refuses to work, with an appropriate message
+in the mini buffer.
+
+The two remaining timeout variables almost never need to be changed
+in practice.  When Emacs is expecting a reply from Python, it might
+repeatedly check the status of the Pymacs service program when that
+reply is not received fast enough, just to make sure that this program
+did not die.  The :code:`pymacs-timeout-at-reply` variable, which
+defaults to 5, says how many seconds to wait without checking, while
+expecting the first line of a reply.  The :code:`pymacs-timeout-at-line`
+variable, which defaults to 2, says how many seconds to wait without
+checking, while expecting a line of the reply after the first.
+
+pymacs-dreadful-zombies
+,,,,,,,,,,,,,,,,,,,,,,,
+
+When the Pymacs helper dies, all useful Python objects it might contain
+also die with it.  However, if the death occurs unexpectedly, instead of
+normally at the end of the Emacs session, there might now exist dangling
+references in Emacs Lisp space towards those vanished Python objects.
+
+Pymacs could not do much without a Pymacs helper, and likely, a new
+one will soon be created within the same Emacs session, and brand new
+Python objects may be created within that new helper.  Now, and this is
+a bit technical, all references are transmitted in form of object slot
+numbers.  As a consequence, the new Pymacs helper should be careful at
+never allocating a new Python object using a slot number of a useful
+vanished object, as this might possibly create fatal confusion.
+
+There is not enough information for the new Pymacs helper to recreate
+the useful objects which disappeared.  However, there is enough
+machinery to recover all their slot numbers, and then, all these slots
+are initialized with so-called *zombies*.  If Emacs later calls a
+vanished Python object, this merely awakes its zombie, which will then
+make some noise, then fall asleep again.  The noise has the form of a
+diagnostic within the ``*Messages*`` buffer, sometimes visible in the
+mini-buffer as well when the mini-buffer is not simultaneously used for
+some other purpose.
+
+Zombies get more dreadful if :code:`pymacs-dreadful-zombies` is set to a
+non-:code:`nil` value.  In this case, calling a vanished Python object
+raises an error that will eventually interrupt the current computation.
+Such a behaviour might be useful for debugging purposes, or for making
+sure that no call to a vanished Python object goes unnoticed.
+
+In previous Pymacs releases, zombies were always dreadful, under the
+assumption that calling a vanished object is a real error.  However, it
+could cause irritation in some circumstances, like when associated with
+frequently triggered Emacs Lisp hook functions.  That's why that, by
+default, zombies have been finally turned into more innocuous beings!
+
+Usage on the Python side
+========================
+
+Python setup
+------------
+
+For Python modules meant to be used from Emacs and which receive nothing
+but Emacs :code:`nil`, numbers or strings, or return nothing but Python
+:code:`None`, numbers or strings, then Pymacs requires little or no
+setup.  Otherwise, use ``from Pymacs import lisp`` at the start of your
+module.  If you need more Pymacs features, like the :code:`Let` class,
+then write ``from Pymacs import lisp, Let``.
+
+The Pymacs helper runs Python code to serve the Emacs side, and it is
+blocked waiting until Emacs sends a request.  Until the Pymacs helper
+returns a reply, Emacs is blocked in turn, yet fully listening to serve
+eventual Python sub-requests, etc.  So, either Emacs or the Pymacs
+helper is active at a given instant, but never both at once.
+
+Unless Emacs has sent a request to the Pymacs helper and is expecting
+a reply, it is just not listening to receive Python requests.  So, any
+other Python thread may not asynchronously use Pymacs to get Emacs
+services.  The design of the Python application should be such that the
+communication is always be channelled from the main Python thread.
+
+When Pymacs starts, all process signals are inhibited on the Python
+side.  Yet, :code:`SIGINT` gets re-enabled while running user functions.
+If the user elects to reactivate some other signal in her Python code,
+she should do so as to not damage or severe the communication protocol.
+
+Emacs Lisp symbols
+------------------
+
+:code:`lisp` is a special object which has useful built-in magic.  Its
+attributes do nothing but represent Emacs Lisp symbols, created on the
+fly as needed (symbols also have their built-in magic).
+
+As special cases, ``lisp.nil`` or ``lisp["nil"]`` are the same
+as :code:`None`, and ``lisp.t`` or ``lisp["t"]`` are the same as
+:code:`True`.  Otherwise, both ``lisp.SYMBOL`` and ``lisp[STRING]``
+yield objects of the internal :code:`Symbol` type.  These are genuine
+Python objects, that could be referred to by simple Python variables.
+One may write ``quote = lisp.quote``, for example, and use ``quote``
+afterwards to mean that Emacs Lisp symbol.  If a Python function
+received an Emacs Lisp symbol as an argument, it can check with ``==``
+if that argument is ``lisp.never`` or ``lisp.ask``, say.  A Python
+function may well choose to return some symbol, like ``lisp.always``.
+
+In Python, writing ``lisp.SYMBOL = VALUE`` or ``lisp[STRING] = VALUE``
+does assign :var:`VALUE` to the corresponding symbol in Emacs Lisp
+space.  Beware that in such cases, the ``lisp.`` prefix may not be
+spared.  After ``result = lisp.result``, one cannot hope that a later
+``result = 3`` will have any effect in the Emacs Lisp space: this would
+merely change the Python variable ``result``, which was a reference to a
+:code:`Symbol` instance, so it is now a reference to the number 3.
+
+The :code:`Symbol` class has ``value()`` and ``copy()`` methods.  One
+can use either ``lisp.SYMBOL.value()`` or ``lisp.SYMBOL.copy()``
+to access the Emacs Lisp value of a symbol, after conversion to
+some Python object, of course.  However, if ``value()`` would have
+given an Emacs Lisp handle, ``lisp.SYMBOL.copy()`` has the effect of
+``lisp.SYMBOL.value().copy()``, that is, it returns the value of the
+symbol as opened as possible.
+
+A symbol may also be used as if it was a Python function, in which case
+it really names an Emacs Lisp function that should be applied over the
+following function arguments.  The result of the Emacs Lisp function
+becomes the value of the call, with all due conversions of course.
+
+Dynamic bindings
+----------------
+
+As Emacs Lisp uses dynamic bindings, it is common that Emacs Lisp
+programs use :code:`let` for temporarily setting new values for some
+Emacs Lisp variables having global scope.  These variables recover their
+previous value automatically when the :code:`let` gets completed, even
+if an error occurs which interrupts the normal flow of execution.
+
+Pymacs has a :code:`Let` class to represent such temporary
+settings.  Suppose for example that you want to recover the value of
+``lisp.mark()`` when the transient mark mode is active on the Emacs Lisp
+side.  One could surely use ``lisp.mark(True)`` to *force* reading the
+mark in such cases, but for the sake of illustration, let's ignore that,
+and temporarily deactivate transient mark mode instead.  This could be
+done this way::
+
+  try:
+      let = Let()
+      let.push(transient_mark_mode=None)
+      ... USER CODE ...
+  finally:
+      let.pop()
+
+``let.push()`` accepts any number of keywords arguments.  Each keyword
+name is interpreted as an Emacs Lisp symbol written the Pymacs way, with
+underlines.  The value of that Emacs Lisp symbol is saved on the Python
+side, and the value of the keyword becomes the new temporary value for
+this Emacs Lisp symbol.  A later ``let.pop()`` restores the previous
+value for all symbols which were saved together at the time of the
+corresponding ``let.push()``.  There may be more than one ``let.push()``
+call for a single :code:`Let` instance, they stack within that instance.
+Each ``let.pop()`` will undo one and only one ``let.push()`` from the
+stack, in the reverse order or the pushes.
+
+When the :code:`Let` instance disappears, either because the programmer
+does ``del let`` or ``let = None``, or just because the Python
+:code:`let` variable goes out of scope, all remaining ``let.pop()`` get
+automatically executed, so the :code:`try`/:code:`finally` statement
+may be omitted in practice.  For this omission to work flawlessly, the
+programmer should be careful at not keeping extra references to the
+:code:`Let` instance.
+
+The constructor call ``let = Let()`` also has an implied initial
+``.push()`` over all given arguments, so the explicit ``let.push()`` may
+be omitted as well.  In practice, this sums up and the above code could
+be reduced to a mere::
+
+  let = Let(transient_mark_mode=None)
+  ... USER CODE ...
+
+Be careful at assigning the result of the constructor to some Python
+variable.  Otherwise, the instance would disappear immediately after
+having been created, restoring the Emacs Lisp variable much too soon.
+
+Any variable to be bound with :code:`Let` should have been bound in
+advance on the Emacs Lisp side.  This restriction usually does no kind
+of harm.  Yet, it will likely be lifted in some later version of Pymacs.
+
+The :code:`Let` class has other methods meant for some macros which are
+common in Emacs Lisp programming, in the spirit of :code:`let` bindings.
+These method names look like ``push_*`` or ``pop_*``, where Emacs Lisp
+macros are ``save-*``.  One has to use the matching ``pop_*`` for
+undoing the effect of a given ``push_*`` rather than a mere ``.pop()``:
+the Python code is clearer, this also ensures that things are undone in
+the proper order.  The same :code:`Let` instance may use many ``push_*``
+methods, their effects nest.
+
+``push_excursion()`` and ``pop_excursion()`` save and restore
+the current buffer, point and mark. ``push_match_data()`` and
+``pop_match_data()`` save and restore the state of the last regular
+expression match. ``push_restriction()`` and ``pop_restriction()`` save
+and restore the current narrowing limits. ``push_selected_window()`` and
+``pop_selected_window()`` save and restore the fact that a window holds
+the cursor. ``push_window_excursion()`` and ``pop_window_excursion()``
+save and restore the current window configuration in the Emacs display.
+
+As a convenience, ``let.push()`` and all other ``push_*`` methods return
+the :code:`Let` instance.  This helps chaining various ``push_*`` right
+after the instance generation.  For example, one may write::
+
+  let = Let().push_excursion()
+  if True:
+      ... USER CODE ...
+  del let
+
+The ``if True:`` (use ``if 1:`` with older Python releases, some people
+might prefer writing ``if let:`` anyway), has the only goal of indenting
+:var:`USER CODE`, so the scope of the :code:`let` variable is made very
+explicit.  This is purely stylistic, and not at all necessary.  The last
+``del let`` might be omitted in a few circumstances, for example if the
+excursion lasts until the end of the Python function.
+
+Raw Emacs Lisp expressions
+--------------------------
+
+Pymacs offers a device for evaluating a raw Emacs Lisp expression, or a
+sequence of such, expressed as a string.  One merely uses :code:`lisp`
+as a function, like this::
+
+  lisp("""
+  ...
+  POSSIBLY-LONG-SEQUENCE-OF-LISP-EXPRESSIONS
+  ...
+  """)
+
+The Emacs Lisp value of the last or only expression in the sequence
+becomes the value of the :code:`lisp` call, after conversion back to
+Python.
+
+User interaction
+----------------
+
+Emacs functions have the concept of user interaction for completing the
+specification of their arguments while being called.  This happens only
+when a function is interactively called by the user, it does not happen
+when a function is directly called by another.  As Python does not have
+a corresponding facility, a bit of trickery was needed to retrofit that
+facility on the Python side.
+
+After loading a Python module but prior to creating an Emacs view
+for this module, Pymacs decides whether loaded functions will be
+interactively callable from Emacs, or not.  Whenever a function has
+an :code:`interaction` attribute, this attribute holds the Emacs
+interaction specification for this function.  The specification is
+either another Python function or a string.  In the former case, that
+other function is called without arguments and should, maybe after
+having consulted the user, return a list of the actual arguments to be
+used for the original function.  In the latter case, the specification
+string is used verbatim as the argument to the ``(interactive ...)``
+function on the Emacs side.  To get a short reminder about how this
+string is interpreted on the Emacs side, try ``C-h f interactive``
+within Emacs.  Here is an example where an empty string is used to
+specify that an interactive has no arguments::
+
+  from Pymacs import lisp
+
+  def hello_world():
+      "`Hello world' from Python."
+      lisp.insert("Hello from Python!")
+  hello_world.interaction = ''
+
+.. `
+
+Versions of Python released before the integration of PEP 232 do not
+allow users to add attributes to functions, so there is a fall-back
+mechanism.  Let's presume that a given function does not have an
+:code:`interaction` attribute as explained above.  If the Python module
+contains an :code:`interactions` global variable which is a dictionary,
+if that dictionary has an entry for the given function with a value
+other than :code:`None`, that function is going to be interactive on the
+Emacs side.  Here is how the preceding example should be written for an
+older version of Python, or when portability is at premium::
+
+  from Pymacs import lisp
+  interactions = @{@}
+
+  def hello_world():
+      "`Hello world' from Python."
+      lisp.insert("Hello from Python!")
+  interactions[hello_world] = ''
+
+One might wonder why we do not merely use ``lisp.interactive(...)``
+from within Python.  There is some magic in the Emacs Lisp interpreter
+itself, looking for that call *before* the function is actually entered,
+this explains why ``(interactive ...)`` has to appear first in an Emacs
+Lisp :code:`defun`.  Pymacs could try to scan the already compiled
+form of the Python code, seeking for ``lisp.interactive``, but as the
+evaluation of :code:`lisp.interactive` arguments could get arbitrarily
+complex, it would a real challenge un-compiling that evaluation into
+Emacs Lisp.
+
+Key bindings
+------------
+
+An interactive function may be bound to a key sequence.
+
+To translate bindings like ``C-x w``, say, one might have to know a
+bit more how Emacs Lisp processes string escapes like ``\C-x`` or
+``\M-\C-x`` in Emacs Lisp, and emulate it within Python strings, since
+Python does not have such escapes.  ``\C-L``, where L is an upper case
+letter, produces a character which ordinal is the result of subtracting
+0x40 from ordinal of ``L``.  ``\M-`` has the ordinal one gets by adding
+0x80 to the ordinal of following described character.  So people can
+use self-inserting non-ASCII characters, ``\M-`` is given another
+representation, which is to replace the addition of 0x80 by prefixing
+with \`ESC', that is 0x1b.
+
+.. `
+
+So ``\C-x`` in Emacs is '\x18' in Python.  This is easily found, using
+an interactive Python session, by giving it: chr(ord('X') - ord('A') +
+1).  An easier way would be using the :code:`kbd` function on the Emacs
+Lisp side, like with lisp.kbd('C-x w') or lisp.kbd('M-<f2>').
+
+To bind the F1 key to the :code:`helper` function in some
+:code:`module`::
+
+  lisp.global_set_key((lisp.f1,), lisp.module_helper)
+
+``(item,)`` is a Python tuple yielding an Emacs Lisp vector.
+``lisp.f1`` translates to the Emacs Lisp symbol :code:`f1`.  So, Python
+``(lisp.f1,)`` is Emacs Lisp ``[f1]``.  Keys like ``[M-f2]`` might
+require some more ingenuity, one may write either ``(lisp['M-f2'],)`` or
+``(lisp.M_f2,)`` on the Python side.
+
+Debugging
+=========
+
+On the communication protocol
+-----------------------------
+
+Initially, the Pymacs communication protocol was rather simple deep
+down, merely using evaluation on arrival on both sides.  All the rest
+was recursion trickery over that simple idea.  But the magic was fragile
+to interruption requests, so the protocol has been revisited a bit so
+each message action could be recognized before evaluation is attempted.
+The idea (not fully implemented yet) is to make the protocol part immune
+to interruptions, but to allow evaluations themselves to be interrupted.
+
+  + As it is more easy to generate than to parse, and also because Emacs
+    has a Lisp parser and Python has a Python parser, Emacs generates
+    Python code when preparing a message to the Pymacs helper, and Python
+    generates Emacs Lisp expressions when preparing a message for Emacs.
+
+  + Messages are exchanged in strictly alternating directions (from
+    Python to Emacs, from Emacs to Python, etc.), the first message being
+    sent by the Pymacs helper just after it started, identifying the
+    current Pymacs version.
+
+  + Messages in both directions have a similar envelope.  Each physical
+    message has a prefix, the message contents, and a newline.  The
+    prefix starts with either ``<`` or ``>`` to mark the directionality,
+    immediately followed by the decimal expression of the contents length
+    counted in characters, immediately followed by a single horizontal
+    tab.  The count excludes the prefix, but includes the newline.
+
+  + In each direction, messages are made up of two elements: an action
+    keyword and a single argument (yet the argument may sometimes be
+    complex).  As a special case, memory cleanup messages, from Python
+    to Emacs, use four elements: the atom :code:`free`, a list of slot
+    numbers to free, and then the real action and argument.  This is
+    because the cleanup is delayed and piggy-backed over some other
+    message from Python to Emacs.
+
+  + For Emacs originated messages, the action and the argument are
+    separated by a space.  For Python originated messages, the action and
+    the argument are made into a Lisp list.
+
+  + Most actions in the following table are available in both
+    directions, unless noted.  The first three actions *start* a new level
+    of Pymacs evaluation, the remaining actions end the current level.
+
+    + :code:`eval` requests the evaluation of its expression argument.
+    + :code:`exec` requests the execution of its statement argument (this may
+      only be received on the Python side).
+    + :code:`expand` requests the opening of an Emacs Lisp structure (this may
+      only be received on the Emacs side).
+    + :code:`return` represents the normal reply to a request, the argument
+      holds the value to be returned (:code:`nil` in case of :code:`exec`).
+    + :code:`raise` represents the error reply to a request, the argument
+      then holds a diagnostic string.
+
+The :code:`*Pymacs*` buffer
+---------------------------
+
+Emacs and Python are two separate processes (well, each may use more
+than one process).  Pymacs implements a simple communication protocol
+between both, and does whatever needed so the programmers do not have
+to worry about details.  The main debugging tool is the communication
+buffer between Emacs and Python, which is named :code:`*Pymacs*`.  By
+default, this buffer gets erased before each transaction.  To make good
+debugging use of it, first set :code:`pymacs-trace-transit` to either
+:code:`t` or to some ``(KEEP . LIMIT)``.  As it is sometimes helpful to
+understand the communication protocol, it is briefly explained here,
+using an artificially complex example to do so.  Consider::
+
+  (pymacs-eval "lisp('(pymacs-eval \"repr(2L**111)\")')")
+  "2596148429267413814265248164610048L"
+
+Here, Emacs asks Python to ask Emacs to ask Python for a simple bignum
+computation.  Note that Emacs does not natively know how to handle big
+integers, nor has an internal representation for them.  This is why I
+use the :code:`repr` function, so Python returns a string representation
+of the result, instead of the result itself.  Here is a trace for this
+example.  Imagine that Emacs stands on the left and that Python stands
+on the right.  The ``<`` character flags a message going from Python to
+Emacs, while the ``>`` character flags a message going from Emacs to
+Python.  The number gives the length of the message, including the end
+of line.  (Acute readers may notice that the first number is incorrect,
+as the version number gets replaced in the example while this manual is
+being produced.)
+
+::
+
+  <22     (version "@VERSION@")
+  >43     eval lisp('(pymacs-eval "repr(2L**111)")')
+  <45     (eval (progn (pymacs-eval "repr(2L**111)")))
+  >19     eval repr(2L**111)
+  <47     (return "2596148429267413814265248164610048L")
+  >45     return "2596148429267413814265248164610048L"
+  <47     (return "2596148429267413814265248164610048L")
+
+Python evaluation is done in the context of the :code:`Pymacs.pymacs`
+module, so for example a mere :code:`reply` really means
+``Pymacs.pymacs.reply``.  On the Emacs Lisp side, there is no concept of
+module name spaces, so we use the ``pymacs-`` prefix as an attempt to
+stay clean.  Users should ideally refrain from naming their Emacs Lisp
+objects with a ``pymacs-`` prefix.
+
+:code:`reply` and :code:`pymacs-reply` are special functions meant to
+indicate that an expected result is finally transmitted. :code:`error`
+and :code:`pymacs-error` are special functions that introduce
+a string which explains an exception which recently occurred.
+:code:`pymacs-expand` is a special function implementing the ``copy()``
+methods of Emacs Lisp handles or symbols.  In all other cases, the
+expression is a request for the other side, that request stacks until a
+corresponding reply is received.
+
+Part of the protocol manages memory, and this management generates some
+extra-noise in the :code:`*Pymacs*` buffer.  Whenever Emacs passes a
+structure to Python, an extra pointer is generated on the Emacs side to
+inhibit garbage collection by Emacs.  Python garbage collector detects
+when the received structure is no longer needed on the Python side, at
+which time the next communication will tell Emacs to remove the extra
+pointer.  It works symmetrically as well, that is, whenever Python
+passes a structure to Emacs, an extra Python reference is generated to
+inhibit garbage collection on the Python side.  Emacs garbage collector
+detects when the received structure is no longer needed on the Emacs
+side, after which Python will be told to remove the extra reference.
+For efficiency, those allocation-related messages are delayed, merged
+and batched together within the next communication having another
+purpose.
+
+Variable :code:`pymacs-trace-transit` may be modified for controlling
+how and when the :code:`*Pymacs*` buffer, or parts thereof, get erased.
+
+Emacs usual debugging
+---------------------
+
+If cross-calls between Emacs Lisp and Python nest deeply, an error will
+raise successive exceptions alternatively on both sides as requests
+unstack, and the diagnostic gets transmitted back and forth, slightly
+growing as we go.  So, errors will eventually be reported by Emacs.  I
+made no kind of effort to transmit the Emacs Lisp back trace on the
+Python side, as I do not see a purpose for it: all debugging is done
+within Emacs windows anyway.
+
+On recent Emacses, the Python back trace gets displayed in the
+mini-buffer, and the Emacs Lisp back trace is simultaneously shown
+in the :code:`*Backtrace*` window.  One useful thing is to allow to
+mini-buffer to grow big, so it has more chance to fully contain the
+Python back trace, the last lines of which are often especially useful.
+Here, I use::
+
+  (setq resize-mini-windows t
+        max-mini-window-height .85)
+
+in my :file:`.emacs` file, so the mini-buffer may use 85% of the screen,
+and quickly shrinks when fewer lines are needed.  The mini-buffer
+contents disappear at the next keystroke, but you can recover the Python
+back trace by looking at the end of the :code:`*Messages*` buffer.  In
+which case the :code:`ffap` package in Emacs may be yet another friend!
+From the :code:`*Messages*` buffer, once :code:`ffap` activated, merely
+put the cursor on the file name of a Python module from the back trace,
+and ``C-x C-f RET`` will quickly open that source for you.
+
+Auto-reloading on save
+----------------------
+
+I found useful to automatically :code:`pymacs-load` some Python files
+whenever they get saved from Emacs.  This can be decided on a per-file
+or per-directory basis.  To get a particular Python file to be reloaded
+automatically on save, add the following lines at the end::
+
+  # Local Variables:
+  # pymacs-auto-reload: t
+  # End:
+
+Here is an example of automatic reloading on a per-directory basis.
+The code below assumes that Python files meant for Pymacs are kept in
+:file:`~/share/emacs/python`::
+
+  (defun fp-maybe-pymacs-reload ()
+    (let ((pymacsdir (expand-file-name "~/share/emacs/python/")))
+      (when (and (string-equal (file-name-directory buffer-file-name)
+                               pymacsdir)
+                 (string-match "\\.py\\'" buffer-file-name))
+        (pymacs-load (substring buffer-file-name 0 -3)))))
+  (add-hook 'after-save-hook 'fp-maybe-pymacs-reload)
+
+Debugging the Pymacs helper
+---------------------------
+
+The Pymacs helper is a Python program which accepts options and arguments.
+The available options, which are only meant for debugging, are:
+
+    -d FILE  Debug the protocol to FILE
+    -s FILE  Trace received signals to FILE
+
++ The ``-d`` option saves a copy of the communication protocol in the
+  given file, as seen from the Pymacs helper.  The file should be fairly
+  identical to the contents of the :code:`*Pymacs*` buffer within Emacs.
+
++ The ``-s`` option monitors most signals received by the Pymacs helper
+  and logs them in the given file.  Each log line merely contains a signal
+  number, possibly followed by a star if the interruption was allowed in.
+  Besides logging, signals are usually ignored.
+
+The arguments list directories to be added at the beginning of the
+Python module search path, and whenever Emacs launches the Pymacs
+helper, the contents of the Emacs Lisp :code:`pymacs-load-path` variable
+is turned into this argument list.
+
+The Pymacs helper options may be set through the :code:`PYMACS_OPTIONS`
+environment variable.  For example, one could execute something like::
+
+  export PYMACS_OPTIONS='-d /tmp/pymacs-debug -s /tmp/pymacs-signals'
+
+in a shell (presuming :code:`bash` here) and start Emacs from that shell.
+Then, when Emacs will launch the Pymacs helper, the above options will
+be obeyed.
+
+About and around Pymacs
+=======================
+
+Known limitations
+-----------------
+
+Memory may leak in some theoretical circumstances (I say theoretical,
+because no one ever reported this as being an actual problem).  As
+Richard Stallman once put it (2002-08):
+
+  `I wonder, though, can this` [memory management] `technique fully handle
+  cycles that run between Lisp and Python?  Suppose Lisp object A refers
+  to Python object B, which refers to Lisp object A, and suppose nothing
+  else refers to either one of them.  Will you succeed in recognizing
+  these two objects as garbage?`
+
+History
+-------
+
+I once hungered for a Python-extensible editor, so much so that I
+pondered the idea of dropping Emacs for other avenues, but found nothing
+much convincing.  Moreover, looking at all Lisp extensions I'd made
+for myself, and considering all those superb tools written by others,
+all of which are now part of my computer life, it would have been a
+huge undertaking for me to reprogram these all in Python.  So, when I
+began to see that something like Pymacs was possible, I felt strongly
+motivated! :-)
+
+Pymacs draws on previous work of Cedric Adjih that enabled
+the running of Python as a process separate from Emacs.
+See http://www.crepuscule.com/pyemacs/, or write Cedric at
+mailto:adjih-pam@crepuscule.com.  Cedric presented :code:`pyemacs` to me
+as a proof of concept.  As I simplified that concept a bit, I dropped
+the ``e`` in ``pyemacs`` :-). Cedric also previously wrote patches for
+linking Python right into XEmacs, but abandoned the idea, as he found
+out that his patches were unmaintainable over the evolution of both
+Python and XEmacs.
+
+As Brian McErlean independently and simultaneously wrote a tool
+similar to this one, we decided to merge our projects.  In an amusing
+coincidence, he even chose :code:`pymacs` as a name.  Brian paid
+good attention to complex details that escaped my courage, so his
+help and collaboration have been beneficial.  You may reach Brian at
+mailto:brianmce@crosswinds.net.
+
+The initial throw at Pymacs has been written on 2001-09-05, and releases
+in the 0.x series followed in a rapid pace for a few months, and Pymacs
+became stable.  Since then, it did not need to move much, as bugs are
+not found often.  Yet, in my opinion, some missing features should be
+addressed before we dare some 1.0 release.
+
+Pymacs and me!
+--------------
+
+Pymacs has been fairly stable since the early versions.  I surely used
+it a great deal, constantly, magically, in my daily works, to the point
+of forgetting that was it there all the time.  It was fairly complete,
+at least for my own needs, and did not move much anymore.
+
+Some time later, someone begged me to consider Vim, and not only Emacs,
+for some tools I was then writing.  Looking at Vim more closely, I
+discovered that it is a worth editor, with Python nicely integrated,
+enough for me to switch.  In a `Web article`__ (which many enjoyed, as
+they told me), I detailed my feelings on these matters.
+
+__ http://pinard.progiciels-bpi.ca/opinions/editors.html
+
+My viewpoint is that Pymacs, maybe after an initial flurry of a bit more
+than a dozen releases, soon became stable in its history.  Reported
+bugs or suggestions were minor, there was not enough new material to
+warrant other releases.  Nevertheless, when I switched from Emacs to
+Vim in my day-to-day habits, I felt that Pymacs needed a more credible
+maintainer than me.  Syver Enstad, who was an enthusiastic user and
+competent contributor, was kind enough to accept the duty (2003-10).
+Some more bugs and suggestions flowed in since then, but Syver did not
+elect to make any new release, and this did not bother me.  Syver then
+became unavailable, to the point I could not contact him in years.  I
+would loathe to see myself interfering with an official maintainer,
+but when I decided to return to some moderate Emacs usage, and because
+of the long silence, I considered resuming Pymacs maintenance as well
+(2007-11).  Then, I dived into it for real (2008-01).
+
+Giovanni Giorgi once (2007-03) wanted to expand on Pymacs and publish
+it on his own, and later felt like maintaining it whole (late 2007-12).
+I rather suggested an attempt at collaborative maintenance, and this
+experiment is still going on...
+
+Vim considerations
+------------------
+
+Emacs Lisp is deeply soldered into Emacs internals.  Vim has its own
+language, which people sometimes call Vimscript, similarly tightened
+into Vim.  My feeling is that Emacs Lisp allows for a more intimate
+handling of edit buffers and external processes than Vimscript does, yet
+this intimacy has a price in complexity, so all totalled, they may be
+perceived as comparable for most practical purposes.
+
+Pymacs allows customising Emacs with Python instead of Emacs Lisp, and
+then runs Python as a process external to Emacs, with a communication
+protocol between both processes.  Python may be built into Vim, and then
+both Python and Vim use a single process.  The same as Pymacs gives
+access to almost all of Emacs Lisp, Python within Vim gives access to
+almost all of Vimscript, but with a much smaller overhead than Pymacs.
+
+Pymacs is not Emacs Lisp, and Python in Vim is not Vimscript either,
+tweaks are needed in both cases for accessing some of the underlying
+scripting facilities.  Pymacs is rather elegant, Python in Vim is rather
+clean.  Python itself is both elegant and clean, but one strong point of
+Python for me is the legibility, which builds deeper roots on the clean
+side than on the elegant side.  All in all, despite I know how debatable
+it can be, I guess I now have a prejudice towards Python in Vim.
+
+I figured out a simple way to have the same Python source usable both
+within Pymacs or Vim.  However, Emacs is byte oriented, while Vim is
+line oriented.  In a few Pymacs applications of mine, I internally
+toggle between line orientation and byte orientation, keeping both for
+speed most probably, while I see things would be a bit simpler (and
+maybe slower) if I was pushing myself on the line-oriented side.  Each
+of Emacs and Vim have their own logic and elegance, and it is probable
+that we loose overall if we try to emulate one with the other.
+
+The idea traversed me to convert all the few Pymacs examples so they
+work both for Pymacs and Vim, and through the documentation, publicise
+how people writing Python extensions could write them for both editors
+at once.  Yet, while doing so, one has to stretch either towards Emacs
+or Vim, and I guess I would favour Vim over Emacs when the time comes to
+evaluate efficiency-related choices.
+
+I also thought about writing a Pymacs module for running Python scripts
+already written for Vim, by offering a compatibility layer.  The
+complexity of this might be unbounded, I should study actual Python
+scripts for Vim before knowing better if this is thinkable or not.
+
+Inclusion within Emacs
+----------------------
+
+Gerd Möllman, who was maintaining Emacs at the time of Pymacs birth and
+development, retrofitted (2001-09) the idea of a :code:`post-gc-hook`
+from XEmacs, as a way to facilitate memory management within Pymacs.
+
+Richard Stallman once suggested (2001-10) that Pymacs be distributed
+within Emacs, and while discussing the details of this, I underlined
+small technical difficulties about Emacs installing the Python parts,
+and the need of a convention about where to install Python files meant
+for Pymacs.  As Richard felt, at the time, very overwhelmed with other
+duties, no decision was taken and the integration went nowhere.
+
+After Gerd resigned as an Emacs maintainer, someone from the Emacs
+development team wrote again (2002-01) asking information about how
+to integrate Pymacs.  It was easy for me to write a good and thorough
+summary, after all these discussions with Richard.  And that's the end
+of the story: I never heard of it again. :-)
+
+Speed issues
+------------
+
+Doug Bagley's shoot out project compares the relative speed of many
+popular languages, and this might interest Pymacs users.  The first URL
+points to the original, the second points to a newer version oriented
+towards Win32 systems, the third is more recent but Debian-oriented:
+
+  + http://www.bagley.org/~doug/shootout/
+  + http://dada.perl.it/shootout/index.html
+  + http://shootout.alioth.debian.org/
+
+I've not heard of any Python to Lisp compiler.  Lisp may be slow or fast
+depending on how one uses it, and how much one uses declarations.  Some
+Lisp systems have really excellent compilers, that give very fast code
+when properly hinted.
+
+Python itself may be slow or fast, once again depending on how one
+uses it.  With the proper bend, one can develop the habit of writing
+Python which shows honest speed.  And there is always Pyrex, which is
+Python complemented with explicit declarations (a bit like some Lisp
+implementations), and which can buy a lot of speed.
+
+This is quite likely that one can have fast programs while using Python,
+or a mix of Python and Pyrex (or even Psyco sometimes), that is, within
+Python paradigms, without feeling any need of resorting to Lisp.
+
+If Python looks like being slow while being used with Emacs, the problem
+probably lies in Emacs-Python communication which Pymacs implements.
+One has to learn how to do the proper compromises for having less
+communications.  (In that regard, Vim and Python are really linked
+together, so Python in Vim is likely faster than Pymacs for someone who
+does not pay special attention to such matters.)
+
+Ali Gholami Rudi also writes (2008-02):
+
+  `Well, there seems to be lots of overhead when transferring large
+  strings.  Transferring them requires:`
+
+    1. `escaping characters in the strings`
+    2. `putting them in` :code:`*Pymacs*` `buffer`
+    3. `sending the region to Python process`
+    4. `evaluating the Python string in Python-side (involves compiling)`
+
+  `In my experiments, transferring a ~5k-line file takes more than a
+  second on a relatively new computer (data from` :code:`rope-dev`\ `).
+  Improving that probably requires a new protocol that does not
+  use Python eval and has an optional debug buffer.  Probably few
+  applications need to transfer large strings to Python but if they do,
+  it is quite slow.`
+
+All in all, speed may sometimes become a real issue for Pymacs.  I once
+wrote within http://pinard.progiciels-bpi.ca/opinions/editors.html :
+
+  `While Pymacs is elegant in my opinion, one cannot effectively use
+  Pymacs (the Python part) without knowing at least the specification
+  of many Lisp functions, and I found that it requires some doing for a
+  Pymacs developer to decouple the Emacs interaction part from the purer
+  algorithmic part in applications.  Moreover, if you do not consider
+  speed issues, they bite you.`
+
+The future of Pymacs
+--------------------
+
+Some people suggested important internal Pymacs changes.  In my opinion,
+new bigger features are better implemented in a careful way, first as
+examples or contributions, and moved closer to internal integration
+depending on how users use or appreciate them.  For now, Pymacs should
+concentrate at doing its own humble job well, and resist bloat.
+
+Before Pymacs closes to some version 1.0, some specifications should be
+revisited, user suggestions pondered, porting matters documented.  The
+test suite should grow up, we should collect more examples.  Pymacs
+should aim seamless integration with :file:`.el` files and with
+transparent :code:`autoload` (my little tries were not so successful).
+On the Python side, Pymacs *might* fake primitives like :code:`getindex`
+and :code:`putindex`, better support iterators and some newer Python
+features, and at least consider Python 3.0.
+
+Pymacs is not much geared towards Python threads.  It is not clear yet if
+it would be reasonably tractable to better support them.

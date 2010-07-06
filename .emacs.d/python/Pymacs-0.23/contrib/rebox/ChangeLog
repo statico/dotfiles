@@ -1,0 +1,153 @@
+2008-01-21  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.py: Support module textwrap.
+	(Refiller, Refiller_Gnu_Fmt, Refiller_Textwrap and Refiller_Dumb):
+	New classes.
+	(refill_lines): Function split to use the above.
+
+2002-01-29  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/rebox.py: Use an interactions map instead of the
+	interaction attribute, so it works with earlier Python versions.
+
+	* Pymacs/rebox.py: Import lisp and Let from Pymacs.
+
+2002-01-13  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/rebox.py (Emacs_Rebox.emacs_engine): Expand flag value,
+	when it is neither the - symbol nor a number.
+
+2002-01-08  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/rebox.py (Template.build): Subtract margin from width
+	just before actually rebuilding the box.
+	Reported by Paul Provost.
+
+2002-01-07  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/rebox.py (main): Implement -v option.
+
+	* Pymacs/rebox.py (pymacs_load_hook): Declare set_default_style.
+
+	* Pymacs/rebox.py (Emacs_Rebox.clean_undo_after): Debugged.
+
+	* Pymacs/rebox.py (Template): New class.  Reorgnise all code.
+	* Pymacs/rebox.py (engine): Moved out of Rebox class.
+	* Pymacs/rebox.py (Rebox, Batch_Rebox): Deleted, as they got empty.
+
+	* Pymacs/rebox.py (Emacs_Rebox.clean_undo_after): Rewrite in Lisp.
+
+2002-01-06  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox: New file.
+
+2002-01-03  François Pinard  <pinard@iro.umontreal.ca>
+
+	* Pymacs/rebox.py: New file, translated from Libit/rebox.el.
+
+2000-09-28  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Replace statistical heuristics for box style recognition
+	by more precise checks and explicit priorities between styles.  To do
+	so, add weights to rebox-templates, replace rebox-building-data	by
+	rebox-style-data holding regexps, delete rebox-recognition-data.
+
+	* rebox.el (rebox-regexp-ruler): New function.
+	(rebox-regexp-quote): Add matching for following white space.
+	Don't force two characters on each middle line, nor in blank rulers.
+	Reported by Paul Provost.
+
+2000-04-28  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-guess-style): When two styles have equal weight,
+	retain the highest numbered, as it probably is the richest.
+	Otherwise, simple C++ comments end up with a single slash.
+	Reported by Akim Demaille.
+
+2000-04-19  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Reorganize from bottom-up into top-down.
+	(taarna-mode): Deleted.
+
+2000-04-18  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-show-style, rebox-help-string-for-language,
+	rebox-help-string-for-quality, rebox-help-string-for-type): Deleted.
+	(rebox-rstrip, rebox-regexp-quote, rebox-unbuild): New functions.
+	(rebox-build): New name for rebox-reconstruct.
+
+2000-04-15  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-guess-style): New function.
+	(rebox-engine): Use it.  Simplified by using template information.
+
+2000-04-14  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-templates): New variable.
+	(rebox-register-template): New function.
+	(rebox-reconstruct): Much simplified by using the above.
+
+2000-04-12  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Rework the initial documentation block.
+	(rebox-reconstruct): Guarantee newline at end for style 241.
+	Reported by Marc Feeley and Paul Provost.
+
+2000-02-22  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Little speed cleanup.  Avoid looking-at when easy.
+
+2000-02-10  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Adjust comment to suggest add-hook instead of setq.
+	Reported by Akim Demaille.
+
+2000-01-30  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Prefer when, unless and cond over if and progn.
+	Combine successive setq.
+
+	* rebox.el (rebox-engine): Recognise quality for shell boxes.
+	Reported by Akim Demaille.
+
+1999-06-30  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Add GPL comment.
+	Reported by Paul Eggert.
+
+1998-03-28  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-reconstruct): Refill a closing */ with the rest.
+	Do not add spaces to a line which is otherwise empty.
+
+1997-12-01  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-engine): Simplify two regexps, for XEmacs.
+	Reported by Ulrich Drepper.
+
+1997-02-17  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-reconstruct): Ensure indent-tabs-mode is nil.
+
+1997-02-14  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Corrected a bug demonstrated as the beginning line
+	of a paragraph spuriously jumping right spuriously.  The full
+	match of the beginning of comment was replaced by spaces on the
+	initial line, while only \1 needed replacement.  This shortened
+	this line, causing later nasty effects.
+
+1996-07-10  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Recognise style 241, so margin does not get doubled.
+	Reported by Marc Feeley.
+
+1996-07-09  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el: Use symbolic constants for language, quality and type.
+
+1996-06-09  François Pinard  <pinard@iro.umontreal.ca>
+
+	* rebox.el (rebox-find-and-narrow): Take care of a missing end of
+	line after a comment being at end of buffer.
+	Reported by Ulrich Drepper.

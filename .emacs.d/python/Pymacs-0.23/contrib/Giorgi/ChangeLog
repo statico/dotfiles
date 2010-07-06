@@ -1,0 +1,9 @@
+2007-03-06  Giovanni Giorgi  <jj@obectsroot.com>
+	* : Release 2.0
+	* General: Migrated to python 2.5
+	           Found and corrected some errors/fixes for
+		   working with emacs 21.4.1
+		   Improved documentation
+	           Added extensions and xmlrpc server
+	* setup:   Added regression tests
+	

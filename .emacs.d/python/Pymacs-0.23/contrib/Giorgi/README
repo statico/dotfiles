@@ -1,0 +1,251 @@
+.. role:: file(literal)
+
+=======================
+Giovanni Giorgi's files
+=======================
+
+.. contents::
+.. sectnum::
+
+This page documents the :file:`contrib/Giorgi/` subdirectory of the
+Pymacs distribution.  First install Pymacs from the top-level of the
+distribution, this has the side-effect of adjusting a few files in this
+directory.  Once this done, return to this directory, then run ``python
+setup.py install``.
+
+Here, you'll find miscellaneous files contributed by Giovanni Giorgi,
+to be sorted, documented, maybe deleted, at least pondered in one way
+or another.  The remainder of this page comes from Giovanni's writing,
+waiting for Giovanni to revise its contents.
+
+Introduction
+============
+
+ChangeLog
+---------
+
+Pymacs last version was 0.22, written by Francois Pinard.  Giovanni
+Giorgi took this version and evolved it.  This new development is marked
+"2.0" and is it always distributed under GNU General Public License 2.0
+
+Feel free to send comments suggestions and so on to Giovanni's email
+address: mailto:jj@objectsroot.com
+
+What's new in Pymacs 2.0
+------------------------
+
+Giovanni Giorgi (the Author) has taken Pymacs 0.99 and has decided to
+write some extensions.  The final product is named Pymacs 2.0.
+
+Improved documentation and examples
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+In Pymacs 2.0 has been added a medium sized example.
+
+The documentation offers a `Troubleshooting`_ section, to solve most
+common issue, also for helping newbie emacs user.
+
+Improved API
+,,,,,,,,,,,,
+
+Pymacs 2.0 offers a magic save_excursion(f) method which mimics the one
+found on lisp side.
+
+Logging Support and Regression Tests
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+The Pymacs/utility.py module offers a useful EmacsLog class.
+
+The basictests.py module offers a list of regression tests Pymacs 2.0
+has been tested on::
+
+  GNU Emacs 21.4.1 (i686-redhat-linux-gnu, X toolkit, Xaw3d scroll bars)
+  GNU Emacs 22.1.1 (i686-pc-linux-gnu,     X toolkit, Xaw3d scroll bars)
+
+XMLRPC Server
+,,,,,,,,,,,,,
+
+In Pymacs 2.0 has been added a XMLRPC server to play with.  Is not yet
+production-ready!
+
+Redesigned Web Site
+,,,,,,,,,,,,,,,,,,,
+
+It is provided a new website at http://blog.objectsroot.com/pymacs
+
+History
+-------
+
+The ChangeLog Reports the first release of 9th September 2001.  Giovanni
+Giorgi started working on Pymacs on 6th March 2007 for its own personal
+use.  This is the first public release, published as final at 23th of
+February 2008.
+
+Evolving Emacs
+--------------
+
+One of the main goal of Pymacs 2.0 is to evolve emacs.  Other editors
+have a very poor support for scripting.
+
+The protocol specification is quite frozen, and python offers always a
+good retro-compatibility, so you can develop to the python site with
+ease.
+
+Emacs instead has a very powerful lisp engine, but it is difficult to
+understand and learn.  Python is very easy to understand, and there
+are plenty of library for it.  Pymacs is quite efficient and very easy
+to use.  I have successful written some functions in Pymacs in an
+evening.  Best, emacs is a powerful platform for accessing remote files,
+parsing XML stuff and so on.  There are equally powerful editor:
+
+Eclipse
+,,,,,,,
+
+Very powerful but difficult to program.  Lacks an easy scripting
+language for common tasks (like small macro-recording actions).  Plug-in
+architecture is very stable, and even if some plug-in crashes, the user
+is well protected.  But Emacs is more stable even then eclipse!
+
+JEdit
+,,,,,
+
+Very easy to script, but too decoupled.  To get a minimum of emacs
+functionality you need to load a huge amount of plug-in.  The plug-in
+model is good, but they don't play nicely between them.  A typical bug
+is a "user focus war" and the frequent errors mess up things.  This is
+unacceptable in a production environment
+
+Vim
+,,,
+
+Smaller and equally powerful, it has only a problem: cryptic sequence
+of keys needed to learn.  And typing your name after launching Vim can
+destroy your file in a snap!  Okay I am joking.  There is a well-known
+war between emacs and vi.  And if you are reading this document, you are
+on my side, young Jedi :-)
+
+Magic save_excursion(f) method
+------------------------------
+
+In Pymacs 2.0 has been added a magical save_excursion() method to the
+lisp object.  For example, instead of::
+
+  l=Let()
+  l.push_excursion()
+  myFantasticFunction()
+  l.pop_excursion()
+
+You can write a more Emacs Lisp-like code::
+
+  lisp.save_excursion(myFantasticFunction)
+
+This lead to a simpler code.  The new save_excursion() method executes
+pop_excursion even in case of errors, so myFantasticFunction() need not
+worry of them.
+
+Useful Extension
+================
+
+Enanched Python Mode
+--------------------
+
+Under the extensions folder you find a modified version of python-mode,
+provided as file :file:`python-mode.diffs`.  These diffs are relative to
+:file:`python-mode-1.0.tar.gz` as found at:
+
+  http://sourceforge.net/projects/python-mode/
+
+Last released version is dated at the end of 2005, so it seems to me
+quite frozen.  For an usage example execute the Emacs Lisp function
+"pycomplete-test"
+
+Emacs Server as XMLRPC
+----------------------
+
+Warning: this is an unsafe and very very experimental feature.
+
+Is it possible to publish emacs as a python XMLRPC server.  You will be
+virtually able to control emacs remotely, and spread the Stallman verb
+to the Universe :) Okay I am joking here.
+
+First of all, import into emacs the rpcserver.py found in the extensions
+folder::
+
+  (pymacs-load "pymacs-2.0/extensions.rpcserver")
+
+then activate it issuing the command M-x rpcserver-publish-XMLRPC-Server
+
+Emacs will freeze, waiting requests.
+
+Open a python prompt and try something like::
+
+  import xmlrpclib
+  s = xmlrpclib.Server('http://127.0.0.1:9000')
+  s.message("hi emacs, I am remoted hosted")
+  s.closeConnection()
+
+You can find a more complex example in extensions/rpcTest.py Keep in
+mind emacs will froze while the server is running.  I have not yet tested
+the server on a long-running procedure, so please do some tests before
+using it heavily.
+
+Troubleshooting
+===============
+
+I see a lot of "Garbage Collecting..." messages blinking on the emacs side
+--------------------------------------------------------------------------
+
+This messages aren't a problem, but can slow down a bit your emacs
+side.  If you have plenty of RAM, try executing something like::
+
+  lisp("""
+             (setq gc-cons-threshold 3558000)
+     """)
+
+pymacs-load "path-to-mymodule"  seems working only the first time
+-----------------------------------------------------------------
+
+This problem was reported on python 2.5 at the moment.  Usually is
+solved putting a dot in the last part of the filename parameter.
+
+Suppose you have a package "myPackage" and a file "utils.py" inside it.
+
+You should write::
+
+  (pymacs load "/home/jj/emacs/myPackage.utils")
+
+this syntax works well every time.  To avoid the "ImportError: No module
+named extensions2.0.pycomplete-serverice" message, remember to add an
+empty __init__.py file in the /home/jj/emacs/myPackage directory
+
+fp-maybe-pymacs-reload emits an error and stop working.
+-------------------------------------------------------
+
+This problem is reported on emacs 21.4 on Linux Fedora Core 6.  I have
+noticed this bug disappears if the callback function is put as the last
+hook::
+
+  (add-hook 'after-save-hook 'fp-maybe-pymacs-reload 'append)
+
+It seems there is a problem calling a Pymacs function inside an hook
+callback function.  This bug is hardly to find because frequently you
+define only an hook for after-save-hook.
+
+Can you give me a .emacs to play with?
+--------------------------------------
+
+If you use the new customization feature of the latest emacs releases,
+you will not need a big .emacs.
+
+First of all, my advice is to develop a separate config.el file.  Load
+the config.el in the .emacs, because emacs tends to write at the end of
+.emacs its customization.
+
+Then stick with emacs, and for the first times avoid XEmacs: I have
+found far more packages working for emacs, and the two programs have
+some incompatibilities.
+
+You can find a huge list of init file at
+http://www.emacswiki.org/cgi-bin/wiki/CategoryDotEmacs
+
+Have fun!

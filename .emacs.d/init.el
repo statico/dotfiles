@@ -116,7 +116,51 @@
 ;; "This automatically indents newlines and attempts to locate the
 ;; cursor at the appropriate, whitespace-sensitive location whenever
 ;; you press Return."
-(add-hook 'python-mode-hook '(lambda () 
+(add-hook 'python-mode-hook '(lambda ()
                                (define-key python-mode-map "\C-m"
                                  'newline-and-indent)))
+
+;;(defun load-ropemacs ()
+;;  "Load pymacs and ropemacs"
+;;  (interactive)
+;;  (setenv "PYTHONPATH" (concat (getenv "PYTHONPATH")
+;;                                ":" (expand-file-name "~/.emacs.d/python/Pymacs-0.23")))
+;;  (setq pymacs-load-path '("~/.emacs.d/python/rope-0.9.3"
+;;                            "~/.emacs.d/python/ropemode"
+;;                            "~/.emacs.d/python/ropemacs"))
+;;  (load "~/.emacs.d/python/Pymacs-0.23/pymacs.el")
+;;  (require 'pymacs)
+;;  (pymacs-load "ropemacs" "rope-")
+;;  ;; ropemacs variables
+;;  (setq ropemacs-confirm-saving 'nil)
+;;  (setq ropemacs-enable-autoimport 't)
+;;  (setq ropemacs-autoimport-modules '("os" "shutil"))
+;;  (setq ropemacs-autoimport-underlineds 't)
+;;  )
+;;(global-set-key "\C-xpl" 'load-ropemacs)
+
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+
+(setenv "PYTHONPATH" (concat (getenv "PYTHONPATH")
+                              ":" (expand-file-name "~/.emacs.d/python/Pymacs-0.23")))
+(eval-after-load "pymacs"
+  '(setq pymacs-load-path '("~/.emacs.d/python/rope-0.9.3"
+                            "~/.emacs.d/python/ropemode"
+                            "~/.emacs.d/python/ropemacs")))
+
+(load "~/.emacs.d/python/Pymacs-0.23/pymacs.el")
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
+(setq ropemacs-confirm-saving 'nil)
+(setq ropemacs-autoimport-modules '("os" "shutil"))
+(setq ropemacs-autoimport-underlineds t)
+
+;; And now some magic from Ryan
+;; ( http://github.com/EnigmaCurry/emacs/blob/master/ryan-python.el )
+
 

@@ -1,0 +1,43 @@
+Metadata-Version: 1.0
+Name: rope
+Version: 0.9.3
+Summary: a python refactoring library...
+Home-page: http://rope.sf.net/
+Author: Ali Gholami Rudi
+Author-email: aligrudi@users.sourceforge.net
+License: GNU GPL
+Description: 
+        ========================================
+        rope, a python refactoring library ...
+        ========================================
+        
+        
+        Overview
+        ========
+        
+        `Rope`_ is a python refactoring library.
+        
+        .. _`rope`: http://rope.sf.net/
+        
+        
+        New Features
+        ============
+        
+        * codeassist: better handling of unicode in docstrings
+        * codeassist: handling builtin unknowns, such as sys.stdout
+        * codeassist: proposals scopes and types revised
+        * fscommands: handle hg crew ui changes
+        * patchedast: handle ExtSlice node
+        
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Operating System :: OS Independent
+Classifier: Environment :: X11 Applications
+Classifier: Environment :: Win32 (MS Windows)
+Classifier: Environment :: MacOS X
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development

@@ -1,0 +1,11 @@
+*.pyc
+.stamp
+Pymacs/__init__.py
+build
+contrib/Giorgi/Pymacs/__init__.py
+contrib/Giorgi/setup.py
+contrib/rebox/Pymacs/__init__.py
+contrib/rebox/setup.py
+pymacs.el
+pymacs.pdf
+pymacs.rst
