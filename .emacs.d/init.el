@@ -1,98 +1,122 @@
-;;; init.el --- Where all the magic begins
 ;;
-;; Part of the Emacs Starter Kit
+;; Ian's Emacs config
 ;;
-;; This is the first thing to get loaded.
+;; Inspiration:
+;; - http://github.com/EnigmaCurry/emacs
+;; - http://github.com/technomancy/emacs-starter-kit
 ;;
-;; "Emacs outshines all other editing software in approximately the
-;; same way that the noonday sun does the stars. It is not just bigger
-;; and brighter; it simply makes everything else vanish."
-;; -Neal Stephenson, "In the Beginning was the Command Line"
 
-;; Turn off mouse interface early in startup to avoid momentary display
-;; You really don't need these; trust me.
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; Load path etc.
+;; ----------------------------------------------------------------------------
+;; Packages
+;; ----------------------------------------------------------------------------
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
+(add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
-;; Load up ELPA, the package manager
-
-(add-to-list 'load-path dotfiles-dir)
-
-(require 'package)
-(package-initialize)
-(require 'starter-kit-elpa)
-
-(add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit"))
-
-(setq autoload-file (concat dotfiles-dir "loaddefs.el"))
-(setq package-user-dir (concat dotfiles-dir "elpa"))
-(setq custom-file (concat dotfiles-dir "custom.el"))
-
-;; These should be loaded on startup rather than autoloaded on demand
-;; since they are likely to be used in every session
-
-(require 'cl)
+(require 'cl)         ;; Common Lisp Extensions
+(require 'ffap)       ;; Find File improvements
+(require 'uniquify)   ;; Unique buffer names
+(require 'ansi-color) ;; Support ANSI color when running commands
+(require 'recentf)    ;; Recent files
 (require 'saveplace)
-(require 'ffap)
-(require 'uniquify)
-(require 'ansi-color)
-(require 'recentf)
 
-(setq viper-mode t)
-(setq viper-expert-level 4)
-(require 'viper)
+;; vendor plugins
+(require 'auto-complete-config)
+(require 'color-theme)
+(require 'cperl-mode)
+(require 'css-mode)
+(require 'diff-git)
+(require 'eshell-vc)
+(require 'espresso)
+(require 'highlight-parentheses)
+(require 'highline)
+(require 'idle-highlight)
+(require 'ido)
+(require 'magit)
+(require 'markdown-mode)
+(require 'nav)
+(require 'whitespace)
+(require 'yaml-mode)
+(require 'zenburn)
 
-;; Command key becomes meta.
+;; ----------------------------------------------------------------------------
+;; Emacs Options
+;; ----------------------------------------------------------------------------
+
+;; Show line & column number
+(column-number-mode 1)
+
+;; Highlight matching parens
+(show-paren-mode 1)
+
+;; Show the scratch buffer at startup, not the welcome screen
+(setq inhibit-startup-screen 1)
+
+;; Show empty lines at the bottom of a frame
+(setq indicate-empty-lines 1)
+
+;; Save locations between files
+(setq-default save-place t)
+
+;; Command key is Meta on OS X
 (setq mac-command-modifier 'meta)
 
-;; backport some functionality to Emacs 22 if needed
-(require 'dominating-file)
-
-;; Load up starter kit customizations
-
-(require 'starter-kit-defuns)
-(require 'starter-kit-bindings)
-(require 'starter-kit-misc)
-(require 'starter-kit-registers)
-(require 'starter-kit-eshell)
-(require 'starter-kit-lisp)
-(require 'starter-kit-perl)
-(require 'starter-kit-ruby)
-(require 'starter-kit-js)
-
-(regen-autoloads)
-(load custom-file 'noerror)
-
-;; Color is nice.
-(if window-system
-  (color-theme-zenburn)
-  )
-
-;; No backup files, thanks.
+;; No backup files, thanks
 (setq make-backup-files nil)
 
-;; No tabs, 2 spaces per tab.
+;; No tabs, 4 spaces per tab
 (setq tab-width 4)
 (setq-default indent-tabs-mode nil)
 
-;; Use C-x/C-c/C-v as cut/copy/paste.
-;; (cua-mode t)
+;; Color theming
+(color-theme-initialize)
+(if window-system (color-theme-tango))
 
-;; You can keep system- or user-specific customizations here
-(setq system-specific-config (concat dotfiles-dir system-name ".el")
-      user-specific-config (concat dotfiles-dir user-login-name ".el")
-      user-specific-dir (concat dotfiles-dir user-login-name))
-(add-to-list 'load-path user-specific-dir)
+;; Improved buffer switching and stuff
+(ido-mode t)
 
-(if (file-exists-p system-specific-config) (load system-specific-config))
-(if (file-exists-p user-specific-config) (load user-specific-config))
-(if (file-exists-p user-specific-dir)
-  (mapc #'load (directory-files user-specific-dir nil ".*el$")))
+;; Auto-completion
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/ac-dict")
+(ac-config-default)
 
-;;; init.el ends here
+;; Make it a little easier to move between window
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings 'meta))
+
+;; Make C-x/c/v into cut-copy-paste when text is selected
+(cua-mode t)
+
+;; ----------------------------------------------------------------------------
+;; Bindings
+;; ----------------------------------------------------------------------------
+
+;; Font-size adjustment from http://is.gd/iaAo
+(defun custom/increase-font-size ()
+  (interactive)
+  (set-face-attribute 'default
+                      nil
+                      :height
+                      (ceiling (* 1.10
+                                  (face-attribute 'default :height)))))
+(defun custom/decrease-font-size ()
+  (interactive)
+  (set-face-attribute 'default
+                      nil
+                      :height
+                      (floor (* 0.9
+                                (face-attribute 'default :height)))))
+(global-set-key (kbd "C-M-+") 'custom/increase-font-size)
+(global-set-key (kbd "C-M--") 'custom/decrease-font-size)
+
+;; ----------------------------------------------------------------------------
+;; Python
+;; ----------------------------------------------------------------------------
+
+;; "This automatically indents newlines and attempts to locate the
+;; cursor at the appropriate, whitespace-sensitive location whenever
+;; you press Return."
+(add-hook 'python-mode-hook '(lambda () 
+                               (define-key python-mode-map "\C-m"
+                                 'newline-and-indent)))
+
