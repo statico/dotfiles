@@ -17,6 +17,8 @@
 (require 'recentf)    ;; Recent files
 (require 'saveplace)
 
+;; vendor plugins
+(require 'auto-complete-config)
 (require 'color-theme)
 (require 'cperl-mode)
 (require 'css-mode)
@@ -58,23 +60,13 @@
 ;; Improved buffer switching and stuff
 (ido-mode t)
 
+;; Auto-completion
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/ac-dict")
+(ac-config-default)
+
 ;; ----------------------------------------------------------------------------
 ;; Python
 ;; ----------------------------------------------------------------------------
-
-;; Enable "electric pairs", courtesy jesselegg.com
-(add-hook 'python-mode-hook
-          (lambda ()
-            (define-key python-mode-map "\"" 'electric-pair)
-            (define-key python-mode-map "\'" 'electric-pair)
-            (define-key python-mode-map "(" 'electric-pair)
-            (define-key python-mode-map "[" 'electric-pair)
-            (define-key python-mode-map "{" 'electric-pair)))
-(defun electric-pair ()
-  "Insert character pair without sournding spaces"
-  (interactive)
-  (let (parens-require-spaces)
-    (insert-pair)))
 
 ;; "This automatically indents newlines and attempts to locate the
 ;; cursor at the appropriate, whitespace-sensitive location whenever
