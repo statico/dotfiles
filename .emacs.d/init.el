@@ -38,6 +38,7 @@
 (require 'nav)
 (require 'whitespace)
 (require 'yaml-mode)
+(require 'yasnippet-bundle)
 (require 'zenburn)
 
 ;; ----------------------------------------------------------------------------
@@ -86,6 +87,10 @@
 
 ;; Make C-x/c/v into cut-copy-paste when text is selected
 (cua-mode t)
+
+;; Configure YASnippet
+(setq yas/root-directory "~/.emacs.d/snippets")
+(yas/load-directory yas/root-directory)
 
 ;; ----------------------------------------------------------------------------
 ;; Bindings
