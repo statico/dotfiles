@@ -26,15 +26,15 @@
 (require 'highlight-parentheses)
 (require 'highline)
 (require 'idle-highlight)
+(require 'ido)
 (require 'magit)
 (require 'markdown-mode)
 (require 'nav)
 (require 'yaml-mode)
 (require 'zenburn)
 
-
 ;; ----------------------------------------------------------------------------
-;; Options
+;; Emacs Options
 ;; ----------------------------------------------------------------------------
 
 ;; Save locations between files
@@ -46,10 +46,39 @@
 ;; No backup files, thanks.
 (setq make-backup-files nil)
 
-;; No tabs, 2 spaces per tab.
+;; No tabs, 4 spaces per tab.
 (setq tab-width 4)
 (setq-default indent-tabs-mode nil)
 
 ;; Color theming
 (color-theme-initialize)
 (if window-system (color-theme-zenburn))
+
+;; Improved buffer switching and stuff
+(ido-mode t)
+
+;; ----------------------------------------------------------------------------
+;; Python
+;; ----------------------------------------------------------------------------
+
+;; Enable "electric pairs", courtesy jesselegg.com
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map "\"" 'electric-pair)
+            (define-key python-mode-map "\'" 'electric-pair)
+            (define-key python-mode-map "(" 'electric-pair)
+            (define-key python-mode-map "[" 'electric-pair)
+            (define-key python-mode-map "{" 'electric-pair)))
+(defun electric-pair ()
+  "Insert character pair without sournding spaces"
+  (interactive)
+  (let (parens-require-spaces)
+    (insert-pair)))
+
+;; "This automatically indents newlines and attempts to locate the
+;; cursor at the appropriate, whitespace-sensitive location whenever
+;; you press Return."
+(add-hook 'python-mode-hook '(lambda () 
+                               (define-key python-mode-map "\C-m"
+                                 'newline-and-indent)))
+
