@@ -1,8 +1,0 @@
-* TODO for `Rebox'                              allout -*- outline -*-
-
-.. Rebox.
-. : Debug the Undo list cleanup!
-. : Try the fall back refiller.
-. : Unicode boxes (suggested by Bruno).
-.  , U+231C..U+231F
-.  , U+25xx

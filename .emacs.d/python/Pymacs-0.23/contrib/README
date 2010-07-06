@@ -1,7 +1,0 @@
-.. role:: file(literal)
-
-====================================
-Contents of Pymacs' :file:`contrib/`
-====================================
-
-Each subdirectory of :file`contrib/` contains its own :file:`README` file.
