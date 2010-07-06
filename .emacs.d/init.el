@@ -1,5 +1,9 @@
 ;;
-;; Ian's init.el as he learns Emacs
+;; Ian's Emacs config
+;;
+;; Inspiration:
+;; - http://github.com/EnigmaCurry/emacs
+;; - http://github.com/technomancy/emacs-starter-kit
 ;;
 
 ;; ----------------------------------------------------------------------------
@@ -40,16 +44,28 @@
 ;; Emacs Options
 ;; ----------------------------------------------------------------------------
 
+;; Show line & column number
+(column-number-mode 1)
+
+;; Highlight matching parens
+(show-paren-mode 1)
+
+;; Show the scratch buffer at startup, not the welcome screen
+(setq inhibit-startup-screen 1)
+
+;; Show empty lines at the bottom of a frame
+(setq indicate-empty-lines 1)
+
 ;; Save locations between files
 (setq-default save-place t)
 
 ;; Command key is Meta on OS X
 (setq mac-command-modifier 'meta)
 
-;; No backup files, thanks.
+;; No backup files, thanks
 (setq make-backup-files nil)
 
-;; No tabs, 4 spaces per tab.
+;; No tabs, 4 spaces per tab
 (setq tab-width 4)
 (setq-default indent-tabs-mode nil)
 
@@ -63,6 +79,28 @@
 ;; Auto-completion
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/vendor/ac-dict")
 (ac-config-default)
+
+;; ----------------------------------------------------------------------------
+;; Bindings
+;; ----------------------------------------------------------------------------
+
+;; Font-size adjustment from http://is.gd/iaAo
+(defun custom/increase-font-size ()
+  (interactive)
+  (set-face-attribute 'default
+                      nil
+                      :height
+                      (ceiling (* 1.10
+                                  (face-attribute 'default :height)))))
+(defun custom/decrease-font-size ()
+  (interactive)
+  (set-face-attribute 'default
+                      nil
+                      :height
+                      (floor (* 0.9
+                                (face-attribute 'default :height)))))
+(global-set-key (kbd "C-M-+") 'custom/increase-font-size)
+(global-set-key (kbd "C-M--") 'custom/decrease-font-size)
 
 ;; ----------------------------------------------------------------------------
 ;; Python
