@@ -29,7 +29,7 @@
       python-mode-hook
       '(lambda () (progn
 
-                    ;;(set-variable 'py-indent-offset 2)
+                    (set-variable 'py-indent-offset 4)
                     (set-variable 'py-smart-indentation t)
                     (set-variable 'indent-tabs-mode nil)
 
