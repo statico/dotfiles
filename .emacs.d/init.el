@@ -65,6 +65,9 @@
 ;; Stop beeping
 (setq visible-bell t)
 
+;; Hide the toolbar
+(tool-bar-mode -1)
+
 ;; No backup files, thanks
 (setq make-backup-files nil)
 (setq auto-save-default nil)
