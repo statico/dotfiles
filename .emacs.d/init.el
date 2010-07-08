@@ -23,7 +23,6 @@
 ;; vendor plugins
 (require 'auto-complete-config)
 (require 'color-theme)
-(require 'cperl-mode)
 (require 'css-mode)
 (require 'diff-git)
 (require 'eshell-vc)
@@ -34,7 +33,6 @@
 (require 'ido)
 (require 'magit)
 (require 'markdown-mode)
-(require 'nav)
 (require 'whitespace)
 (require 'yaml-mode)
 (require 'yasnippet-bundle)
@@ -94,9 +92,6 @@
 ;; Make it a little easier to move between window
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings 'meta))
-
-;; Make C-x/c/v into cut-copy-paste when text is selected
-(cua-mode t)
 
 ;; Configure YASnippet
 (setq yas/root-directory "~/.emacs.d/snippets")
