@@ -68,6 +68,10 @@
 ;; Hide the toolbar
 (tool-bar-mode -1)
 
+;; Hide scroll bars by default
+(set-scroll-bar-mode 'right)
+(scroll-bar-mode -1)
+
 ;; No backup files, thanks
 (setq make-backup-files nil)
 (setq auto-save-default nil)
