@@ -1,3 +1,6 @@
+URxvt*font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-1
+URxvt*boldFont: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-1
+
 XTerm*foreground: #ffffff
 XTerm*background: #000000
 XTerm*color0: #585858
@@ -72,4 +75,3 @@ URxvt*visualbell:       true
 URxvt*scrollBar:        false
 URxvt*scrollBar_right:  true
 URxvt*saveLines:        3000
-
