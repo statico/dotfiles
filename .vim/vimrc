@@ -418,6 +418,7 @@ function! ToggleMiniBufVerticalness()
     TMiniBufExplorer
     TMiniBufExplorer
 endfunction
+let g:miniBufExplorerMoreThanOne=999 " Don't open MBE by default
 
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
