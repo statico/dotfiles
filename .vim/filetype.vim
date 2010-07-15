@@ -1,12 +1,45 @@
 "
 " manual filetype assignment
 "
+
+" Template syntax selector from Armin Ronacher (mitsuhiko). {{{1
+fun! s:SelectHTML()
+let n = 1
+while n < 50 && n < line("$")
+  " check for jinja
+  if getline(n) =~ '{%\s*\(extends\|block\|macro\|set\|if\|for\|include\|trans\)\>'
+    set ft=htmljinja
+    return
+  endif
+  " check for django
+  if getline(n) =~ '{%\s*\(extends\|block\|comment\|ssi\|if\|for\|blocktrans\)\>'
+    set ft=htmldjango
+    return
+  endif
+  " check for mako
+    if getline(n) =~ '<%\(def\|inherit\)'
+      set ft=mako
+      return
+    endif
+    " check for genshi
+    if getline(n) =~ 'xmlns:py\|py:\(match\|for\|if\|def\|strip\|xmlns\)'
+      set ft=genshi
+      return
+    endif
+    let n = n + 1
+  endwhile
+  " go with html
+  set ft=html
+endfun
+" }}}
+
 augroup filetypedetect
 
 au BufNewFile,BufRead *.as      setf actionscript
 au BufNewFile,BufRead *.bb      setf xdefaults
 au BufNewFile,BufRead *.csv     setf csv
 au BufNewFile,BufRead *.flr     setf actionscript
+au BufNewFile,BufRead *.html,*.htm  call s:SelectHTML()
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
 au BufNewFile,BufRead *.less    setf less
@@ -52,7 +85,7 @@ au BufNewFile,BufRead *.tt2
             \   setf tt2html |
             \ else |
             \   setf tt2 |
-            \ endif 
+            \ endif
 
 augroup END
 

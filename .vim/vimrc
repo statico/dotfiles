@@ -74,7 +74,7 @@ nmap ; :FufBuffer<CR>
 nmap <D-e> :FufFile<CR>
 nmap <M-e> :FufFile<CR>
 
-" missing emacs-like bindings in insert mode
+" emacs-like bindings in insert mode
 imap <C-e> <C-o>$
 
 " emacs-like bindings in command line
@@ -230,6 +230,7 @@ set copyindent              " Make autoindent use the same chars as prev line
 set directory-=.            " Don't store temp files in cwd
 set encoding=utf8           " UTF-8 by default
 set expandtab               " No tabs
+set fileformats=unix,dos,mac  " Prefer Unix
 set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄
                             " Unicode chars for diffs/folds, and rely on
                             " Colors for window borders
@@ -268,6 +269,7 @@ set showmatch               " Hilight matching braces/parens/etc.
 set sidescrolloff=3         " Keep cursor away from this many chars left/right
 set smartcase               " Lets you search for ALL CAPS
 set softtabstop=4           " Spaces 'feel' like tabs
+set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})  " An improved status line
 set suffixes+=.pyc          " Ignore these files when tab-completing
 set tabstop=4               " The One True Tab
 set notitle                 " Don't set the title of the Vim window

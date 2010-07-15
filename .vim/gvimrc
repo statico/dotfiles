@@ -8,7 +8,9 @@ set guioptions=aigrLm
 set mousemodel=popup
 set scrolloff=6
 set sidescrolloff=6
-set visualbell errorbells
+set visualbell
+set errorbells
+set cursorline
 
 " now load specifics to this machine
 source ~/.gvimlocal
