@@ -38,6 +38,9 @@
 (require 'yasnippet-bundle)
 (require 'zenburn)
 
+(add-to-list 'load-path "~/.emacs.d/vendor/ecb-2.40")
+(require 'ecb-autoloads)
+
 ;; ----------------------------------------------------------------------------
 ;; Emacs Options
 ;; ----------------------------------------------------------------------------
@@ -67,8 +70,7 @@
 (tool-bar-mode -1)
 
 ;; Hide scroll bars by default
-(set-scroll-bar-mode 'right)
-(scroll-bar-mode -1)
+(scroll-bar-mode 'nil)
 
 ;; No backup files, thanks
 (setq make-backup-files nil)
@@ -106,6 +108,13 @@
 ;; ----------------------------------------------------------------------------
 ;; Bindings
 ;; ----------------------------------------------------------------------------
+
+;; Let's try Viper. Emacs hurts my wrists.
+;; (set viper-mode 't)
+(require 'viper)
+
+;; I tried CUA mode, but I didn't like it.
+(cua-mode 'nil)
 
 ;; Font-size adjustment from http://is.gd/iaAo
 (defun custom/increase-font-size ()

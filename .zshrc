@@ -31,13 +31,22 @@ function _is() {
     return $( [ "$HOSTTYPE" = "$1" ] )
 }
 
+# Returns whether out terminal supports color.
+function _color() {
+    return $( [ -z "$INSIDE_EMACS" ] )
+}
+
 # ENVIRONMENT {{{1
 
 # Yes, this defeats the point of the TERM variable. But, face it, everything
 # uses modern ANSI escape sequences, and I've found that forcing everything to
 # be "rxvt" just about works everywhere. (If you want to know if you're in
 # screen, use SHLVL or TERMCAP.)
-export TERM=rxvt
+if _color; then
+    export TERM=rxvt
+else
+    export TERM=xterm
+fi
 
 # Utility variables.
 if which hostname >/dev/null 2>&1; then
@@ -60,7 +69,9 @@ export HOSTTYPE
 # PAGER
 if _has less; then
     export PAGER=less
-    export LESS='-R'
+    if _color; then
+        export LESS='-R'
+    fi
 fi
 
 # EDITOR
@@ -71,13 +82,17 @@ elif _has vi; then
 fi
 
 # GNU grep
-export GREP_OPTIONS='--color=auto'
-export GREP_COLOR='1;32'
+if _color; then
+    export GREP_OPTIONS='--color=auto'
+    export GREP_COLOR='1;32'
+fi
 
 # GNU and BSD ls colorization.
-export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
-export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
-export CLICOLOR=1
+if _color; then
+    export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
+    export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
+    export CLICOLOR=1
+fi
 
 # Overridable locale support.
 if [ -z $$LC_ALL ]; then
@@ -191,7 +206,7 @@ fi
 
 # Linux should definitely have Gnu coreutils, right?
 if _is Linux; then
-    if _try ls --color; then
+    if _color && _try ls --color; then
         alias ls='ls --color'
     fi
 fi
@@ -627,6 +642,10 @@ local newline="
 # line and set PS1 to the second line. See http://xrl.us/bf3wh for more info.
 
 function colorprompt {
+    if ! _color; then
+        uncolorprompt
+        return
+    fi
     mode=${1:-0}
     line1=(
         "%{[${mode}m%}[%m:%/]"
