@@ -87,6 +87,7 @@
 :TlistUndebug	taglist.txt	/*:TlistUndebug*
 :TlistUnlock	taglist.txt	/*:TlistUnlock*
 :TlistUpdate	taglist.txt	/*:TlistUpdate*
+ConqueTerm	conque_term.txt	/*ConqueTerm*
 CreateBundleSnippet	snippets_emu.txt	/*CreateBundleSnippet*
 CreateSnippet	snippets_emu.txt	/*CreateSnippet*
 NERDTree	NERD_tree.txt	/*NERDTree*
@@ -147,6 +148,13 @@ Tlist_Set_App()	taglist.txt	/*Tlist_Set_App()*
 Tlist_Update_File_Tags()	taglist.txt	/*Tlist_Update_File_Tags()*
 abc	fuf.txt	/*abc*
 basic-snippet	snippets_emu.txt	/*basic-snippet*
+conque_term-bugs	conque_term.txt	/*conque_term-bugs*
+conque_term-changelog	conque_term.txt	/*conque_term-changelog*
+conque_term-contribute	conque_term.txt	/*conque_term-contribute*
+conque_term-requirements	conque_term.txt	/*conque_term-requirements*
+conque_term-settings	conque_term.txt	/*conque_term-settings*
+conque_term-todo	conque_term.txt	/*conque_term-todo*
+conque_term-usage	conque_term.txt	/*conque_term-usage*
 creating-snippets	snippets_emu.txt	/*creating-snippets*
 cs	surround.txt	/*cs*
 ds	surround.txt	/*ds*
