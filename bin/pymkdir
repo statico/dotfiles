@@ -8,7 +8,7 @@ if len(sys.argv) != 2:
 
 path = sys.argv[1]
 
-curdir = ''
+curdir = '.'
 for subdir in os.path.split(path):
   curdir = os.path.join(curdir, subdir)
   if os.path.isdir(curdir):
