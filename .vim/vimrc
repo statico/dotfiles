@@ -496,7 +496,7 @@ highlight def link treeRO treeFile
 highlight SpecialKey ctermbg=Yellow guibg=Yellow
 
 " make menu selections visible
-highlight PmenuSel ctermfg=white ctermbg=magenta cterm=reverse
+highlight PmenuSel ctermfg=black ctermbg=magenta
 
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------
