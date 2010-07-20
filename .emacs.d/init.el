@@ -12,6 +12,7 @@
 
 (add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d/vendor")
+(add-to-list 'load-path "~/.emacs.d/vendor/icicles")
 
 (require 'cl)         ;; Common Lisp Extensions
 (require 'ffap)       ;; Find File improvements
@@ -29,6 +30,7 @@
 (require 'espresso)
 (require 'highlight-parentheses)
 (require 'highline)
+(require 'icicles)
 (require 'idle-highlight)
 (require 'ido)
 (require 'magit)
