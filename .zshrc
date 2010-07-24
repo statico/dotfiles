@@ -287,6 +287,10 @@ function last-command-output () {
 zle -N last-command-output
 bindkey "^[n" last-command-output
 
+# Automatically quote URLs when pasted
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+
 
 # PRANK-PROTECTION {{{1
 
