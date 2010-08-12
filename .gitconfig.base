@@ -17,6 +17,9 @@
 	civ = commit -v
 	civa = commit -v -a
 	co = checkout
+	d = diff
+	dc = diff --cached
+	diffc = diff --cached
 	forkup = pull --rebase upstream
 	last = log -1
 	newb = checkout -b
