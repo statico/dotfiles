@@ -39,6 +39,7 @@ au BufNewFile,BufRead *.as      setf actionscript
 au BufNewFile,BufRead *.bb      setf xdefaults
 au BufNewFile,BufRead *.csv     setf csv
 au BufNewFile,BufRead *.flr     setf actionscript
+au BufNewFile,BufRead *.html    setlocal cino=
 au BufNewFile,BufRead *.html,*.htm  call s:SelectHTML()
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
