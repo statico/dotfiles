@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 #
 # Ian's dotfile installer. Usage:
 #
@@ -52,7 +52,7 @@ function link() {
     fi
 
     # Update existing or create new symlinks.
-    ln -vsf $src $dest
+    /bin/ln -vsf $src $dest
 }
 
 function unpack_tarball() {
@@ -88,6 +88,7 @@ else
         git clone $gitbase $basedir
         cd $basedir
     else
+        warn "Git not installed."
         unpack_tarball
     fi
 fi
@@ -107,7 +108,7 @@ done
 note "Installing bin/ directory..."
 mkdir -v -p $bindir
 for path in bin/* ; do
-    relpath=$( basename $path )
+    relpath=$( /usr/bin/basename $path )
     link $basedir/$path $bindir/$relpath
 done
 
@@ -115,7 +116,7 @@ note "Symlinking Vim configurations..."
 for rc in vim gvim; do
     link $basedir/.vim/${rc}rc $HOME/.${rc}rc
     if [ ! -e $HOME/.${rc}local ]; then
-        touch $HOME/.${rc}local
+        /usr/bin/touch $HOME/.${rc}local
     fi
 done
 link $basedir/.vim/_vimoutliner $HOME/.vimoutliner
