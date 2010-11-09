@@ -89,9 +89,6 @@ cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 cnoremap <Esc>d <S-right><Delete>
 
-" lookup word with meta-D
-nmap <Esc>d :!w3m -dump http://dictionary.reference.com/browse/<cword> \| perl -e'while (<>) {last if /results/}; while (<>) {print}' \| less<CR>
-
 " CTRL-z is too close, plus I use it very frequently, and i want to write
 " first
 if !has('gui_running')
