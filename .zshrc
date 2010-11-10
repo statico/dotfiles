@@ -702,7 +702,7 @@ bindkey "^L" clear-screen-and-precmd
 
 # Create login shortcuts from SSH config file, which has 'Host' directives.
 # (If you set up an ssh host in .ssh/config, it become an alias.)
-if [ -d $HOME/.ssh/config ]; then
+if [ -e "$HOME/.ssh/config" ]; then
     for host in $(grep -E '^Host +\w+$' $HOME/.ssh/config | awk '{print $2}'); do
         alias $host="ssh $host"
     done
