@@ -150,6 +150,7 @@ alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
+alias g='git'
 alias gpgdecrypt='gpg --decrypt-files'
 alias gpge='gpg --edit-key'
 alias gpgencrypt='gpg --default-recipient-self --armor --encrypt-files'
@@ -175,6 +176,7 @@ alias scp='scp -C -p'
 alias screen='screen -U'
 alias sd='svn diff --diff-cmd=diff --extensions="-ydw -W$COLUMNS"'
 alias sshx='ssh -C -c blowfish -X'
+alias st='git status'
 alias svnl='svn log -v -r HEAD'
 alias svnvimdiff='svn diff | vim -R +setf\ diff\ nolist -'
 alias tree="tree -F -A -I CVS"
@@ -336,7 +338,7 @@ function psl () {
 
 # RCS helper functions
 # TODO: Replade 'add .' with 'add -A' when all workstations have a newer Git.
-function st () {
+function sta () {
     if [ -d .svn ]; then
         svn status $@
     elif [ -d CVS ]; then
