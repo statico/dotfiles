@@ -64,6 +64,10 @@ function! PythonFoldText()
   elseif nextline =~ '^\s\+pass\s*$'
     let line = line . ' pass'
   endif
+
+  " Ian's modifications: Just show the line as the fold."
+  return line
+
   "compute the width of the visible part of the window (see Note above)
   let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
   let size = 1 + v:foldend - v:foldstart
