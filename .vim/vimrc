@@ -22,7 +22,7 @@ vmap \B <Esc>:!tabtable<CR>
 nmap \c mt:%!indent -kr --no-tabs<CR>'t
 nmap \d :%!perltidy<CR>
 nmap \e :TMiniBufExplorer<CR>
-nmap \f :let perl_fold=1<CR>:e<CR>:set fdl=1<CR>
+nmap \f :source ~/.vim/plugin/jpythonfold.vim<CR>
 nmap \g mt\d't
 nmap \h mt\H't
 nmap \H :%!tidy -icq -asxhtml -w 80 -utf8<CR>
