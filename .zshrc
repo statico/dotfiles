@@ -552,7 +552,7 @@ bindkey -e
 bindkey -s '\eu' '^Ucd ..; ls^M'
 
 # Connect to my most recently used screen session
-bindkey -s '\ej' "^Urxvt-title biscotti;c -D 1080 -t zsh -c 'source .zshrc ; source .zsh/ssh.zsh ; screen -U -D -R'^M"
+bindkey -s '\ej' "^Ussh c -t screen -U -D -R^M"
 
 # Smart less-adder
 bindkey -s "\el" " 2>&1|less^M"
