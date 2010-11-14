@@ -89,8 +89,9 @@ cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 cnoremap <Esc>d <S-right><Delete>
 
-" Why not use the space key to toggle folds?
+" Why not use the space or return keys to toggle folds?
 nnoremap <space> za
+nnoremap <CR> za
 vnoremap <space> zf
 
 " Search for the word under the cursor in the current directory
@@ -391,9 +392,6 @@ let perl_include_pod = 1
 " perldoc
 let g:perldoc_program='perldoc'
 
-" javascript.vim
-let javaScript_fold = 1
-
 " Explore.vim (comes with Vim 6)
 let explVertical = 1
 let explSplitRight = 1
@@ -450,9 +448,6 @@ endif
 syntax on
 colorscheme default
 
-" folded text was too bright - change to black on cyan bg
-highlight Folded ctermfg=black ctermbg=cyan cterm=none
-
 " window splits & ruler were too bright - change to white on grey
 " (shouldn't change GUI or non-color term appearance)
 highlight StatusLine   cterm=NONE ctermbg=blue ctermfg=white
@@ -476,6 +471,8 @@ highlight SpellLocal   term=underline cterm=underline ctermbg=NONE ctermfg=cyan
 highlight Ignore cterm=bold ctermfg=black
 highlight clear FoldColumn
 highlight def link FoldColumn Ignore
+highlight clear Folded
+highlight link Folded Ignore
 highlight clear LineNr
 highlight! def link LineNr Ignore
 
@@ -509,4 +506,3 @@ highlight PmenuSel ctermfg=black ctermbg=magenta
 
 " now load specifics to this machine
 source ~/.vimlocal
-
