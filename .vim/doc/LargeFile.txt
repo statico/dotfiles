@@ -1,0 +1,55 @@
+*LargeFile.txt*	Editing Large Files Quickly			Sep 23, 2008
+
+Author:  Charles E. Campbell, Jr.  <NdrOchip@ScampbellPfamily.AbizM>
+	  (remove NOSPAM from Campbell's email first)
+Copyright: (c) 2004-2008 by Charles E. Campbell, Jr.	*LargeFile-copyright*
+           The VIM LICENSE applies to LargeFile.vim
+           (see |copyright|) except use "LargeFile" instead of "Vim"
+	   No warranty, express or implied.  Use At-Your-Own-Risk.
+
+==============================================================================
+1. Large File Plugin						*largefile* {{{1
+
+The LargeFile plugin is fairly short -- it simply sets up an |autocmd| that
+checks for large files.  There is one parameter: >
+	g:LargeFile
+which, by default, is 20MB.  Thus with this value of g:LargeFile, 20MByte
+files and larger are considered to be "large files"; smaller ones aren't.  Of
+course, you as a user may set g:LargeFile to whatever you want in your
+<.vimrc> (in units of MBytes).
+
+LargeFile.vim always assumes that when the file size is larger than what
+can fit into a signed integer (2^31, ie. about 2GB) that the file is "Large".
+
+Basically, this autocmd simply turns off a number of features in Vim,
+including event handling, undo, and syntax highlighting, in the interest of
+speed and responsiveness.
+
+LargeFile.vim borrows from vimtip#611.
+
+To undo what LargeFile does, type >
+	:Unlarge
+<
+To redo what LargeFile does, type >
+	:Large
+<
+Note that LargeFile cannot alleviate hardware limitations; vim on 32-bit
+machines are limited to editing 2G files.  If your vim is compiled on a 64-bit
+machine such that it can take advantage of the additional address space, then
+presumably vim could edit up to 9.7 quadrillion byte files (not that I've ever
+tried that!).
+
+==============================================================================
+2. History						*largefile-history* {{{1
+
+  4 : Jan 03, 2008 * made LargeFile.vim :AutoInstall:-able by getscript
+      Apr 11, 2008 * (Daniel Shahaf suggested) that :Large! do the large-file
+                     handling irregardless of file size.  Implemented.
+      Sep 23, 2008 * if getfsize() returns -2 then the file is assumed to be
+		     large
+  3 : May 24, 2007 * Unlarge command included
+                   * If getfsize() returns something less than -1, then it
+		     will automatically be assumed to be a large file.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:fdm=marker:
