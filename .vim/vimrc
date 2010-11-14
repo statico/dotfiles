@@ -89,6 +89,10 @@ cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 cnoremap <Esc>d <S-right><Delete>
 
+" Why not use the space key to toggle folds?
+nnoremap <space> za
+vnoremap <space> zf
+
 " Search for the word under the cursor in the current directory
 nmap <C-k> :!clear; ack -C "\b<cword>\b" \| less -FRX <CR><CR>
 
