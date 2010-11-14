@@ -52,7 +52,7 @@ function link() {
     fi
 
     # Update existing or create new symlinks.
-    /bin/ln -vsf $src $dest
+    ln -vsf $src $dest
 }
 
 function unpack_tarball() {
@@ -108,7 +108,7 @@ done
 note "Installing bin/ directory..."
 mkdir -v -p $bindir
 for path in bin/* ; do
-    relpath=$( /usr/bin/basename $path )
+    relpath=$( basename $path )
     link $basedir/$path $bindir/$relpath
 done
 
@@ -116,7 +116,7 @@ note "Symlinking Vim configurations..."
 for rc in vim gvim; do
     link $basedir/.vim/${rc}rc $HOME/.${rc}rc
     if [ ! -e $HOME/.${rc}local ]; then
-        /usr/bin/touch $HOME/.${rc}local
+        touch $HOME/.${rc}local
     fi
 done
 link $basedir/.vim/_vimoutliner $HOME/.vimoutliner
