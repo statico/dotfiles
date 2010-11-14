@@ -89,6 +89,9 @@ cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 cnoremap <Esc>d <S-right><Delete>
 
+" Search for the word under the cursor in the current directory
+nmap <C-k> :!clear; ack -C "\b<cword>\b" \| less -FRX <CR><CR>
+
 " CTRL-z is too close, plus I use it very frequently, and i want to write
 " first
 if !has('gui_running')
