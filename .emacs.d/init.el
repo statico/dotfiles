@@ -11,12 +11,15 @@
   "Are we running as a Max OS X app?")
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lib"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lib/icicles"))
 
 ;; Color theme
 (require 'color-theme)
 (color-theme-initialize)
 (when gui
   (color-theme-blackboard))
+
+(require 'icicles)
 
 (setq
  inhibit-startup-messages t
@@ -32,7 +35,6 @@
 
 (when gui
   (setq mac-command-modifier 'meta)
-  (cua-mode 'nil)
   (tool-bar-mode -1)
   (scroll-bar-mode 'nil))
 
