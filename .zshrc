@@ -293,6 +293,10 @@ bindkey "^[n" last-command-output
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
+# Turn off completion and weirdness if we're within Emacs.
+if [[ "$EMACS" = "t" ]]; then
+    unsetopt zle
+fi
 
 # PRANK-PROTECTION {{{1
 
@@ -652,6 +656,7 @@ function colorprompt {
         uncolorprompt
         return
     fi
+
     mode=${1:-0}
     line1=(
         "%{[${mode}m%}[%m:%/]"
@@ -671,17 +676,17 @@ function colorprompt {
 }
 
 function uncolorprompt {
-    line1=(
+    newline="
+"
+    temp=(
         "[%m:%/]"
         "%(1j. (%j jobs).)"
         "%(?.. (error %?%))"
-    )
-    line2=(
+	$newline
         "%n %# "
     )
-    temp=${(j::)line1}
-    precmd() { print -P $temp }
-    PS1=${(j::)line2}
+    unfunction precmd &>/dev/null
+    PS1=${(j::)temp}
 }
 
 if [ -n "$SUDO_USER" ]; then
