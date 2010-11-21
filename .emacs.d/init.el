@@ -41,3 +41,6 @@
 
 (global-set-key (kbd "C-w") 'backward-kill-word)
 (global-set-key (kbd "C-x C-k") 'kill-region)
+
+(set-keyboard-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
