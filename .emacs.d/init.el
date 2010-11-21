@@ -44,5 +44,20 @@
 (global-set-key (kbd "C-w") 'backward-kill-word)
 (global-set-key (kbd "C-x C-k") 'kill-region)
 
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
 (set-keyboard-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python
+
+(setenv "PYTHONPATH"
+        (concat (getenv "PYTHONPATH") ":" (expand-file-name "~/.emacs.d/pylib")))
+
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+
