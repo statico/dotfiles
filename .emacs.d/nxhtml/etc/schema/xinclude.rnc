@@ -1,0 +1,35 @@
+default namespace = "http://www.w3.org/2001/XInclude"
+namespace xi = "http://www.w3.org/2001/XInclude"
+
+xi.include.attlist =
+   attribute href     { xsd:anyURI }?,
+   attribute parse    { "xml" | "text" }?,
+   attribute xpointer { xsd:string }?,
+   attribute encoding { xsd:string }?,
+   attribute accept   { xsd:string }?,
+   attribute accept-language { xsd:string }?
+
+xi.include.attlist.extra =
+   attribute * - xi.include.attlist { text }*
+
+xi.include =
+   element xi:include {
+      xi.include.attlist,
+      xi.include.attlist.extra,
+      (xi.fallback? | xi.include.extra)*
+   }
+
+xi.include.extra = notAllowed
+
+xi.fallback.attlist =
+   attribute * { text }*
+
+xi.fallback =
+   element xi:fallback {
+      xi.fallback.attlist, 
+      (xi.include | xi.fallback.extra)*
+   }
+
+xi.fallback.extra = notAllowed
+
+xi.class = xi.include | xi.fallback

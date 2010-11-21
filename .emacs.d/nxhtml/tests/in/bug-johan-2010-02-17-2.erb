@@ -1,0 +1,14 @@
+
+<% semantic_form_for @user_session do |form| %>
+<%= form.error_messages :header_tag => :h3 %>
+<%#= authlogic_facebook_login_button %>
+
+<% form.inputs do %>
+<%= form.input :email %>
+<%= form.input :password %>
+<% end %>
+
+<% form.buttons do %>
+<%= form.commit_button %>
+<% end %>
+<% end %>

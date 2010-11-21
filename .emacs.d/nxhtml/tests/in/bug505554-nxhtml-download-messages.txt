@@ -1,0 +1,98 @@
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+Updated "/home/ranko/.emacs.d/nxhtml/autostart.el"
+Invalid face reference: hi-gold [4 times]
+Reading [application/octet-stream]... 2k of 2k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+Updated "/home/ranko/.emacs.d/nxhtml/autostart22.el"
+Invalid face reference: hi-gold
+Reading [application/octet-stream]... 77 bytes of 66 bytes (117%)
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/emacs22.cmd" was ok
+Reading [application/octet-stream]... 158k of 158k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+Updated "/home/ranko/.emacs.d/nxhtml/nxhtml-loaddefs.el"
+Reading [application/octet-stream]... 16k of 16k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+Updated "/home/ranko/.emacs.d/nxhtml/nxhtmlmaint.el"
+Reading [text/plain]... 1k of 1k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/README.txt" was ok
+Reading [application/octet-stream]... 18k of 18k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+Downloaded "/home/ranko/.emacs.d/nxhtml/web-autoload.el"
+Reading [application/octet-stream]... 95k of 95k (100%) [2 times]
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/web-vcs-temp.tmp
+Downloaded "/home/ranko/.emacs.d/nxhtml/web-vcs.el"
+Contacting host: bazaar.launchpad.net:80
+Reading [application/octet-stream]... 5k of 5k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/alts/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/alts/find-recursive-orig.el" was ok
+Reading [application/octet-stream]... 23k of 23k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/alts/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/alts/javascript-mozlab.el" was ok
+Reading [application/octet-stream]... 97k of 97k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/alts/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/alts/smarty-mode-vdebout.el" was ok
+Contacting host: bazaar.launchpad.net:80 [2 times]
+Reading [image/jpeg]... 25k of 25k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/etc/img/pause/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/img/pause/pause.jpg" was ok
+Reading [image/jpeg]... 26k of 26k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/etc/img/pause/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/img/pause/pause2.jpg" was ok
+Contacting host: bazaar.launchpad.net:80
+Reading [application/octet-stream]... 1k of 1k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/schema/genshi-old.rnc" was ok
+Reading [text/xml]... 150 bytes of 139 bytes (108%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/schema/genshi-schemas.xml" was ok
+Reading [application/octet-stream]... 2k of 2k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+Updated "/home/ranko/.emacs.d/nxhtml/etc/schema/genshi.rnc"
+Reading [application/octet-stream]... 2k of 2k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/schema/mjt.rnc" was ok
+Reading [text/x-diff]... 1k of 1k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/schema/nxml-erb.patch" was ok
+Reading [application/octet-stream]... 1k of 1k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+Downloaded "/home/ranko/.emacs.d/nxhtml/etc/schema/old-genshi.rnc"
+Reading [application/octet-stream]... 2k of 2k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+Downloaded "/home/ranko/.emacs.d/nxhtml/etc/schema/old-qtmstr-xhtml.rnc"
+Reading [application/octet-stream]... 367 bytes of 356 bytes (103%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+Downloaded "/home/ranko/.emacs.d/nxhtml/etc/schema/old-xinclude.rnc"
+Reading [application/octet-stream]... 2k of 2k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/schema/qtmstr-xhtml-old.rnc" was ok
+Reading [application/octet-stream]... 2k of 2k (100%)
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+Updated "/home/ranko/.emacs.d/nxhtml/etc/schema/qtmstr-xhtml.rnc"
+Reading [application/octet-stream]... 3k of 3k (100%)
+Reading... done.
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+File "/home/ranko/.emacs.d/nxhtml/etc/schema/schema-path-patch.el" was ok
+Reading [application/octet-stream]... 890 bytes of 879 bytes (101%)
+Wrote /home/ranko/.emacs.d/nxhtml/etc/schema/web-vcs-temp.tmp
+Updated "/home/ranko/.emacs.d/nxhtml/etc/schema/xinclude.rnc"
+let*: Args out of range: 5023, 5047
+Mark set [2 times]
+Saved text from "Contacting host: bazaar.launchpad.net:80"
+call-interactively: End of buffer
+(New file)

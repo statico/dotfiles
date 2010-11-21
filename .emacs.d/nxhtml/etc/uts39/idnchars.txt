@@ -1,0 +1,894 @@
+﻿# Recommended Identifier Profiles for IDN
+# File: idnchars.txt
+# Version: 2.0
+# Generated: 2006-08-15, 04:35:10 GMT
+# Checkin: $Revision: 1.11 $
+#
+# For documentation and usage, see http://www.unicode.org/reports/tr39/
+#
+# Allowed as output characters
+
+002D          ; output #      (-)  HYPHEN-MINUS
+0030..0039    ; output # [10] (0..9)  DIGIT ZERO..DIGIT NINE
+0041..005A    ; output # [26] (A..Z)  LATIN CAPITAL LETTER A..LATIN CAPITAL LETTER Z
+0061..007A    ; output # [26] (a..z)  LATIN SMALL LETTER A..LATIN SMALL LETTER Z
+00B7          ; output #      (·)  MIDDLE DOT
+00E0..00F6    ; output # [23] (à..ö)  LATIN SMALL LETTER A WITH GRAVE..LATIN SMALL LETTER O WITH DIAERESIS
+00F8..00FF    ; output #  [8] (ø..ÿ)  LATIN SMALL LETTER O WITH STROKE..LATIN SMALL LETTER Y WITH DIAERESIS
+0101          ; output #      (ā)  LATIN SMALL LETTER A WITH MACRON
+0103          ; output #      (ă)  LATIN SMALL LETTER A WITH BREVE
+0105          ; output #      (ą)  LATIN SMALL LETTER A WITH OGONEK
+0107          ; output #      (ć)  LATIN SMALL LETTER C WITH ACUTE
+0109          ; output #      (ĉ)  LATIN SMALL LETTER C WITH CIRCUMFLEX
+010B          ; output #      (ċ)  LATIN SMALL LETTER C WITH DOT ABOVE
+010D          ; output #      (č)  LATIN SMALL LETTER C WITH CARON
+010F          ; output #      (ď)  LATIN SMALL LETTER D WITH CARON
+0111          ; output #      (đ)  LATIN SMALL LETTER D WITH STROKE
+0113          ; output #      (ē)  LATIN SMALL LETTER E WITH MACRON
+0115          ; output #      (ĕ)  LATIN SMALL LETTER E WITH BREVE
+0117          ; output #      (ė)  LATIN SMALL LETTER E WITH DOT ABOVE
+0119          ; output #      (ę)  LATIN SMALL LETTER E WITH OGONEK
+011B          ; output #      (ě)  LATIN SMALL LETTER E WITH CARON
+011D          ; output #      (ĝ)  LATIN SMALL LETTER G WITH CIRCUMFLEX
+011F          ; output #      (ğ)  LATIN SMALL LETTER G WITH BREVE
+0121          ; output #      (ġ)  LATIN SMALL LETTER G WITH DOT ABOVE
+0123          ; output #      (ģ)  LATIN SMALL LETTER G WITH CEDILLA
+0125          ; output #      (ĥ)  LATIN SMALL LETTER H WITH CIRCUMFLEX
+0127          ; output #      (ħ)  LATIN SMALL LETTER H WITH STROKE
+0129          ; output #      (ĩ)  LATIN SMALL LETTER I WITH TILDE
+012B          ; output #      (ī)  LATIN SMALL LETTER I WITH MACRON
+012D          ; output #      (ĭ)  LATIN SMALL LETTER I WITH BREVE
+012F          ; output #      (į)  LATIN SMALL LETTER I WITH OGONEK
+0131          ; output #      (ı)  LATIN SMALL LETTER DOTLESS I
+0135          ; output #      (ĵ)  LATIN SMALL LETTER J WITH CIRCUMFLEX
+0137..0138    ; output #  [2] (ķ..ĸ)  LATIN SMALL LETTER K WITH CEDILLA..LATIN SMALL LETTER KRA
+013A          ; output #      (ĺ)  LATIN SMALL LETTER L WITH ACUTE
+013C          ; output #      (ļ)  LATIN SMALL LETTER L WITH CEDILLA
+013E          ; output #      (ľ)  LATIN SMALL LETTER L WITH CARON
+0142          ; output #      (ł)  LATIN SMALL LETTER L WITH STROKE
+0144          ; output #      (ń)  LATIN SMALL LETTER N WITH ACUTE
+0146          ; output #      (ņ)  LATIN SMALL LETTER N WITH CEDILLA
+0148          ; output #      (ň)  LATIN SMALL LETTER N WITH CARON
+014B          ; output #      (ŋ)  LATIN SMALL LETTER ENG
+014D          ; output #      (ō)  LATIN SMALL LETTER O WITH MACRON
+014F          ; output #      (ŏ)  LATIN SMALL LETTER O WITH BREVE
+0151          ; output #      (ő)  LATIN SMALL LETTER O WITH DOUBLE ACUTE
+0153          ; output #      (œ)  LATIN SMALL LIGATURE OE
+0155          ; output #      (ŕ)  LATIN SMALL LETTER R WITH ACUTE
+0157          ; output #      (ŗ)  LATIN SMALL LETTER R WITH CEDILLA
+0159          ; output #      (ř)  LATIN SMALL LETTER R WITH CARON
+015B          ; output #      (ś)  LATIN SMALL LETTER S WITH ACUTE
+015D          ; output #      (ŝ)  LATIN SMALL LETTER S WITH CIRCUMFLEX
+015F          ; output #      (ş)  LATIN SMALL LETTER S WITH CEDILLA
+0161          ; output #      (š)  LATIN SMALL LETTER S WITH CARON
+0163          ; output #      (ţ)  LATIN SMALL LETTER T WITH CEDILLA
+0165          ; output #      (ť)  LATIN SMALL LETTER T WITH CARON
+0167          ; output #      (ŧ)  LATIN SMALL LETTER T WITH STROKE
+0169          ; output #      (ũ)  LATIN SMALL LETTER U WITH TILDE
+016B          ; output #      (ū)  LATIN SMALL LETTER U WITH MACRON
+016D          ; output #      (ŭ)  LATIN SMALL LETTER U WITH BREVE
+016F          ; output #      (ů)  LATIN SMALL LETTER U WITH RING ABOVE
+0171          ; output #      (ű)  LATIN SMALL LETTER U WITH DOUBLE ACUTE
+0173          ; output #      (ų)  LATIN SMALL LETTER U WITH OGONEK
+0175          ; output #      (ŵ)  LATIN SMALL LETTER W WITH CIRCUMFLEX
+0177          ; output #      (ŷ)  LATIN SMALL LETTER Y WITH CIRCUMFLEX
+017A          ; output #      (ź)  LATIN SMALL LETTER Z WITH ACUTE
+017C          ; output #      (ż)  LATIN SMALL LETTER Z WITH DOT ABOVE
+017E          ; output #      (ž)  LATIN SMALL LETTER Z WITH CARON
+0183          ; output #      (ƃ)  LATIN SMALL LETTER B WITH TOPBAR
+0185          ; output #      (ƅ)  LATIN SMALL LETTER TONE SIX
+0188          ; output #      (ƈ)  LATIN SMALL LETTER C WITH HOOK
+018C          ; output #      (ƌ)  LATIN SMALL LETTER D WITH TOPBAR
+0192          ; output #      (ƒ)  LATIN SMALL LETTER F WITH HOOK
+0195          ; output #      (ƕ)  LATIN SMALL LETTER HV
+0199..019B    ; output #  [3] (ƙ..ƛ)  LATIN SMALL LETTER K WITH HOOK..LATIN SMALL LETTER LAMBDA WITH STROKE
+019E          ; output #      (ƞ)  LATIN SMALL LETTER N WITH LONG RIGHT LEG
+01A1          ; output #      (ơ)  LATIN SMALL LETTER O WITH HORN
+01A3          ; output #      (ƣ)  LATIN SMALL LETTER OI
+01A5          ; output #      (ƥ)  LATIN SMALL LETTER P WITH HOOK
+01A8          ; output #      (ƨ)  LATIN SMALL LETTER TONE TWO
+01AD          ; output #      (ƭ)  LATIN SMALL LETTER T WITH HOOK
+01B0          ; output #      (ư)  LATIN SMALL LETTER U WITH HORN
+01B4          ; output #      (ƴ)  LATIN SMALL LETTER Y WITH HOOK
+01B6          ; output #      (ƶ)  LATIN SMALL LETTER Z WITH STROKE
+01BD          ; output #      (ƽ)  LATIN SMALL LETTER TONE FIVE
+01CE          ; output #      (ǎ)  LATIN SMALL LETTER A WITH CARON
+01D0          ; output #      (ǐ)  LATIN SMALL LETTER I WITH CARON
+01D2          ; output #      (ǒ)  LATIN SMALL LETTER O WITH CARON
+01D4          ; output #      (ǔ)  LATIN SMALL LETTER U WITH CARON
+01D6          ; output #      (ǖ)  LATIN SMALL LETTER U WITH DIAERESIS AND MACRON
+01D8          ; output #      (ǘ)  LATIN SMALL LETTER U WITH DIAERESIS AND ACUTE
+01DA          ; output #      (ǚ)  LATIN SMALL LETTER U WITH DIAERESIS AND CARON
+01DC..01DD    ; output #  [2] (ǜ..ǝ)  LATIN SMALL LETTER U WITH DIAERESIS AND GRAVE..LATIN SMALL LETTER TURNED E
+01DF          ; output #      (ǟ)  LATIN SMALL LETTER A WITH DIAERESIS AND MACRON
+01E1          ; output #      (ǡ)  LATIN SMALL LETTER A WITH DOT ABOVE AND MACRON
+01E3          ; output #      (ǣ)  LATIN SMALL LETTER AE WITH MACRON
+01E5          ; output #      (ǥ)  LATIN SMALL LETTER G WITH STROKE
+01E7          ; output #      (ǧ)  LATIN SMALL LETTER G WITH CARON
+01E9          ; output #      (ǩ)  LATIN SMALL LETTER K WITH CARON
+01EB          ; output #      (ǫ)  LATIN SMALL LETTER O WITH OGONEK
+01ED          ; output #      (ǭ)  LATIN SMALL LETTER O WITH OGONEK AND MACRON
+01EF..01F0    ; output #  [2] (ǯ..ǰ)  LATIN SMALL LETTER EZH WITH CARON..LATIN SMALL LETTER J WITH CARON
+01F5          ; output #      (ǵ)  LATIN SMALL LETTER G WITH ACUTE
+01F9          ; output #      (ǹ)  LATIN SMALL LETTER N WITH GRAVE
+01FB          ; output #      (ǻ)  LATIN SMALL LETTER A WITH RING ABOVE AND ACUTE
+01FD          ; output #      (ǽ)  LATIN SMALL LETTER AE WITH ACUTE
+01FF          ; output #      (ǿ)  LATIN SMALL LETTER O WITH STROKE AND ACUTE
+0201          ; output #      (ȁ)  LATIN SMALL LETTER A WITH DOUBLE GRAVE
+0203          ; output #      (ȃ)  LATIN SMALL LETTER A WITH INVERTED BREVE
+0205          ; output #      (ȅ)  LATIN SMALL LETTER E WITH DOUBLE GRAVE
+0207          ; output #      (ȇ)  LATIN SMALL LETTER E WITH INVERTED BREVE
+0209          ; output #      (ȉ)  LATIN SMALL LETTER I WITH DOUBLE GRAVE
+020B          ; output #      (ȋ)  LATIN SMALL LETTER I WITH INVERTED BREVE
+020D          ; output #      (ȍ)  LATIN SMALL LETTER O WITH DOUBLE GRAVE
+020F          ; output #      (ȏ)  LATIN SMALL LETTER O WITH INVERTED BREVE
+0211          ; output #      (ȑ)  LATIN SMALL LETTER R WITH DOUBLE GRAVE
+0213          ; output #      (ȓ)  LATIN SMALL LETTER R WITH INVERTED BREVE
+0215          ; output #      (ȕ)  LATIN SMALL LETTER U WITH DOUBLE GRAVE
+0217          ; output #      (ȗ)  LATIN SMALL LETTER U WITH INVERTED BREVE
+0219          ; output #      (ș)  LATIN SMALL LETTER S WITH COMMA BELOW
+021B          ; output #      (ț)  LATIN SMALL LETTER T WITH COMMA BELOW
+021F          ; output #      (ȟ)  LATIN SMALL LETTER H WITH CARON
+0223          ; output #      (ȣ)  LATIN SMALL LETTER OU
+0225          ; output #      (ȥ)  LATIN SMALL LETTER Z WITH HOOK
+0227          ; output #      (ȧ)  LATIN SMALL LETTER A WITH DOT ABOVE
+0229          ; output #      (ȩ)  LATIN SMALL LETTER E WITH CEDILLA
+022B          ; output #      (ȫ)  LATIN SMALL LETTER O WITH DIAERESIS AND MACRON
+022D          ; output #      (ȭ)  LATIN SMALL LETTER O WITH TILDE AND MACRON
+022F          ; output #      (ȯ)  LATIN SMALL LETTER O WITH DOT ABOVE
+0231          ; output #      (ȱ)  LATIN SMALL LETTER O WITH DOT ABOVE AND MACRON
+0233          ; output #      (ȳ)  LATIN SMALL LETTER Y WITH MACRON
+0253..0254    ; output #  [2] (ɓ..ɔ)  LATIN SMALL LETTER B WITH HOOK..LATIN SMALL LETTER OPEN O
+0256..0257    ; output #  [2] (ɖ..ɗ)  LATIN SMALL LETTER D WITH TAIL..LATIN SMALL LETTER D WITH HOOK
+0259          ; output #      (ə)  LATIN SMALL LETTER SCHWA
+025B          ; output #      (ɛ)  LATIN SMALL LETTER OPEN E
+0260          ; output #      (ɠ)  LATIN SMALL LETTER G WITH HOOK
+0263          ; output #      (ɣ)  LATIN SMALL LETTER GAMMA
+0268..0269    ; output #  [2] (ɨ..ɩ)  LATIN SMALL LETTER I WITH STROKE..LATIN SMALL LETTER IOTA
+026F          ; output #      (ɯ)  LATIN SMALL LETTER TURNED M
+0272          ; output #      (ɲ)  LATIN SMALL LETTER N WITH LEFT HOOK
+0275          ; output #      (ɵ)  LATIN SMALL LETTER BARRED O
+0280          ; output #      (ʀ)  LATIN LETTER SMALL CAPITAL R
+0283          ; output #      (ʃ)  LATIN SMALL LETTER ESH
+0288          ; output #      (ʈ)  LATIN SMALL LETTER T WITH RETROFLEX HOOK
+028A..028B    ; output #  [2] (ʊ..ʋ)  LATIN SMALL LETTER UPSILON..LATIN SMALL LETTER V WITH HOOK
+0292          ; output #      (ʒ)  LATIN SMALL LETTER EZH
+0294          ; output #      (ʔ)  LATIN LETTER GLOTTAL STOP
+0300..033F    ; output # [64] (̀..̿)  COMBINING GRAVE ACCENT..COMBINING DOUBLE OVERLINE
+0342          ; output #      (͂)  COMBINING GREEK PERISPOMENI
+0346..034E    ; output #  [9] (͆..͎)  COMBINING BRIDGE ABOVE..COMBINING UPWARDS ARROW BELOW
+0360..036F    ; output # [16] (͠..ͯ)  COMBINING DOUBLE TILDE..COMBINING LATIN SMALL LETTER X
+0390          ; output #      (ΐ)  GREEK SMALL LETTER IOTA WITH DIALYTIKA AND TONOS
+03AC..03C1    ; output # [22] (ά..ρ)  GREEK SMALL LETTER ALPHA WITH TONOS..GREEK SMALL LETTER RHO
+03C3..03CE    ; output # [12] (σ..ώ)  GREEK SMALL LETTER SIGMA..GREEK SMALL LETTER OMEGA WITH TONOS
+0430..045F    ; output # [48] (а..џ)  CYRILLIC SMALL LETTER A..CYRILLIC SMALL LETTER DZHE
+0461          ; output #      (ѡ)  CYRILLIC SMALL LETTER OMEGA
+0463          ; output #      (ѣ)  CYRILLIC SMALL LETTER YAT
+0465          ; output #      (ѥ)  CYRILLIC SMALL LETTER IOTIFIED E
+0467          ; output #      (ѧ)  CYRILLIC SMALL LETTER LITTLE YUS
+0469          ; output #      (ѩ)  CYRILLIC SMALL LETTER IOTIFIED LITTLE YUS
+046B          ; output #      (ѫ)  CYRILLIC SMALL LETTER BIG YUS
+046D          ; output #      (ѭ)  CYRILLIC SMALL LETTER IOTIFIED BIG YUS
+046F          ; output #      (ѯ)  CYRILLIC SMALL LETTER KSI
+0471          ; output #      (ѱ)  CYRILLIC SMALL LETTER PSI
+0473          ; output #      (ѳ)  CYRILLIC SMALL LETTER FITA
+0475          ; output #      (ѵ)  CYRILLIC SMALL LETTER IZHITSA
+0477          ; output #      (ѷ)  CYRILLIC SMALL LETTER IZHITSA WITH DOUBLE GRAVE ACCENT
+0479          ; output #      (ѹ)  CYRILLIC SMALL LETTER UK
+047B          ; output #      (ѻ)  CYRILLIC SMALL LETTER ROUND OMEGA
+047D          ; output #      (ѽ)  CYRILLIC SMALL LETTER OMEGA WITH TITLO
+047F          ; output #      (ѿ)  CYRILLIC SMALL LETTER OT
+0481          ; output #      (ҁ)  CYRILLIC SMALL LETTER KOPPA
+048B          ; output #      (ҋ)  CYRILLIC SMALL LETTER SHORT I WITH TAIL
+048D          ; output #      (ҍ)  CYRILLIC SMALL LETTER SEMISOFT SIGN
+048F          ; output #      (ҏ)  CYRILLIC SMALL LETTER ER WITH TICK
+0491          ; output #      (ґ)  CYRILLIC SMALL LETTER GHE WITH UPTURN
+0493          ; output #      (ғ)  CYRILLIC SMALL LETTER GHE WITH STROKE
+0495          ; output #      (ҕ)  CYRILLIC SMALL LETTER GHE WITH MIDDLE HOOK
+0497          ; output #      (җ)  CYRILLIC SMALL LETTER ZHE WITH DESCENDER
+0499          ; output #      (ҙ)  CYRILLIC SMALL LETTER ZE WITH DESCENDER
+049B          ; output #      (қ)  CYRILLIC SMALL LETTER KA WITH DESCENDER
+049D          ; output #      (ҝ)  CYRILLIC SMALL LETTER KA WITH VERTICAL STROKE
+049F          ; output #      (ҟ)  CYRILLIC SMALL LETTER KA WITH STROKE
+04A1          ; output #      (ҡ)  CYRILLIC SMALL LETTER BASHKIR KA
+04A3          ; output #      (ң)  CYRILLIC SMALL LETTER EN WITH DESCENDER
+04A5          ; output #      (ҥ)  CYRILLIC SMALL LIGATURE EN GHE
+04A7          ; output #      (ҧ)  CYRILLIC SMALL LETTER PE WITH MIDDLE HOOK
+04A9          ; output #      (ҩ)  CYRILLIC SMALL LETTER ABKHASIAN HA
+04AB          ; output #      (ҫ)  CYRILLIC SMALL LETTER ES WITH DESCENDER
+04AD          ; output #      (ҭ)  CYRILLIC SMALL LETTER TE WITH DESCENDER
+04AF          ; output #      (ү)  CYRILLIC SMALL LETTER STRAIGHT U
+04B1          ; output #      (ұ)  CYRILLIC SMALL LETTER STRAIGHT U WITH STROKE
+04B3          ; output #      (ҳ)  CYRILLIC SMALL LETTER HA WITH DESCENDER
+04B5          ; output #      (ҵ)  CYRILLIC SMALL LIGATURE TE TSE
+04B7          ; output #      (ҷ)  CYRILLIC SMALL LETTER CHE WITH DESCENDER
+04B9          ; output #      (ҹ)  CYRILLIC SMALL LETTER CHE WITH VERTICAL STROKE
+04BB          ; output #      (һ)  CYRILLIC SMALL LETTER SHHA
+04BD          ; output #      (ҽ)  CYRILLIC SMALL LETTER ABKHASIAN CHE
+04BF..04C0    ; output #  [2] (ҿ..Ӏ)  CYRILLIC SMALL LETTER ABKHASIAN CHE WITH DESCENDER..CYRILLIC LETTER PALOCHKA
+04C2          ; output #      (ӂ)  CYRILLIC SMALL LETTER ZHE WITH BREVE
+04C4          ; output #      (ӄ)  CYRILLIC SMALL LETTER KA WITH HOOK
+04C6          ; output #      (ӆ)  CYRILLIC SMALL LETTER EL WITH TAIL
+04C8          ; output #      (ӈ)  CYRILLIC SMALL LETTER EN WITH HOOK
+04CA          ; output #      (ӊ)  CYRILLIC SMALL LETTER EN WITH TAIL
+04CC          ; output #      (ӌ)  CYRILLIC SMALL LETTER KHAKASSIAN CHE
+04CE          ; output #      (ӎ)  CYRILLIC SMALL LETTER EM WITH TAIL
+04D1          ; output #      (ӑ)  CYRILLIC SMALL LETTER A WITH BREVE
+04D3          ; output #      (ӓ)  CYRILLIC SMALL LETTER A WITH DIAERESIS
+04D5          ; output #      (ӕ)  CYRILLIC SMALL LIGATURE A IE
+04D7          ; output #      (ӗ)  CYRILLIC SMALL LETTER IE WITH BREVE
+04D9          ; output #      (ә)  CYRILLIC SMALL LETTER SCHWA
+04DB          ; output #      (ӛ)  CYRILLIC SMALL LETTER SCHWA WITH DIAERESIS
+04DD          ; output #      (ӝ)  CYRILLIC SMALL LETTER ZHE WITH DIAERESIS
+04DF          ; output #      (ӟ)  CYRILLIC SMALL LETTER ZE WITH DIAERESIS
+04E1          ; output #      (ӡ)  CYRILLIC SMALL LETTER ABKHASIAN DZE
+04E3          ; output #      (ӣ)  CYRILLIC SMALL LETTER I WITH MACRON
+04E5          ; output #      (ӥ)  CYRILLIC SMALL LETTER I WITH DIAERESIS
+04E7          ; output #      (ӧ)  CYRILLIC SMALL LETTER O WITH DIAERESIS
+04E9          ; output #      (ө)  CYRILLIC SMALL LETTER BARRED O
+04EB          ; output #      (ӫ)  CYRILLIC SMALL LETTER BARRED O WITH DIAERESIS
+04ED          ; output #      (ӭ)  CYRILLIC SMALL LETTER E WITH DIAERESIS
+04EF          ; output #      (ӯ)  CYRILLIC SMALL LETTER U WITH MACRON
+04F1          ; output #      (ӱ)  CYRILLIC SMALL LETTER U WITH DIAERESIS
+04F3          ; output #      (ӳ)  CYRILLIC SMALL LETTER U WITH DOUBLE ACUTE
+04F5          ; output #      (ӵ)  CYRILLIC SMALL LETTER CHE WITH DIAERESIS
+04F9          ; output #      (ӹ)  CYRILLIC SMALL LETTER YERU WITH DIAERESIS
+0501          ; output #      (ԁ)  CYRILLIC SMALL LETTER KOMI DE
+0503          ; output #      (ԃ)  CYRILLIC SMALL LETTER KOMI DJE
+0505          ; output #      (ԅ)  CYRILLIC SMALL LETTER KOMI ZJE
+0507          ; output #      (ԇ)  CYRILLIC SMALL LETTER KOMI DZJE
+0509          ; output #      (ԉ)  CYRILLIC SMALL LETTER KOMI LJE
+050B          ; output #      (ԋ)  CYRILLIC SMALL LETTER KOMI NJE
+050D          ; output #      (ԍ)  CYRILLIC SMALL LETTER KOMI SJE
+050F          ; output #      (ԏ)  CYRILLIC SMALL LETTER KOMI TJE
+0561..0586    ; output # [38] (ա..ֆ)  ARMENIAN SMALL LETTER AYB..ARMENIAN SMALL LETTER FEH
+0591..05A1    ; output # [17] (֑..֡)  HEBREW ACCENT ETNAHTA..HEBREW ACCENT PAZER
+05A3..05B9    ; output # [23] (֣..ֹ)  HEBREW ACCENT MUNAH..HEBREW POINT HOLAM
+05BB..05BD    ; output #  [3] (ֻ..ֽ)  HEBREW POINT QUBUTS..HEBREW POINT METEG
+05BF          ; output #      (ֿ)  HEBREW POINT RAFE
+05C1..05C2    ; output #  [2] (ׁ..ׂ)  HEBREW POINT SHIN DOT..HEBREW POINT SIN DOT
+05C4          ; output #      (ׄ)  HEBREW MARK UPPER DOT
+05D0..05EA    ; output # [27] (א..ת)  HEBREW LETTER ALEF..HEBREW LETTER TAV
+05F0..05F2    ; output #  [3] (װ..ײ)  HEBREW LIGATURE YIDDISH DOUBLE VAV..HEBREW LIGATURE YIDDISH DOUBLE YOD
+0621..063A    ; output # [26] (ء..غ)  ARABIC LETTER HAMZA..ARABIC LETTER GHAIN
+0641..0655    ; output # [21] (ف..ٕ)  ARABIC LETTER FEH..ARABIC HAMZA BELOW
+0660..0669    ; output # [10] (٠..٩)  ARABIC-INDIC DIGIT ZERO..ARABIC-INDIC DIGIT NINE
+0670..0674    ; output #  [5] (ٰ..ٴ)  ARABIC LETTER SUPERSCRIPT ALEF..ARABIC LETTER HIGH HAMZA
+0679..068D    ; output # [21] (ٹ..ڍ)  ARABIC LETTER TTEH..ARABIC LETTER DDAHAL
+068F..06D3    ; output # [69] (ڏ..ۓ)  ARABIC LETTER DAL WITH THREE DOTS ABOVE DOWNWARDS..ARABIC LETTER YEH BARREE WITH HAMZA ABOVE
+06D5..06DC    ; output #  [8] (ە..ۜ)  ARABIC LETTER AE..ARABIC SMALL HIGH SEEN
+06DF..06E8    ; output # [10] (۟..ۨ)  ARABIC SMALL HIGH ROUNDED ZERO..ARABIC SMALL HIGH NOON
+06EA..06ED    ; output #  [4] (۪..ۭ)  ARABIC EMPTY CENTRE LOW STOP..ARABIC SMALL LOW MEEM
+06F0..06FC    ; output # [13] (۰..ۼ)  EXTENDED ARABIC-INDIC DIGIT ZERO..ARABIC LETTER GHAIN WITH DOT BELOW
+0710..072C    ; output # [29] (ܐ..ܬ)  SYRIAC LETTER ALAPH..SYRIAC LETTER TAW
+0730..073F    ; output # [16] (ܰ..ܿ)  SYRIAC PTHAHA ABOVE..SYRIAC RWAHA
+0780..07B1    ; output # [50] (ހ..ޱ)  THAANA LETTER HAA..THAANA LETTER NAA
+0901..0903    ; output #  [3] (ँ..ः)  DEVANAGARI SIGN CANDRABINDU..DEVANAGARI SIGN VISARGA
+0905..0939    ; output # [53] (अ..ह)  DEVANAGARI LETTER A..DEVANAGARI LETTER HA
+093C..094D    ; output # [18] (़..्)  DEVANAGARI SIGN NUKTA..DEVANAGARI SIGN VIRAMA
+0950..0954    ; output #  [5] (ॐ..॔)  DEVANAGARI OM..DEVANAGARI ACUTE ACCENT
+0960..0963    ; output #  [4] (ॠ..ॣ)  DEVANAGARI LETTER VOCALIC RR..DEVANAGARI VOWEL SIGN VOCALIC LL
+0966..096F    ; output # [10] (०..९)  DEVANAGARI DIGIT ZERO..DEVANAGARI DIGIT NINE
+0981..0983    ; output #  [3] (ঁ..ঃ)  BENGALI SIGN CANDRABINDU..BENGALI SIGN VISARGA
+0985..098C    ; output #  [8] (অ..ঌ)  BENGALI LETTER A..BENGALI LETTER VOCALIC L
+098F..0990    ; output #  [2] (এ..ঐ)  BENGALI LETTER E..BENGALI LETTER AI
+0993..09A8    ; output # [22] (ও..ন)  BENGALI LETTER O..BENGALI LETTER NA
+09AA..09B0    ; output #  [7] (প..র)  BENGALI LETTER PA..BENGALI LETTER RA
+09B2          ; output #      (ল)  BENGALI LETTER LA
+09B6..09B9    ; output #  [4] (শ..হ)  BENGALI LETTER SHA..BENGALI LETTER HA
+09BC          ; output #      (়)  BENGALI SIGN NUKTA
+09BE..09C4    ; output #  [7] (া..ৄ)  BENGALI VOWEL SIGN AA..BENGALI VOWEL SIGN VOCALIC RR
+09C7..09C8    ; output #  [2] (ে..ৈ)  BENGALI VOWEL SIGN E..BENGALI VOWEL SIGN AI
+09CB..09CD    ; output #  [3] (ো..্)  BENGALI VOWEL SIGN O..BENGALI SIGN VIRAMA
+09D7          ; output #      (ৗ)  BENGALI AU LENGTH MARK
+09E0..09E3    ; output #  [4] (ৠ..ৣ)  BENGALI LETTER VOCALIC RR..BENGALI VOWEL SIGN VOCALIC LL
+09E6..09F1    ; output # [12] (০..ৱ)  BENGALI DIGIT ZERO..BENGALI LETTER RA WITH LOWER DIAGONAL
+0A02          ; output #      (ਂ)  GURMUKHI SIGN BINDI
+0A05..0A0A    ; output #  [6] (ਅ..ਊ)  GURMUKHI LETTER A..GURMUKHI LETTER UU
+0A0F..0A10    ; output #  [2] (ਏ..ਐ)  GURMUKHI LETTER EE..GURMUKHI LETTER AI
+0A13..0A28    ; output # [22] (ਓ..ਨ)  GURMUKHI LETTER OO..GURMUKHI LETTER NA
+0A2A..0A30    ; output #  [7] (ਪ..ਰ)  GURMUKHI LETTER PA..GURMUKHI LETTER RA
+0A32          ; output #      (ਲ)  GURMUKHI LETTER LA
+0A35          ; output #      (ਵ)  GURMUKHI LETTER VA
+0A38..0A39    ; output #  [2] (ਸ..ਹ)  GURMUKHI LETTER SA..GURMUKHI LETTER HA
+0A3C          ; output #      (਼)  GURMUKHI SIGN NUKTA
+0A3E..0A42    ; output #  [5] (ਾ..ੂ)  GURMUKHI VOWEL SIGN AA..GURMUKHI VOWEL SIGN UU
+0A47..0A48    ; output #  [2] (ੇ..ੈ)  GURMUKHI VOWEL SIGN EE..GURMUKHI VOWEL SIGN AI
+0A4B..0A4D    ; output #  [3] (ੋ..੍)  GURMUKHI VOWEL SIGN OO..GURMUKHI SIGN VIRAMA
+0A5C          ; output #      (ੜ)  GURMUKHI LETTER RRA
+0A66..0A74    ; output # [15] (੦..ੴ)  GURMUKHI DIGIT ZERO..GURMUKHI EK ONKAR
+0A81..0A83    ; output #  [3] (ઁ..ઃ)  GUJARATI SIGN CANDRABINDU..GUJARATI SIGN VISARGA
+0A85..0A8B    ; output #  [7] (અ..ઋ)  GUJARATI LETTER A..GUJARATI LETTER VOCALIC R
+0A8D          ; output #      (ઍ)  GUJARATI VOWEL CANDRA E
+0A8F..0A91    ; output #  [3] (એ..ઑ)  GUJARATI LETTER E..GUJARATI VOWEL CANDRA O
+0A93..0AA8    ; output # [22] (ઓ..ન)  GUJARATI LETTER O..GUJARATI LETTER NA
+0AAA..0AB0    ; output #  [7] (પ..ર)  GUJARATI LETTER PA..GUJARATI LETTER RA
+0AB2..0AB3    ; output #  [2] (લ..ળ)  GUJARATI LETTER LA..GUJARATI LETTER LLA
+0AB5..0AB9    ; output #  [5] (વ..હ)  GUJARATI LETTER VA..GUJARATI LETTER HA
+0ABC..0AC5    ; output # [10] (઼..ૅ)  GUJARATI SIGN NUKTA..GUJARATI VOWEL SIGN CANDRA E
+0AC7..0AC9    ; output #  [3] (ે..ૉ)  GUJARATI VOWEL SIGN E..GUJARATI VOWEL SIGN CANDRA O
+0ACB..0ACD    ; output #  [3] (ો..્)  GUJARATI VOWEL SIGN O..GUJARATI SIGN VIRAMA
+0AD0          ; output #      (ૐ)  GUJARATI OM
+0AE0          ; output #      (ૠ)  GUJARATI LETTER VOCALIC RR
+0AE6..0AEF    ; output # [10] (૦..૯)  GUJARATI DIGIT ZERO..GUJARATI DIGIT NINE
+0B01..0B03    ; output #  [3] (ଁ..ଃ)  ORIYA SIGN CANDRABINDU..ORIYA SIGN VISARGA
+0B05..0B0C    ; output #  [8] (ଅ..ଌ)  ORIYA LETTER A..ORIYA LETTER VOCALIC L
+0B0F..0B10    ; output #  [2] (ଏ..ଐ)  ORIYA LETTER E..ORIYA LETTER AI
+0B13..0B28    ; output # [22] (ଓ..ନ)  ORIYA LETTER O..ORIYA LETTER NA
+0B2A..0B30    ; output #  [7] (ପ..ର)  ORIYA LETTER PA..ORIYA LETTER RA
+0B32..0B33    ; output #  [2] (ଲ..ଳ)  ORIYA LETTER LA..ORIYA LETTER LLA
+0B36..0B39    ; output #  [4] (ଶ..ହ)  ORIYA LETTER SHA..ORIYA LETTER HA
+0B3C..0B43    ; output #  [8] (଼..ୃ)  ORIYA SIGN NUKTA..ORIYA VOWEL SIGN VOCALIC R
+0B47..0B48    ; output #  [2] (େ..ୈ)  ORIYA VOWEL SIGN E..ORIYA VOWEL SIGN AI
+0B4B..0B4D    ; output #  [3] (ୋ..୍)  ORIYA VOWEL SIGN O..ORIYA SIGN VIRAMA
+0B56..0B57    ; output #  [2] (ୖ..ୗ)  ORIYA AI LENGTH MARK..ORIYA AU LENGTH MARK
+0B5F..0B61    ; output #  [3] (ୟ..ୡ)  ORIYA LETTER YYA..ORIYA LETTER VOCALIC LL
+0B66..0B6F    ; output # [10] (୦..୯)  ORIYA DIGIT ZERO..ORIYA DIGIT NINE
+0B82..0B83    ; output #  [2] (ஂ..ஃ)  TAMIL SIGN ANUSVARA..TAMIL SIGN VISARGA
+0B85..0B8A    ; output #  [6] (அ..ஊ)  TAMIL LETTER A..TAMIL LETTER UU
+0B8E..0B90    ; output #  [3] (எ..ஐ)  TAMIL LETTER E..TAMIL LETTER AI
+0B92..0B95    ; output #  [4] (ஒ..க)  TAMIL LETTER O..TAMIL LETTER KA
+0B99..0B9A    ; output #  [2] (ங..ச)  TAMIL LETTER NGA..TAMIL LETTER CA
+0B9C          ; output #      (ஜ)  TAMIL LETTER JA
+0B9E..0B9F    ; output #  [2] (ஞ..ட)  TAMIL LETTER NYA..TAMIL LETTER TTA
+0BA3..0BA4    ; output #  [2] (ண..த)  TAMIL LETTER NNA..TAMIL LETTER TA
+0BA8..0BAA    ; output #  [3] (ந..ப)  TAMIL LETTER NA..TAMIL LETTER PA
+0BAE..0BB5    ; output #  [8] (ம..வ)  TAMIL LETTER MA..TAMIL LETTER VA
+0BB7..0BB9    ; output #  [3] (ஷ..ஹ)  TAMIL LETTER SSA..TAMIL LETTER HA
+0BBE..0BC2    ; output #  [5] (ா..ூ)  TAMIL VOWEL SIGN AA..TAMIL VOWEL SIGN UU
+0BC6..0BC8    ; output #  [3] (ெ..ை)  TAMIL VOWEL SIGN E..TAMIL VOWEL SIGN AI
+0BCA..0BCD    ; output #  [4] (ொ..்)  TAMIL VOWEL SIGN O..TAMIL SIGN VIRAMA
+0BD7          ; output #      (ௗ)  TAMIL AU LENGTH MARK
+0BE7..0BEF    ; output #  [9] (௧..௯)  TAMIL DIGIT ONE..TAMIL DIGIT NINE
+0C01..0C03    ; output #  [3] (ఁ..ః)  TELUGU SIGN CANDRABINDU..TELUGU SIGN VISARGA
+0C05..0C0C    ; output #  [8] (అ..ఌ)  TELUGU LETTER A..TELUGU LETTER VOCALIC L
+0C0E..0C10    ; output #  [3] (ఎ..ఐ)  TELUGU LETTER E..TELUGU LETTER AI
+0C12..0C28    ; output # [23] (ఒ..న)  TELUGU LETTER O..TELUGU LETTER NA
+0C2A..0C33    ; output # [10] (ప..ళ)  TELUGU LETTER PA..TELUGU LETTER LLA
+0C35..0C39    ; output #  [5] (వ..హ)  TELUGU LETTER VA..TELUGU LETTER HA
+0C3E..0C44    ; output #  [7] (ా..ౄ)  TELUGU VOWEL SIGN AA..TELUGU VOWEL SIGN VOCALIC RR
+0C46..0C48    ; output #  [3] (ె..ై)  TELUGU VOWEL SIGN E..TELUGU VOWEL SIGN AI
+0C4A..0C4D    ; output #  [4] (ొ..్)  TELUGU VOWEL SIGN O..TELUGU SIGN VIRAMA
+0C55..0C56    ; output #  [2] (ౕ..ౖ)  TELUGU LENGTH MARK..TELUGU AI LENGTH MARK
+0C60..0C61    ; output #  [2] (ౠ..ౡ)  TELUGU LETTER VOCALIC RR..TELUGU LETTER VOCALIC LL
+0C66..0C6F    ; output # [10] (౦..౯)  TELUGU DIGIT ZERO..TELUGU DIGIT NINE
+0C82..0C83    ; output #  [2] (ಂ..ಃ)  KANNADA SIGN ANUSVARA..KANNADA SIGN VISARGA
+0C85..0C8C    ; output #  [8] (ಅ..ಌ)  KANNADA LETTER A..KANNADA LETTER VOCALIC L
+0C8E..0C90    ; output #  [3] (ಎ..ಐ)  KANNADA LETTER E..KANNADA LETTER AI
+0C92..0CA8    ; output # [23] (ಒ..ನ)  KANNADA LETTER O..KANNADA LETTER NA
+0CAA..0CB3    ; output # [10] (ಪ..ಳ)  KANNADA LETTER PA..KANNADA LETTER LLA
+0CB5..0CB9    ; output #  [5] (ವ..ಹ)  KANNADA LETTER VA..KANNADA LETTER HA
+0CBE..0CC4    ; output #  [7] (ಾ..ೄ)  KANNADA VOWEL SIGN AA..KANNADA VOWEL SIGN VOCALIC RR
+0CC6..0CC8    ; output #  [3] (ೆ..ೈ)  KANNADA VOWEL SIGN E..KANNADA VOWEL SIGN AI
+0CCA..0CCD    ; output #  [4] (ೊ..್)  KANNADA VOWEL SIGN O..KANNADA SIGN VIRAMA
+0CD5..0CD6    ; output #  [2] (ೕ..ೖ)  KANNADA LENGTH MARK..KANNADA AI LENGTH MARK
+0CE0..0CE1    ; output #  [2] (ೠ..ೡ)  KANNADA LETTER VOCALIC RR..KANNADA LETTER VOCALIC LL
+0CE6..0CEF    ; output # [10] (೦..೯)  KANNADA DIGIT ZERO..KANNADA DIGIT NINE
+0D02..0D03    ; output #  [2] (ം..ഃ)  MALAYALAM SIGN ANUSVARA..MALAYALAM SIGN VISARGA
+0D05..0D0C    ; output #  [8] (അ..ഌ)  MALAYALAM LETTER A..MALAYALAM LETTER VOCALIC L
+0D0E..0D10    ; output #  [3] (എ..ഐ)  MALAYALAM LETTER E..MALAYALAM LETTER AI
+0D12..0D28    ; output # [23] (ഒ..ന)  MALAYALAM LETTER O..MALAYALAM LETTER NA
+0D2A..0D39    ; output # [16] (പ..ഹ)  MALAYALAM LETTER PA..MALAYALAM LETTER HA
+0D3E..0D43    ; output #  [6] (ാ..ൃ)  MALAYALAM VOWEL SIGN AA..MALAYALAM VOWEL SIGN VOCALIC R
+0D46..0D48    ; output #  [3] (െ..ൈ)  MALAYALAM VOWEL SIGN E..MALAYALAM VOWEL SIGN AI
+0D4A..0D4D    ; output #  [4] (ൊ..്)  MALAYALAM VOWEL SIGN O..MALAYALAM SIGN VIRAMA
+0D57          ; output #      (ൗ)  MALAYALAM AU LENGTH MARK
+0D60..0D61    ; output #  [2] (ൠ..ൡ)  MALAYALAM LETTER VOCALIC RR..MALAYALAM LETTER VOCALIC LL
+0D66..0D6F    ; output # [10] (൦..൯)  MALAYALAM DIGIT ZERO..MALAYALAM DIGIT NINE
+0D82..0D83    ; output #  [2] (ං..ඃ)  SINHALA SIGN ANUSVARAYA..SINHALA SIGN VISARGAYA
+0D85..0D96    ; output # [18] (අ..ඖ)  SINHALA LETTER AYANNA..SINHALA LETTER AUYANNA
+0D9A..0DB1    ; output # [24] (ක..න)  SINHALA LETTER ALPAPRAANA KAYANNA..SINHALA LETTER DANTAJA NAYANNA
+0DB3..0DBB    ; output #  [9] (ඳ..ර)  SINHALA LETTER SANYAKA DAYANNA..SINHALA LETTER RAYANNA
+0DBD          ; output #      (ල)  SINHALA LETTER DANTAJA LAYANNA
+0DC0..0DC6    ; output #  [7] (ව..ෆ)  SINHALA LETTER VAYANNA..SINHALA LETTER FAYANNA
+0DCA          ; output #      (්)  SINHALA SIGN AL-LAKUNA
+0DCF..0DD4    ; output #  [6] (ා..ු)  SINHALA VOWEL SIGN AELA-PILLA..SINHALA VOWEL SIGN KETTI PAA-PILLA
+0DD6          ; output #      (ූ)  SINHALA VOWEL SIGN DIGA PAA-PILLA
+0DD8..0DDF    ; output #  [8] (ෘ..ෟ)  SINHALA VOWEL SIGN GAETTA-PILLA..SINHALA VOWEL SIGN GAYANUKITTA
+0DF2..0DF3    ; output #  [2] (ෲ..ෳ)  SINHALA VOWEL SIGN DIGA GAETTA-PILLA..SINHALA VOWEL SIGN DIGA GAYANUKITTA
+0E01..0E32    ; output # [50] (ก..า)  THAI CHARACTER KO KAI..THAI CHARACTER SARA AA
+0E34..0E3A    ; output #  [7] (ิ..ฺ)  THAI CHARACTER SARA I..THAI CHARACTER PHINTHU
+0E40..0E4E    ; output # [15] (เ..๎)  THAI CHARACTER SARA E..THAI CHARACTER YAMAKKAN
+0E50..0E59    ; output # [10] (๐..๙)  THAI DIGIT ZERO..THAI DIGIT NINE
+0E81..0E82    ; output #  [2] (ກ..ຂ)  LAO LETTER KO..LAO LETTER KHO SUNG
+0E84          ; output #      (ຄ)  LAO LETTER KHO TAM
+0E87..0E88    ; output #  [2] (ງ..ຈ)  LAO LETTER NGO..LAO LETTER CO
+0E8A          ; output #      (ຊ)  LAO LETTER SO TAM
+0E8D          ; output #      (ຍ)  LAO LETTER NYO
+0E94..0E97    ; output #  [4] (ດ..ທ)  LAO LETTER DO..LAO LETTER THO TAM
+0E99..0E9F    ; output #  [7] (ນ..ຟ)  LAO LETTER NO..LAO LETTER FO SUNG
+0EA1..0EA3    ; output #  [3] (ມ..ຣ)  LAO LETTER MO..LAO LETTER LO LING
+0EA5          ; output #      (ລ)  LAO LETTER LO LOOT
+0EA7          ; output #      (ວ)  LAO LETTER WO
+0EAA..0EAB    ; output #  [2] (ສ..ຫ)  LAO LETTER SO SUNG..LAO LETTER HO SUNG
+0EAD..0EB2    ; output #  [6] (ອ..າ)  LAO LETTER O..LAO VOWEL SIGN AA
+0EB4..0EB9    ; output #  [6] (ິ..ູ)  LAO VOWEL SIGN I..LAO VOWEL SIGN UU
+0EBB..0EBD    ; output #  [3] (ົ..ຽ)  LAO VOWEL SIGN MAI KON..LAO SEMIVOWEL SIGN NYO
+0EC0..0EC4    ; output #  [5] (ເ..ໄ)  LAO VOWEL SIGN E..LAO VOWEL SIGN AI
+0EC6          ; output #      (ໆ)  LAO KO LA
+0EC8..0ECD    ; output #  [6] (່..ໍ)  LAO TONE MAI EK..LAO NIGGAHITA
+0ED0..0ED9    ; output # [10] (໐..໙)  LAO DIGIT ZERO..LAO DIGIT NINE
+0F00          ; output #      (ༀ)  TIBETAN SYLLABLE OM
+0F18..0F19    ; output #  [2] (༘..༙)  TIBETAN ASTROLOGICAL SIGN -KHYUD PA..TIBETAN ASTROLOGICAL SIGN SDONG TSHUGS
+0F20..0F29    ; output # [10] (༠..༩)  TIBETAN DIGIT ZERO..TIBETAN DIGIT NINE
+0F35          ; output #      (༵)  TIBETAN MARK NGAS BZUNG NYI ZLA
+0F37          ; output #      (༷)  TIBETAN MARK NGAS BZUNG SGOR RTAGS
+0F39          ; output #      (༹)  TIBETAN MARK TSA -PHRU
+0F3E..0F42    ; output #  [5] (༾..ག)  TIBETAN SIGN YAR TSHES..TIBETAN LETTER GA
+0F44..0F47    ; output #  [4] (ང..ཇ)  TIBETAN LETTER NGA..TIBETAN LETTER JA
+0F49..0F4C    ; output #  [4] (ཉ..ཌ)  TIBETAN LETTER NYA..TIBETAN LETTER DDA
+0F4E..0F51    ; output #  [4] (ཎ..ད)  TIBETAN LETTER NNA..TIBETAN LETTER DA
+0F53..0F56    ; output #  [4] (ན..བ)  TIBETAN LETTER NA..TIBETAN LETTER BA
+0F58..0F5B    ; output #  [4] (མ..ཛ)  TIBETAN LETTER MA..TIBETAN LETTER DZA
+0F5D..0F68    ; output # [12] (ཝ..ཨ)  TIBETAN LETTER WA..TIBETAN LETTER A
+0F6A          ; output #      (ཪ)  TIBETAN LETTER FIXED-FORM RA
+0F71..0F72    ; output #  [2] (ཱ..ི)  TIBETAN VOWEL SIGN AA..TIBETAN VOWEL SIGN I
+0F74          ; output #      (ུ)  TIBETAN VOWEL SIGN U
+0F7A..0F80    ; output #  [7] (ེ..ྀ)  TIBETAN VOWEL SIGN E..TIBETAN VOWEL SIGN REVERSED I
+0F82..0F84    ; output #  [3] (ྂ..྄)  TIBETAN SIGN NYI ZLA NAA DA..TIBETAN MARK HALANTA
+0F86..0F8B    ; output #  [6] (྆..ྋ)  TIBETAN SIGN LCI RTAGS..TIBETAN SIGN GRU MED RGYINGS
+0F90..0F92    ; output #  [3] (ྐ..ྒ)  TIBETAN SUBJOINED LETTER KA..TIBETAN SUBJOINED LETTER GA
+0F94..0F97    ; output #  [4] (ྔ..ྗ)  TIBETAN SUBJOINED LETTER NGA..TIBETAN SUBJOINED LETTER JA
+0F99..0F9C    ; output #  [4] (ྙ..ྜ)  TIBETAN SUBJOINED LETTER NYA..TIBETAN SUBJOINED LETTER DDA
+0F9E..0FA1    ; output #  [4] (ྞ..ྡ)  TIBETAN SUBJOINED LETTER NNA..TIBETAN SUBJOINED LETTER DA
+0FA3..0FA6    ; output #  [4] (ྣ..ྦ)  TIBETAN SUBJOINED LETTER NA..TIBETAN SUBJOINED LETTER BA
+0FA8..0FAB    ; output #  [4] (ྨ..ྫ)  TIBETAN SUBJOINED LETTER MA..TIBETAN SUBJOINED LETTER DZA
+0FAD..0FB8    ; output # [12] (ྭ..ྸ)  TIBETAN SUBJOINED LETTER WA..TIBETAN SUBJOINED LETTER A
+0FBA..0FBC    ; output #  [3] (ྺ..ྼ)  TIBETAN SUBJOINED LETTER FIXED-FORM WA..TIBETAN SUBJOINED LETTER FIXED-FORM RA
+0FC6          ; output #      (࿆)  TIBETAN SYMBOL PADMA GDAN
+1000..1021    ; output # [34] (က..အ)  MYANMAR LETTER KA..MYANMAR LETTER A
+1023..1027    ; output #  [5] (ဣ..ဧ)  MYANMAR LETTER I..MYANMAR LETTER E
+1029..102A    ; output #  [2] (ဩ..ဪ)  MYANMAR LETTER O..MYANMAR LETTER AU
+102C..1032    ; output #  [7] (ာ..ဲ)  MYANMAR VOWEL SIGN AA..MYANMAR VOWEL SIGN AI
+1036..1039    ; output #  [4] (ံ..္)  MYANMAR SIGN ANUSVARA..MYANMAR SIGN VIRAMA
+1040..1049    ; output # [10] (၀..၉)  MYANMAR DIGIT ZERO..MYANMAR DIGIT NINE
+1050..1059    ; output # [10] (ၐ..ၙ)  MYANMAR LETTER SHA..MYANMAR VOWEL SIGN VOCALIC LL
+10A0..10C5    ; output # [38] (Ⴀ..Ⴥ)  GEORGIAN CAPITAL LETTER AN..GEORGIAN CAPITAL LETTER HOE
+10D0..10F0    ; output # [33] (ა..ჰ)  GEORGIAN LETTER AN..GEORGIAN LETTER HAE
+10F7..10F8    ; output #  [2] (ჷ..ჸ)  GEORGIAN LETTER YN..GEORGIAN LETTER ELIFI
+1200..1206    ; output #  [7] (ሀ..ሆ)  ETHIOPIC SYLLABLE HA..ETHIOPIC SYLLABLE HO
+1208..1246    ; output # [63] (ለ..ቆ)  ETHIOPIC SYLLABLE LA..ETHIOPIC SYLLABLE QO
+1248          ; output #      (ቈ)  ETHIOPIC SYLLABLE QWA
+124A..124D    ; output #  [4] (ቊ..ቍ)  ETHIOPIC SYLLABLE QWI..ETHIOPIC SYLLABLE QWE
+1250..1256    ; output #  [7] (ቐ..ቖ)  ETHIOPIC SYLLABLE QHA..ETHIOPIC SYLLABLE QHO
+1258          ; output #      (ቘ)  ETHIOPIC SYLLABLE QHWA
+125A..125D    ; output #  [4] (ቚ..ቝ)  ETHIOPIC SYLLABLE QHWI..ETHIOPIC SYLLABLE QHWE
+1260..1286    ; output # [39] (በ..ኆ)  ETHIOPIC SYLLABLE BA..ETHIOPIC SYLLABLE XO
+1288          ; output #      (ኈ)  ETHIOPIC SYLLABLE XWA
+128A..128D    ; output #  [4] (ኊ..ኍ)  ETHIOPIC SYLLABLE XWI..ETHIOPIC SYLLABLE XWE
+1290..12AE    ; output # [31] (ነ..ኮ)  ETHIOPIC SYLLABLE NA..ETHIOPIC SYLLABLE KO
+12B0          ; output #      (ኰ)  ETHIOPIC SYLLABLE KWA
+12B2..12B5    ; output #  [4] (ኲ..ኵ)  ETHIOPIC SYLLABLE KWI..ETHIOPIC SYLLABLE KWE
+12B8..12BE    ; output #  [7] (ኸ..ኾ)  ETHIOPIC SYLLABLE KXA..ETHIOPIC SYLLABLE KXO
+12C0          ; output #      (ዀ)  ETHIOPIC SYLLABLE KXWA
+12C2..12C5    ; output #  [4] (ዂ..ዅ)  ETHIOPIC SYLLABLE KXWI..ETHIOPIC SYLLABLE KXWE
+12C8..12CE    ; output #  [7] (ወ..ዎ)  ETHIOPIC SYLLABLE WA..ETHIOPIC SYLLABLE WO
+12D0..12D6    ; output #  [7] (ዐ..ዖ)  ETHIOPIC SYLLABLE PHARYNGEAL A..ETHIOPIC SYLLABLE PHARYNGEAL O
+12D8..12EE    ; output # [23] (ዘ..ዮ)  ETHIOPIC SYLLABLE ZA..ETHIOPIC SYLLABLE YO
+12F0..130E    ; output # [31] (ደ..ጎ)  ETHIOPIC SYLLABLE DA..ETHIOPIC SYLLABLE GO
+1310          ; output #      (ጐ)  ETHIOPIC SYLLABLE GWA
+1312..1315    ; output #  [4] (ጒ..ጕ)  ETHIOPIC SYLLABLE GWI..ETHIOPIC SYLLABLE GWE
+1318..131E    ; output #  [7] (ጘ..ጞ)  ETHIOPIC SYLLABLE GGA..ETHIOPIC SYLLABLE GGO
+1320..1346    ; output # [39] (ጠ..ፆ)  ETHIOPIC SYLLABLE THA..ETHIOPIC SYLLABLE TZO
+1348..135A    ; output # [19] (ፈ..ፚ)  ETHIOPIC SYLLABLE FA..ETHIOPIC SYLLABLE FYA
+1369..1371    ; output #  [9] (፩..፱)  ETHIOPIC DIGIT ONE..ETHIOPIC DIGIT NINE
+13A0..13F4    ; output # [85] (Ꭰ..Ᏼ)  CHEROKEE LETTER A..CHEROKEE LETTER YV
+1401..166C    ; output # [620] (ᐁ..ᙬ)  CANADIAN SYLLABICS E..CANADIAN SYLLABICS CARRIER TTSA
+166F..1676    ; output #  [8] (ᙯ..ᙶ)  CANADIAN SYLLABICS QAI..CANADIAN SYLLABICS NNGAA
+1780..17A2    ; output # [35] (ក..អ)  KHMER LETTER KA..KHMER LETTER QA
+17A5..17A7    ; output #  [3] (ឥ..ឧ)  KHMER INDEPENDENT VOWEL QI..KHMER INDEPENDENT VOWEL QU
+17A9..17B3    ; output # [11] (ឩ..ឳ)  KHMER INDEPENDENT VOWEL QUU..KHMER INDEPENDENT VOWEL QAU
+17B6..17D0    ; output # [27] (ា..័)  KHMER VOWEL SIGN AA..KHMER SIGN SAMYOK SANNYA
+17D2          ; output #      (្)  KHMER SIGN COENG
+17D7          ; output #      (ៗ)  KHMER SIGN LEK TOO
+17DC          ; output #      (ៜ)  KHMER SIGN AVAKRAHASANYA
+17E0..17E9    ; output # [10] (០..៩)  KHMER DIGIT ZERO..KHMER DIGIT NINE
+1810..1819    ; output # [10] (᠐..᠙)  MONGOLIAN DIGIT ZERO..MONGOLIAN DIGIT NINE
+1820..1877    ; output # [88] (ᠠ..ᡷ)  MONGOLIAN LETTER A..MONGOLIAN LETTER MANCHU ZHA
+1880..18A9    ; output # [42] (ᢀ..ᢩ)  MONGOLIAN LETTER ALI GALI ANUSVARA ONE..MONGOLIAN LETTER ALI GALI DAGALGA
+1E01          ; output #      (ḁ)  LATIN SMALL LETTER A WITH RING BELOW
+1E03          ; output #      (ḃ)  LATIN SMALL LETTER B WITH DOT ABOVE
+1E05          ; output #      (ḅ)  LATIN SMALL LETTER B WITH DOT BELOW
+1E07          ; output #      (ḇ)  LATIN SMALL LETTER B WITH LINE BELOW
+1E09          ; output #      (ḉ)  LATIN SMALL LETTER C WITH CEDILLA AND ACUTE
+1E0B          ; output #      (ḋ)  LATIN SMALL LETTER D WITH DOT ABOVE
+1E0D          ; output #      (ḍ)  LATIN SMALL LETTER D WITH DOT BELOW
+1E0F          ; output #      (ḏ)  LATIN SMALL LETTER D WITH LINE BELOW
+1E11          ; output #      (ḑ)  LATIN SMALL LETTER D WITH CEDILLA
+1E13          ; output #      (ḓ)  LATIN SMALL LETTER D WITH CIRCUMFLEX BELOW
+1E15          ; output #      (ḕ)  LATIN SMALL LETTER E WITH MACRON AND GRAVE
+1E17          ; output #      (ḗ)  LATIN SMALL LETTER E WITH MACRON AND ACUTE
+1E19          ; output #      (ḙ)  LATIN SMALL LETTER E WITH CIRCUMFLEX BELOW
+1E1B          ; output #      (ḛ)  LATIN SMALL LETTER E WITH TILDE BELOW
+1E1D          ; output #      (ḝ)  LATIN SMALL LETTER E WITH CEDILLA AND BREVE
+1E1F          ; output #      (ḟ)  LATIN SMALL LETTER F WITH DOT ABOVE
+1E21          ; output #      (ḡ)  LATIN SMALL LETTER G WITH MACRON
+1E23          ; output #      (ḣ)  LATIN SMALL LETTER H WITH DOT ABOVE
+1E25          ; output #      (ḥ)  LATIN SMALL LETTER H WITH DOT BELOW
+1E27          ; output #      (ḧ)  LATIN SMALL LETTER H WITH DIAERESIS
+1E29          ; output #      (ḩ)  LATIN SMALL LETTER H WITH CEDILLA
+1E2B          ; output #      (ḫ)  LATIN SMALL LETTER H WITH BREVE BELOW
+1E2D          ; output #      (ḭ)  LATIN SMALL LETTER I WITH TILDE BELOW
+1E2F          ; output #      (ḯ)  LATIN SMALL LETTER I WITH DIAERESIS AND ACUTE
+1E31          ; output #      (ḱ)  LATIN SMALL LETTER K WITH ACUTE
+1E33          ; output #      (ḳ)  LATIN SMALL LETTER K WITH DOT BELOW
+1E35          ; output #      (ḵ)  LATIN SMALL LETTER K WITH LINE BELOW
+1E37          ; output #      (ḷ)  LATIN SMALL LETTER L WITH DOT BELOW
+1E39          ; output #      (ḹ)  LATIN SMALL LETTER L WITH DOT BELOW AND MACRON
+1E3B          ; output #      (ḻ)  LATIN SMALL LETTER L WITH LINE BELOW
+1E3D          ; output #      (ḽ)  LATIN SMALL LETTER L WITH CIRCUMFLEX BELOW
+1E3F          ; output #      (ḿ)  LATIN SMALL LETTER M WITH ACUTE
+1E41          ; output #      (ṁ)  LATIN SMALL LETTER M WITH DOT ABOVE
+1E43          ; output #      (ṃ)  LATIN SMALL LETTER M WITH DOT BELOW
+1E45          ; output #      (ṅ)  LATIN SMALL LETTER N WITH DOT ABOVE
+1E47          ; output #      (ṇ)  LATIN SMALL LETTER N WITH DOT BELOW
+1E49          ; output #      (ṉ)  LATIN SMALL LETTER N WITH LINE BELOW
+1E4B          ; output #      (ṋ)  LATIN SMALL LETTER N WITH CIRCUMFLEX BELOW
+1E4D          ; output #      (ṍ)  LATIN SMALL LETTER O WITH TILDE AND ACUTE
+1E4F          ; output #      (ṏ)  LATIN SMALL LETTER O WITH TILDE AND DIAERESIS
+1E51          ; output #      (ṑ)  LATIN SMALL LETTER O WITH MACRON AND GRAVE
+1E53          ; output #      (ṓ)  LATIN SMALL LETTER O WITH MACRON AND ACUTE
+1E55          ; output #      (ṕ)  LATIN SMALL LETTER P WITH ACUTE
+1E57          ; output #      (ṗ)  LATIN SMALL LETTER P WITH DOT ABOVE
+1E59          ; output #      (ṙ)  LATIN SMALL LETTER R WITH DOT ABOVE
+1E5B          ; output #      (ṛ)  LATIN SMALL LETTER R WITH DOT BELOW
+1E5D          ; output #      (ṝ)  LATIN SMALL LETTER R WITH DOT BELOW AND MACRON
+1E5F          ; output #      (ṟ)  LATIN SMALL LETTER R WITH LINE BELOW
+1E61          ; output #      (ṡ)  LATIN SMALL LETTER S WITH DOT ABOVE
+1E63          ; output #      (ṣ)  LATIN SMALL LETTER S WITH DOT BELOW
+1E65          ; output #      (ṥ)  LATIN SMALL LETTER S WITH ACUTE AND DOT ABOVE
+1E67          ; output #      (ṧ)  LATIN SMALL LETTER S WITH CARON AND DOT ABOVE
+1E69          ; output #      (ṩ)  LATIN SMALL LETTER S WITH DOT BELOW AND DOT ABOVE
+1E6B          ; output #      (ṫ)  LATIN SMALL LETTER T WITH DOT ABOVE
+1E6D          ; output #      (ṭ)  LATIN SMALL LETTER T WITH DOT BELOW
+1E6F          ; output #      (ṯ)  LATIN SMALL LETTER T WITH LINE BELOW
+1E71          ; output #      (ṱ)  LATIN SMALL LETTER T WITH CIRCUMFLEX BELOW
+1E73          ; output #      (ṳ)  LATIN SMALL LETTER U WITH DIAERESIS BELOW
+1E75          ; output #      (ṵ)  LATIN SMALL LETTER U WITH TILDE BELOW
+1E77          ; output #      (ṷ)  LATIN SMALL LETTER U WITH CIRCUMFLEX BELOW
+1E79          ; output #      (ṹ)  LATIN SMALL LETTER U WITH TILDE AND ACUTE
+1E7B          ; output #      (ṻ)  LATIN SMALL LETTER U WITH MACRON AND DIAERESIS
+1E7D          ; output #      (ṽ)  LATIN SMALL LETTER V WITH TILDE
+1E7F          ; output #      (ṿ)  LATIN SMALL LETTER V WITH DOT BELOW
+1E81          ; output #      (ẁ)  LATIN SMALL LETTER W WITH GRAVE
+1E83          ; output #      (ẃ)  LATIN SMALL LETTER W WITH ACUTE
+1E85          ; output #      (ẅ)  LATIN SMALL LETTER W WITH DIAERESIS
+1E87          ; output #      (ẇ)  LATIN SMALL LETTER W WITH DOT ABOVE
+1E89          ; output #      (ẉ)  LATIN SMALL LETTER W WITH DOT BELOW
+1E8B          ; output #      (ẋ)  LATIN SMALL LETTER X WITH DOT ABOVE
+1E8D          ; output #      (ẍ)  LATIN SMALL LETTER X WITH DIAERESIS
+1E8F          ; output #      (ẏ)  LATIN SMALL LETTER Y WITH DOT ABOVE
+1E91          ; output #      (ẑ)  LATIN SMALL LETTER Z WITH CIRCUMFLEX
+1E93          ; output #      (ẓ)  LATIN SMALL LETTER Z WITH DOT BELOW
+1E95..1E99    ; output #  [5] (ẕ..ẙ)  LATIN SMALL LETTER Z WITH LINE BELOW..LATIN SMALL LETTER Y WITH RING ABOVE
+1EA1          ; output #      (ạ)  LATIN SMALL LETTER A WITH DOT BELOW
+1EA3          ; output #      (ả)  LATIN SMALL LETTER A WITH HOOK ABOVE
+1EA5          ; output #      (ấ)  LATIN SMALL LETTER A WITH CIRCUMFLEX AND ACUTE
+1EA7          ; output #      (ầ)  LATIN SMALL LETTER A WITH CIRCUMFLEX AND GRAVE
+1EA9          ; output #      (ẩ)  LATIN SMALL LETTER A WITH CIRCUMFLEX AND HOOK ABOVE
+1EAB          ; output #      (ẫ)  LATIN SMALL LETTER A WITH CIRCUMFLEX AND TILDE
+1EAD          ; output #      (ậ)  LATIN SMALL LETTER A WITH CIRCUMFLEX AND DOT BELOW
+1EAF          ; output #      (ắ)  LATIN SMALL LETTER A WITH BREVE AND ACUTE
+1EB1          ; output #      (ằ)  LATIN SMALL LETTER A WITH BREVE AND GRAVE
+1EB3          ; output #      (ẳ)  LATIN SMALL LETTER A WITH BREVE AND HOOK ABOVE
+1EB5          ; output #      (ẵ)  LATIN SMALL LETTER A WITH BREVE AND TILDE
+1EB7          ; output #      (ặ)  LATIN SMALL LETTER A WITH BREVE AND DOT BELOW
+1EB9          ; output #      (ẹ)  LATIN SMALL LETTER E WITH DOT BELOW
+1EBB          ; output #      (ẻ)  LATIN SMALL LETTER E WITH HOOK ABOVE
+1EBD          ; output #      (ẽ)  LATIN SMALL LETTER E WITH TILDE
+1EBF          ; output #      (ế)  LATIN SMALL LETTER E WITH CIRCUMFLEX AND ACUTE
+1EC1          ; output #      (ề)  LATIN SMALL LETTER E WITH CIRCUMFLEX AND GRAVE
+1EC3          ; output #      (ể)  LATIN SMALL LETTER E WITH CIRCUMFLEX AND HOOK ABOVE
+1EC5          ; output #      (ễ)  LATIN SMALL LETTER E WITH CIRCUMFLEX AND TILDE
+1EC7          ; output #      (ệ)  LATIN SMALL LETTER E WITH CIRCUMFLEX AND DOT BELOW
+1EC9          ; output #      (ỉ)  LATIN SMALL LETTER I WITH HOOK ABOVE
+1ECB          ; output #      (ị)  LATIN SMALL LETTER I WITH DOT BELOW
+1ECD          ; output #      (ọ)  LATIN SMALL LETTER O WITH DOT BELOW
+1ECF          ; output #      (ỏ)  LATIN SMALL LETTER O WITH HOOK ABOVE
+1ED1          ; output #      (ố)  LATIN SMALL LETTER O WITH CIRCUMFLEX AND ACUTE
+1ED3          ; output #      (ồ)  LATIN SMALL LETTER O WITH CIRCUMFLEX AND GRAVE
+1ED5          ; output #      (ổ)  LATIN SMALL LETTER O WITH CIRCUMFLEX AND HOOK ABOVE
+1ED7          ; output #      (ỗ)  LATIN SMALL LETTER O WITH CIRCUMFLEX AND TILDE
+1ED9          ; output #      (ộ)  LATIN SMALL LETTER O WITH CIRCUMFLEX AND DOT BELOW
+1EDB          ; output #      (ớ)  LATIN SMALL LETTER O WITH HORN AND ACUTE
+1EDD          ; output #      (ờ)  LATIN SMALL LETTER O WITH HORN AND GRAVE
+1EDF          ; output #      (ở)  LATIN SMALL LETTER O WITH HORN AND HOOK ABOVE
+1EE1          ; output #      (ỡ)  LATIN SMALL LETTER O WITH HORN AND TILDE
+1EE3          ; output #      (ợ)  LATIN SMALL LETTER O WITH HORN AND DOT BELOW
+1EE5          ; output #      (ụ)  LATIN SMALL LETTER U WITH DOT BELOW
+1EE7          ; output #      (ủ)  LATIN SMALL LETTER U WITH HOOK ABOVE
+1EE9          ; output #      (ứ)  LATIN SMALL LETTER U WITH HORN AND ACUTE
+1EEB          ; output #      (ừ)  LATIN SMALL LETTER U WITH HORN AND GRAVE
+1EED          ; output #      (ử)  LATIN SMALL LETTER U WITH HORN AND HOOK ABOVE
+1EEF          ; output #      (ữ)  LATIN SMALL LETTER U WITH HORN AND TILDE
+1EF1          ; output #      (ự)  LATIN SMALL LETTER U WITH HORN AND DOT BELOW
+1EF3          ; output #      (ỳ)  LATIN SMALL LETTER Y WITH GRAVE
+1EF5          ; output #      (ỵ)  LATIN SMALL LETTER Y WITH DOT BELOW
+1EF7          ; output #      (ỷ)  LATIN SMALL LETTER Y WITH HOOK ABOVE
+1EF9          ; output #      (ỹ)  LATIN SMALL LETTER Y WITH TILDE
+1F00..1F07    ; output #  [8] (ἀ..ἇ)  GREEK SMALL LETTER ALPHA WITH PSILI..GREEK SMALL LETTER ALPHA WITH DASIA AND PERISPOMENI
+1F10..1F15    ; output #  [6] (ἐ..ἕ)  GREEK SMALL LETTER EPSILON WITH PSILI..GREEK SMALL LETTER EPSILON WITH DASIA AND OXIA
+1F20..1F27    ; output #  [8] (ἠ..ἧ)  GREEK SMALL LETTER ETA WITH PSILI..GREEK SMALL LETTER ETA WITH DASIA AND PERISPOMENI
+1F30..1F37    ; output #  [8] (ἰ..ἷ)  GREEK SMALL LETTER IOTA WITH PSILI..GREEK SMALL LETTER IOTA WITH DASIA AND PERISPOMENI
+1F40..1F45    ; output #  [6] (ὀ..ὅ)  GREEK SMALL LETTER OMICRON WITH PSILI..GREEK SMALL LETTER OMICRON WITH DASIA AND OXIA
+1F50..1F57    ; output #  [8] (ὐ..ὗ)  GREEK SMALL LETTER UPSILON WITH PSILI..GREEK SMALL LETTER UPSILON WITH DASIA AND PERISPOMENI
+1F60..1F67    ; output #  [8] (ὠ..ὧ)  GREEK SMALL LETTER OMEGA WITH PSILI..GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMENI
+1F70          ; output #      (ὰ)  GREEK SMALL LETTER ALPHA WITH VARIA
+1F72          ; output #      (ὲ)  GREEK SMALL LETTER EPSILON WITH VARIA
+1F74          ; output #      (ὴ)  GREEK SMALL LETTER ETA WITH VARIA
+1F76          ; output #      (ὶ)  GREEK SMALL LETTER IOTA WITH VARIA
+1F78          ; output #      (ὸ)  GREEK SMALL LETTER OMICRON WITH VARIA
+1F7A          ; output #      (ὺ)  GREEK SMALL LETTER UPSILON WITH VARIA
+1F7C          ; output #      (ὼ)  GREEK SMALL LETTER OMEGA WITH VARIA
+1FB0..1FB1    ; output #  [2] (ᾰ..ᾱ)  GREEK SMALL LETTER ALPHA WITH VRACHY..GREEK SMALL LETTER ALPHA WITH MACRON
+1FB6          ; output #      (ᾶ)  GREEK SMALL LETTER ALPHA WITH PERISPOMENI
+1FC6          ; output #      (ῆ)  GREEK SMALL LETTER ETA WITH PERISPOMENI
+1FD0..1FD2    ; output #  [3] (ῐ..ῒ)  GREEK SMALL LETTER IOTA WITH VRACHY..GREEK SMALL LETTER IOTA WITH DIALYTIKA AND VARIA
+1FD6..1FD7    ; output #  [2] (ῖ..ῗ)  GREEK SMALL LETTER IOTA WITH PERISPOMENI..GREEK SMALL LETTER IOTA WITH DIALYTIKA AND PERISPOMENI
+1FE0..1FE2    ; output #  [3] (ῠ..ῢ)  GREEK SMALL LETTER UPSILON WITH VRACHY..GREEK SMALL LETTER UPSILON WITH DIALYTIKA AND VARIA
+1FE4..1FE7    ; output #  [4] (ῤ..ῧ)  GREEK SMALL LETTER RHO WITH PSILI..GREEK SMALL LETTER UPSILON WITH DIALYTIKA AND PERISPOMENI
+1FF6          ; output #      (ῶ)  GREEK SMALL LETTER OMEGA WITH PERISPOMENI
+2132          ; output #      (Ⅎ)  TURNED CAPITAL F
+3005..3007    ; output #  [3] (々..〇)  IDEOGRAPHIC ITERATION MARK..IDEOGRAPHIC NUMBER ZERO
+3041..3096    ; output # [86] (ぁ..ゖ)  HIRAGANA LETTER SMALL A..HIRAGANA LETTER SMALL KE
+3099..309A    ; output #  [2] (゙..゚)  COMBINING KATAKANA-HIRAGANA VOICED SOUND MARK..COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+309D..309E    ; output #  [2] (ゝ..ゞ)  HIRAGANA ITERATION MARK..HIRAGANA VOICED ITERATION MARK
+30A1..30FE    ; output # [94] (ァ..ヾ)  KATAKANA LETTER SMALL A..KATAKANA VOICED ITERATION MARK
+3105..312C    ; output # [40] (ㄅ..ㄬ)  BOPOMOFO LETTER B..BOPOMOFO LETTER GN
+31A0..31B7    ; output # [24] (ㆠ..ㆷ)  BOPOMOFO LETTER BU..BOPOMOFO FINAL LETTER H
+31F0..31FF    ; output # [16] (ㇰ..ㇿ)  KATAKANA LETTER SMALL KU..KATAKANA LETTER SMALL RO
+3447          ; output #      (㑇)  CJK UNIFIED IDEOGRAPH-3447
+3473          ; output #      (㑳)  CJK UNIFIED IDEOGRAPH-3473
+34E4          ; output #      (㓤)  CJK UNIFIED IDEOGRAPH-34E4
+3577          ; output #      (㕷)  CJK UNIFIED IDEOGRAPH-3577
+359E          ; output #      (㖞)  CJK UNIFIED IDEOGRAPH-359E
+35A1          ; output #      (㖡)  CJK UNIFIED IDEOGRAPH-35A1
+35AD          ; output #      (㖭)  CJK UNIFIED IDEOGRAPH-35AD
+35BF          ; output #      (㖿)  CJK UNIFIED IDEOGRAPH-35BF
+35CE          ; output #      (㗎)  CJK UNIFIED IDEOGRAPH-35CE
+35F3          ; output #      (㗳)  CJK UNIFIED IDEOGRAPH-35F3
+35FE          ; output #      (㗾)  CJK UNIFIED IDEOGRAPH-35FE
+360E          ; output #      (㘎)  CJK UNIFIED IDEOGRAPH-360E
+361A          ; output #      (㘚)  CJK UNIFIED IDEOGRAPH-361A
+3918          ; output #      (㤘)  CJK UNIFIED IDEOGRAPH-3918
+3960          ; output #      (㥠)  CJK UNIFIED IDEOGRAPH-3960
+396E          ; output #      (㥮)  CJK UNIFIED IDEOGRAPH-396E
+39CF..39D0    ; output #  [2] (㧏..㧐)  CJK UNIFIED IDEOGRAPH-39CF..CJK UNIFIED IDEOGRAPH-39D0
+39DF          ; output #      (㧟)  CJK UNIFIED IDEOGRAPH-39DF
+39F8          ; output #      (㧸)  CJK UNIFIED IDEOGRAPH-39F8
+39FE          ; output #      (㧾)  CJK UNIFIED IDEOGRAPH-39FE
+3A18          ; output #      (㨘)  CJK UNIFIED IDEOGRAPH-3A18
+3A52          ; output #      (㩒)  CJK UNIFIED IDEOGRAPH-3A52
+3A67          ; output #      (㩧)  CJK UNIFIED IDEOGRAPH-3A67
+3A73          ; output #      (㩳)  CJK UNIFIED IDEOGRAPH-3A73
+3B39          ; output #      (㬹)  CJK UNIFIED IDEOGRAPH-3B39
+3B4E          ; output #      (㭎)  CJK UNIFIED IDEOGRAPH-3B4E
+3C6E          ; output #      (㱮)  CJK UNIFIED IDEOGRAPH-3C6E
+3CE0          ; output #      (㳠)  CJK UNIFIED IDEOGRAPH-3CE0
+3DE7          ; output #      (㷧)  CJK UNIFIED IDEOGRAPH-3DE7
+3DEB          ; output #      (㷫)  CJK UNIFIED IDEOGRAPH-3DEB
+3E74          ; output #      (㹴)  CJK UNIFIED IDEOGRAPH-3E74
+3ED0          ; output #      (㻐)  CJK UNIFIED IDEOGRAPH-3ED0
+4056          ; output #      (䁖)  CJK UNIFIED IDEOGRAPH-4056
+4065          ; output #      (䁥)  CJK UNIFIED IDEOGRAPH-4065
+406A          ; output #      (䁪)  CJK UNIFIED IDEOGRAPH-406A
+40BB          ; output #      (䂻)  CJK UNIFIED IDEOGRAPH-40BB
+40DF          ; output #      (䃟)  CJK UNIFIED IDEOGRAPH-40DF
+4137          ; output #      (䄷)  CJK UNIFIED IDEOGRAPH-4137
+415F          ; output #      (䅟)  CJK UNIFIED IDEOGRAPH-415F
+4337          ; output #      (䌷)  CJK UNIFIED IDEOGRAPH-4337
+43AC          ; output #      (䎬)  CJK UNIFIED IDEOGRAPH-43AC
+43B1          ; output #      (䎱)  CJK UNIFIED IDEOGRAPH-43B1
+43DD          ; output #      (䏝)  CJK UNIFIED IDEOGRAPH-43DD
+44D6          ; output #      (䓖)  CJK UNIFIED IDEOGRAPH-44D6
+44EA          ; output #      (䓪)  CJK UNIFIED IDEOGRAPH-44EA
+4606          ; output #      (䘆)  CJK UNIFIED IDEOGRAPH-4606
+464C          ; output #      (䙌)  CJK UNIFIED IDEOGRAPH-464C
+4661          ; output #      (䙡)  CJK UNIFIED IDEOGRAPH-4661
+4723          ; output #      (䜣)  CJK UNIFIED IDEOGRAPH-4723
+4729          ; output #      (䜩)  CJK UNIFIED IDEOGRAPH-4729
+477C          ; output #      (䝼)  CJK UNIFIED IDEOGRAPH-477C
+478D          ; output #      (䞍)  CJK UNIFIED IDEOGRAPH-478D
+47F4          ; output #      (䟴)  CJK UNIFIED IDEOGRAPH-47F4
+48B5          ; output #      (䢵)  CJK UNIFIED IDEOGRAPH-48B5
+48BC          ; output #      (䢼)  CJK UNIFIED IDEOGRAPH-48BC
+48C5          ; output #      (䣅)  CJK UNIFIED IDEOGRAPH-48C5
+48D3          ; output #      (䣓)  CJK UNIFIED IDEOGRAPH-48D3
+4947          ; output #      (䥇)  CJK UNIFIED IDEOGRAPH-4947
+497A          ; output #      (䥺)  CJK UNIFIED IDEOGRAPH-497A
+497D          ; output #      (䥽)  CJK UNIFIED IDEOGRAPH-497D
+4982..4983    ; output #  [2] (䦂..䦃)  CJK UNIFIED IDEOGRAPH-4982..CJK UNIFIED IDEOGRAPH-4983
+4985..4986    ; output #  [2] (䦅..䦆)  CJK UNIFIED IDEOGRAPH-4985..CJK UNIFIED IDEOGRAPH-4986
+499B          ; output #      (䦛)  CJK UNIFIED IDEOGRAPH-499B
+499F          ; output #      (䦟)  CJK UNIFIED IDEOGRAPH-499F
+49B6..49B7    ; output #  [2] (䦶..䦷)  CJK UNIFIED IDEOGRAPH-49B6..CJK UNIFIED IDEOGRAPH-49B7
+49D1          ; output #      (䧑)  CJK UNIFIED IDEOGRAPH-49D1
+4A12          ; output #      (䨒)  CJK UNIFIED IDEOGRAPH-4A12
+4AB8          ; output #      (䪸)  CJK UNIFIED IDEOGRAPH-4AB8
+4C77          ; output #      (䱷)  CJK UNIFIED IDEOGRAPH-4C77
+4C7D          ; output #      (䱽)  CJK UNIFIED IDEOGRAPH-4C7D
+4C81          ; output #      (䲁)  CJK UNIFIED IDEOGRAPH-4C81
+4C85          ; output #      (䲅)  CJK UNIFIED IDEOGRAPH-4C85
+4C9F..4CA3    ; output #  [5] (䲟..䲣)  CJK UNIFIED IDEOGRAPH-4C9F..CJK UNIFIED IDEOGRAPH-4CA3
+4CB3          ; output #      (䲳)  CJK UNIFIED IDEOGRAPH-4CB3
+4D08          ; output #      (䴈)  CJK UNIFIED IDEOGRAPH-4D08
+4D13..4D19    ; output #  [7] (䴓..䴙)  CJK UNIFIED IDEOGRAPH-4D13..CJK UNIFIED IDEOGRAPH-4D19
+4DAE          ; output #      (䶮)  CJK UNIFIED IDEOGRAPH-4DAE
+4E00..9FA5    ; output # [20902] (一..龥)  CJK UNIFIED IDEOGRAPH-4E00..CJK UNIFIED IDEOGRAPH-9FA5
+A000..A48C    ; output # [1165] (ꀀ..ꒌ)  YI SYLLABLE IT..YI SYLLABLE YYR
+AC00..D7A3    ; output # [11172] (가..힣)  HANGUL SYLLABLE GA..HANGUL SYLLABLE HIH
+FA0E..FA0F    ; output #  [2] (﨎..﨏)  CJK COMPATIBILITY IDEOGRAPH-FA0E..CJK COMPATIBILITY IDEOGRAPH-FA0F
+FA11          ; output #      (﨑)  CJK COMPATIBILITY IDEOGRAPH-FA11
+FA13..FA14    ; output #  [2] (﨓..﨔)  CJK COMPATIBILITY IDEOGRAPH-FA13..CJK COMPATIBILITY IDEOGRAPH-FA14
+FA1F          ; output #      (﨟)  CJK COMPATIBILITY IDEOGRAPH-FA1F
+FA21          ; output #      (﨡)  CJK COMPATIBILITY IDEOGRAPH-FA21
+FA23..FA24    ; output #  [2] (﨣..﨤)  CJK COMPATIBILITY IDEOGRAPH-FA23..CJK COMPATIBILITY IDEOGRAPH-FA24
+FA27..FA29    ; output #  [3] (﨧..﨩)  CJK COMPATIBILITY IDEOGRAPH-FA27..CJK COMPATIBILITY IDEOGRAPH-FA29
+2070E         ; output #      (𠜎)  CJK UNIFIED IDEOGRAPH-2070E
+20731         ; output #      (𠜱)  CJK UNIFIED IDEOGRAPH-20731
+20779         ; output #      (𠝹)  CJK UNIFIED IDEOGRAPH-20779
+20C53         ; output #      (𠱓)  CJK UNIFIED IDEOGRAPH-20C53
+20C78         ; output #      (𠱸)  CJK UNIFIED IDEOGRAPH-20C78
+20C96         ; output #      (𠲖)  CJK UNIFIED IDEOGRAPH-20C96
+20CCF         ; output #      (𠳏)  CJK UNIFIED IDEOGRAPH-20CCF
+20CD5         ; output #      (𠳕)  CJK UNIFIED IDEOGRAPH-20CD5
+20D15         ; output #      (𠴕)  CJK UNIFIED IDEOGRAPH-20D15
+20D7C         ; output #      (𠵼)  CJK UNIFIED IDEOGRAPH-20D7C
+20D7F         ; output #      (𠵿)  CJK UNIFIED IDEOGRAPH-20D7F
+20E0E..20E0F  ; output #  [2] (𠸎..𠸏)  CJK UNIFIED IDEOGRAPH-20E0E..CJK UNIFIED IDEOGRAPH-20E0F
+20E77         ; output #      (𠹷)  CJK UNIFIED IDEOGRAPH-20E77
+20E9D         ; output #      (𠺝)  CJK UNIFIED IDEOGRAPH-20E9D
+20EA2         ; output #      (𠺢)  CJK UNIFIED IDEOGRAPH-20EA2
+20ED7         ; output #      (𠻗)  CJK UNIFIED IDEOGRAPH-20ED7
+20EF9..20EFA  ; output #  [2] (𠻹..𠻺)  CJK UNIFIED IDEOGRAPH-20EF9..CJK UNIFIED IDEOGRAPH-20EFA
+20F2D..20F2E  ; output #  [2] (𠼭..𠼮)  CJK UNIFIED IDEOGRAPH-20F2D..CJK UNIFIED IDEOGRAPH-20F2E
+20F4C         ; output #      (𠽌)  CJK UNIFIED IDEOGRAPH-20F4C
+20FB4         ; output #      (𠾴)  CJK UNIFIED IDEOGRAPH-20FB4
+20FBC         ; output #      (𠾼)  CJK UNIFIED IDEOGRAPH-20FBC
+20FEA         ; output #      (𠿪)  CJK UNIFIED IDEOGRAPH-20FEA
+2105C         ; output #      (𡁜)  CJK UNIFIED IDEOGRAPH-2105C
+2106F         ; output #      (𡁯)  CJK UNIFIED IDEOGRAPH-2106F
+21075..21076  ; output #  [2] (𡁵..𡁶)  CJK UNIFIED IDEOGRAPH-21075..CJK UNIFIED IDEOGRAPH-21076
+2107B         ; output #      (𡁻)  CJK UNIFIED IDEOGRAPH-2107B
+210C1         ; output #      (𡃁)  CJK UNIFIED IDEOGRAPH-210C1
+210C9         ; output #      (𡃉)  CJK UNIFIED IDEOGRAPH-210C9
+211D9         ; output #      (𡇙)  CJK UNIFIED IDEOGRAPH-211D9
+220C7         ; output #      (𢃇)  CJK UNIFIED IDEOGRAPH-220C7
+227B5         ; output #      (𢞵)  CJK UNIFIED IDEOGRAPH-227B5
+22AD5         ; output #      (𢫕)  CJK UNIFIED IDEOGRAPH-22AD5
+22B43         ; output #      (𢭃)  CJK UNIFIED IDEOGRAPH-22B43
+22BCA         ; output #      (𢯊)  CJK UNIFIED IDEOGRAPH-22BCA
+22C51         ; output #      (𢱑)  CJK UNIFIED IDEOGRAPH-22C51
+22C55         ; output #      (𢱕)  CJK UNIFIED IDEOGRAPH-22C55
+22CC2         ; output #      (𢳂)  CJK UNIFIED IDEOGRAPH-22CC2
+22D08         ; output #      (𢴈)  CJK UNIFIED IDEOGRAPH-22D08
+22D4C         ; output #      (𢵌)  CJK UNIFIED IDEOGRAPH-22D4C
+22D67         ; output #      (𢵧)  CJK UNIFIED IDEOGRAPH-22D67
+22EB3         ; output #      (𢺳)  CJK UNIFIED IDEOGRAPH-22EB3
+23CB7         ; output #      (𣲷)  CJK UNIFIED IDEOGRAPH-23CB7
+244D3         ; output #      (𤓓)  CJK UNIFIED IDEOGRAPH-244D3
+24DB8         ; output #      (𤶸)  CJK UNIFIED IDEOGRAPH-24DB8
+24DEA         ; output #      (𤷪)  CJK UNIFIED IDEOGRAPH-24DEA
+2512B         ; output #      (𥄫)  CJK UNIFIED IDEOGRAPH-2512B
+26258         ; output #      (𦉘)  CJK UNIFIED IDEOGRAPH-26258
+267CC         ; output #      (𦟌)  CJK UNIFIED IDEOGRAPH-267CC
+269F2         ; output #      (𦧲)  CJK UNIFIED IDEOGRAPH-269F2
+269FA         ; output #      (𦧺)  CJK UNIFIED IDEOGRAPH-269FA
+27A3E         ; output #      (𧨾)  CJK UNIFIED IDEOGRAPH-27A3E
+2815D         ; output #      (𨅝)  CJK UNIFIED IDEOGRAPH-2815D
+28207         ; output #      (𨈇)  CJK UNIFIED IDEOGRAPH-28207
+282E2         ; output #      (𨋢)  CJK UNIFIED IDEOGRAPH-282E2
+28CCA         ; output #      (𨳊)  CJK UNIFIED IDEOGRAPH-28CCA
+28CCD         ; output #      (𨳍)  CJK UNIFIED IDEOGRAPH-28CCD
+28CD2         ; output #      (𨳒)  CJK UNIFIED IDEOGRAPH-28CD2
+29D98         ; output #      (𩶘)  CJK UNIFIED IDEOGRAPH-29D98
+
+# Total code points: 37201
+
+# Not allowed at start of identifier
+
+0300..033F    ; nonstarting # [64] (̀..̿)  COMBINING GRAVE ACCENT..COMBINING DOUBLE OVERLINE
+0342          ; nonstarting #      (͂)  COMBINING GREEK PERISPOMENI
+0345..034E    ; nonstarting # [10] (ͅ..͎)  COMBINING GREEK YPOGEGRAMMENI..COMBINING UPWARDS ARROW BELOW
+0360..036F    ; nonstarting # [16] (͠..ͯ)  COMBINING DOUBLE TILDE..COMBINING LATIN SMALL LETTER X
+0591..05A1    ; nonstarting # [17] (֑..֡)  HEBREW ACCENT ETNAHTA..HEBREW ACCENT PAZER
+05A3..05B9    ; nonstarting # [23] (֣..ֹ)  HEBREW ACCENT MUNAH..HEBREW POINT HOLAM
+05BB..05BD    ; nonstarting #  [3] (ֻ..ֽ)  HEBREW POINT QUBUTS..HEBREW POINT METEG
+05BF          ; nonstarting #      (ֿ)  HEBREW POINT RAFE
+05C1..05C2    ; nonstarting #  [2] (ׁ..ׂ)  HEBREW POINT SHIN DOT..HEBREW POINT SIN DOT
+05C4          ; nonstarting #      (ׄ)  HEBREW MARK UPPER DOT
+064B..0655    ; nonstarting # [11] (ً..ٕ)  ARABIC FATHATAN..ARABIC HAMZA BELOW
+0670          ; nonstarting #      (ٰ)  ARABIC LETTER SUPERSCRIPT ALEF
+06D6..06DC    ; nonstarting #  [7] (ۖ..ۜ)  ARABIC SMALL HIGH LIGATURE SAD WITH LAM WITH ALEF MAKSURA..ARABIC SMALL HIGH SEEN
+06DF..06E4    ; nonstarting #  [6] (۟..ۤ)  ARABIC SMALL HIGH ROUNDED ZERO..ARABIC SMALL HIGH MADDA
+06E7..06E8    ; nonstarting #  [2] (ۧ..ۨ)  ARABIC SMALL HIGH YEH..ARABIC SMALL HIGH NOON
+06EA..06ED    ; nonstarting #  [4] (۪..ۭ)  ARABIC EMPTY CENTRE LOW STOP..ARABIC SMALL LOW MEEM
+0711          ; nonstarting #      (ܑ)  SYRIAC LETTER SUPERSCRIPT ALAPH
+0730..073F    ; nonstarting # [16] (ܰ..ܿ)  SYRIAC PTHAHA ABOVE..SYRIAC RWAHA
+07A6..07B0    ; nonstarting # [11] (ަ..ް)  THAANA ABAFILI..THAANA SUKUN
+0901..0903    ; nonstarting #  [3] (ँ..ः)  DEVANAGARI SIGN CANDRABINDU..DEVANAGARI SIGN VISARGA
+093C          ; nonstarting #      (़)  DEVANAGARI SIGN NUKTA
+093E..094D    ; nonstarting # [16] (ा..्)  DEVANAGARI VOWEL SIGN AA..DEVANAGARI SIGN VIRAMA
+0951..0954    ; nonstarting #  [4] (॑..॔)  DEVANAGARI STRESS SIGN UDATTA..DEVANAGARI ACUTE ACCENT
+0962..0963    ; nonstarting #  [2] (ॢ..ॣ)  DEVANAGARI VOWEL SIGN VOCALIC L..DEVANAGARI VOWEL SIGN VOCALIC LL
+0981..0983    ; nonstarting #  [3] (ঁ..ঃ)  BENGALI SIGN CANDRABINDU..BENGALI SIGN VISARGA
+09BC          ; nonstarting #      (়)  BENGALI SIGN NUKTA
+09BE..09C4    ; nonstarting #  [7] (া..ৄ)  BENGALI VOWEL SIGN AA..BENGALI VOWEL SIGN VOCALIC RR
+09C7..09C8    ; nonstarting #  [2] (ে..ৈ)  BENGALI VOWEL SIGN E..BENGALI VOWEL SIGN AI
+09CB..09CD    ; nonstarting #  [3] (ো..্)  BENGALI VOWEL SIGN O..BENGALI SIGN VIRAMA
+09D7          ; nonstarting #      (ৗ)  BENGALI AU LENGTH MARK
+09E2..09E3    ; nonstarting #  [2] (ৢ..ৣ)  BENGALI VOWEL SIGN VOCALIC L..BENGALI VOWEL SIGN VOCALIC LL
+0A02          ; nonstarting #      (ਂ)  GURMUKHI SIGN BINDI
+0A3C          ; nonstarting #      (਼)  GURMUKHI SIGN NUKTA
+0A3E..0A42    ; nonstarting #  [5] (ਾ..ੂ)  GURMUKHI VOWEL SIGN AA..GURMUKHI VOWEL SIGN UU
+0A47..0A48    ; nonstarting #  [2] (ੇ..ੈ)  GURMUKHI VOWEL SIGN EE..GURMUKHI VOWEL SIGN AI
+0A4B..0A4D    ; nonstarting #  [3] (ੋ..੍)  GURMUKHI VOWEL SIGN OO..GURMUKHI SIGN VIRAMA
+0A70..0A71    ; nonstarting #  [2] (ੰ..ੱ)  GURMUKHI TIPPI..GURMUKHI ADDAK
+0A81..0A83    ; nonstarting #  [3] (ઁ..ઃ)  GUJARATI SIGN CANDRABINDU..GUJARATI SIGN VISARGA
+0ABC          ; nonstarting #      (઼)  GUJARATI SIGN NUKTA
+0ABE..0AC5    ; nonstarting #  [8] (ા..ૅ)  GUJARATI VOWEL SIGN AA..GUJARATI VOWEL SIGN CANDRA E
+0AC7..0AC9    ; nonstarting #  [3] (ે..ૉ)  GUJARATI VOWEL SIGN E..GUJARATI VOWEL SIGN CANDRA O
+0ACB..0ACD    ; nonstarting #  [3] (ો..્)  GUJARATI VOWEL SIGN O..GUJARATI SIGN VIRAMA
+0B01..0B03    ; nonstarting #  [3] (ଁ..ଃ)  ORIYA SIGN CANDRABINDU..ORIYA SIGN VISARGA
+0B3C          ; nonstarting #      (଼)  ORIYA SIGN NUKTA
+0B3E..0B43    ; nonstarting #  [6] (ା..ୃ)  ORIYA VOWEL SIGN AA..ORIYA VOWEL SIGN VOCALIC R
+0B47..0B48    ; nonstarting #  [2] (େ..ୈ)  ORIYA VOWEL SIGN E..ORIYA VOWEL SIGN AI
+0B4B..0B4D    ; nonstarting #  [3] (ୋ..୍)  ORIYA VOWEL SIGN O..ORIYA SIGN VIRAMA
+0B56..0B57    ; nonstarting #  [2] (ୖ..ୗ)  ORIYA AI LENGTH MARK..ORIYA AU LENGTH MARK
+0B82          ; nonstarting #      (ஂ)  TAMIL SIGN ANUSVARA
+0BBE..0BC2    ; nonstarting #  [5] (ா..ூ)  TAMIL VOWEL SIGN AA..TAMIL VOWEL SIGN UU
+0BC6..0BC8    ; nonstarting #  [3] (ெ..ை)  TAMIL VOWEL SIGN E..TAMIL VOWEL SIGN AI
+0BCA..0BCD    ; nonstarting #  [4] (ொ..்)  TAMIL VOWEL SIGN O..TAMIL SIGN VIRAMA
+0BD7          ; nonstarting #      (ௗ)  TAMIL AU LENGTH MARK
+0C01..0C03    ; nonstarting #  [3] (ఁ..ః)  TELUGU SIGN CANDRABINDU..TELUGU SIGN VISARGA
+0C3E..0C44    ; nonstarting #  [7] (ా..ౄ)  TELUGU VOWEL SIGN AA..TELUGU VOWEL SIGN VOCALIC RR
+0C46..0C48    ; nonstarting #  [3] (ె..ై)  TELUGU VOWEL SIGN E..TELUGU VOWEL SIGN AI
+0C4A..0C4D    ; nonstarting #  [4] (ొ..్)  TELUGU VOWEL SIGN O..TELUGU SIGN VIRAMA
+0C55..0C56    ; nonstarting #  [2] (ౕ..ౖ)  TELUGU LENGTH MARK..TELUGU AI LENGTH MARK
+0C82..0C83    ; nonstarting #  [2] (ಂ..ಃ)  KANNADA SIGN ANUSVARA..KANNADA SIGN VISARGA
+0CBE..0CC4    ; nonstarting #  [7] (ಾ..ೄ)  KANNADA VOWEL SIGN AA..KANNADA VOWEL SIGN VOCALIC RR
+0CC6..0CC8    ; nonstarting #  [3] (ೆ..ೈ)  KANNADA VOWEL SIGN E..KANNADA VOWEL SIGN AI
+0CCA..0CCD    ; nonstarting #  [4] (ೊ..್)  KANNADA VOWEL SIGN O..KANNADA SIGN VIRAMA
+0CD5..0CD6    ; nonstarting #  [2] (ೕ..ೖ)  KANNADA LENGTH MARK..KANNADA AI LENGTH MARK
+0D02..0D03    ; nonstarting #  [2] (ം..ഃ)  MALAYALAM SIGN ANUSVARA..MALAYALAM SIGN VISARGA
+0D3E..0D43    ; nonstarting #  [6] (ാ..ൃ)  MALAYALAM VOWEL SIGN AA..MALAYALAM VOWEL SIGN VOCALIC R
+0D46..0D48    ; nonstarting #  [3] (െ..ൈ)  MALAYALAM VOWEL SIGN E..MALAYALAM VOWEL SIGN AI
+0D4A..0D4D    ; nonstarting #  [4] (ൊ..്)  MALAYALAM VOWEL SIGN O..MALAYALAM SIGN VIRAMA
+0D57          ; nonstarting #      (ൗ)  MALAYALAM AU LENGTH MARK
+0D82..0D83    ; nonstarting #  [2] (ං..ඃ)  SINHALA SIGN ANUSVARAYA..SINHALA SIGN VISARGAYA
+0DCA          ; nonstarting #      (්)  SINHALA SIGN AL-LAKUNA
+0DCF..0DD4    ; nonstarting #  [6] (ා..ු)  SINHALA VOWEL SIGN AELA-PILLA..SINHALA VOWEL SIGN KETTI PAA-PILLA
+0DD6          ; nonstarting #      (ූ)  SINHALA VOWEL SIGN DIGA PAA-PILLA
+0DD8..0DDF    ; nonstarting #  [8] (ෘ..ෟ)  SINHALA VOWEL SIGN GAETTA-PILLA..SINHALA VOWEL SIGN GAYANUKITTA
+0DF2..0DF3    ; nonstarting #  [2] (ෲ..ෳ)  SINHALA VOWEL SIGN DIGA GAETTA-PILLA..SINHALA VOWEL SIGN DIGA GAYANUKITTA
+0E31          ; nonstarting #      (ั)  THAI CHARACTER MAI HAN-AKAT
+0E34..0E3A    ; nonstarting #  [7] (ิ..ฺ)  THAI CHARACTER SARA I..THAI CHARACTER PHINTHU
+0E47..0E4E    ; nonstarting #  [8] (็..๎)  THAI CHARACTER MAITAIKHU..THAI CHARACTER YAMAKKAN
+0EB1          ; nonstarting #      (ັ)  LAO VOWEL SIGN MAI KAN
+0EB4..0EB9    ; nonstarting #  [6] (ິ..ູ)  LAO VOWEL SIGN I..LAO VOWEL SIGN UU
+0EBB..0EBC    ; nonstarting #  [2] (ົ..ຼ)  LAO VOWEL SIGN MAI KON..LAO SEMIVOWEL SIGN LO
+0EC8..0ECD    ; nonstarting #  [6] (່..ໍ)  LAO TONE MAI EK..LAO NIGGAHITA
+0F18..0F19    ; nonstarting #  [2] (༘..༙)  TIBETAN ASTROLOGICAL SIGN -KHYUD PA..TIBETAN ASTROLOGICAL SIGN SDONG TSHUGS
+0F35          ; nonstarting #      (༵)  TIBETAN MARK NGAS BZUNG NYI ZLA
+0F37          ; nonstarting #      (༷)  TIBETAN MARK NGAS BZUNG SGOR RTAGS
+0F39          ; nonstarting #      (༹)  TIBETAN MARK TSA -PHRU
+0F3E..0F3F    ; nonstarting #  [2] (༾..༿)  TIBETAN SIGN YAR TSHES..TIBETAN SIGN MAR TSHES
+0F71..0F72    ; nonstarting #  [2] (ཱ..ི)  TIBETAN VOWEL SIGN AA..TIBETAN VOWEL SIGN I
+0F74          ; nonstarting #      (ུ)  TIBETAN VOWEL SIGN U
+0F76          ; nonstarting #      (ྲྀ)  TIBETAN VOWEL SIGN VOCALIC R
+0F78          ; nonstarting #      (ླྀ)  TIBETAN VOWEL SIGN VOCALIC L
+0F7A..0F80    ; nonstarting #  [7] (ེ..ྀ)  TIBETAN VOWEL SIGN E..TIBETAN VOWEL SIGN REVERSED I
+0F82..0F84    ; nonstarting #  [3] (ྂ..྄)  TIBETAN SIGN NYI ZLA NAA DA..TIBETAN MARK HALANTA
+0F86..0F87    ; nonstarting #  [2] (྆..྇)  TIBETAN SIGN LCI RTAGS..TIBETAN SIGN YANG RTAGS
+0F90..0F97    ; nonstarting #  [8] (ྐ..ྗ)  TIBETAN SUBJOINED LETTER KA..TIBETAN SUBJOINED LETTER JA
+0F99..0FBC    ; nonstarting # [36] (ྙ..ྼ)  TIBETAN SUBJOINED LETTER NYA..TIBETAN SUBJOINED LETTER FIXED-FORM RA
+0FC6          ; nonstarting #      (࿆)  TIBETAN SYMBOL PADMA GDAN
+102C..1032    ; nonstarting #  [7] (ာ..ဲ)  MYANMAR VOWEL SIGN AA..MYANMAR VOWEL SIGN AI
+1036..1039    ; nonstarting #  [4] (ံ..္)  MYANMAR SIGN ANUSVARA..MYANMAR SIGN VIRAMA
+1056..1059    ; nonstarting #  [4] (ၖ..ၙ)  MYANMAR VOWEL SIGN VOCALIC R..MYANMAR VOWEL SIGN VOCALIC LL
+17B6..17D0    ; nonstarting # [27] (ា..័)  KHMER VOWEL SIGN AA..KHMER SIGN SAMYOK SANNYA
+17D2          ; nonstarting #      (្)  KHMER SIGN COENG
+18A9          ; nonstarting #      (ᢩ)  MONGOLIAN LETTER ALI GALI DAGALGA
+3099..309A    ; nonstarting #  [2] (゙..゚)  COMBINING KATAKANA-HIRAGANA VOICED SOUND MARK..COMBINING KATAKANA-HIRAGANA SEMI-VOICED SOUND MARK
+
+# Total code points: 524

@@ -1,0 +1,84 @@
+default namespace = "http://genshi.edgewall.org/"
+namespace py = "http://genshi.edgewall.org/"
+
+include "xinclude.rnc"
+
+# There's no way to just match the text part against a Genshi Python expression
+# See: http://relaxng.org/compact-tutorial-20030326.html#id2814737
+python.expression = text
+
+genshi.expr-type = xsd:string { minLength = "1" }
+genshi.xpath-type = xsd:anyURI
+
+genshi.attrib =
+   attribute py:if { genshi.expr-type }?,
+   attribute py:choose { text }?,
+   attribute py:when { genshi.expr-type }?,
+   attribute py:otherwise { text }?,
+   attribute py:for { genshi.expr-type }?,
+   attribute py:def { genshi.expr-type }?,
+   attribute py:match { genshi.xpath-type}?,
+   attribute py:with { genshi.expr-type }?,
+   attribute py:attrs { genshi.expr-type }?,
+   attribute py:content { text }?,
+   attribute py:replace { genshi.expr-type }?,
+   attribute py:strip { text }?
+
+genshi.if.attlist  = attribute test { genshi.expr-type }
+genshi.choose.attlist = attribute test { text }
+genshi.when.attlist = attribute test { genshi.expr-type }
+genshi.for.attlist = attribute each { genshi.expr-type }
+genshi.def.attlist = attribute function { genshi.expr-type }
+genshi.with.attlist = attribute vars { genshi.expr-type }
+genshi.replace.attlist = attribute value { genshi.expr-type }
+genshi.match.attlist =
+   attribute path { genshi.xpath-type },
+   attribute buffer { "true" | "false" }?,
+   attribute once { "true" | "false" }?,
+   attribute recursive { "true" | "false" }?
+
+genshi.choose =
+   element py:choose { genshi.choose.attlist,
+      genshi.model
+   }
+genshi.when =
+   element py:when { genshi.when.attlist,
+      genshi.model
+   }
+genshi.otherwise =
+   element py:otherwise {
+      genshi.model
+   }
+genshi.if =
+   element py:if { genshi.if.attlist,
+      genshi.model
+   }
+genshi.for =
+   element py:for { genshi.for.attlist,
+      genshi.model
+   }
+genshi.def =
+   element py:def { genshi.def.attlist,
+      genshi.model
+   }
+genshi.with =
+   element py:with { genshi.with.attlist,
+      genshi.model
+   }
+genshi.match =
+   element py:match { genshi.match.attlist,
+      genshi.model
+   }
+genshi.replace =
+   element py:replace { genshi.replace.attlist,
+      genshi.model
+   }
+
+genshi.allowed.children = text
+
+genshi.class = genshi.if | genshi.choose | genshi.when | genshi.otherwise
+ | genshi.for | genshi.def | genshi.with | genshi.match | genshi.replace
+ | python.expression
+ | xi.include
+
+genshi.model = genshi.class* | genshi.allowed.children*

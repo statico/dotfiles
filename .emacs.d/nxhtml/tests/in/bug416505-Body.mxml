@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+  xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:c="imo.utils.*"
+  xmlns:imocp="imo.components.*"
+  xmlns:fl="http://github.com/lancecarlson/flails"
+  xmlns:commons="imo.components.commons.*"
+  creationComplete="resetMenus()"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+  <mx:Script>
+    <![CDATA[
+      import imo.components.tooltips.MediaFileToolTip;
+
+      import mx.core.UIComponent;
+      import mx.events.DragEvent;
+      import mx.managers.DragManager;
+      
+      public static const LEFT_STATES:Array = [];
+      public static const RIGHT_STATES:Array = [];
+
+      [Deprecated]
+      public function changeState(state:String):void {
+        containers.currentState = state;
+      }
+
+      private function tabMouseDown(e:MouseEvent):void{
+        resetMenus(e.target.parent);
+      	containers.currentState = e.target.label;
+      }
+
+      private function resetMenus(which:Object = null):void {
+        if (which == null) {
+          leftMenu.selectedIndex = -1;
+          rightMenu.selectedIndex = -1;
+        } else {
+          which.selectedIndex = -1;
+        }
+      }
+
+      private function onDragEnter( event:DragEvent ):void{
+        containers.currentState = "queue";
+        DragManager.acceptDragDrop( UIComponent(event.target) );
+      }
+
+      private function updateMenu(page:Object):void{
+        if (page.hasOwnProperty("menu")) {
+          this[page.menu + "Menu"].selectedIndex = page.menuIndex;
+        } else {
+          resetMenus();
+        }
+      }
+     ]]>
+  </mx:Script>
+
+  <!--<commons:TransparentBorderCanvas styleName="sideCanvas" x="-10" width="30" height="210"
+    horizontalScrollPolicy="off" verticalScrollPolicy="off"
+  	customBorderThickness="2" borderAlpha=".6" cornerRadius="10">-->
+  <mx:Canvas styleName="sideCanvas" horizontalScrollPolicy="off" verticalScrollPolicy="off" x="-8" width="30" height="174" >
+    <mx:TabBar id="leftMenu"
+               styleName="sideMenu"
+               dataProvider="{LEFT_STATES.reverse()}"
+               rotation="90"
+               x="24"
+               y="4"
+               width="163"
+               buttonMode="true"
+               mouseDown="tabMouseDown(event);"
+               toggleOnClick="true"/>
+    </mx:Canvas>
+  <!--</commons:TransparentBorderCanvas>-->
+
+  <imocp:MainContainer x="29" y="0" id="containers" width="376" height="473"/>
+	<mx:Canvas x="412" styleName="sideCanvas" horizontalScrollPolicy="off" verticalScrollPolicy="off"  width="40" height="155">
+	  <mx:TabBar x="22" y="5" id="rightMenu" mouseDown="tabMouseDown(event);"
+                     styleName="rightSideMenu"
+                     dataProvider="{RIGHT_STATES.reverse()}"
+                     rotation="90"
+                     width="142"
+                     buttonMode="true"
+                     dragEnter="onDragEnter(event)"
+                     toggleOnClick="true"/>
+	</mx:Canvas>
+  <!--</commons:TransparentBorderCanvas>-->
+</mx:Canvas>

@@ -1,0 +1,46 @@
+
+<%perl>
+    my $noun = 'World';
+my @time = localtime;
+</%perl>
+Hello <% $noun %>,
+% if ( $time[2] < 12 ) {
+                  good morning.
+                  % } else {
+                  good afternoon.
+                  % }
+
+                  <%text>
+                    Some text
+                  </%text>
+
+<%doc>
+                    Some doc
+</%doc>
+
+<& simple_comp &>
+
+  <%args>
+    $a
+    @b       # a comment
+    %c
+
+    # another comment
+    $d => 5
+    $e => $d*2
+    @f => ('foo', 'baz')
+    %g => (joe => 1, bob => 2)
+  </%args>
+
+<&| /path/to/comp &> this is the content </&>
+<&| comp, arg1 => 'hi' &> filters can take arguments </&>
+<&| comp &> content can include <%  "tags" %> of all kinds </&>
+something
+<& simple_comp &>
+<&| SELF:method1 &> subcomponents can be filters </&>
+<&| compit &>
+  <&| comp1 &>
+    nesting is also
+    <&| comp2 &> OK </&>
+xx
+</&>

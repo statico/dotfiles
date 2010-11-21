@@ -1,0 +1,17 @@
+{% if athlete_list %}
+  <p>Here are the athletes: {{ athlete_list }}.</p>
+{% else %}
+  <p>No athletes are available.</p>
+  {% if coach_list %}
+    <p>Here are the coaches: {{ coach_list }}.</p>
+  {% endif %}
+{% endif %}
+{% block content %}
+
+ {% if morning %}
+   <p>Hello World!</p>
+   {% else %}
+     <p>Goodbye World!</p>
+   {% endif %}
+
+ {% endblock %}
