@@ -1,0 +1,20 @@
+* Test of org and mumamo
+
+  Below is a html chunk
+
+#+BEGIN_HTML 
+<p>
+  I have no idea of how to use this yet.
+</p>
+#+END_HTML
+
+#+BEGIN_SRC emacs-lisp-mode
+            (defun
+#+END_SRC
+
+Where are the "..." in org-mumamo-mode???
+
+** Some subnode
+
+Hm, org full header lines are broken, why?
+Does not seem related to mumamo.

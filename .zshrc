@@ -75,7 +75,9 @@ if _has less; then
 fi
 
 # EDITOR
-if _has vim; then
+if _has emacs; then
+    export EDITOR=emacs VISUAL=emacs
+elif _has vim; then
     export EDITOR=vim VISUAL=vim
 elif _has vi; then
     export EDITOR=vi VISUAL=vi
@@ -146,6 +148,7 @@ alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias df='df -H'
 alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
+alias e='emacs'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
@@ -293,6 +296,10 @@ bindkey "^[n" last-command-output
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
 
+# Turn off completion and weirdness if we're within Emacs.
+if [[ "$EMACS" = "t" ]]; then
+    unsetopt zle
+fi
 
 # PRANK-PROTECTION {{{1
 
@@ -355,9 +362,9 @@ function sta () {
 }
 function stv () {
     if [ -d .svn ]; then
-        svn diff | vim -R -
+        svn diff | less -FRX
     elif [ -d CVS ]; then
-        cvs diff | vim -R -
+        cvs diff | less -FRX
     elif _try git add -A; then
         git diff --cached
     elif _try git add .; then
@@ -563,7 +570,7 @@ bindkey "^Q" push-line
 bindkey "^T" history-incremental-search-forward
 bindkey "ESC-." insert-last-word
 
-# Edit the current command line in Vim with Meta-e
+# Edit the current command line with Meta-e
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\ee' edit-command-line
@@ -652,6 +659,7 @@ function colorprompt {
         uncolorprompt
         return
     fi
+
     mode=${1:-0}
     line1=(
         "%{[${mode}m%}[%m:%/]"
@@ -671,17 +679,17 @@ function colorprompt {
 }
 
 function uncolorprompt {
-    line1=(
+    newline="
+"
+    temp=(
         "[%m:%/]"
         "%(1j. (%j jobs).)"
         "%(?.. (error %?%))"
-    )
-    line2=(
+	$newline
         "%n %# "
     )
-    temp=${(j::)line1}
-    precmd() { print -P $temp }
-    PS1=${(j::)line2}
+    unfunction precmd &>/dev/null
+    PS1=${(j::)temp}
 }
 
 if [ -n "$SUDO_USER" ]; then

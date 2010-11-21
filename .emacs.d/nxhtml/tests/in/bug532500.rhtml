@@ -1,0 +1,7 @@
+    <tr>
+      <td><%= f.label((t('app.views.large_surveys_admin.new.gift'))) %></td>
+      <td><%= check_box_tag('gift',
+                            'checked',
+                            !@large_survey.coupon_pool_id.nil?,
+                            {:onclick => "$('coupon_pool').toggle()"}) %></td>
+    </tr>

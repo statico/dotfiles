@@ -1,0 +1,34 @@
+!!! Strict
+%html
+  %head
+    %title= t("site.title")
+    %meta{"http-equiv" => "Content-Type", :content => "text/html;charset=utf-8"}
+    = javascript_include_merged :mootools, :application
+    = stylesheet_link_merged :application
+    /[if lt IE 8]
+      = stylesheet_link_merged :ie
+
+  %body
+    = render :partial => "shared/fork"
+    #container
+      #logo
+        = link_to image_tag("logo.png"), root_url
+
+      = render :partial => "shared/user_panel"
+      = render :partial => "shared/menu"
+
+      #body
+        #contents
+          = render :partial => "shared/flash", :object => flash
+
+          .padder
+            #search_results
+
+            = yield
+
+        #sidebar
+          .padder
+            = render :partial => "shared/sidebar"
+
+      #footer
+        %p= t("site.copyright")

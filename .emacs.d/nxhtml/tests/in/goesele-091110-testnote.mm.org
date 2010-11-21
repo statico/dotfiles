@@ -1,0 +1,5 @@
+* Testnote
+
+  :CLOCK:
+  my clock
+  :END:
