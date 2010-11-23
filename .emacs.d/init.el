@@ -45,10 +45,13 @@
  inhibit-startup-messages t
  inhibit-startup-screen t
  make-backup-files nil 
- auto-save-default nil)
+ auto-save-default nil
+ sentence-end-double-space nil)
 
 (setq-default
  indent-tabs-mode nil
+ iswitchb-mode t
+ auto-fill-mode t
  case-fold-search t)
 
 (transient-mark-mode 1)
@@ -58,7 +61,7 @@
 (when gui
   (setq mac-command-modifier 'meta)
   (tool-bar-mode -1)
-  (scroll-bar-mode 'nil))
+  (scroll-bar-mode nil))
 
 (when macgui
   (set-default-font "Inconsolata 14"))
