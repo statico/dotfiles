@@ -23,6 +23,7 @@
 	forkup = pull --rebase upstream
 	last = log -1
 	newb = checkout -b
+	quicklog = log --oneline -10
 	rewind-one = reset --hard HEAD^
 	st = status
 	sta = stash
