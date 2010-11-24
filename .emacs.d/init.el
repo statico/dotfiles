@@ -1,6 +1,8 @@
 ;;
 ;; Ian's Emacs config
 ;;
+;; A lot of things stolen from EmacsWiki and threads like
+;; http://news.ycombinator.com/item?id=1654164
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Constants
@@ -38,11 +40,11 @@
 (load-snippet "rename-file-and-buffer")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Basic settings
+;; Pile o' settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Be quiet at startup.
-(setq inhibit-startup-message t)
+(setq inhibit-startup-message nil)
 (setq inhibit-startup-screen t)
 
 ;; Don't save backup files everywhere.
@@ -81,20 +83,16 @@
 ;; Make all "yes or no" prompts show "y or n" instead.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Key bindings
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Maybe I'm too used to bash.
-(global-set-key (kbd "C-w") 'backward-kill-word)
-(global-set-key (kbd "C-x C-k") 'kill-region)
+;; C-w kills a word or region depending on context.
+(defun backward-kill-word-or-kill-region (&optional arg)
+  (interactive "p")
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word arg)))
+(global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
 
 ;; <Enter> should be smart.
 (global-set-key (kbd "RET") 'newline-and-indent)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Everything else
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
@@ -159,9 +157,37 @@
   ;; Set as the Django default for HTML files.
   (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode)))
 
+;; Switch-to-previous-buffer
+(global-set-key (kbd "C-=") 'switch-to-previous-buffer)
+(defun switch-to-previous-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer)))
+
+;; C-z toggles between shell. (C-x C-z still suspends.)
+(global-set-key (kbd "C-z") 'shell)
+(defun my-shell-mode-hook ()
+  (local-set-key (kbd "C-z") 'bury-buffer))
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+
+;; Make buffer names unique.
+(require 'uniquify)
+(setq 
+ uniquify-buffer-name-style 'reverse
+ uniquify-separator ":")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Enable code-folding, use M-RET to toggle hiding
+(add-hook 'python-mode-hook
+          '(lambda ()
+             (hs-minor-mode 1)
+             (hs-hide-all)
+             (define-key python-mode-map (kbd "M-RET") 'hs-toggle-hiding)))
+
+;; On-the-fly spell checking.
+(add-hook 'python-mode-hook '(lambda () (flyspell-prog-mode)))
 
 ;; Use our local installation of Pymacs and rope.
 (setenv "PYTHONPATH"
