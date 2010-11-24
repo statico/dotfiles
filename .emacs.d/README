@@ -6,3 +6,8 @@ The best OS X port seems to be http://emacsformacosx.com/
 
 TIPS:
 - C-u 0 M-x byte-recompile-directory
+
+TODO
+- Git mode
+- Support per-host local init file
+- Load ropemacs when Python is >2.5
