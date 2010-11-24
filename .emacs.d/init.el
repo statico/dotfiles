@@ -36,10 +36,10 @@
  '(mode-line-inactive ((default (:background "black")) (nil nil)))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
- '(region ((((class color) (min-colors 8)) (:background "black"))))
+ '(region ((((class color) (min-colors 8)) (:background "grey20"))))
  '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black")))))
 
-(require 'icicles)
+;; (require 'icicles)
 
 (setq
  inhibit-startup-messages t
@@ -65,7 +65,7 @@
 (when gui
   (setq mac-command-modifier 'meta)
   (tool-bar-mode -1)
-  (scroll-bar-mode nil))
+  (setq scroll-bar-mode nil))
 
 (when macgui
   (set-default-font "Inconsolata 14"))
@@ -103,6 +103,9 @@
           (rename-buffer new-name)
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
+
+(require 'tramp)
+(setq tramp-default-method "scp")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python
