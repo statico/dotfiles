@@ -3,7 +3,8 @@
 # Updates Pymacs, rope, ropemode and ropemacs.
 #
 
-pylib=~/.emacs.d/pylib
+pylib=~/.emacs.d/python
+vendordir=~/.emacs.d/vendor
 tmp=/tmp/$LOGNAME-emacs-update
 
 mkdir $tmp
@@ -16,6 +17,8 @@ tar zxf Pymacs.tar.gz
 pushd Pymacs-*
 make
 cp -Rv build/lib/Pymacs $pylib
+mkdir -p $vendordir/pymacs
+cp pymacs.el $vendordir/pymacs
 popd
 rm -rf Pymacs-* Pymacs.tar.gz
 

@@ -2,137 +2,99 @@
 ;; Ian's Emacs config
 ;;
 
-(defconst gui
-  (not (eq window-system 'nil))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Constants
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconst gui (not (eq window-system 'nil))
   "Are we running window system?")
 
-(defconst macgui
-  (eq window-system "ns")
+(defconst macgui (eq window-system "ns")
   "Are we running as a Max OS X app?")
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lib"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lib/icicles"))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Basic settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Color theme
-(require 'color-theme)
-(color-theme-initialize)
-(when gui
-  (color-theme-blackboard))
+;; Be quiet at startup.
+(setq inhibit-startup-message t)
+(setq inhibit-startup-screen t)
 
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(isearch ((((class color) (min-colors 8)) (:background "black"))))
- '(lazy-highlight ((((class color) (min-colors 8)) (:background "black"))))
- '(mode-line ((t (:background "blue"))))
- '(mode-line-inactive ((default (:background "black")) (nil nil)))
- '(mumamo-background-chunk-major ((t nil)))
- '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
- '(region ((((class color) (min-colors 8)) (:background "grey20"))))
- '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black")))))
+;; Don't save backup files everywhere.
+(setq make-backup-files nil )
+(setq auto-save-default nil)
 
-;; (require 'icicles)
-
-(setq
- inhibit-startup-messages t
- inhibit-startup-screen t
- make-backup-files nil 
- auto-save-default nil
- sentence-end-double-space nil)
-
-(setq-default
- indent-tabs-mode nil
- iswitchb-mode t
- auto-fill-mode t
- tab-width 2
- py-indent-offset 4
- css-indent-offset 2
- javascript-indent-offset 2
- case-fold-search t)
-
-(transient-mark-mode 1)
-(show-paren-mode 1)
+;; Hide the menu, tool and scroll bars.
 (menu-bar-mode -1)
-
 (when gui
-  (setq mac-command-modifier 'meta)
-  (tool-bar-mode -1)
-  (setq scroll-bar-mode nil))
+  (scroll-bar-mode -1)
+  (tool-bar-mode -1))
 
-(when macgui
-  (set-default-font "Inconsolata 14"))
+;; Use spaces, not tabs, and display 2 spaces per tab.
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
 
-(global-set-key (kbd "C-w") 'backward-kill-word)
-(global-set-key (kbd "C-x C-k") 'kill-region)
+;; Make search case-insensitive.
+(setq-default case-fold-search t)
 
-(define-key global-map (kbd "RET") 'newline-and-indent)
+;; Make the region act like common text selection.
+(transient-mark-mode 1)
 
+;; Highlight parentheses.
+(show-paren-mode 1)
+
+;; All of my terminals are Unicode-aware.
 (set-keyboard-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 
-(add-to-list 'load-path "~/.emacs.d/auto-complete-1.3.1")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete-1.3.1/ac-dict")
-(ac-config-default)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Global key bindings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(load "~/.emacs.d/nxhtml/autostart.el")
-(setq mumamo-background-colors nil) 
+;; Maybe I'm too used to bash.
+(global-set-key (kbd "C-w") 'backward-kill-word)
+(global-set-key (kbd "C-x C-k") 'kill-region)
 
-(add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
+;; <Enter> should be smart.
+(global-set-key (kbd "RET") 'newline-and-indent)
 
-;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
-(defun rename-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not filename)
-        (message "Buffer '%s' is not visiting a file!" name)
-      (if (get-buffer new-name)
-          (message "A buffer named '%s' already exists!" new-name)
-        (progn
-          (rename-file name new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Load everything else
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'tramp)
-(setq tramp-default-method "scp")
+;; Add all subdirectories in the vendor dir to the load path.
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Python
+(defun add-subfolders-to-load-path (parent-dir) ;; from bbatsov
+  "Adds all first level `parent-dir' subdirs to the Emacs load path."
+  (dolist (f (directory-files parent-dir))
+    (let ((name (concat parent-dir "/" f)))
+      (when (and (file-directory-p name)
+                 (not (equal f ".."))
+                 (not (equal f ".")))
+        (add-to-list 'load-path name)))))
 
-(setenv "PYTHONPATH"
-        (concat (getenv "PYTHONPATH") ":" (expand-file-name "~/.emacs.d/pylib")))
+(add-subfolders-to-load-path "~/.emacs.d/vendor")
 
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
+;; Load extra Emacs lisp snippets.
 
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+(defun load-snippet (name)
+  "Loads the file in elisp-dir with the given name."
+  (load (concat "~/.emacs.d/elisp/" name)))
 
-(setq ropemacs-enable-shortcuts nil)
-(setq ropemacs-local-prefix "C-c C-p")
+(load-snippet "rename-file-and-buffer")
 
-(when (load "flymake" t)
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name
-                        temp-file
-                        (file-name-directory buffer-file-name))))
-      (list "epylint" (list local-file))))
+;; Load the rest of the emacs configuration.
 
-  (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init)))
+(defun load-config (name)
+  "Loads the init file in basedir with the given name."
+  (load (concat "~/.emacs.d/init-" name)))
+
+(load-config "autocomplete")
+(load-config "color-theme")
+(load-config "customize")
+(load-config "html")
+(load-config "ido")
+(load-config "macosx")
+(load-config "python")
+(load-config "text")
+(load-config "tramp")
