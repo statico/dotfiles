@@ -11,7 +11,7 @@
 (defconst gui (not (eq window-system 'nil))
   "Are we running window system?")
 
-(defconst macgui (eq window-system "ns")
+(defconst macgui (string-equal window-system "ns")
   "Are we running as a Max OS X app?")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -30,6 +30,7 @@
         (add-to-list 'load-path name)))))
 
 (add-subfolders-to-load-path "~/.emacs.d/vendor")
+(add-to-list 'load-path "~/.emacs.d/vendor")
 
 ;; Load extra Emacs lisp snippets.
 
@@ -60,6 +61,10 @@
 ;; Use spaces, not tabs, and display 2 spaces per tab.
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
+
+;; Do the right thing with whitespace. Seriously. The Right Thing.
+(require 'ethan-wspace)
+(global-ethan-wspace-mode 1)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
