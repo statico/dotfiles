@@ -98,12 +98,11 @@
   "Loads the init file in basedir with the given name."
   (load (concat "~/.emacs.d/init-" name)))
 
-(load-config "autocomplete")
-(load-config "color-theme")
 (load-config "customize")
 (load-config "html")
 (load-config "ido")
 (load-config "macosx")
+(load-config "misc")
 (load-config "python")
 (load-config "text")
 (load-config "tramp")
