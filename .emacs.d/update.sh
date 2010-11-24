@@ -7,6 +7,7 @@ pylib=~/.emacs.d/python
 vendordir=~/.emacs.d/vendor
 tmp=/tmp/$LOGNAME-emacs-update
 
+rm -rf $tmp
 mkdir $tmp
 pushd $tmp
 
