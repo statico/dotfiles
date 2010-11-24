@@ -105,4 +105,3 @@
 (load-config "misc")
 (load-config "python")
 (load-config "text")
-(load-config "tramp")

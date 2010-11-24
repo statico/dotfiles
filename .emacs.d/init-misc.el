@@ -21,3 +21,7 @@
 (color-theme-initialize)
 (when gui
   (color-theme-blackboard))
+
+;; Edit remote files - http://www.gnu.org/software/emacs/manual/tramp.html
+(require 'tramp)
+(setq tramp-default-method "scp")
