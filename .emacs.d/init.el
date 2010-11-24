@@ -13,6 +13,31 @@
   "Are we running as a Max OS X app?")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Libraries and snippets
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Add all subdirectories in the vendor dir to the load path.
+
+(defun add-subfolders-to-load-path (parent-dir) ;; from bbatsov
+  "Adds all first level `parent-dir' subdirs to the Emacs load path."
+  (dolist (f (directory-files parent-dir))
+    (let ((name (concat parent-dir "/" f)))
+      (when (and (file-directory-p name)
+                 (not (equal f ".."))
+                 (not (equal f ".")))
+        (add-to-list 'load-path name)))))
+
+(add-subfolders-to-load-path "~/.emacs.d/vendor")
+
+;; Load extra Emacs lisp snippets.
+
+(defun load-snippet (name)
+  "Loads the file in elisp-dir with the given name."
+  (load (concat "~/.emacs.d/elisp/" name)))
+
+(load-snippet "rename-file-and-buffer")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Basic settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -57,7 +82,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Global key bindings
+;; Key bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Maybe I'm too used to bash.
@@ -68,40 +93,131 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Load everything else
+;; Everything else
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Add all subdirectories in the vendor dir to the load path.
+;; http://www.emacswiki.org/emacs/InteractivelyDoThings
+(require 'ido)
+(ido-mode 1)
 
-(defun add-subfolders-to-load-path (parent-dir) ;; from bbatsov
-  "Adds all first level `parent-dir' subdirs to the Emacs load path."
-  (dolist (f (directory-files parent-dir))
-    (let ((name (concat parent-dir "/" f)))
-      (when (and (file-directory-p name)
-                 (not (equal f ".."))
-                 (not (equal f ".")))
-        (add-to-list 'load-path name)))))
+;; Display ido results vertically, rather than horizontally
+;; (from timcharper, jpkotta via EmacsWiki)
+(setq ido-decorations
+      (quote ("\n-> " "" "\n   " "\n   ..." "[" "]"
+              " [No match]" " [Matched]" " [Not readable]"
+              " [Too big]" " [Confirm]")))
+(defun ido-disable-line-trucation ()
+  (set (make-local-variable 'truncate-lines) nil))
+(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
-(add-subfolders-to-load-path "~/.emacs.d/vendor")
+;; Mac OS X customizations
+(when macgui
 
-;; Load extra Emacs lisp snippets.
+  ;; Make the command key the meta key.
+  (setq mac-command-modifier 'meta)
 
-(defun load-snippet (name)
-  "Loads the file in elisp-dir with the given name."
-  (load (concat "~/.emacs.d/elisp/" name)))
+  ;; Raph makes nice fonts :)
+  (set-default-font "Inconsolata 14"))
 
-(load-snippet "rename-file-and-buffer")
+;; browse-kill-ring
+(require 'browse-kill-ring)
+(global-set-key (kbd "C-c k") 'browse-kill-ring)
 
-;; Load the rest of the emacs configuration.
+;; Use ack instead of grep - http://betterthangrep.com/
+(load-library "ack")
+(defalias 'grep 'ack)
 
-(defun load-config (name)
-  "Loads the init file in basedir with the given name."
-  (load (concat "~/.emacs.d/init-" name)))
+;; Auto-complete
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories
+             "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
+(ac-config-default)
 
-(load-config "customize")
-(load-config "html")
-(load-config "ido")
-(load-config "macosx")
-(load-config "misc")
-(load-config "python")
-(load-config "text")
+;; Color theme
+(require 'color-theme)
+(color-theme-initialize)
+(when gui
+  (color-theme-blackboard))
+
+;; Edit remote files - http://www.gnu.org/software/emacs/manual/tramp.html
+(require 'tramp)
+(setq tramp-default-method "scp")
+
+;; Settings for editing text
+(setq sentence-end-double-space nil)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'text-mode-hook (lambda () (set-fill-column 72)))
+(add-hook 'text-mode-hook (lambda () (column-number-mode 1)))
+
+;; HTML-editing settings
+(when (>= emacs-major-version 23)
+  (load "~/.emacs.d/vendor/nxhtml-2.08/autostart.el")
+
+  ;; No silly background colors for different modes.
+  (setq mumamo-background-colors nil) 
+
+  ;; Set as the Django default for HTML files.
+  (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Use our local installation of Pymacs and rope.
+(setenv "PYTHONPATH"
+        (concat (getenv "PYTHONPATH") ":"
+                (expand-file-name "~/.emacs.d/python")))
+
+;; Basic Pymacs setup instructions.
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+
+;; Load Rope.
+(when (>= emacs-major-version 23)
+  (require 'pymacs)
+  (pymacs-load "ropemacs" "rope-"))
+
+;; Rope Settings
+(setq ropemacs-enable-shortcuts nil)
+(setq ropemacs-local-prefix "C-c C-p")
+
+;; Python/Flymake/Pylint attempt.
+(when (load "flymake" t)
+  (defun flymake-pylint-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "epylint" (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pylint-init)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Customize settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(isearch ((((class color) (min-colors 8)) (:background "black"))))
+ '(lazy-highlight ((((class color) (min-colors 8)) (:background "black"))))
+ '(mode-line ((t (:background "blue"))))
+ '(mode-line-inactive ((default (:background "black")) (nil nil)))
+ '(mumamo-background-chunk-major ((t nil)))
+ '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
+ '(region ((((class color) (min-colors 8)) (:background "grey20"))))
+ '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black")))))
+
