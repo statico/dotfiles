@@ -47,6 +47,15 @@
 (set-keyboard-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 
+;; Display the line and column number in the modeline.
+(setq line-number-mode t)
+(setq column-number-mode t)
+(line-number-mode t)
+(column-number-mode t)
+
+;; Make all "yes or no" prompts show "y or n" instead.
+(fset 'yes-or-no-p 'y-or-n-p)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Global key bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
