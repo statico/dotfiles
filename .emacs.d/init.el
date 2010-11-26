@@ -44,6 +44,13 @@
 ;; Pile o' settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Color theme
+(require 'color-theme)
+(color-theme-initialize)
+(when gui
+  (require 'zenburn)
+  (zenburn))
+
 ;; Be quiet at startup.
 (setq inhibit-startup-message nil)
 (setq inhibit-startup-screen t)
@@ -63,8 +70,8 @@
 (setq-default tab-width 2)
 
 ;; Do the right thing with whitespace. Seriously. The Right Thing.
-(require 'ethan-wspace)
-(global-ethan-wspace-mode 1)
+;; (require 'ethan-wspace)
+;; (global-ethan-wspace-mode 1)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
@@ -135,12 +142,6 @@
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
 (ac-config-default)
-
-;; Color theme
-(require 'color-theme)
-(color-theme-initialize)
-(when gui
-  (color-theme-blackboard))
 
 ;; Edit remote files - http://www.gnu.org/software/emacs/manual/tramp.html
 (require 'tramp)
