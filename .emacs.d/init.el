@@ -70,8 +70,8 @@
 (setq-default tab-width 2)
 
 ;; Do the right thing with whitespace. Seriously. The Right Thing.
-;; (require 'ethan-wspace)
-;; (global-ethan-wspace-mode 1)
+(require 'ethan-wspace)
+(global-ethan-wspace-mode 1)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)

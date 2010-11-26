@@ -20,6 +20,19 @@ rm -rf $tmp
 mkdir $tmp
 pushd $tmp
 
+echo "Updating ethan-whitespace"
+f=ethan-wspace
+rm -rf $f
+mkdir $f
+pushd $f
+curl -L https://github.com/glasserc/ethan-wspace/tarball/master >$f.tar.gz
+tar zxf $f.tar.gz
+cd glasserc-ethan-wspace*
+rm -rf $vendordir/$f
+cp -Rv lisp $vendordir/$f
+popd
+rm -rf $f
+
 echo "Updating Pymacs"
 rm -rf $pylib/Pymacs
 curl -O http://pymacs.progiciels-bpi.ca/archives/Pymacs.tar.gz
