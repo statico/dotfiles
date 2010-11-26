@@ -1,11 +1,20 @@
 #!/bin/bash -ex
 #
 # Updates Pymacs, rope, ropemode and ropemacs.
+# Updates all sorts of things.
 #
 
 pylib=~/.emacs.d/python
 vendordir=~/.emacs.d/vendor
+pylib=~/.emacs.d/python
 tmp=/tmp/$LOGNAME-emacs-update
+
+echo "Updating single files"
+pushd $vendordir
+curl -O http://www.emacswiki.org/emacs/download/browse-kill-ring.el
+curl -O http://hg.rooijan.za.net/addons/file/tip/ack.el
+curl -O http://hg.rooijan.za.net/addons/file/tip/ack-emacs.el
+popd
 
 rm -rf $tmp
 mkdir $tmp
