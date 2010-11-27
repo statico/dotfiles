@@ -12,8 +12,8 @@ tmp=/tmp/$LOGNAME-emacs-update
 echo "Updating single files"
 pushd $vendordir
 curl -O http://www.emacswiki.org/emacs/download/browse-kill-ring.el
-curl -O http://hg.rooijan.za.net/addons/file/tip/ack.el
-curl -O http://hg.rooijan.za.net/addons/file/tip/ack-emacs.el
+curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
+curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
 popd
 
 rm -rf $tmp
