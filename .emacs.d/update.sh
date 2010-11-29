@@ -16,6 +16,8 @@ curl -O http://www.emacswiki.org/emacs/download/vimpulse.el
 curl -O http://www.dr-qubit.org/undo-tree/undo-tree.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
+cd color-theme/themes
+curl -O https://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
 popd
 
 rm -rf $tmp

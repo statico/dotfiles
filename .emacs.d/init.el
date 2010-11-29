@@ -58,7 +58,8 @@
 (color-theme-initialize)
 (when gui
   (require 'zenburn)
-  (zenburn))
+  (zenburn)
+  (color-theme-railscasts))
 
 ;; Be quiet at startup.
 (setq inhibit-startup-message nil)
