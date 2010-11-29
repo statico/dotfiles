@@ -44,6 +44,15 @@
 ;; Pile o' settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Vim emulation. Here we go!
+(setq viper-custom-file-name "~/.emacs.d/viper.el")
+(setq viper-mode t)
+(require 'vimpulse) ;; enables Viper
+
+;; Make the Undo system like Vim's, but with a visualizer
+(require 'undo-tree)
+(global-undo-tree-mode t)
+
 ;; Color theme
 (require 'color-theme)
 (color-theme-initialize)
@@ -164,7 +173,7 @@
   (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode)))
 
 ;; Switch-to-previous-buffer
-(global-set-key (kbd "C-=") 'switch-to-previous-buffer)
+(global-set-key (kbd "C-e") 'switch-to-previous-buffer)
 (defun switch-to-previous-buffer ()
   (interactive)
   (switch-to-buffer (other-buffer)))
@@ -177,7 +186,7 @@
 
 ;; Make buffer names unique.
 (require 'uniquify)
-(setq 
+(setq
  uniquify-buffer-name-style 'reverse
  uniquify-separator ":")
 
@@ -246,10 +255,10 @@
   ;; If there is more than one, they won't work right.
  '(isearch ((((class color) (min-colors 8)) (:background "black"))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "black"))))
- '(mode-line ((t (:background "blue"))))
- '(mode-line-inactive ((default (:background "black")) (nil nil)))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
  '(region ((((class color) (min-colors 8)) (:background "grey20"))))
  '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black")))))
 
+ ;; '(mode-line ((t (:background "blue"))))
+ ;; '(mode-line-inactive ((default (:background "black")) (nil nil)))
