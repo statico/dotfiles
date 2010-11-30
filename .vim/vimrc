@@ -74,10 +74,17 @@ nmap ; :FufBuffer<CR>
 nmap <D-e> :FufFile<CR>
 nmap <M-e> :FufFile<CR>
 
-" emacs-like bindings in insert mode
+" Emacs-like bindings in normal mode
+nmap <C-x>o <C-w><C-w>
+nmap <C-x>0 <C-w>c
+nmap <C-x>1 <C-w>o
+nmap <C-x>1 <C-w>s
+nmap <C-x>1 <C-w>v
+
+" Emacs-like bindings in insert mode
 imap <C-e> <C-o>$
 
-" emacs-like bindings in command line
+" Emacs-like bindings in command line
 cnoremap <C-a>  <Home>
 cnoremap <C-b>  <Left>
 cnoremap <C-f>  <Right>
@@ -88,6 +95,7 @@ cnoremap <M-d>  <S-right><Delete>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
 cnoremap <Esc>d <S-right><Delete>
+cnoremap <C-g>  <C-c>
 
 " Why not use the space or return keys to toggle folds?
 nnoremap <space> za
@@ -114,7 +122,7 @@ function! WriteAndSuspend()
     suspend
 endfunction
 
-" CTRL-p pipes the current buffer to the current filetype as a command
+" Alt-p pipes the current buffer to the current filetype as a command
 " (good for perl, python, ruby, shell, gnuplot...)
 nmap <M-p>  :call RunUsingCurrentFiletype()<CR>
 nmap <Esc>p :call RunUsingCurrentFiletype()<CR>
