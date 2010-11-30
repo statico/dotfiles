@@ -58,8 +58,7 @@
 (color-theme-initialize)
 (when gui
   (require 'zenburn)
-  (zenburn)
-  (color-theme-railscasts))
+  (zenburn))
 
 ;; Be quiet at startup.
 (setq inhibit-startup-message nil)
@@ -224,7 +223,7 @@
 
 ;; Rope Settings
 (setq ropemacs-enable-shortcuts nil)
-(setq ropemacs-local-prefix "C-c C-p")
+(setq ropemacs-local-prefix "C-0")
 
 ;; Python/Flymake/Pylint attempt.
 (when (load "flymake" t)
@@ -258,8 +257,11 @@
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "black"))))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
- '(region ((((class color) (min-colors 8)) (:background "grey20"))))
- '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black")))))
+ '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black"))))
+ '(viper-minibuffer-emacs ((((class color)) (:background "darkseagreen2" :foreground "Black"))))
+ '(viper-minibuffer-insert ((((class color)) nil)))
+ '(viper-search ((((class color)) (:background "#330" :foreground "yellow")))))
 
+ ;; '(region ((((class color) (min-colors 8)) (:background "grey20"))))
  ;; '(mode-line ((t (:background "blue"))))
  ;; '(mode-line-inactive ((default (:background "black")) (nil nil)))
