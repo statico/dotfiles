@@ -42,8 +42,7 @@
 (define-key viper-vi-global-user-map (kbd "\\ l") 'linum-mode)
 (define-key viper-vi-global-user-map (kbd "\\ u") 'ethan-wspace-mode)
 
-;; Enable code-folding, use M-RET to toggle hiding
-(add-hook 'python-mode-hook
+(add-hook 'hs-minor-mode-hook
           '(lambda ()
              (define-key viper-vi-local-user-map (kbd "SPC") 'hs-toggle-hiding)))
 

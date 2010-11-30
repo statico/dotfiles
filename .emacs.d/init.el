@@ -61,6 +61,7 @@
 ;; By default, use spaces, not tabs, and display 2 spaces per tab.
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
+(setq-default js-indent-level 2)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
@@ -133,6 +134,24 @@
   (set (make-local-variable 'truncate-lines) nil))
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
+;; Switch-to-previous-buffer
+(global-set-key (kbd "C-e") 'switch-to-previous-buffer)
+(defun switch-to-previous-buffer ()
+  (interactive)
+  (switch-to-buffer (other-buffer)))
+
+;; C-z toggles between shell. (C-x C-z still suspends.)
+(global-set-key (kbd "C-z") 'shell)
+(defun my-shell-mode-hook ()
+  (local-set-key (kbd "C-z") 'bury-buffer))
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+
+;; Make buffer names unique.
+(require 'uniquify)
+(setq
+ uniquify-buffer-name-style 'reverse
+ uniquify-separator ":")
+
 ;; Mac OS X customizations
 (when macgui
 
@@ -183,37 +202,29 @@
 (require 'zencoding-mode)
 (add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
 
-;; Switch-to-previous-buffer
-(global-set-key (kbd "C-e") 'switch-to-previous-buffer)
-(defun switch-to-previous-buffer ()
-  (interactive)
-  (switch-to-buffer (other-buffer)))
-
-;; C-z toggles between shell. (C-x C-z still suspends.)
-(global-set-key (kbd "C-z") 'shell)
-(defun my-shell-mode-hook ()
-  (local-set-key (kbd "C-z") 'bury-buffer))
-(add-hook 'shell-mode-hook 'my-shell-mode-hook)
-
-;; Make buffer names unique.
-(require 'uniquify)
-(setq
- uniquify-buffer-name-style 'reverse
- uniquify-separator ":")
+;; Markdown
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)
+(setq auto-mode-alist
+      (cons '("\\.md" . markdown-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Enable code-folding, use M-RET to toggle hiding
+;; Enable code-folding
 (add-hook 'python-mode-hook
           '(lambda ()
              (hs-minor-mode 1)
-             (hs-hide-all)
+             (hs-hide-all)))
+
+;; Use M-RET to toggle hiding
+(add-hook 'hs-minor-mode-hook
+          '(lambda ()
              (define-key python-mode-map (kbd "M-RET") 'hs-toggle-hiding)))
 
-;; On-the-fly spell checking.
-(add-hook 'python-mode-hook '(lambda () (flyspell-prog-mode)))
+;; testing
+;; (add-hook 'python-mode-hook '(lambda () (flyspell-prog-mode)))
 
 ;; Use our local installation of Pymacs and rope.
 (setenv "PYTHONPATH"
@@ -266,6 +277,7 @@
   ;; If there is more than one, they won't work right.
  '(isearch ((((class color) (min-colors 8)) (:background "black"))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "black"))))
+ '(linum ((t (:foreground "#666" :height 0.75))))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
  '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black"))))
