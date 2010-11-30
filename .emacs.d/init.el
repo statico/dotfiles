@@ -44,22 +44,6 @@
 ;; Pile o' settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Vim emulation. Here we go!
-(setq viper-custom-file-name "~/.emacs.d/viper.el")
-(setq viper-mode t)
-(require 'vimpulse) ;; enables Viper
-
-;; Make the Undo system like Vim's, but with a visualizer
-(require 'undo-tree)
-(global-undo-tree-mode t)
-
-;; Color theme
-(require 'color-theme)
-(color-theme-initialize)
-(when gui
-  (require 'zenburn)
-  (zenburn))
-
 ;; Be quiet at startup.
 (setq inhibit-startup-message nil)
 (setq inhibit-startup-screen t)
@@ -68,19 +52,15 @@
 (setq make-backup-files nil )
 (setq auto-save-default nil)
 
-;; Hide the menu, tool and scroll bars.
+;; Hide the menu, toolbar and scroll bars.
 (menu-bar-mode -1)
 (when gui
   (scroll-bar-mode -1)
   (tool-bar-mode -1))
 
-;; Use spaces, not tabs, and display 2 spaces per tab.
+;; By default, use spaces, not tabs, and display 2 spaces per tab.
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
-
-;; Do the right thing with whitespace. Seriously. The Right Thing.
-(require 'ethan-wspace)
-(global-ethan-wspace-mode 1)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
@@ -104,7 +84,30 @@
 ;; Make all "yes or no" prompts show "y or n" instead.
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; C-w kills a word or region depending on context.
+;; Vim emulation. Viper gets you mostly there, Vimpulse brings it home.
+;; See viper.el for Viper-specific details.
+(setq viper-custom-file-name "~/.emacs.d/viper.el")
+(setq viper-mode t)
+(require 'vimpulse) ;; enables Viper
+
+;; Make the Undo system like Vim's, but with a sexy visualizer.
+;; http://www.emacswiki.org/emacs/UndoTree
+(require 'undo-tree)
+(global-undo-tree-mode t)
+
+;; Color theme.
+(require 'color-theme)
+(color-theme-initialize)
+(when gui
+  (color-theme-goldenrod) ;; This sets some things that railscasts doesn't.
+  (color-theme-railscasts))
+
+;; Do the right thing with whitespace. Seriously. The Right Thing.
+;; Also provides handy "clean up this file" commands and highlights errors.
+(require 'ethan-wspace)
+(global-ethan-wspace-mode 1)
+
+;; C-w kills a word or region depending on context. (DWIM)
 (defun backward-kill-word-or-kill-region (&optional arg)
   (interactive "p")
   (if (region-active-p)
@@ -112,14 +115,15 @@
     (backward-kill-word arg)))
 (global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
 
-;; <Enter> should be smart.
+;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
+;; IDO mode: Better buffer and file completion.
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
 (ido-mode 1)
 
-;; Display ido results vertically, rather than horizontally
+;; Display IDO results vertically, rather than horizontally
 ;; (from timcharper, jpkotta via EmacsWiki)
 (setq ido-decorations
       (quote ("\n-> " "" "\n   " "\n   ..." "[" "]"
@@ -132,11 +136,14 @@
 ;; Mac OS X customizations
 (when macgui
 
+  ;; Raph makes nice fonts :)
+  (set-default-font "Inconsolata 14")
+
   ;; Make the command key the meta key.
   (setq mac-command-modifier 'meta)
 
-  ;; Raph makes nice fonts :)
-  (set-default-font "Inconsolata 14"))
+  ;; Make Cmd-~ do the right thing.
+  (global-set-key (kbd "M-`") 'ns-next-frame))
 
 ;; browse-kill-ring
 (require 'browse-kill-ring)
@@ -167,10 +174,14 @@
   (load "~/.emacs.d/vendor/nxhtml-2.08/autostart.el")
 
   ;; No silly background colors for different modes.
-  (setq mumamo-background-colors nil) 
+  (setq mumamo-background-colors nil)
 
   ;; Set as the Django default for HTML files.
   (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode)))
+
+;; "Sparkup" or "Zen-coding" makes churning out HTML easier.
+(require 'zencoding-mode)
+(add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
 
 ;; Switch-to-previous-buffer
 (global-set-key (kbd "C-e") 'switch-to-previous-buffer)
@@ -261,7 +272,3 @@
  '(viper-minibuffer-emacs ((((class color)) (:background "darkseagreen2" :foreground "Black"))))
  '(viper-minibuffer-insert ((((class color)) nil)))
  '(viper-search ((((class color)) (:background "#330" :foreground "yellow")))))
-
- ;; '(region ((((class color) (min-colors 8)) (:background "grey20"))))
- ;; '(mode-line ((t (:background "blue"))))
- ;; '(mode-line-inactive ((default (:background "black")) (nil nil)))

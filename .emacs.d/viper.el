@@ -1,3 +1,6 @@
+  ;; Raph makes nice fonts :)
+  (set-default-font "Inconsolata 14")
+
 ;;
 ;; Viper mode customizations
 ;;
@@ -28,8 +31,21 @@
 (define-key viper-vi-global-user-map (kbd "C-u") 'viper-scroll-down)
 (define-key viper-vi-global-user-map (kbd ";") 'ido-switch-buffer)
 (define-key viper-vi-global-user-map (kbd "-") 'shell)
-(define-key viper-vi-global-user-map (kbd "SPC") 'hs-toggle-hiding)
 (define-key viper-insert-global-user-map (kbd "C-e") 'end-of-line)
+
+;; I used backslash as my <Leader> key in Vim, and backslash-X keys
+;; made good keybindings for toggling settings and macros.
+(define-key viper-vi-global-user-map (kbd "\\") nil)
+(define-key viper-vi-global-user-map (kbd "\\ a") 'auto-fill-mode)
+(define-key viper-vi-global-user-map (kbd "\\ c") 'css-color-mode)
+(define-key viper-vi-global-user-map (kbd "\\ j") 'speedbar)
+(define-key viper-vi-global-user-map (kbd "\\ l") 'linum-mode)
+(define-key viper-vi-global-user-map (kbd "\\ u") 'ethan-wspace-mode)
+
+;; Enable code-folding, use M-RET to toggle hiding
+(add-hook 'python-mode-hook
+          '(lambda ()
+             (define-key viper-vi-local-user-map (kbd "SPC") 'hs-toggle-hiding)))
 
 ;; Is rebinding C-c a good idea?
 (define-key viper-insert-global-user-map (kbd "C-c") 'vimpulse-exit-insert-state)
