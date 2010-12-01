@@ -59,9 +59,11 @@
   (tool-bar-mode -1))
 
 ;; By default, use spaces, not tabs, and display 2 spaces per tab.
+(defconst default-indent-level 2)
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
-(setq-default js-indent-level 2)
+(setq-default tab-width default-indent-level)
+(setq-default js-indent-level default-indent-level)
+(setq-default css-indent-offset default-indent-level)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
@@ -84,6 +86,10 @@
 
 ;; Make all "yes or no" prompts show "y or n" instead.
 (fset 'yes-or-no-p 'y-or-n-p)
+
+;; Allow narrowing. (`C-x n w' gets you out of this.)
+(put 'narrow-to-defun 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
 ;; Vim emulation. Viper gets you mostly there, Vimpulse brings it home.
 ;; See viper.el for Viper-specific details.

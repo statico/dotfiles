@@ -46,6 +46,10 @@
           '(lambda ()
              (define-key viper-vi-local-user-map (kbd "SPC") 'hs-toggle-hiding)))
 
+(add-hook 'sgml-mode-hook
+          '(lambda ()
+             (define-key viper-insert-local-user-map (kbd "C-/") 'sgml-close-tag)))
+
 ;; Is rebinding C-c a good idea?
 (define-key viper-insert-global-user-map (kbd "C-c") 'vimpulse-exit-insert-state)
 
