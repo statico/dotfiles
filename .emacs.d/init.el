@@ -214,6 +214,12 @@
 (setq auto-mode-alist
       (cons '("\\.md" . markdown-mode) auto-mode-alist))
 
+;; Open init.el
+(defun open-init-dot-el ()
+  (interactive)
+  (find-file (expand-file-name "~/.emacs.d/init.el")))
+(global-set-key (kbd "C-M-0") 'open-init-dot-el)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
