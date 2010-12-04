@@ -12,6 +12,7 @@ tmp=/tmp/$LOGNAME-emacs-update
 echo "Updating single files"
 pushd $vendordir
 curl -O http://www.emacswiki.org/emacs/download/browse-kill-ring.el
+curl -O http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
 curl -O http://www.emacswiki.org/emacs/download/vimpulse.el
 curl -O http://www.dr-qubit.org/undo-tree/undo-tree.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack.el

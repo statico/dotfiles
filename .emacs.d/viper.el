@@ -33,6 +33,8 @@
 (define-key viper-vi-global-user-map (kbd "-") 'shell)
 (define-key viper-insert-global-user-map (kbd "C-e") 'end-of-line)
 
+;; TODO: Make C-c cancel the region, like C-g.
+
 ;; I used backslash as my <Leader> key in Vim, and backslash-X keys
 ;; made good keybindings for toggling settings and macros.
 (define-key viper-vi-global-user-map (kbd "\\") nil)
@@ -41,6 +43,7 @@
 (define-key viper-vi-global-user-map (kbd "\\ j") 'speedbar)
 (define-key viper-vi-global-user-map (kbd "\\ l") 'linum-mode)
 (define-key viper-vi-global-user-map (kbd "\\ u") 'ethan-wspace-mode)
+(define-key viper-vi-global-user-map (kbd "\\ v") 'global-centered-cursor-mode)
 
 (add-hook 'hs-minor-mode-hook
           '(lambda ()
@@ -55,3 +58,5 @@
 
 ;; This might be changed later.
 (setq-default viper-shift-width 2)
+
+(setq scrolloff 20) ; don't touch or else...

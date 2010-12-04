@@ -48,12 +48,16 @@
 (setq inhibit-startup-message nil)
 (setq inhibit-startup-screen t)
 
+;; No damn beeping.
+(setq ring-bell-function 'ignore)
+
 ;; Don't save backup files everywhere.
 (setq make-backup-files nil )
 (setq auto-save-default nil)
 
 ;; Hide the menu, toolbar and scroll bars.
-(menu-bar-mode -1)
+(when (not gui)
+  (menu-bar-mode 1))
 (when gui
   (scroll-bar-mode -1)
   (tool-bar-mode -1))
@@ -97,17 +101,12 @@
 (setq viper-mode t)
 (require 'vimpulse) ;; enables Viper
 
-;; Make the Undo system like Vim's, but with a sexy visualizer.
-;; http://www.emacswiki.org/emacs/UndoTree
-(require 'undo-tree)
-(global-undo-tree-mode t)
-
 ;; Color theme.
 (require 'color-theme)
 (color-theme-initialize)
-(when gui
-  (color-theme-goldenrod) ;; This sets some things that railscasts doesn't.
-  (color-theme-railscasts))
+;; (when gui
+;;   (color-theme-goldenrod) ;; This sets some things that railscasts doesn't.
+;;   (color-theme-railscasts))
 
 ;; Do the right thing with whitespace. Seriously. The Right Thing.
 ;; Also provides handy "clean up this file" commands and highlights errors.
@@ -141,7 +140,7 @@
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
 ;; Switch-to-previous-buffer
-(global-set-key (kbd "C-e") 'switch-to-previous-buffer)
+(global-set-key (kbd "C-=") 'switch-to-previous-buffer)
 (defun switch-to-previous-buffer ()
   (interactive)
   (switch-to-buffer (other-buffer)))
@@ -170,9 +169,18 @@
   ;; Make Cmd-~ do the right thing.
   (global-set-key (kbd "M-`") 'ns-next-frame))
 
+;; Make the Undo system like Vim's, but with a sexy visualizer.
+;; http://www.emacswiki.org/emacs/UndoTree
+(require 'undo-tree)
+(global-undo-tree-mode t)
+
 ;; browse-kill-ring
 (require 'browse-kill-ring)
-(global-set-key (kbd "C-c k") 'browse-kill-ring)
+(global-set-key (kbd "C-x C-r") 'browse-kill-ring)
+
+;; Keep the cursor kinda centered, like scrolloff in vim
+(require 'centered-cursor-mode)
+;; (global-centered-cursor-mode +1)
 
 ;; Use ack instead of grep - http://betterthangrep.com/
 (load-library "ack")
@@ -183,15 +191,15 @@
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
 (ac-config-default)
+(setq ac-auto-show-menu t)
 
 ;; Edit remote files - http://www.gnu.org/software/emacs/manual/tramp.html
-(require 'tramp)
-(setq tramp-default-method "scp")
+;; (require 'tramp)
+;; (setq tramp-default-method "scp")
 
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook (lambda () (set-fill-column 72)))
 (add-hook 'text-mode-hook (lambda () (column-number-mode 1)))
 
 ;; HTML-editing settings
@@ -287,11 +295,12 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(isearch ((((class color) (min-colors 8)) (:background "black"))))
- '(lazy-highlight ((((class color) (min-colors 8)) (:background "black"))))
+ '(isearch ((((class color) (min-colors 8)) (:background "grey25"))))
+ '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
  '(linum ((t (:foreground "#666" :height 0.75))))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
+ '(show-paren-match ((t (:background "grey20"))))
  '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black"))))
  '(viper-minibuffer-emacs ((((class color)) (:background "darkseagreen2" :foreground "Black"))))
  '(viper-minibuffer-insert ((((class color)) nil)))

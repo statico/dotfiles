@@ -8,6 +8,7 @@ TIPS:
 - C-u 0 M-x byte-recompile-directory
 
 TODO
+- Try ECB and CEDET
 - Fix editing in CSS mode - ending lines with ; and }
 - Git mode
 - Support per-host local init file
