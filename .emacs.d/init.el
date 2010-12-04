@@ -219,8 +219,14 @@
 ;; Markdown
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
-(setq auto-mode-alist
-      (cons '("\\.md" . markdown-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+
+;; YAML
+(autoload 'yaml-mode "yaml-mode.el")
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-hook 'yaml-mode-hook
+          '(lambda ()
+             (define-key yaml-mode-map (kbd "RET") 'newline-and-indent)))
 
 ;; Open init.el
 (defun open-init-dot-el ()

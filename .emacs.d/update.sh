@@ -21,6 +21,7 @@ cd color-theme/themes
 curl -O http://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
 curl -O http://github.com/chrisdone/zencoding/raw/master/zencoding-mode.el
 curl -O http://jblevins.org/projects/markdown-mode/markdown-mode.el
+curl -O https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 popd
 
 rm -rf $tmp
