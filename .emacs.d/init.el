@@ -39,6 +39,12 @@
   (load (concat "~/.emacs.d/elisp/" name)))
 
 (load-snippet "rename-file-and-buffer")
+(load-snippet "cleanup-unused-buffers")
+(load-snippet "swap-windows")
+
+;; Executables might be somewhere else
+(add-to-list 'exec-path "~/bin")
+(add-to-list 'exec-path "/opt/local/bin")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pile o' settings
@@ -97,9 +103,9 @@
 
 ;; Vim emulation. Viper gets you mostly there, Vimpulse brings it home.
 ;; See viper.el for Viper-specific details.
-(setq viper-custom-file-name "~/.emacs.d/viper.el")
-(setq viper-mode t)
-(require 'vimpulse) ;; enables Viper
+;; (setq viper-custom-file-name "~/.emacs.d/viper.el")
+;; (setq viper-mode t)
+;; (require 'vimpulse) ;; enables Viper
 
 ;; Color theme.
 (require 'color-theme)
@@ -128,6 +134,13 @@
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
 (ido-mode 1)
+;; Get rid of the annoying .ido.last file
+;; (http://stackoverflow.com/questions/1371076)
+(custom-set-variables
+ '(ido-enable-last-directory-history nil)
+ '(ido-record-commands nil)
+ '(ido-max-work-directory-list 0)
+ '(ido-max-work-file-list 0))
 
 ;; Display IDO results vertically, rather than horizontally
 ;; (from timcharper, jpkotta via EmacsWiki)
@@ -192,6 +205,7 @@
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
 (ac-config-default)
 (setq ac-auto-show-menu t)
+(setq ac-auto-start t)
 
 ;; Edit remote files - http://www.gnu.org/software/emacs/manual/tramp.html
 ;; (require 'tramp)
@@ -216,10 +230,18 @@
 (require 'zencoding-mode)
 (add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
 
+;; dired settings
+(require 'dired)
+(define-key dired-mode-map (kbd "u") 'dired-up-directory)
+(define-key dired-mode-map (kbd "U") 'dired-unmark)
+
 ;; Markdown
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-hook 'markdown-mode-hook
+          '(lambda ()
+             (flyspell-mode 1)))
 
 ;; YAML
 (autoload 'yaml-mode "yaml-mode.el")
@@ -241,6 +263,7 @@
 ;; Enable code-folding
 (add-hook 'python-mode-hook
           '(lambda ()
+             (flyspell-prog-mode)
              (hs-minor-mode 1)
              (hs-hide-all)))
 
@@ -295,7 +318,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(ac-auto-start nil))
+ )
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.

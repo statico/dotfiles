@@ -26,9 +26,9 @@
 ;; Keybinding
 (setq-default viper-toggle-key (kbd "C-q"))
 (define-key viper-vi-global-user-map (kbd "C-e") 'switch-to-previous-buffer)
-(define-key viper-vi-global-user-map (kbd "C-b") 'speedbar)
 (define-key viper-vi-global-user-map (kbd "C-f") 'ido-find-file)
 (define-key viper-vi-global-user-map (kbd "C-u") 'viper-scroll-down)
+(define-key viper-vi-global-user-map (kbd "C-;") 'dired-jump)
 (define-key viper-vi-global-user-map (kbd ";") 'ido-switch-buffer)
 (define-key viper-vi-global-user-map (kbd "-") 'shell)
 (define-key viper-insert-global-user-map (kbd "C-e") 'end-of-line)
