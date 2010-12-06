@@ -141,6 +141,7 @@
  '(ido-record-commands nil)
  '(ido-max-work-directory-list 0)
  '(ido-max-work-file-list 0))
+(global-set-key (kbd "C-;") 'ido-switch-buffer)
 
 ;; Display IDO results vertically, rather than horizontally
 ;; (from timcharper, jpkotta via EmacsWiki)
@@ -255,6 +256,12 @@
   (interactive)
   (find-file (expand-file-name "~/.emacs.d/init.el")))
 (global-set-key (kbd "C-M-0") 'open-init-dot-el)
+
+;; Maybe I want to do some reading in Emacs?
+(require 'info)
+(setq Info-directory-list
+      (cons (expand-file-name "~/.dotfiles/info")
+            Info-directory-list))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings

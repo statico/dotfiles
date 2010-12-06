@@ -132,6 +132,9 @@ _append_to_path /usr/X11R6/bin
 _append_to_path /usr/local/mysql/bin
 _append_to_path /usr/sbin
 
+# Add our docs, too
+export INFOPATH=$HOME/.dotfiles/info:$INFOPATH
+
 # ALIASES {{{1
 
 alias Ag='sudo apt-get install'
