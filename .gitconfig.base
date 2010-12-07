@@ -17,6 +17,8 @@
 	civ = commit -v
 	civa = commit -v -a
 	co = checkout
+	config-to-push-all-branches = config --add remote.origin.push '+refs/heads/*:refs/heads/*'
+	config-to-push-all-tags = config --add remote.origin.push '+refs/tags/*:refs/tags/*'
 	d = diff
 	dc = diff --cached
 	diffc = diff --cached
@@ -24,6 +26,7 @@
 	last = log -1
 	newb = checkout -b
 	quicklog = log --oneline -10
+	r = remote
 	rewind-one = reset --hard HEAD^
 	st = status
 	sta = stash
