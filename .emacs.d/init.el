@@ -62,11 +62,10 @@
 (setq auto-save-default nil)
 
 ;; Hide the menu, toolbar and scroll bars.
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (not gui)
   (menu-bar-mode 1))
-(when gui
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1))
 
 ;; By default, use spaces, not tabs, and display 2 spaces per tab.
 (defconst default-indent-level 2)
@@ -113,14 +112,6 @@
 ;; Also provides handy "clean up this file" commands and highlights errors.
 (require 'ethan-wspace)
 (global-ethan-wspace-mode 1)
-
-;; C-w kills a word or region depending on context. (DWIM)
-(defun backward-kill-word-or-kill-region (&optional arg)
-  (interactive "p")
-  (if (region-active-p)
-      (kill-region (region-beginning) (region-end))
-    (backward-kill-word arg)))
-(global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
 
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -188,11 +179,12 @@
 
 ;; Keep the cursor kinda centered, like scrolloff in vim
 (require 'centered-cursor-mode)
-;; (global-centered-cursor-mode +1)
+(global-set-key (kbd "C-M-c") 'global-centered-cursor-mode)
 
 ;; Use ack instead of grep - http://betterthangrep.com/
 (load-library "ack")
 (defalias 'grep 'ack)
+(setq ack-command "~/bin/ack --nocolor --nogroup")
 
 ;; Auto-complete
 (require 'auto-complete-config)
@@ -228,11 +220,13 @@
 (require 'dired)
 (define-key dired-mode-map (kbd "u") 'dired-up-directory)
 (define-key dired-mode-map (kbd "U") 'dired-unmark)
+(global-set-key (kbd "C-:") 'dired-jump)
 
 ;; Markdown
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-hook 'markdown-mode-hook 'flyspell-mode)
+(setq-default markdown-command "~/bin/markdown")
 
 ;; YAML
 (require 'yaml-mode)
@@ -244,12 +238,6 @@
   (interactive)
   (find-file (expand-file-name "~/.emacs.d/init.el")))
 (global-set-key (kbd "C-M-0") 'open-init-dot-el)
-
-;; Maybe I want to do some reading in Emacs?
-(require 'info)
-(setq Info-directory-list
-      (cons (expand-file-name "~/.dotfiles/info")
-            Info-directory-list))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
@@ -304,6 +292,26 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 
+;; The Cult of Steve Yegge ;)
+;; http://sites.google.com/site/steveyegge2/effective-emacs
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+(global-set-key "\C-c\C-m" 'execute-extended-command)
+
+;; C-w kills a word or region depending on context. (DWIM)
+(defun backward-kill-word-or-kill-region (&optional arg)
+  (interactive "p")
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word arg)))
+(global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
+(global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key "\C-c\C-k" 'kill-region)
+
+;; Command aliases
+(defalias 'er 'eval-region)
+(defalias 'rb 'rename-buffer)
+(defalias 'qrr 'query-replace-regexp)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customize settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -319,9 +327,8 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(isearch ((((class color) (min-colors 8)) (:background "grey25"))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
- '(linum ((t (:foreground "#666" :height 0.75))))
+ '(linum ((t (:height 0.75))))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
  '(show-paren-match ((t (:background "grey20"))))

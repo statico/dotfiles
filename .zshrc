@@ -705,7 +705,16 @@ function uncolorprompt {
     PS1=${(j::)temp}
 }
 
-if [ -n "$SUDO_USER" ]; then
+function simpleprompt {
+    unfunction precmd &>/dev/null
+    PS1="%n %# "
+}
+
+if [ -n "$INSIDE_EMACS" ]; then
+    function colorprompt () { simpleprompt }
+    function uncolorprompt () { simpleprompt }
+    simpleprompt
+elif [ -n "$SUDO_USER" ]; then
     colorprompt '33;1'
 else
     colorprompt
