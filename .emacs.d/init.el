@@ -70,10 +70,10 @@
 
 ;; By default, use spaces, not tabs, and display 2 spaces per tab.
 (defconst default-indent-level 2)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width default-indent-level)
-(setq-default js-indent-level default-indent-level)
-(setq-default css-indent-offset default-indent-level)
+(setq indent-tabs-mode nil)
+(setq tab-width default-indent-level)
+(setq js-indent-level default-indent-level)
+(setq css-indent-offset default-indent-level)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
@@ -101,14 +101,9 @@
 (put 'narrow-to-defun 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
-;; Vim emulation. Viper gets you mostly there, Vimpulse brings it home.
-;; See viper.el for Viper-specific details.
-;; (setq viper-custom-file-name "~/.emacs.d/viper.el")
-;; (setq viper-mode t)
-;; (require 'vimpulse) ;; enables Viper
-
 ;; Color theme.
 (require 'color-theme)
+(require 'zenburn)
 (color-theme-initialize)
 ;; (when gui
 ;;   (color-theme-goldenrod) ;; This sets some things that railscasts doesn't.
@@ -136,11 +131,11 @@
 (ido-mode 1)
 ;; Get rid of the annoying .ido.last file
 ;; (http://stackoverflow.com/questions/1371076)
-(custom-set-variables
- '(ido-enable-last-directory-history nil)
- '(ido-record-commands nil)
- '(ido-max-work-directory-list 0)
- '(ido-max-work-file-list 0))
+(setq
+ ido-enable-last-directory-history nil
+ ido-record-commands nil
+ ido-max-work-directory-list 0
+ ido-max-work-file-list 0)
 (global-set-key (kbd "C-;") 'ido-switch-buffer)
 
 ;; Display IDO results vertically, rather than horizontally
@@ -160,10 +155,9 @@
   (switch-to-buffer (other-buffer)))
 
 ;; C-z toggles between shell. (C-x C-z still suspends.)
+(require 'shell)
 (global-set-key (kbd "C-z") 'shell)
-(defun my-shell-mode-hook ()
-  (local-set-key (kbd "C-z") 'bury-buffer))
-(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+(define-key shell-mode-map (kbd "C-z") 'bury-buffer)
 
 ;; Make buffer names unique.
 (require 'uniquify)
@@ -215,7 +209,6 @@
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-(add-hook 'text-mode-hook (lambda () (column-number-mode 1)))
 
 ;; HTML-editing settings
 (when (>= emacs-major-version 23)
@@ -237,19 +230,14 @@
 (define-key dired-mode-map (kbd "U") 'dired-unmark)
 
 ;; Markdown
-(autoload 'markdown-mode "markdown-mode.el"
-  "Major mode for editing Markdown files" t)
+(require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-(add-hook 'markdown-mode-hook
-          '(lambda ()
-             (flyspell-mode 1)))
+(add-hook 'markdown-mode-hook 'flyspell-mode)
 
 ;; YAML
-(autoload 'yaml-mode "yaml-mode.el")
+(require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-(add-hook 'yaml-mode-hook
-          '(lambda ()
-             (define-key yaml-mode-map (kbd "RET") 'newline-and-indent)))
+(define-key yaml-mode-map (kbd "RET") 'newline-and-indent)
 
 ;; Open init.el
 (defun open-init-dot-el ()
@@ -294,14 +282,14 @@
 (autoload 'pymacs-exec "pymacs" nil t)
 (autoload 'pymacs-load "pymacs" nil t)
 
-;; Load Rope.
-(when (>= emacs-major-version 23)
-  (require 'pymacs)
-  (pymacs-load "ropemacs" "rope-"))
+;; ;; Load Rope.
+;; (when (>= emacs-major-version 23)
+;;   (require 'pymacs)
+;;   (pymacs-load "ropemacs" "rope-"))
 
-;; Rope Settings
-(setq ropemacs-enable-shortcuts nil)
-(setq ropemacs-local-prefix "C-0")
+;; ;; Rope Settings
+;; (setq ropemacs-enable-shortcuts nil)
+;; (setq ropemacs-local-prefix "C-0")
 
 ;; Python/Flymake/Pylint attempt.
 (when (load "flymake" t)
