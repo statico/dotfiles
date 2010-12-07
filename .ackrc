@@ -12,3 +12,6 @@
 # Force color and header, even in less -R.
 --color
 --group
+
+# Custom types and abbreviatinos.
+--type-set=py=.py
