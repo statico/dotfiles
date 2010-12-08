@@ -104,9 +104,9 @@
 (require 'color-theme)
 (require 'zenburn)
 (color-theme-initialize)
-;; (when gui
-;;   (color-theme-goldenrod) ;; This sets some things that railscasts doesn't.
-;;   (color-theme-railscasts))
+(when gui
+  (zenburn)
+  (color-theme-railscasts))
 
 ;; Do the right thing with whitespace. Seriously. The Right Thing.
 ;; Also provides handy "clean up this file" commands and highlights errors.
@@ -168,10 +168,10 @@
   ;; Make Cmd-~ do the right thing.
   (global-set-key (kbd "M-`") 'ns-next-frame))
 
-;; Make the Undo system like Vim's, but with a sexy visualizer.
-;; http://www.emacswiki.org/emacs/UndoTree
-(require 'undo-tree)
-(global-undo-tree-mode t)
+;; ;; Make the Undo system like Vim's, but with a sexy visualizer.
+;; ;; http://www.emacswiki.org/emacs/UndoTree
+;; (require 'undo-tree)
+;; (global-undo-tree-mode t)
 
 ;; browse-kill-ring
 (require 'browse-kill-ring)
@@ -220,13 +220,15 @@
 (require 'dired)
 (define-key dired-mode-map (kbd "u") 'dired-up-directory)
 (define-key dired-mode-map (kbd "U") 'dired-unmark)
-(global-set-key (kbd "C-:") 'dired-jump)
+(global-set-key (kbd "C-M-;") 'dired-jump)
 
 ;; Markdown
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 (add-hook 'markdown-mode-hook 'flyspell-mode)
+(define-key markdown-mode-map (kbd "RET") 'markdown-enter-key)
 (setq-default markdown-command "~/bin/markdown")
+(setq-default markdown-italic-underscore t)
 
 ;; YAML
 (require 'yaml-mode)
@@ -253,7 +255,8 @@
 ;; Use M-RET to toggle hiding
 (add-hook 'hs-minor-mode-hook
           '(lambda ()
-             (define-key python-mode-map (kbd "M-RET") 'hs-toggle-hiding)))
+             (define-key python-mode-map (kbd "M-RET") 'hs-toggle-hiding)
+             (define-key python-mode-map (kbd "C-M-RET") 'hs-show-all)))
 
 ;; testing
 ;; (add-hook 'python-mode-hook '(lambda () (flyspell-prog-mode)))
