@@ -260,6 +260,9 @@
 (global-set-key (kbd "C-c C-m") 'execute-extended-command)
 (global-set-key (kbd "M-s") 'isearch-forward-regexp)
 (global-set-key (kbd "M-r") 'isearch-backward-regexp)
+(defalias 'er 'eval-region)
+(defalias 'rb 'rename-buffer)
+(defalias 'qrr 'query-replace-regexp)
 
 ;; C-w kills a word or region depending on context. (DWIM)
 (defun backward-kill-word-or-kill-region (&optional arg)
@@ -270,11 +273,6 @@
 (global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
-
-;; Command aliases
-(defalias 'er 'eval-region)
-(defalias 'rb 'rename-buffer)
-(defalias 'qrr 'query-replace-regexp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
