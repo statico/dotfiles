@@ -168,6 +168,19 @@
   ;; Make Cmd-~ do the right thing.
   (global-set-key (kbd "M-`") 'ns-next-frame))
 
+;; When starting the GUI, maximize the frame vertically.
+(when gui
+  (require 'frame-cmds)
+  (maximize-frame-vertically))
+
+;; Zoom the font size in and out in GUI.
+(when gui
+  (require 'zoom-frm)
+  (global-set-key (kbd "M--") 'zoom-out)
+  (global-set-key (kbd "M-=") 'zoom-in)
+  (global-set-key (kbd "M-+") 'zoom-in)
+  (global-set-key (kbd "M-0") 'zoom-frm-unzoom))
+
 ;; ;; Make the Undo system like Vim's, but with a sexy visualizer.
 ;; ;; http://www.emacswiki.org/emacs/UndoTree
 ;; (require 'undo-tree)
@@ -241,6 +254,28 @@
   (find-file (expand-file-name "~/.emacs.d/init.el")))
 (global-set-key (kbd "C-M-0") 'open-init-dot-el)
 
+;; The Cult of Steve Yegge ;)
+;; http://sites.google.com/site/steveyegge2/effective-emacs
+(global-set-key (kbd "C-x C-m") 'execute-extended-command)
+(global-set-key (kbd "C-c C-m") 'execute-extended-command)
+(global-set-key (kbd "M-s") 'isearch-forward-regexp)
+(global-set-key (kbd "M-r") 'isearch-backward-regexp)
+
+;; C-w kills a word or region depending on context. (DWIM)
+(defun backward-kill-word-or-kill-region (&optional arg)
+  (interactive "p")
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word arg)))
+(global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
+(global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key "\C-c\C-k" 'kill-region)
+
+;; Command aliases
+(defalias 'er 'eval-region)
+(defalias 'rb 'rename-buffer)
+(defalias 'qrr 'query-replace-regexp)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -295,26 +330,6 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pylint-init)))
 
-;; The Cult of Steve Yegge ;)
-;; http://sites.google.com/site/steveyegge2/effective-emacs
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
-
-;; C-w kills a word or region depending on context. (DWIM)
-(defun backward-kill-word-or-kill-region (&optional arg)
-  (interactive "p")
-  (if (region-active-p)
-      (kill-region (region-beginning) (region-end))
-    (backward-kill-word arg)))
-(global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
-
-;; Command aliases
-(defalias 'er 'eval-region)
-(defalias 'rb 'rename-buffer)
-(defalias 'qrr 'query-replace-regexp)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customize settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -330,10 +345,19 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(button ((t (:inherit zenburn-blue-1 :underline t :weight bold))))
+ '(fancy-widget-button ((t (:background "#3f3f3f" :box (:line-width 2 :style released-button)))))
+ '(fancy-widget-field ((t (:background "#333" :box (:line-width 1 :color "#444")))))
+ '(font-lock-comment-delimiter ((t (:inherit zenburn-lowlight-1))))
+ '(font-lock-comment-delimiter-face ((t (:inherit zenburn-lowlight-1))))
+ '(font-lock-comment-face ((t (:inherit zenburn-lowlight-1 :slant italic))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
  '(linum ((t (:height 0.75))))
+ '(mode-line ((t (:background "#454d48" :foreground "#acbc90" :box (:line-width 2 :color "#1e2320")))))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
+ '(primary-selection ((t (:inherit region))))
+ '(region ((t (:background "#446"))))
  '(show-paren-match ((t (:background "grey20"))))
  '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black"))))
  '(viper-minibuffer-emacs ((((class color)) (:background "darkseagreen2" :foreground "Black"))))
