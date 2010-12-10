@@ -110,8 +110,8 @@
 
 ;; Do the right thing with whitespace. Seriously. The Right Thing.
 ;; Also provides handy "clean up this file" commands and highlights errors.
-(require 'ethan-wspace)
-(global-ethan-wspace-mode 1)
+;; (require 'ethan-wspace)
+;; (global-ethan-wspace-mode 1)
 
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -127,6 +127,10 @@
  ido-record-commands nil
  ido-max-work-directory-list 0
  ido-max-work-file-list 0)
+(add-hook 'ido-setup-hook
+	  '(lambda ()
+	     (define-key ido-completion-map (kbd "C-u") 'kill-line)
+	     (define-key ido-completion-map (kbd "C-k") 'backward-kill-word)))
 (global-set-key (kbd "C-;") 'ido-switch-buffer)
 
 ;; Display IDO results vertically, rather than horizontally
@@ -181,14 +185,12 @@
   (global-set-key (kbd "M-+") 'zoom-in)
   (global-set-key (kbd "M-0") 'zoom-frm-unzoom))
 
-;; ;; Make the Undo system like Vim's, but with a sexy visualizer.
-;; ;; http://www.emacswiki.org/emacs/UndoTree
-;; (require 'undo-tree)
-;; (global-undo-tree-mode t)
-
 ;; browse-kill-ring
 (require 'browse-kill-ring)
 (global-set-key (kbd "C-x C-r") 'browse-kill-ring)
+
+;; C-_ is undo, but what about redo?
+(global-set-key (kbd "M-_") 'redo)
 
 ;; Keep the cursor kinda centered, like scrolloff in vim
 (require 'centered-cursor-mode)
@@ -271,8 +273,8 @@
       (kill-region (region-beginning) (region-end))
     (backward-kill-word arg)))
 (global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
+(global-set-key (kbd "C-x C-k") 'kill-region)
+(global-set-key (kbd "C-c C-c") 'kill-region)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
@@ -348,7 +350,7 @@
  '(fancy-widget-field ((t (:background "#333" :box (:line-width 1 :color "#444")))))
  '(font-lock-comment-delimiter ((t (:inherit zenburn-lowlight-1))))
  '(font-lock-comment-delimiter-face ((t (:inherit zenburn-lowlight-1))))
- '(font-lock-comment-face ((t (:inherit zenburn-lowlight-1 :slant italic))))
+ '(font-lock-comment-face ((t (:foreground nil :inherit zenburn-lowlight-1 :slant italic))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
  '(linum ((t (:height 0.75))))
  '(mode-line ((t (:background "#454d48" :foreground "#acbc90" :box (:line-width 2 :color "#1e2320")))))
@@ -356,7 +358,7 @@
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
  '(primary-selection ((t (:inherit region))))
  '(region ((t (:background "#446"))))
- '(show-paren-match ((t (:background "grey20"))))
+ '(show-paren-match ((t (:background "#2f2f43" :foreground "#838fea"))))
  '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black"))))
  '(viper-minibuffer-emacs ((((class color)) (:background "darkseagreen2" :foreground "Black"))))
  '(viper-minibuffer-insert ((((class color)) nil)))

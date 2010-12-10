@@ -635,7 +635,7 @@ unsetopt extended_history
 setopt notify
 
 # Input/Output
-unsetopt clobber
+#unsetopt clobber
 
 # HISTORY CONTROL {{{1
 
