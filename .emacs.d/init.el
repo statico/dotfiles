@@ -39,7 +39,6 @@
   (load (concat "~/.emacs.d/elisp/" name)))
 
 (load-snippet "rename-file-and-buffer")
-(load-snippet "cleanup-unused-buffers")
 (load-snippet "swap-windows")
 
 ;; Executables might be somewhere else
@@ -65,7 +64,7 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (not gui)
-  (menu-bar-mode 1))
+  (menu-bar-mode -1))
 
 ;; By default, use spaces, not tabs, and display 2 spaces per tab.
 (defconst default-indent-level 2)
@@ -110,8 +109,8 @@
 
 ;; Do the right thing with whitespace. Seriously. The Right Thing.
 ;; Also provides handy "clean up this file" commands and highlights errors.
-;; (require 'ethan-wspace)
-;; (global-ethan-wspace-mode 1)
+(require 'ethan-wspace)
+(global-ethan-wspace-mode 1)
 
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -193,8 +192,9 @@
 (global-set-key (kbd "M-_") 'redo)
 
 ;; Keep the cursor kinda centered, like scrolloff in vim
-(require 'centered-cursor-mode)
-(global-set-key (kbd "C-M-c") 'global-centered-cursor-mode)
+(when gui
+    (require 'centered-cursor-mode)
+    (global-set-key (kbd "C-M-c") 'global-centered-cursor-mode))
 
 ;; Use ack instead of grep - http://betterthangrep.com/
 (load-library "ack")
@@ -211,7 +211,7 @@
 
 ;; Edit remote files - http://www.gnu.org/software/emacs/manual/tramp.html
 ;; (require 'tramp)
-;; (setq tramp-default-method "scp")
+;; (setq tramp-default-method "scp")q
 
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
@@ -236,6 +236,7 @@
 (define-key dired-mode-map (kbd "u") 'dired-up-directory)
 (define-key dired-mode-map (kbd "U") 'dired-unmark)
 (global-set-key (kbd "C-M-;") 'dired-jump)
+(global-set-key (kbd "C-:") 'dired-jump)
 
 ;; Markdown
 (require 'markdown-mode)
@@ -276,6 +277,22 @@
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-c C-c") 'kill-region)
 
+;; Directory browser
+(global-set-key (kbd "C-M-b") 'speedbar)
+
+;; Make dired ignore certain files
+(eval-after-load "dired"
+  '(require 'dired-x))
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (dired-omit-mode 1)))
+(setq dired-omit-files
+      (concat dired-omit-files "\\|\.pyc$"))
+
+;; Vim-like mark commands
+(global-set-key (kbd "C-x m") 'point-to-register)
+(global-set-key (kbd "C-x '") 'jump-to-register)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -283,9 +300,9 @@
 ;; Enable code-folding
 (add-hook 'python-mode-hook
           '(lambda ()
-             (flyspell-prog-mode)
-             (hs-minor-mode 1)
-             (hs-hide-all)))
+             (flyspell-prog-mode)))
+             ;; (hs-minor-mode 1)
+             ;; (hs-hide-all)))
 
 ;; Use M-RET to toggle hiding
 (add-hook 'hs-minor-mode-hook
@@ -339,27 +356,39 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(ac-auto-show-menu nil)
+ '(ac-delay 0.1)
+ '(ac-show-menu-immediately-on-auto-complete t)
+ '(ac-trigger-key nil)
+ '(debug-on-error nil)
+ '(indicate-buffer-boundaries nil)
+ '(indicate-empty-lines t)
+ '(visual-line-fringe-indicators (quote (nil nil))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(button ((t (:inherit zenburn-blue-1 :underline t :weight bold))))
+ '(cursor ((t (:background "green"))))
+ '(custom-link ((t (:inherit zenburn-blue :underline t))))
  '(fancy-widget-button ((t (:background "#3f3f3f" :box (:line-width 2 :style released-button)))))
  '(fancy-widget-field ((t (:background "#333" :box (:line-width 1 :color "#444")))))
  '(font-lock-comment-delimiter ((t (:inherit zenburn-lowlight-1))))
  '(font-lock-comment-delimiter-face ((t (:inherit zenburn-lowlight-1))))
  '(font-lock-comment-face ((t (:foreground nil :inherit zenburn-lowlight-1 :slant italic))))
+ '(fringe ((t (:foreground "#4f4f4f"))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
  '(linum ((t (:height 0.75))))
  '(mode-line ((t (:background "#454d48" :foreground "#acbc90" :box (:line-width 2 :color "#1e2320")))))
+ '(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090" :box (:line-width 2 :color "#2e3330")))))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
+ '(mumamo-border-face-out ((t (:inherit font-lock-preprocessor-face :underline t))))
  '(primary-selection ((t (:inherit region))))
  '(region ((t (:background "#446"))))
  '(show-paren-match ((t (:background "#2f2f43" :foreground "#838fea"))))
- '(vertical-border ((((type tty)) (:inherit mode-line-inactive :foreground "black"))))
+ '(vertical-border ((nil (:foreground "#666"))))
  '(viper-minibuffer-emacs ((((class color)) (:background "darkseagreen2" :foreground "Black"))))
  '(viper-minibuffer-insert ((((class color)) nil)))
  '(viper-search ((((class color)) (:background "#330" :foreground "yellow")))))
