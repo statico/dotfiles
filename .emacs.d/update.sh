@@ -17,13 +17,15 @@ curl -O http://www.emacswiki.org/emacs/download/vimpulse.el
 curl -O http://www.emacswiki.org/emacs/download/zoom-frm.el
 curl -O http://www.emacswiki.org/emacs/download/frame-cmds.el
 curl -O http://www.emacswiki.org/emacs/download/frame-fns.el
+curl -O http://www.emacswiki.org/emacs/highlight-current-line.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
 cd color-theme/themes
 curl -O http://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
 curl -O http://github.com/chrisdone/zencoding/raw/master/zencoding-mode.el
 curl -O http://jblevins.org/projects/markdown-mode/markdown-mode.el
-curl -O https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
+curl -O http://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
+curl -O http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
 popd
 
 rm -rf $tmp

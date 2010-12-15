@@ -40,6 +40,7 @@
 
 (load-snippet "rename-file-and-buffer")
 (load-snippet "swap-windows")
+(load-snippet "whole-line-or-region")
 
 ;; Executables might be somewhere else
 (add-to-list 'exec-path "~/bin")
@@ -109,8 +110,9 @@
 
 ;; Do the right thing with whitespace. Seriously. The Right Thing.
 ;; Also provides handy "clean up this file" commands and highlights errors.
-(require 'ethan-wspace)
-(global-ethan-wspace-mode 1)
+;; (require 'ethan-wspace)
+;; (global-ethan-wspace-mode 1)
+;; (ethan-wspace-clean-all-modes)
 
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -127,9 +129,9 @@
  ido-max-work-directory-list 0
  ido-max-work-file-list 0)
 (add-hook 'ido-setup-hook
-	  '(lambda ()
-	     (define-key ido-completion-map (kbd "C-u") 'kill-line)
-	     (define-key ido-completion-map (kbd "C-k") 'backward-kill-word)))
+          '(lambda ()
+             (define-key ido-completion-map (kbd "C-u") 'kill-line)
+             (define-key ido-completion-map (kbd "C-k") 'backward-kill-word)))
 (global-set-key (kbd "C-;") 'ido-switch-buffer)
 
 ;; Display IDO results vertically, rather than horizontally
@@ -293,6 +295,26 @@
 (global-set-key (kbd "C-x m") 'point-to-register)
 (global-set-key (kbd "C-x '") 'jump-to-register)
 
+;; Vim-like "*" command
+(require 'highlight-symbol)
+(global-set-key (kbd "C-*") 'highlight-symbol-next)
+(global-set-key (kbd "C-x *") 'highlight-symbol-prev)
+
+;; Vim-like zap-up-to-char
+(defadvice zap-to-char (after my-zap-to-char-advice (arg char) activate)
+  "Kill up to the ARG'th occurence of CHAR, and leave CHAR.
+  The CHAR is replaced and the point is put before CHAR."
+  (insert char)
+  (forward-char -1))
+
+;; Window movement
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
+(require 'highlight-current-line)
+(setq highlight-current-line-globally t)
+(highlight-current-line-on t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -378,9 +400,12 @@
  '(font-lock-comment-delimiter-face ((t (:inherit zenburn-lowlight-1))))
  '(font-lock-comment-face ((t (:foreground nil :inherit zenburn-lowlight-1 :slant italic))))
  '(fringe ((t (:foreground "#4f4f4f"))))
+ '(highlight-current-line ((t (:background "#292929"))))
+ '(highlight-current-line-face ((t (:inherit highlight-current-line))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
- '(linum ((t (:height 0.75))))
+ '(linum ((t (:inherit font-lock-comment-delimiter))))
  '(mode-line ((t (:background "#454d48" :foreground "#acbc90" :box (:line-width 2 :color "#1e2320")))))
+ '(mode-line-buffer-id ((t (:foreground "#A5BAF1" :weight bold))))
  '(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090" :box (:line-width 2 :color "#2e3330")))))
  '(mumamo-background-chunk-major ((t nil)))
  '(mumamo-background-chunk-submode1 ((((class color) (min-colors 88) (background dark)) nil)))
@@ -391,4 +416,6 @@
  '(vertical-border ((nil (:foreground "#666"))))
  '(viper-minibuffer-emacs ((((class color)) (:background "darkseagreen2" :foreground "Black"))))
  '(viper-minibuffer-insert ((((class color)) nil)))
- '(viper-search ((((class color)) (:background "#330" :foreground "yellow")))))
+ '(viper-search ((((class color)) (:background "#330" :foreground "yellow"))))
+ '(zenburn-highlight-subtle ((t nil))))
+(put 'upcase-region 'disabled nil)
