@@ -3,3 +3,4 @@
 *.pyc
 *~
 .#*
+.unison.*.unison.tmp-bad
