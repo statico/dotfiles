@@ -108,12 +108,6 @@
   (zenburn)
   (color-theme-railscasts))
 
-;; Do the right thing with whitespace. Seriously. The Right Thing.
-;; Also provides handy "clean up this file" commands and highlights errors.
-;; (require 'ethan-wspace)
-;; (global-ethan-wspace-mode 1)
-;; (ethan-wspace-clean-all-modes)
-
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
@@ -311,9 +305,15 @@
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
+;; Modern IDE-like line highlighting (subtle)
 (require 'highlight-current-line)
 (setq highlight-current-line-globally t)
 (highlight-current-line-on t)
+
+;; Trailing whitespace is evil
+(require 'whitespace)
+(setq whitespace-style '(tabs trailing empty))
+(global-whitespace-mode t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
