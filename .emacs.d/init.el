@@ -69,8 +69,8 @@
 
 ;; By default, use spaces, not tabs, and display 2 spaces per tab.
 (defconst default-indent-level 2)
-(setq indent-tabs-mode nil)
-(setq tab-width default-indent-level)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width default-indent-level)
 (setq js-indent-level default-indent-level)
 (setq css-indent-offset default-indent-level)
 
@@ -198,16 +198,16 @@
 (setq ack-command "~/bin/ack --nocolor --nogroup")
 
 ;; Auto-complete
-(require 'auto-complete-config)
+(require 'auto-complete)
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
 (ac-config-default)
-(setq ac-auto-show-menu t)
 (setq ac-auto-start t)
-
-;; Edit remote files - http://www.gnu.org/software/emacs/manual/tramp.html
-;; (require 'tramp)
-;; (setq tramp-default-method "scp")q
+(setq ac-auto-show-menu nil)
+(setq ac-delay 0.1)
+(setq ac-show-menu-immediately-on-auto-complete t)
+(setq ac-auto-show-menu t)
+(setq ac-trigger-key nil)
 
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
@@ -315,6 +315,13 @@
 (setq whitespace-style '(tabs trailing empty))
 (global-whitespace-mode t)
 
+;; Vim-like line-joining with C-k
+(defadvice kill-line (before check-position activate)
+  (if (and (eolp) (not (bolp)))
+      (progn (forward-char 1)
+             (just-one-space 0)
+             (backward-char 1))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -378,10 +385,6 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(ac-auto-show-menu nil)
- '(ac-delay 0.1)
- '(ac-show-menu-immediately-on-auto-complete t)
- '(ac-trigger-key nil)
  '(debug-on-error nil)
  '(indicate-buffer-boundaries nil)
  '(indicate-empty-lines t)
