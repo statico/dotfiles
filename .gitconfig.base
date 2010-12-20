@@ -1,3 +1,6 @@
+#
+# NOTE: This file is renamed to .gitconfig by my install script.
+# 
 [user]
 	name = Ian Langworth
 	email = ian@langworth.com
