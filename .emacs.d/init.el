@@ -155,6 +155,24 @@
  uniquify-buffer-name-style 'reverse
  uniquify-separator ":")
 
+;; Fonts I like
+(defun set-font-face (face anti-alias)
+  (interactive
+   (list (read-string "Face? ")
+	 (y-or-n-p "Anti-alias? ")))
+  (set-default-font face)
+  (setq mac-allow-anti-aliasing anti-alias)
+  (redraw-display)
+  (message (format "Font set to '%s', anti-aliasing %s"
+		   face
+		   (if anti-alias "enabled" "disabled"))))
+(defun set-font-face-inconsolata ()
+  (interactive)
+  (set-font-face "Inconsolata 14" t))
+(defun set-font-face-monaco ()
+  (interactive)
+  (set-font-face "Monaco 9" nil))
+
 ;; Mac OS X customizations
 (when macgui
 
@@ -211,7 +229,6 @@
 
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;; HTML-editing settings
 (when (>= emacs-major-version 23)
@@ -339,29 +356,30 @@
              (define-key python-mode-map (kbd "M-RET") 'hs-toggle-hiding)
              (define-key python-mode-map (kbd "C-M-RET") 'hs-show-all)))
 
-;; testing
-;; (add-hook 'python-mode-hook '(lambda () (flyspell-prog-mode)))
-
 ;; Use our local installation of Pymacs and rope.
-(setenv "PYTHONPATH"
-        (concat (getenv "PYTHONPATH") ":"
-                (expand-file-name "~/.emacs.d/python")))
+(setq pymacs-load-path (expand-file-name "~/.emacs.d/python"))
+;; (setenv "PYTHONPATH"
+;;         (concat (getenv "PYTHONPATH") ":"
+;;                 (expand-file-name "~/.emacs.d/python")))
 
-;; Basic Pymacs setup instructions.
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
+;; ;; Basic Pymacs setup instructions.
+;; (autoload 'pymacs-apply "pymacs")
+;; (autoload 'pymacs-call "pymacs")
+;; (autoload 'pymacs-eval "pymacs" nil t)
+;; (autoload 'pymacs-exec "pymacs" nil t)
+;; (autoload 'pymacs-load "pymacs" nil t)
 
-;; ;; Load Rope.
-;; (when (>= emacs-major-version 23)
-;;   (require 'pymacs)
-;;   (pymacs-load "ropemacs" "rope-"))
-
-;; ;; Rope Settings
-;; (setq ropemacs-enable-shortcuts nil)
-;; (setq ropemacs-local-prefix "C-0")
+;; Load Rope/ropemacs only when needed.
+(defun load-ropemacs ()
+  "Load pymacs and ropemacs"
+  (interactive)
+  (setq ropemacs-enable-shortcuts nil)
+  (setq ropemacs-confirm-saving nil)
+  (setq ropemacs-guess-project t)
+  (require 'pymacs)
+  (pymacs-load "ropemacs" "rope-")
+  )
+(global-set-key (kbd "\C-x p y") 'load-ropemacs)
 
 ;; Python/Flymake/Pylint attempt.
 (when (load "flymake" t)
@@ -388,6 +406,7 @@
  '(debug-on-error nil)
  '(indicate-buffer-boundaries nil)
  '(indicate-empty-lines t)
+ '(text-mode-hook (quote (text-mode-hook-identify)))
  '(visual-line-fringe-indicators (quote (nil nil))))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -421,4 +440,5 @@
  '(viper-minibuffer-insert ((((class color)) nil)))
  '(viper-search ((((class color)) (:background "#330" :foreground "yellow"))))
  '(zenburn-highlight-subtle ((t nil))))
+
 (put 'upcase-region 'disabled nil)
