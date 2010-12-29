@@ -403,6 +403,10 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(ac-auto-show-menu nil)
+ '(ac-delay 0.1)
+ '(ac-show-menu-immediately-on-auto-complete t)
+ '(ac-trigger-key nil)
  '(debug-on-error nil)
  '(indicate-buffer-boundaries nil)
  '(indicate-empty-lines t)
@@ -426,7 +430,7 @@
  '(highlight-current-line-face ((t (:inherit highlight-current-line))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
  '(linum ((t (:inherit font-lock-comment-delimiter))))
- '(mode-line ((t (:background "#454d48" :foreground "#acbc90" :box (:line-width 2 :color "#1e2320")))))
+ '(mode-line ((t (:background "#454d48" :foreground "#acbc90" :box (:line-width 2 :color "#1e2320") :height 0.9 :family "Arial"))))
  '(mode-line-buffer-id ((t (:foreground "#A5BAF1" :weight bold))))
  '(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090" :box (:line-width 2 :color "#2e3330")))))
  '(mumamo-background-chunk-major ((t nil)))
