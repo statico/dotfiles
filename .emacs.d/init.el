@@ -67,12 +67,12 @@
 (when (not gui)
   (menu-bar-mode -1))
 
-;; By default, use spaces, not tabs, and display 2 spaces per tab.
-(defconst default-indent-level 2)
+;; By default, use spaces, not tabs, and display 4 spaces per tab.
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width default-indent-level)
-(setq js-indent-level default-indent-level)
-(setq css-indent-offset default-indent-level)
+(setq tab-width 4)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'js-indent-level 'tab-width)
+(defvaralias 'css-indent-level 'tab-width)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
@@ -219,7 +219,6 @@
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
-(ac-config-default)
 (setq ac-auto-start t)
 (setq ac-auto-show-menu nil)
 (setq ac-delay 0.1)
@@ -243,6 +242,10 @@
 ;; "Sparkup" or "Zen-coding" makes churning out HTML easier.
 (require 'zencoding-mode)
 (add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
+
+;; CSS settings
+(add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
+(add-hook 'css-mode-hook 'css-color-mode)
 
 ;; dired settings
 (require 'dired)
@@ -446,3 +449,4 @@
  '(zenburn-highlight-subtle ((t nil))))
 
 (put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
