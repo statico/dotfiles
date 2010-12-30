@@ -346,10 +346,9 @@
 (setq highlight-current-line-globally t)
 (highlight-current-line-on t)
 
-;; Trailing whitespace is evil
-(require 'whitespace)
-(setq whitespace-style '(tabs trailing empty))
-(global-whitespace-mode t)
+;; Ethan whitespace mode
+(require 'ethan-wspace)
+(global-ethan-wspace-mode 1)
 
 ;; Vim-like line-joining with C-k
 (defadvice kill-line (before check-position activate)
