@@ -70,9 +70,9 @@
 ;; By default, use spaces, not tabs, and display 4 spaces per tab.
 (setq-default indent-tabs-mode nil)
 (setq tab-width 4)
-(defvaralias 'c-basic-offset 'tab-width)
-(defvaralias 'js-indent-level 'tab-width)
-(defvaralias 'css-indent-level 'tab-width)
+(setq-default c-basic-offset tab-width
+              js-indent-level tab-width
+              css-indent-level tab-width)
 
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
@@ -272,6 +272,22 @@
   (interactive)
   (find-file (expand-file-name "~/.emacs.d/init.el")))
 (global-set-key (kbd "C-M-0") 'open-init-dot-el)
+
+;; Useful for editing config files
+(global-set-key (kbd "C-M-9") '(lambda ()
+  "Evaluates the current region (if a region is active) or the
+  current buffer (if no region is active)."
+  (interactive)
+  (if (or (eq major-mode 'lisp-interaction-mode)
+          (eq major-mode 'emacs-lisp-mode))
+      (if (region-active-p)
+          (progn
+            (eval-region (region-beginning) (region-end))
+            (message "Region eval'd"))
+        (eval-buffer)
+        (message "Buffer eval'd"))
+      (message "Not in a Lisp mode"))))
+
 
 ;; The Cult of Steve Yegge ;)
 ;; http://sites.google.com/site/steveyegge2/effective-emacs
