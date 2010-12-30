@@ -20,6 +20,7 @@
 	civ = commit -v
 	civa = commit -v -a
 	co = checkout
+	cp = cherry-pick
 	config-to-push-all-branches = config --add remote.origin.push '+refs/heads/*:refs/heads/*'
 	config-to-push-all-tags = config --add remote.origin.push '+refs/tags/*:refs/tags/*'
 	d = diff
@@ -63,3 +64,5 @@
 [branch "master"]
 	remote = origin
 	merge = refs/heads/master
+[log]
+	decorate = short
