@@ -6,7 +6,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Constants
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconst gui (not (eq window-system 'nil))
   "Are we running window system?")
@@ -100,6 +100,10 @@
 (put 'narrow-to-defun 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+;; Allow upcasing-downcasing.
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 ;; Color theme.
 (require 'color-theme)
 (require 'zenburn)
@@ -159,13 +163,13 @@
 (defun set-font-face (face anti-alias)
   (interactive
    (list (read-string "Face? ")
-	 (y-or-n-p "Anti-alias? ")))
+         (y-or-n-p "Anti-alias? ")))
   (set-default-font face)
   (setq mac-allow-anti-aliasing anti-alias)
   (redraw-display)
   (message (format "Font set to '%s', anti-aliasing %s"
-		   face
-		   (if anti-alias "enabled" "disabled"))))
+                   face
+                   (if anti-alias "enabled" "disabled"))))
 (defun set-font-face-inconsolata ()
   (interactive)
   (set-font-face "Inconsolata 14" t))
@@ -216,9 +220,10 @@
 (setq ack-command "~/bin/ack --nocolor --nogroup")
 
 ;; Auto-complete
-(require 'auto-complete)
+(require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
+(ac-config-default)
 (setq ac-auto-start t)
 (setq ac-auto-show-menu nil)
 (setq ac-delay 0.1)
@@ -463,5 +468,10 @@
  '(viper-search ((((class color)) (:background "#330" :foreground "yellow"))))
  '(zenburn-highlight-subtle ((t nil))))
 
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Per-host customizations
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(let ((local-elisp-path "~/.local.el"))
+  (if (file-exists-p local-elisp-path)
+      (load local-elisp-path)))
