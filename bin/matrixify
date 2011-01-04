@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+$|++;
+
 END {
     print "\e[0m";
 }
