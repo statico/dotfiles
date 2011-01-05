@@ -223,13 +223,7 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
-(ac-config-default)
-(setq ac-auto-start t)
-(setq ac-auto-show-menu nil)
-(setq ac-delay 0.1)
-(setq ac-show-menu-immediately-on-auto-complete t)
-(setq ac-auto-show-menu t)
-(setq ac-trigger-key nil)
+(ac-config-default) ;; Use customize for further settings.
 
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
@@ -366,13 +360,6 @@
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Enable code-folding
-(add-hook 'python-mode-hook
-          '(lambda ()
-             (flyspell-prog-mode)))
-             ;; (hs-minor-mode 1)
-             ;; (hs-hide-all)))
-
 ;; Use M-RET to toggle hiding
 (add-hook 'hs-minor-mode-hook
           '(lambda ()
@@ -445,6 +432,8 @@
  '(custom-link ((t (:inherit zenburn-blue :underline t))))
  '(fancy-widget-button ((t (:background "#3f3f3f" :box (:line-width 2 :style released-button)))))
  '(fancy-widget-field ((t (:background "#333" :box (:line-width 1 :color "#444")))))
+ '(flymake-errline ((t (:underline "red"))))
+ '(flymake-warnline ((t (:underline "cyan"))))
  '(font-lock-comment-delimiter ((t (:inherit zenburn-lowlight-1))))
  '(font-lock-comment-delimiter-face ((t (:inherit zenburn-lowlight-1))))
  '(font-lock-comment-face ((t (:foreground nil :inherit zenburn-lowlight-1 :slant italic))))
