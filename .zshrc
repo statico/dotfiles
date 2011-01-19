@@ -89,6 +89,11 @@ if _color; then
     export GREP_COLOR='1;32'
 fi
 
+# Ack is better than grep
+if ! _color; then
+    alias ack='ack --nocolor'
+fi
+
 # GNU and BSD ls colorization.
 if _color; then
     export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
@@ -230,7 +235,6 @@ if _is Linux; then
         alias ls='ls --color'
     fi
 fi
-
 
 # COMPLETION {{{1
 
@@ -449,12 +453,16 @@ function gg () {
     fi
 }
 
-
 # Do you miss `git add -A` ?
 function svnaddall () {
     svn status | grep \? | f2 | xargs svn add
     svn status | grep \! | f2 | xargs svn rm
 }
+
+# Don't use less inside of emacs
+if [ -n "$INSIDE_EMACS" ]; then
+    alias git='git -c core.pager=cat'
+fi
 
 # Make a new command.
 vix () {

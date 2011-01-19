@@ -104,6 +104,9 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+;; If a file has changed and I haven't modified it, don't bother me.
+(global-auto-revert-mode 1)
+
 ;; Color theme.
 (require 'color-theme)
 (require 'zenburn)
@@ -111,6 +114,12 @@
 (when gui
   (zenburn)
   (color-theme-railscasts))
+
+(defun color-theme-dark ()
+  "Use a white-on-black theme and disable line highlighting."
+  (interactive)
+  (color-theme-clarity)
+  (highlight-current-line-on nil))
 
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
@@ -297,6 +306,8 @@
 (defalias 'er 'eval-region)
 (defalias 'rb 'rename-buffer)
 (defalias 'qrr 'query-replace-regexp)
+(defalias 'ffap 'find-file-at-point)
+(defalias 'sw 'swap-windows)
 
 ;; C-w kills a word or region depending on context. (DWIM)
 (defun backward-kill-word-or-kill-region (&optional arg)
@@ -348,6 +359,7 @@
 ;; Ethan whitespace mode
 (require 'ethan-wspace)
 (global-ethan-wspace-mode 1)
+(defalias 'ewcam 'ethan-wspace-clean-all-modes)
 
 ;; Vim-like line-joining with C-k
 (defadvice kill-line (before check-position activate)
