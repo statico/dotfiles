@@ -67,10 +67,14 @@ fi
 export HOSTTYPE
 
 # PAGER
-if _has less; then
-    export PAGER=less
-    if _color; then
-        export LESS='-R'
+if [ -n "$INSIDE_EMACS" ]; then
+    export PAGER=cat
+else
+    if _has less; then
+        export PAGER=less
+        if _color; then
+            export LESS='-R'
+        fi
     fi
 fi
 
