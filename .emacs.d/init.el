@@ -39,7 +39,6 @@
   (load (concat "~/.emacs.d/elisp/" name)))
 
 (load-snippet "rename-file-and-buffer")
-(load-snippet "swap-windows")
 (load-snippet "whole-line-or-region")
 
 ;; Executables might be somewhere else
@@ -307,7 +306,6 @@
 (defalias 'rb 'rename-buffer)
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'ffap 'find-file-at-point)
-(defalias 'sw 'swap-windows)
 
 ;; C-w kills a word or region depending on context. (DWIM)
 (defun backward-kill-word-or-kill-region (&optional arg)
@@ -367,6 +365,10 @@
       (progn (forward-char 1)
              (just-one-space 0)
              (backward-char 1))))
+
+(load-snippet "swap-windows")
+(defalias 'sw 'swap-windows)
+(global-set-key (kbd "C-M-S-s") 'swap-windows)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
