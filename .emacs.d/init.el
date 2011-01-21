@@ -405,18 +405,20 @@
   )
 (global-set-key (kbd "\C-x p y") 'load-ropemacs)
 
-;; Python/Flymake/Pylint attempt.
-(when (load "flymake" t)
-  (defun flymake-pylint-init ()
+;; Load pyflakes for flymake with Python.
+(defun load-pyflakes ()
+  "Sets up flymake to use pyflakes on Python files. Requires 'pyflakes' in path."
+  (require 'flymake)
+  (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
            (local-file (file-relative-name
                         temp-file
                         (file-name-directory buffer-file-name))))
-      (list "epylint" (list local-file))))
-
+      (list "pyflakes" (list local-file))))
   (add-to-list 'flymake-allowed-file-name-masks
-               '("\\.py\\'" flymake-pylint-init)))
+               '("\\.py\\'" flymake-pyflakes-init))
+  (add-hook 'find-file-hook 'flymake-find-file-hook))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customize settings
