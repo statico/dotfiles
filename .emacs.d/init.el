@@ -127,6 +127,7 @@
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
 (ido-mode 1)
+(setq ido-enable-flex-matching t) ; fuzzy matching is a must have, says rmm5t
 ;; Get rid of the annoying .ido.last file
 ;; (http://stackoverflow.com/questions/1371076)
 (setq
