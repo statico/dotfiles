@@ -338,7 +338,7 @@ function {
 # ack is really useful. I usually look for code and then edit all of the files
 # containing that code. Changing `ack' to `vack' does this for me.
 function vack () {
-  $EDITOR `ack -l $@`
+  vim `ack -l $@`
 }
 
 # Quick commands to sync CWD between terminals.
