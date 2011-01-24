@@ -393,6 +393,10 @@
 (defalias 'sw 'swap-windows)
 (global-set-key (kbd "C-M-S-s") 'swap-windows)
 
+;; Flymake
+(setq flymake-allowed-file-name-masks
+      (delete "\\.html?\\'" flymake-allowed-file-name-masks))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
