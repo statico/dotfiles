@@ -40,6 +40,8 @@
 
 (load-snippet "rename-file-and-buffer")
 (load-snippet "whole-line-or-region")
+(load-snippet "sgml-delete-tagged-text")
+(load-snippet "remove-alist-name")
 
 ;; Executables might be somewhere else
 (add-to-list 'exec-path "~/bin")
@@ -207,9 +209,8 @@
 (when gui
   (require 'zoom-frm)
   (global-set-key (kbd "M--") 'zoom-out)
-  (global-set-key (kbd "M-=") 'zoom-in)
   (global-set-key (kbd "M-+") 'zoom-in)
-  (global-set-key (kbd "M-0") 'zoom-frm-unzoom))
+  (global-set-key (kbd "M-=") 'zoom-frm-unzoom))
 
 ;; browse-kill-ring
 (require 'browse-kill-ring)
@@ -233,6 +234,7 @@
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
 (ac-config-default) ;; Use customize for further settings.
+(define-key ac-complete-mode-map "\r" nil) ;; Interferes with CSS
 
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
@@ -245,7 +247,10 @@
   (setq mumamo-background-colors nil)
 
   ;; Set as the Django default for HTML files.
-  (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode)))
+  (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
+
+  ;; Useful commands
+  (global-set-key (kbd "C-c d") 'sgml-delete-tagged-text))
 
 ;; "Sparkup" or "Zen-coding" makes churning out HTML easier.
 (require 'zencoding-mode)
@@ -393,9 +398,12 @@
 (defalias 'sw 'swap-windows)
 (global-set-key (kbd "C-M-S-s") 'swap-windows)
 
-;; Flymake
-(setq flymake-allowed-file-name-masks
-      (delete "\\.html?\\'" flymake-allowed-file-name-masks))
+;; Disable Flymake for HTML/XML files.
+(require 'flymake)
+(dolist (extension '("html?" "xml"))
+  (let ((full-extension (concat "\\." extension "\\'")))
+    (setq flymake-allowed-file-name-masks
+          (remove-alist-name full-extension flymake-allowed-file-name-masks))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
@@ -435,7 +443,6 @@
 ;; Load pyflakes for flymake with Python.
 (defun load-pyflakes ()
   "Sets up flymake to use pyflakes on Python files. Requires 'pyflakes' in path."
-  (require 'flymake)
   (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))
