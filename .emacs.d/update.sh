@@ -22,7 +22,6 @@ curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
 cd color-theme/themes
 curl -O http://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
-curl -O http://github.com/chrisdone/zencoding/raw/master/zencoding-mode.el
 curl -O http://jblevins.org/projects/markdown-mode/markdown-mode.el
 curl -O http://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 curl -O http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el

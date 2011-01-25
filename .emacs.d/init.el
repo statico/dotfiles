@@ -254,7 +254,10 @@
 
 ;; "Sparkup" or "Zen-coding" makes churning out HTML easier.
 (require 'zencoding-mode)
-(add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
+(defun enable-zencoding-mode () (zencoding-mode t))
+(add-hook 'sgml-mode-hook 'enable-zencoding-mode)
+(add-hook 'html-mode-hook 'enable-zencoding-mode)
+(add-hook 'django-mode-hook 'enable-zencoding-mode)
 
 ;; CSS settings
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
