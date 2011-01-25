@@ -204,6 +204,7 @@ alias rxvt-scrollbar="echo -n '[?30t'"
 alias scp='scp -C -p'
 alias screen='screen -U'
 alias sd='svn diff --diff-cmd=diff --extensions="-ydw -W$COLUMNS"'
+alias slurp='wget -t 5 -c -nH -r -N --no-parent'
 alias sshx='ssh -C -c blowfish -X'
 alias st='git status'
 alias svnl='svn log -v -r HEAD'
