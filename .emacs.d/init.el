@@ -153,6 +153,16 @@
   (set (make-local-variable 'truncate-lines) nil))
 (add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
 
+;; Neat little Textmate Command-T emulation
+(defun ido-find-file-in-tag-files ()
+  (interactive)
+  (save-excursion
+    (let ((enable-recursive-minibuffers t)) (visit-tags-table-buffer))
+    (find-file (expand-file-name
+                (ido-completing-read "Project file: "
+                                     (tags-table-files) nil t)))))
+(global-set-key (kbd "M-C-;") 'ido-find-file-in-tag-files)
+
 ;; Switch-to-previous-buffer
 (global-set-key (kbd "C-=") 'switch-to-previous-buffer)
 (defun switch-to-previous-buffer ()
