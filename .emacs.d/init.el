@@ -46,6 +46,7 @@
 ;; Executables might be somewhere else
 (add-to-list 'exec-path "~/bin")
 (add-to-list 'exec-path "/opt/local/bin")
+(add-to-list 'exec-path "/usr/local/bin")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pile o' settings
@@ -456,6 +457,7 @@
 ;; Load pyflakes for flymake with Python.
 (defun load-pyflakes ()
   "Sets up flymake to use pyflakes on Python files. Requires 'pyflakes' in path."
+  (interactive)
   (defun flymake-pyflakes-init ()
     (let* ((temp-file (flymake-init-create-temp-buffer-copy
                        'flymake-create-temp-inplace))

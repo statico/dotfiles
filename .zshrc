@@ -466,9 +466,9 @@ function svnaddall () {
     svn status | grep \! | f2 | xargs svn rm
 }
 
-# Don't use less inside of emacs
+# Don't page inside of emacs
 if [ -n "$INSIDE_EMACS" ]; then
-    alias git='git -c core.pager=cat'
+    alias git='git --no-pager'
 fi
 
 # Make a new command.
