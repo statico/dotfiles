@@ -123,6 +123,11 @@
   (color-theme-clarity)
   (highlight-current-line-on nil))
 
+(defun color-theme-light ()
+  (interactive)
+  (color-theme-mac-classic)
+  (highlight-current-line-on nil))
+
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
@@ -292,6 +297,7 @@
 ;; YAML
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (define-key yaml-mode-map (kbd "RET") 'newline-and-indent)
 
 ;; Open init.el
