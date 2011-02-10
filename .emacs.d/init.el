@@ -222,6 +222,7 @@
   (maximize-frame-vertically))
 
 ;; Zoom the font size in and out in GUI.
+;; (Don't forget that C-x C-- and C-x C-+ do this for a single buffer.)
 (when gui
   (require 'zoom-frm)
   (global-set-key (kbd "M--") 'zoom-out)
@@ -375,18 +376,34 @@
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
+;; Window switching avoids special windows
+;; From http://stackoverflow.com/questions/4941960
+(defvar avoid-window-regexp "^[0-9]$")
+(defun my-other-window ()
+  "Similar to 'other-window, only try to avoid windows whose buffers match avoid-window-regexp"
+  (interactive)
+  (let* ((window-list (delq (selected-window) (window-list)))
+         (filtered-window-list (remove-if
+                                (lambda (w)
+                                  (string-match-p avoid-window-regexp (buffer-name (window-buffer w))))
+                                window-list)))
+    (if filtered-window-list
+        (select-window (car filtered-window-list))
+      (and window-list
+           (select-window (car window-list))))))
+(global-set-key (kbd "M-o") 'my-other-window)
+
 ;; Map the window manipulation keys to meta 0, 1, 2, o (from rmm5t)
 (global-set-key (kbd "M-3") 'split-window-horizontally) ; was digit-argument
 (global-set-key (kbd "M-2") 'split-window-vertically) ; was digit-argument
 (global-set-key (kbd "M-1") 'delete-other-windows) ; was digit-argument
 (global-set-key (kbd "M-0") 'delete-window) ; was digit-argument
-(global-set-key (kbd "M-o") 'other-window) ; was facemenu-keymap
 ;; Replace dired's M-o
 (add-hook 'dired-mode-hook
-          (lambda () (define-key dired-mode-map (kbd "M-o") 'other-window))) ; was dired-omit-mode
+          (lambda () (define-key dired-mode-map (kbd "M-o") 'my-other-window))) ; was dired-omit-mode
 ;; Replace ibuffer's M-o
 (add-hook 'ibuffer-mode-hook
-          (lambda () (define-key ibuffer-mode-map (kbd "M-o") 'other-window))) ; was ibuffer-visit-buffer-1-window
+          (lambda () (define-key ibuffer-mode-map (kbd "M-o") 'my-other-window))) ; was ibuffer-visit-buffer-1-window
 ;; To help Unlearn C-x 0, 1, 2, o
 (global-unset-key (kbd "C-x 3")) ; was split-window-horizontally
 (global-unset-key (kbd "C-x 2")) ; was split-window-vertically
@@ -449,7 +466,7 @@
 ;; (autoload 'pymacs-load "pymacs" nil t)
 
 ;; Load Rope/ropemacs only when needed.
-(defun load-ropemacs ()
+(defun init-ropemacs ()
   "Load pymacs and ropemacs"
   (interactive)
   (setq ropemacs-enable-shortcuts nil)
@@ -461,7 +478,7 @@
 (global-set-key (kbd "\C-x p y") 'load-ropemacs)
 
 ;; Load pyflakes for flymake with Python.
-(defun load-pyflakes ()
+(defun init-pyflakes ()
   "Sets up flymake to use pyflakes on Python files. Requires 'pyflakes' in path."
   (interactive)
   (defun flymake-pyflakes-init ()
