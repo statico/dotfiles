@@ -284,7 +284,6 @@
 (require 'dired)
 (define-key dired-mode-map (kbd "u") 'dired-up-directory)
 (define-key dired-mode-map (kbd "U") 'dired-unmark)
-(global-set-key (kbd "C-M-;") 'dired-jump)
 (global-set-key (kbd "C-:") 'dired-jump)
 
 ;; Markdown
@@ -430,6 +429,9 @@
       (progn (forward-char 1)
              (just-one-space 0)
              (backward-char 1))))
+
+;; Bind line-joins to an easier key
+(global-set-key (kbd "C-M-j") 'delete-indentation)
 
 (load-snippet "swap-windows")
 (defalias 'sw 'swap-windows)
