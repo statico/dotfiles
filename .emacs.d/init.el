@@ -128,6 +128,27 @@
   (color-theme-mac-classic)
   (highlight-current-line-on nil))
 
+;; Fonts I like
+(defun set-font-face (face anti-alias)
+  (interactive
+   (list (read-string "Face? ")
+         (y-or-n-p "Anti-alias? ")))
+  (set-default-font face)
+  (setq mac-allow-anti-aliasing anti-alias)
+  (redraw-display)
+  (message (format "Font set to '%s', anti-aliasing %s"
+                   face
+                   (if anti-alias "enabled" "disabled"))))
+(defun set-font-face-inconsolata ()
+  (interactive)
+  (set-font-face "Inconsolata 14" t))
+(defun set-font-face-monaco ()
+  (interactive)
+  (set-font-face "Monaco 9" nil))
+(defun set-font-face-georgia ()
+  (interactive)
+  (set-font-face "Georgia 16" t))
+
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
@@ -185,24 +206,6 @@
 (setq
  uniquify-buffer-name-style 'reverse
  uniquify-separator ":")
-
-;; Fonts I like
-(defun set-font-face (face anti-alias)
-  (interactive
-   (list (read-string "Face? ")
-         (y-or-n-p "Anti-alias? ")))
-  (set-default-font face)
-  (setq mac-allow-anti-aliasing anti-alias)
-  (redraw-display)
-  (message (format "Font set to '%s', anti-aliasing %s"
-                   face
-                   (if anti-alias "enabled" "disabled"))))
-(defun set-font-face-inconsolata ()
-  (interactive)
-  (set-font-face "Inconsolata 14" t))
-(defun set-font-face-monaco ()
-  (interactive)
-  (set-font-face "Monaco 9" nil))
 
 ;; Mac OS X customizations
 (when macgui
