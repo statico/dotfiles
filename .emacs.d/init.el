@@ -149,6 +149,9 @@
   (interactive)
   (set-font-face "Georgia 16" t))
 
+;; Settings for editing text
+(setq sentence-end-double-space nil)
+
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
@@ -241,14 +244,6 @@
 (global-undo-tree-mode)
 (setq undo-tree-mode-lighter "") ;; Hide "Undo-Tree" in modeline.
 
-;; C-_ is undo, but what about redo?
-(global-set-key (kbd "M-_") 'redo)
-
-;; Keep the cursor kinda centered, like scrolloff in vim
-(when gui
-    (require 'centered-cursor-mode)
-    (global-set-key (kbd "C-M-c") 'global-centered-cursor-mode))
-
 ;; Use ack instead of grep - http://betterthangrep.com/
 (load-library "ack")
 (defalias 'grep 'ack)
@@ -260,9 +255,6 @@
              "~/.emacs.d/vendor/auto-complete-1.3.1/ac-dict")
 (ac-config-default) ;; Use customize for further settings.
 (define-key ac-complete-mode-map "\r" nil) ;; Interferes with CSS
-
-;; Settings for editing text
-(setq sentence-end-double-space nil)
 
 ;; HTML-editing settings
 (when (>= emacs-major-version 23)
@@ -277,13 +269,6 @@
   ;; Useful commands
   (global-set-key (kbd "C-c d") 'sgml-delete-tagged-text))
 
-;; "Sparkup" or "Zen-coding" makes churning out HTML easier.
-(require 'zencoding-mode)
-(defun enable-zencoding-mode () (zencoding-mode t))
-(add-hook 'sgml-mode-hook 'enable-zencoding-mode)
-(add-hook 'html-mode-hook 'enable-zencoding-mode)
-(add-hook 'django-mode-hook 'enable-zencoding-mode)
-
 ;; CSS settings
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-hook 'css-mode-hook 'css-color-mode)
@@ -293,6 +278,15 @@
 (define-key dired-mode-map (kbd "u") 'dired-up-directory)
 (define-key dired-mode-map (kbd "U") 'dired-unmark)
 (global-set-key (kbd "C-:") 'dired-jump)
+
+;; Make dired ignore certain files
+(eval-after-load "dired"
+  '(require 'dired-x))
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (dired-omit-mode 1)))
+(setq dired-omit-files
+      (concat dired-omit-files "\\|\.pyc$"))
 
 ;; Markdown
 (require 'markdown-mode)
@@ -350,18 +344,6 @@
 (global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-c C-c") 'kill-region)
-
-;; Directory browser
-(global-set-key (kbd "C-M-b") 'speedbar)
-
-;; Make dired ignore certain files
-(eval-after-load "dired"
-  '(require 'dired-x))
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (dired-omit-mode 1)))
-(setq dired-omit-files
-      (concat dired-omit-files "\\|\.pyc$"))
 
 ;; Vim-like mark commands
 (global-set-key (kbd "C-x m") 'point-to-register)
@@ -441,6 +423,7 @@
 ;; Bind line-joins to an easier key
 (global-set-key (kbd "C-M-j") 'delete-indentation)
 
+;; Swap two windows
 (load-snippet "swap-windows")
 (defalias 'sw 'swap-windows)
 (global-set-key (kbd "C-M-S-s") 'swap-windows)
@@ -456,7 +439,7 @@
 ;; Python settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Use M-RET to toggle hiding
+;; Use M-RET to toggle hiding if enabled
 (add-hook 'hs-minor-mode-hook
           '(lambda ()
              (define-key python-mode-map (kbd "M-RET") 'hs-toggle-hiding)
