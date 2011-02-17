@@ -236,6 +236,11 @@
 (require 'browse-kill-ring)
 (global-set-key (kbd "C-x C-r") 'browse-kill-ring)
 
+;; A vim-like undo system isn't as smart but is easier to work with.
+(require 'undo-tree)
+(global-undo-tree-mode)
+(setq undo-tree-mode-lighter "") ;; Hide "Undo-Tree" in modeline.
+
 ;; C-_ is undo, but what about redo?
 (global-set-key (kbd "M-_") 'redo)
 
@@ -459,28 +464,21 @@
 
 ;; Use our local installation of Pymacs and rope.
 (setq pymacs-load-path (expand-file-name "~/.emacs.d/python"))
-;; (setenv "PYTHONPATH"
-;;         (concat (getenv "PYTHONPATH") ":"
-;;                 (expand-file-name "~/.emacs.d/python")))
-
-;; ;; Basic Pymacs setup instructions.
-;; (autoload 'pymacs-apply "pymacs")
-;; (autoload 'pymacs-call "pymacs")
-;; (autoload 'pymacs-eval "pymacs" nil t)
-;; (autoload 'pymacs-exec "pymacs" nil t)
-;; (autoload 'pymacs-load "pymacs" nil t)
 
 ;; Load Rope/ropemacs only when needed.
 (defun init-ropemacs ()
   "Load pymacs and ropemacs"
   (interactive)
-  (setq ropemacs-enable-shortcuts nil)
+  (autoload 'pymacs-apply "pymacs")
+  (autoload 'pymacs-call "pymacs")
+  (autoload 'pymacs-eval "pymacs" nil t)
+  (autoload 'pymacs-exec "pymacs" nil t)
+  (autoload 'pymacs-load "pymacs" nil t)
+  (setq ropemacs-enable-autoimport t)
   (setq ropemacs-confirm-saving nil)
   (setq ropemacs-guess-project t)
   (require 'pymacs)
-  (pymacs-load "ropemacs" "rope-")
-  )
-(global-set-key (kbd "\C-x p y") 'load-ropemacs)
+  (pymacs-load "ropemacs" "rope-"))
 
 ;; Load pyflakes for flymake with Python.
 (defun init-pyflakes ()

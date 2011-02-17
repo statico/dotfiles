@@ -19,6 +19,7 @@ curl -O http://www.emacswiki.org/emacs/download/zoom-frm.el
 curl -O http://www.emacswiki.org/emacs/download/frame-cmds.el
 curl -O http://www.emacswiki.org/emacs/download/frame-fns.el
 curl -O http://www.emacswiki.org/emacs/download/highlight-current-line.el
+curl -O http://www.dr-qubit.org/undo-tree/undo-tree.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
 curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
 curl -O http://jblevins.org/projects/markdown-mode/markdown-mode.el
