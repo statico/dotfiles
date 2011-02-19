@@ -446,7 +446,9 @@
              (define-key python-mode-map (kbd "C-M-RET") 'hs-show-all)))
 
 ;; Use our local installation of Pymacs and rope.
-(setq pymacs-load-path (expand-file-name "~/.emacs.d/python"))
+(setq pymacs-load-path '("~/.emacs.d/python"))
+(setenv "PYTHONPATH"(concat (getenv "PYTHONPATH")
+                             ":" (expand-file-name "~/.emacs.d/python")))
 
 ;; Load Rope/ropemacs only when needed.
 (defun init-ropemacs ()
