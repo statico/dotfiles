@@ -366,7 +366,7 @@
   (interactive)
   (previous-line)
   (open-line))
-(global-set-key (kbd "M-S-o") 'open-line-above)
+(global-set-key (kbd "C-S-o") 'open-line-above)
 
 ;; Window movement
 (when (fboundp 'windmove-default-keybindings)
