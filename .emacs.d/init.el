@@ -361,6 +361,13 @@
   (insert char)
   (forward-char -1))
 
+;; Vim-like shift-O
+(defun open-line-above ()
+  (interactive)
+  (previous-line)
+  (open-line))
+(global-set-key (kbd "M-S-o") 'open-line-above)
+
 ;; Window movement
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
@@ -459,7 +466,9 @@
   (autoload 'pymacs-eval "pymacs" nil t)
   (autoload 'pymacs-exec "pymacs" nil t)
   (autoload 'pymacs-load "pymacs" nil t)
-  (setq ropemacs-enable-autoimport t)
+  (setq ropemacs-local-prefix "C-c C-p")
+  (setq ropemacs-enable-shortcuts nil)
+  (setq ropemacs-enable-autoimport nil)
   (setq ropemacs-confirm-saving nil)
   (setq ropemacs-guess-project t)
   (require 'pymacs)
