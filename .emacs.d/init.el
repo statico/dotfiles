@@ -159,6 +159,12 @@
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
 (ido-mode 1)
+
+;; Ignore some stuff
+;; http://emacsblog.org/2008/05/19/giving-ido-mode-a-second-chance/
+(defun my-ido-ignore-buffers (name)
+ (with-current-buffer name
+   (string-match "-template-indent-buffer$" name)))
 (setq ido-enable-flex-matching t) ; fuzzy matching is a must have, says rmm5t
 ;; Get rid of the annoying .ido.last file
 ;; (http://stackoverflow.com/questions/1371076)
@@ -166,7 +172,8 @@
  ido-enable-last-directory-history nil
  ido-record-commands nil
  ido-max-work-directory-list 0
- ido-max-work-file-list 0)
+ ido-max-work-file-list 0
+ ido-ignore-buffers '(my-ido-ignore-buffers))
 (add-hook 'ido-setup-hook
           '(lambda ()
              (define-key ido-completion-map (kbd "C-u") 'kill-line)
@@ -353,6 +360,7 @@
 (require 'highlight-symbol)
 (global-set-key (kbd "C-*") 'highlight-symbol-next)
 (global-set-key (kbd "C-x *") 'highlight-symbol-prev)
+(defalias 'hsap 'highlight-symbol-at-point)
 
 ;; Vim-like zap-up-to-char
 (defadvice zap-to-char (after my-zap-to-char-advice (arg char) activate)
