@@ -159,25 +159,21 @@
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
 (ido-mode 1)
-
 ;; Ignore some stuff
 ;; http://emacsblog.org/2008/05/19/giving-ido-mode-a-second-chance/
 (defun my-ido-ignore-buffers (name)
  (with-current-buffer name
    (string-match "-template-indent-buffer$" name)))
-(setq ido-enable-flex-matching t) ; fuzzy matching is a must have, says rmm5t
+(setq ido-ignore-buffers '(my-ido-ignore-buffers))
+;; fuzzy matching is a must have, says rmm5t
+(setq ido-enable-flex-matching t)
 ;; Get rid of the annoying .ido.last file
 ;; (http://stackoverflow.com/questions/1371076)
 (setq
  ido-enable-last-directory-history nil
  ido-record-commands nil
  ido-max-work-directory-list 0
- ido-max-work-file-list 0
- ido-ignore-buffers '(my-ido-ignore-buffers))
-(add-hook 'ido-setup-hook
-          '(lambda ()
-             (define-key ido-completion-map (kbd "C-u") 'kill-line)
-             (define-key ido-completion-map (kbd "C-k") 'backward-kill-word)))
+ ido-max-work-file-list 0)
 (global-set-key (kbd "C-;") 'ido-switch-buffer)
 
 ;; Display IDO results vertically, rather than horizontally
