@@ -399,6 +399,7 @@
 (global-set-key (kbd "M-2") 'split-window-vertically) ; was digit-argument
 (global-set-key (kbd "M-1") 'delete-other-windows) ; was digit-argument
 (global-set-key (kbd "M-0") 'delete-window) ; was digit-argument
+(global-set-key (kbd "M-4") 'delete-window) ; left-handed!
 ;; Replace dired's M-o
 (add-hook 'dired-mode-hook
           (lambda () (define-key dired-mode-map (kbd "M-o") 'my-other-window))) ; was dired-omit-mode
