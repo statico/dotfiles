@@ -357,6 +357,7 @@
 (global-set-key (kbd "C-*") 'highlight-symbol-next)
 (global-set-key (kbd "C-x *") 'highlight-symbol-prev)
 (defalias 'hsap 'highlight-symbol-at-point)
+(defalias 'hrap 'highlight-symbol-remove-all)
 
 ;; Vim-like zap-up-to-char
 (defadvice zap-to-char (after my-zap-to-char-advice (arg char) activate)
