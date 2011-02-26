@@ -305,6 +305,16 @@
 (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
 (define-key yaml-mode-map (kbd "RET") 'newline-and-indent)
 
+;; CoffeeScript
+(require 'coffee-mode)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . ))
+(defun coffee-custom ()
+  "coffee-mode-hook"
+  (set (make-local-variable 'tab-width) 2))
+(add-hook 'coffee-mode-hook
+   '(lambda() (coffee-custom)))
+
 ;; Open init.el
 (defun open-init-dot-el ()
   (interactive)
