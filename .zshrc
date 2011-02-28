@@ -231,11 +231,6 @@ else
     alias vim=vi
 fi
 
-# Mac OS X doesn't come with wget.
-if ! _has wget; then
-    alias wget='curl -O'
-fi
-
 # Linux should definitely have Gnu coreutils, right?
 if _is Linux; then
     if _color && _try ls --color; then
