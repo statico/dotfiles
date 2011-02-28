@@ -315,6 +315,10 @@
 (add-hook 'coffee-mode-hook
    '(lambda() (coffee-custom)))
 
+;; SASS
+(require 'sass-mode)
+(add-to-list 'auto-mode-alist '("\\.sass$" . sass-mode))
+
 ;; Open init.el
 (defun open-init-dot-el ()
   (interactive)

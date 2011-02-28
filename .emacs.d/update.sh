@@ -26,6 +26,8 @@ curl -O http://www.emacswiki.org/emacs/download/highlight-current-line.el
 curl -O http://www.emacswiki.org/emacs/download/vimpulse.el
 curl -O http://www.emacswiki.org/emacs/download/zoom-frm.el
 curl -O https://github.com/defunkt/coffee-mode/raw/master/coffee-mode.el
+curl -O https://github.com/nex3/haml-mode/raw/master/haml-mode.el
+curl -O https://github.com/nex3/sass-mode/raw/master/sass-mode.el
 curl -O https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 
 cd color-theme/themes
