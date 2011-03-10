@@ -276,6 +276,10 @@
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-hook 'css-mode-hook 'css-color-mode)
 
+;; JavaScript settings
+(require 'js)
+(defvar javascript-mode-syntax-table js-mode-syntax-table) ;; monkey patch
+
 ;; dired settings
 (require 'dired)
 (define-key dired-mode-map (kbd "u") 'dired-up-directory)
