@@ -42,6 +42,7 @@
 (load-snippet "whole-line-or-region")
 (load-snippet "sgml-delete-tagged-text")
 (load-snippet "remove-alist-name")
+(load-snippet "toggle-current-window-dedication")
 
 ;; Executables might be somewhere else
 (add-to-list 'exec-path "~/bin")
@@ -148,6 +149,9 @@
 (defun set-font-face-georgia ()
   (interactive)
   (set-font-face "Georgia 16" t))
+(defalias 'sffi 'set-font-face-inconsolata)
+(defalias 'sffm 'set-font-face-monaco)
+(defalias 'sffg 'set-font-face-georgia)
 
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
@@ -318,6 +322,8 @@
   (set (make-local-variable 'tab-width) 2))
 (add-hook 'coffee-mode-hook
    '(lambda() (coffee-custom)))
+;; coffee-mode is still kinda buggy...
+(eval-when-compile (defvar javascript-mode-syntax-table))
 
 ;; SASS
 (require 'sass-mode)
@@ -351,10 +357,14 @@
 (global-set-key (kbd "C-c C-m") 'execute-extended-command)
 (global-set-key (kbd "M-s") 'isearch-forward-regexp)
 (global-set-key (kbd "M-r") 'isearch-backward-regexp)
+
+;; Misc aliases
 (defalias 'er 'eval-region)
 (defalias 'rb 'rename-buffer)
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'ffap 'find-file-at-point)
+(defalias 'rfab 'rename-file-and-buffer)
+(defalias 'ow 'overwrite-mode)
 
 ;; C-w kills a word or region depending on context. (DWIM)
 (defun backward-kill-word-or-kill-region (&optional arg)
@@ -365,6 +375,9 @@
 (global-set-key (kbd "C-w") 'backward-kill-word-or-kill-region)
 (global-set-key (kbd "C-x C-k") 'kill-region)
 (global-set-key (kbd "C-c C-c") 'kill-region)
+
+;; I seem to be using overwrite-mode...
+(global-set-key (kbd "C-M-S-o") 'overwrite-mode)
 
 ;; Vim-like mark commands
 (global-set-key (kbd "C-x m") 'point-to-register)
@@ -391,7 +404,8 @@
   (open-line))
 (global-set-key (kbd "C-S-o") 'open-line-above)
 
-;; Window movement
+;; Window movement and settings
+(winner-mode t)
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
@@ -411,6 +425,17 @@
       (and window-list
            (select-window (car window-list))))))
 (global-set-key (kbd "M-o") 'my-other-window)
+
+;; Toggle dedicated windows
+(global-set-key (kbd "M-6") 'toggle-current-window-dedication)
+
+;; Set dedicated terminals for long running process
+(defun init-server-window ()
+  "Sets up some defaults for a window with a long-running process."
+  (interactive)
+  (set-window-dedicated-p (selected-window) t)
+  (setq comint-scroll-show-maximum-output t)
+  (setq comint-scroll-to-bottom-on-input t))
 
 ;; Map the window manipulation keys to meta 0, 1, 2, o (from rmm5t)
 (global-set-key (kbd "M-3") 'split-window-horizontally) ; was digit-argument
@@ -465,6 +490,12 @@
   (let ((full-extension (concat "\\." extension "\\'")))
     (setq flymake-allowed-file-name-masks
           (remove-alist-name full-extension flymake-allowed-file-name-masks))))
+
+;; Org Mode
+(add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
+(add-to-list 'auto-mode-alist '("TODO$" . org-mode))
+(setq org-todo-keywords '((sequence "TODO" "IN_PROGRESS" "|" "DONE")))
+(setq org-enforce-todo-dependencies t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
