@@ -208,8 +208,8 @@
 
 ;; C-z toggles between shell. (C-x C-z still suspends.)
 (require 'shell)
-(global-set-key (kbd "C-z") 'shell)
 (define-key shell-mode-map (kbd "C-z") 'bury-buffer)
+(global-set-key (kbd "C-z") (if gui 'shell 'suspend-emacs))
 
 ;; Make buffer names unique.
 (require 'uniquify)
@@ -238,8 +238,8 @@
 ;; (Don't forget that C-x C-- and C-x C-+ do this for a single buffer.)
 (when gui
   (require 'zoom-frm)
-  (global-set-key (kbd "M--") 'zoom-out)
-  (global-set-key (kbd "M-+") 'zoom-in)
+  (global-set-key (kbd "M--") 'zoom-frm-out)
+  (global-set-key (kbd "M-+") 'zoom-frm-in)
   (global-set-key (kbd "M-=") 'zoom-frm-unzoom))
 
 ;; browse-kill-ring
@@ -494,8 +494,6 @@
 ;; Org Mode
 (add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
 (add-to-list 'auto-mode-alist '("TODO$" . org-mode))
-(setq org-todo-keywords '((sequence "TODO" "IN_PROGRESS" "|" "DONE")))
-(setq org-enforce-todo-dependencies t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
