@@ -227,7 +227,10 @@
   (setq mac-command-modifier 'meta)
 
   ;; Make Cmd-~ do the right thing.
-  (global-set-key (kbd "M-`") 'ns-next-frame))
+  (global-set-key (kbd "M-`") 'ns-next-frame)
+
+  ;; Allow editing of files in this process.
+  (server-start))
 
 ;; When starting the GUI, maximize the frame vertically.
 (when gui
