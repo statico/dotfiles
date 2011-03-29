@@ -122,13 +122,6 @@ done
 link $basedir/.vim/_vimoutliner $HOME/.vimoutliner
 link $basedir/.vim/_vimoutlinerrc $HOME/.vimoutlinerrc
 
-if has ruby; then
-  note "Building Vim tools..."
-  pushd $basedir/.vim/ruby/command-t
-  ruby extconf.rb && make
-  popd
-fi
-
 note "Initializing tools..."
 if has git; then
     # Post-install scripts might customize this further.
