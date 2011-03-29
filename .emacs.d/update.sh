@@ -38,19 +38,6 @@ rm -rf $tmp
 mkdir $tmp
 pushd $tmp
 
-echo "Updating magit"
-f=magit
-rm -rf $f
-mkdir $f
-pushd $f
-curl -L https://github.com/philjackson/magit/tarball/master >$f.tar.gz
-tar zxf $f.tar.gz
-cd magit*
-cp -v magit*.el $vendordir/
-cp -v magit.texi ~/.dotfiles/info/
-popd
-rm -rf $f
-
 echo "Updating ethan-whitespace"
 f=ethan-wspace
 rm -rf $f

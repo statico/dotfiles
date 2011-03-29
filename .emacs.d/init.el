@@ -49,13 +49,6 @@
 (add-to-list 'exec-path "/opt/local/bin")
 (add-to-list 'exec-path "/usr/local/bin")
 
-;; Info might be somewhere else
-(add-to-list 'Info-default-directory-list (expand-file-name "~/.dotfiles/info"))
-(add-hook 'Info-mode-hook               ; After Info-mode has started
-          (lambda ()
-            (setq Info-additional-directory-list Info-default-directory-list)
-            ))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pile o' settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -497,10 +490,6 @@
   (let ((full-extension (concat "\\." extension "\\'")))
     (setq flymake-allowed-file-name-masks
           (remove-alist-name full-extension flymake-allowed-file-name-masks))))
-
-;; Magit
-(require 'magit)
-(global-set-key (kbd "M-8") 'magit-status)
 
 ;; Org Mode
 (add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
