@@ -4,12 +4,12 @@
 ;; Description: Non-interactive frame and window functions.
 ;; Author: Drew Adams
 ;; Maintainer: Drew Adams
-;; Copyright (C) 1996-2011, Drew Adams, all rights reserved.
+;; Copyright (C) 1996-2010, Drew Adams, all rights reserved.
 ;; Created: Tue Mar  5 16:15:50 1996
 ;; Version: 21.1
-;; Last-Updated: Tue Jan  4 09:43:55 2011 (-0800)
+;; Last-Updated: Tue Jan 12 17:16:29 2010 (-0800)
 ;;           By: dradams
-;;     Update #: 197
+;;     Update #: 194
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/frame-fns.el
 ;; Keywords: internal, extensions, local, frames
 ;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
@@ -36,8 +36,6 @@
 ;;
 ;;; Change log:
 ;;
-;; 2011/01/04 dadams
-;;     Removed autoload cookies from non-interactive functions.
 ;; 2010/01/12 dadams
 ;;     1-window-frames-on, multi-window-frames-on:
 ;;       save-excursion + set-buffer -> with-current-buffer.
@@ -82,12 +80,14 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;###autoload
 (defun window-coords (&optional position)
   "Return window coordinates of buffer POSITION (default: point).
 If POSITION is nil, (point) is used."
   (unless (fboundp 'mouse-avoidance-point-position) (require 'avoid))
   (cdr (mouse-avoidance-point-position)))
 
+;;;###autoload
 (defun distance (pt1 pt2)
   "Distance as the crow flies between PT1 and PT2.
 PT1 and PT2 are each a cons of the form (X . Y)."
@@ -95,6 +95,7 @@ PT1 and PT2 are each a cons of the form (X . Y)."
         (ydiff (abs (- (cdr pt1) (cdr pt2)))))
     (sqrt (+ (* xdiff xdiff) (* ydiff ydiff)))))
 
+;;;###autoload
 (defun frame-geom-value-numeric (type value &optional frame)
   "Return equivalent geometry value for FRAME in numeric terms.
 A geometry value equivalent to VALUE for FRAME is returned,
@@ -137,6 +138,7 @@ opposite frame edge from the edge indicated in the input spec."
     ;; e.g. 300 or -300
     value))
 
+;;;###autoload
 (defun frame-geom-spec-numeric (spec &optional frame)
   "Return equivalent geometry specification for FRAME in numeric terms.
 A geometry specification equivalent to SPEC for FRAME is returned,
@@ -161,6 +163,7 @@ In the last two examples, the returned value is relative to the
 opposite frame edge from the edge indicated in the input SPEC."
   (cons (car spec) (frame-geom-value-numeric (car spec) (cdr spec))))
 
+;;;###autoload
 (defun frame-geom-value-cons (type value &optional frame)
   "Return equivalent geometry value for FRAME as a cons with car `+'.
 A geometry value equivalent to VALUE for FRAME is returned,
@@ -197,6 +200,7 @@ the opposite frame edge from the edge indicated in the input spec."
                          (frame-pixel-width frame)
                        (frame-pixel-height frame)))))))
 
+;;;###autoload
 (defun frame-geom-spec-cons (spec &optional frame)
   "Return equivalent geometry spec for FRAME as a cons with car `+'.
 A geometry specification equivalent to SPEC for FRAME is returned,
@@ -221,6 +225,7 @@ In the 3rd, 4th, and 6th examples, the returned value is relative to
 the opposite frame edge from the edge indicated in the input spec."
   (cons (car spec) (frame-geom-value-cons (car spec) (cdr spec))))
 
+;;;###autoload
 (defun get-frame-name (&optional frame)
   "Return the string that names FRAME (a frame).  Default is selected frame."
   (unless frame (setq frame (selected-frame)))
@@ -228,6 +233,7 @@ the opposite frame edge from the edge indicated in the input spec."
       (cdr (assq 'name (frame-parameters frame)))
     (error "Function `get-frame-name': Argument not a frame: `%s'" frame)))
 
+;;;###autoload
 (defun get-a-frame (frame)
   "Return a frame, if any, named FRAME (a frame or a string).
 If none, return nil.
@@ -244,6 +250,7 @@ If FRAME is a frame, it is returned."
           "Function `get-frame-name': Arg neither a string nor a frame: `%s'"
           frame))))
 
+;;;###autoload
 (defun read-frame (prompt &optional default existing)
   "Read the name of a frame, and return it as a string.
 Prompts with 1st arg, PROMPT (a string).
@@ -264,11 +271,13 @@ existing frames."
                    ;; `frame-name-history' is defined in `frame.el'.
                    nil existing nil '(frame-name-history . 2) default))
 
+;;;###autoload
 (defun frames-on (buffer &optional frame)
   "List of all live frames showing BUFFER (a buffer or its name).
 The optional FRAME argument is as for function `get-buffer-window'."
   (filtered-frame-list (function (lambda (fr) (get-buffer-window buffer fr)))))
 
+;;;###autoload
 (defun 1-window-frames-on (buffer)
   "List of all visible 1-window frames showing BUFFER."
   (setq buffer  (get-buffer buffer))
@@ -282,6 +291,7 @@ The optional FRAME argument is as for function `get-buffer-window'."
               (when (one-window-p t fr) (push fr frs))))))
       frs)))
 
+;;;###autoload
 (defun multi-window-frames-on (buffer)
   "List of all visible multi-window frames showing BUFFER."
   (setq buffer  (get-buffer buffer))
@@ -295,6 +305,7 @@ The optional FRAME argument is as for function `get-buffer-window'."
               (when (not (one-window-p t fr)) (push fr frs))))))
       frs)))
 
+;;;###autoload
 (defun flash-ding (&optional do-not-terminate frame)
   "Ring bell (`ding'), after flashing FRAME (default: current), if relevant.
 Terminates any keyboard macro executing, unless arg DO-NOT-TERMINATE non-nil."

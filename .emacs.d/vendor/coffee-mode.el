@@ -238,7 +238,7 @@ path."
 (defvar coffee-prototype-regexp "\\(\\(\\w\\|\\.\\|_\\| \\|$\\)+?\\)::\\(\\(\\w\\|\\.\\|_\\| \\|$\\)+?\\):")
 
 ;; Assignment
-(defvar coffee-assign-regexp "\\(\\(\\w\\|\\.\\|_\\| \\|$\\)+?\\):")
+(defvar coffee-assign-regexp "\\(\\(\\w\\|\\.\\|_\\| \\|$\\)+?\\)[:=]")
 
 ;; Lambda
 (defvar coffee-lambda-regexp "\\((.+)\\)?\\s *\\(->\\|=>\\)")
@@ -257,7 +257,7 @@ path."
       '("if" "else" "new" "return" "try" "catch"
         "finally" "throw" "break" "continue" "for" "in" "while"
         "delete" "instanceof" "typeof" "switch" "super" "extends"
-        "class" "until" "loop"))
+        "class"))
 
 ;; Reserved keywords either by JS or CS.
 (defvar coffee-js-reserved
@@ -469,7 +469,7 @@ For detail, see `comment-dwim'."
     (if (bobp)
         0
       (progn
-        (while (and (coffee-line-empty-p) (not (bobp))) (forward-line -1))
+        (while (coffee-line-empty-p) (forward-line -1))
         (current-indentation)))))
 
 (defun coffee-line-empty-p ()
@@ -580,7 +580,6 @@ line? Returns `t' or `nil'. See the README for more details."
   ;; perl style comment: "# ..."
   (modify-syntax-entry ?# "< b" coffee-mode-syntax-table)
   (modify-syntax-entry ?\n "> b" coffee-mode-syntax-table)
-  (make-local-variable 'comment-start)
   (setq comment-start "#")
 
   ;; single quote strings
@@ -589,6 +588,7 @@ line? Returns `t' or `nil'. See the README for more details."
   ;; indentation
   (make-local-variable 'indent-line-function)
   (setq indent-line-function 'coffee-indent-line)
+  (setq coffee-tab-width tab-width) ;; Just in case...
 
   ;; imenu
   (make-local-variable 'imenu-create-index-function)
