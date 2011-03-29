@@ -4,12 +4,12 @@
 ;; Description: Commands to zoom frame font size.
 ;; Author: Drew Adams
 ;; Maintainer: Drew Adams
-;; Copyright (C) 2005-2010, Drew Adams, all rights reserved.
+;; Copyright (C) 2005-2011, Drew Adams, all rights reserved.
 ;; Created: Fri Jan 07 10:24:35 2005
 ;; Version: 20
-;; Last-Updated: Tue Jul  6 12:55:32 2010 (-0700)
+;; Last-Updated: Tue Jan  4 15:52:56 2011 (-0800)
 ;;           By: dradams
-;;     Update #: 239
+;;     Update #: 243
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/zoom-frm.el
 ;; Keywords: frames, extensions, convenience
 ;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
@@ -134,8 +134,10 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Change log:
+;;; Change Log:
 ;;
+;; 2011/01/04 dadams
+;;     Added autoload cookies for defgroup and defcustom.
 ;; 2010/07/06 dadams
 ;;     zoom-(in|out): Put doc strings before interactive spec.  Thx to Yidong Chong.
 ;; 2009/06/11 dadams
@@ -179,6 +181,7 @@
 
 ;;; USER OPTIONS (VARIABLES) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;###autoload
 (defgroup zoom nil
   "Zoom a frame or buffer."
   :group 'frames :group 'Frame-Commands ; Defined in `frame-cmds.el'.
@@ -195,6 +198,7 @@ Don't forget to mention your Emacs and library versions."))
           "http://www.emacswiki.org/cgi-bin/wiki/SetFonts#ChangingFontSize")
   :link '(emacs-commentary-link :tag "Commentary" "zoom-frm"))
 
+;;;###autoload
 (defcustom frame-zoom-font-difference 1
   "*Number of points to change the frame font size when zooming
 using commands `zoom-frm-in' and `zoom-frm-out'.

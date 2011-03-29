@@ -1,6 +1,11 @@
-;;; ethan-wspace.el
-;;; Whitespace customizations.
+;;; ethan-wspace.el --- whitespace customizations for emacs
+
+;; Copyright (C) 2010 Ethan Glasser-Camp
+
+;; Author: Ethan Glasser-Camp <ethan@betacantrips.com>
+;; Keywords: whitespace, tab, newline, trailing, clean
 ;;
+;;; Commentary:
 ;; For more information on the design of this package, please see the
 ;; README that came with it.
 ;;
@@ -48,6 +53,8 @@
 ;;
 ;; Also disable '(require-final-newlines t); ethan-wspace will handle
 ;; the final newlines.
+
+;;; Code:
 ;;
 ;; FIXME: Coding conventions suggest using (define-* thing-name) for generated stuff.
 ;;
@@ -760,3 +767,4 @@ This just activates each whitespace type in this buffer."
 ;;                                        (1 'show-ws-trailing-whitespace t))))))
 
 (provide 'ethan-wspace)
+;;; ethan-wspace.el ends here

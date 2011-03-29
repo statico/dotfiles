@@ -4,12 +4,12 @@
 ;; Description: Frame and window commands (interactive functions).
 ;; Author: Drew Adams
 ;; Maintainer: Drew Adams
-;; Copyright (C) 1996-2010, Drew Adams, all rights reserved.
+;; Copyright (C) 1996-2011, Drew Adams, all rights reserved.
 ;; Created: Tue Mar  5 16:30:45 1996
 ;; Version: 21.0
-;; Last-Updated: Tue Oct 19 21:18:24 2010 (-0700)
+;; Last-Updated: Thu Feb 24 15:13:39 2011 (-0800)
 ;;           By: dradams
-;;     Update #: 2634
+;;     Update #: 2638
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/frame-cmds.el
 ;; Keywords: internal, extensions, mouse, frames, windows, convenience
 ;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
@@ -245,6 +245,8 @@
 ;;
 ;;; Change log:
 ;;
+;; 2011/01/04 dadams
+;;     Removed autoload cookie from non-interactive function.
 ;; 2010/10/19 dadams
 ;;     enlarge-font: Only do frame-update-faces if Emacs 20 (obsolete in 21).
 ;; 2010/06/04 dadams
@@ -511,13 +513,13 @@ must set it."
   :type 'integer :group 'Frame-Commands)
 
 (defcustom enlarge-font-tries 100
-  "Number of times to try to change font-size, when looking for a font.
+  "*Number of times to try to change font-size, when looking for a font.
 The font-size portion of a font name is incremented or decremented at
 most this many times, before giving up and raising an error."
   :type 'integer :group 'Frame-Commands)
 
 (defcustom frame-parameters-to-exclude '((window-id) (buffer-list) (name) (title) (icon-name))
-  "Parameters to exclude in `set-all-frame-alist-parameters-from-frame'.
+  "*Parameters to exclude in `set-all-frame-alist-parameters-from-frame'.
 An alist of the same form as that returned by `frame-parameters'.
 The cdr of each alist element is ignored.
 These frame parameters are not copied to the target alist."
@@ -532,7 +534,7 @@ If nil, you can move the frame as far off the display as you like."
   :type 'boolean :group 'Frame-Commands)
 
 (defcustom available-screen-pixel-bounds nil
-  "Upper left and lower right of available screen space for tiling frames.
+  "*Upper left and lower right of available screen space for tiling frames.
 Integer list: (x0 y0 x1 y1), where (x0, y0) is the upper left position
 and (x1, y1) is the lower right position.  Coordinates are in pixels,
 measured from the screen absolute origin, (0, 0), at the upper left.
@@ -1138,7 +1140,6 @@ If called from a program, all frames in list FRAMES are tiled."
   (interactive (and current-prefix-arg (read-args-for-tile-frames)))
   (tile-frames 'vertical frames))
 
-;;;###autoload
 (defun tile-frames (direction frames)
   "Tile visible frames horizontally or vertically, depending on DIRECTION.
 Arg DIRECTION is `horizontal' or `vertical'.
