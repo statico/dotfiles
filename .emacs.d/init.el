@@ -500,6 +500,12 @@
 (global-set-key (kbd "M-8") 'magit-status)
 (defalias 'git-blame 'mo-git-blame-current)
 
+(defun set-git-path (path)
+  "Sets the path to the git executable. Use in ~/.local.el"
+  (interactive (list (read-string "Path to git executable? ")))
+  (setq magit-git-executable path)
+  (setq mo-git-blame-git-executable path))
+
 ;; Org Mode
 (add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
 (add-to-list 'auto-mode-alist '("TODO$" . org-mode))
