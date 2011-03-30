@@ -29,6 +29,7 @@ curl -O https://github.com/defunkt/coffee-mode/raw/master/coffee-mode.el
 curl -O https://github.com/nex3/haml-mode/raw/master/haml-mode.el
 curl -O https://github.com/nex3/sass-mode/raw/master/sass-mode.el
 curl -O https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
+curl -O https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
 
 cd color-theme/themes
 curl -O http://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el

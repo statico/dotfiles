@@ -494,9 +494,11 @@
     (setq flymake-allowed-file-name-masks
           (remove-alist-name full-extension flymake-allowed-file-name-masks))))
 
-;; Magit
+;; Git
 (require 'magit)
+(require 'mo-git-blame)
 (global-set-key (kbd "M-8") 'magit-status)
+(defalias 'git-blame 'mo-git-blame-current)
 
 ;; Org Mode
 (add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
