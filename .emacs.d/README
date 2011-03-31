@@ -9,8 +9,4 @@ TIPS:
 
 TODO
 - Try ECB and CEDET
-- Fix editing in CSS mode - ending lines with ; and }
-- Git mode
-- Support per-host local init file
-- Load ropemacs when Python is >2.5
 - Make M-; comment current line if region is inactive
