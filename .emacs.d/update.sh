@@ -32,7 +32,7 @@ curl -OL https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 curl -OL https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
 
 cd color-theme/themes
-curl -O http://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
+curl -OL https://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
 
 popd
 rm -rf $tmp
