@@ -12,24 +12,24 @@ tmp=/tmp/$LOGNAME-emacs-update
 echo "Updating single files"
 pushd $vendordir
 
-curl -O http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
-curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
-curl -O http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
-curl -O http://jblevins.org/projects/markdown-mode/markdown-mode.el
-curl -O http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
-curl -O http://www.dr-qubit.org/undo-tree/undo-tree.el
-curl -O http://www.emacswiki.org/emacs/download/browse-kill-ring.el
-curl -O http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
-curl -O http://www.emacswiki.org/emacs/download/frame-cmds.el
-curl -O http://www.emacswiki.org/emacs/download/frame-fns.el
-curl -O http://www.emacswiki.org/emacs/download/highlight-current-line.el
-curl -O http://www.emacswiki.org/emacs/download/vimpulse.el
-curl -O http://www.emacswiki.org/emacs/download/zoom-frm.el
-curl -O https://github.com/defunkt/coffee-mode/raw/master/coffee-mode.el
-curl -O https://github.com/nex3/haml-mode/raw/master/haml-mode.el
-curl -O https://github.com/nex3/sass-mode/raw/master/sass-mode.el
-curl -O https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
-curl -O https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
+curl -OL http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
+curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
+curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
+curl -OL http://jblevins.org/projects/markdown-mode/markdown-mode.el
+curl -OL http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
+curl -OL http://www.dr-qubit.org/undo-tree/undo-tree.el
+curl -OL http://www.emacswiki.org/emacs/download/browse-kill-ring.el
+curl -OL http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
+curl -OL http://www.emacswiki.org/emacs/download/frame-cmds.el
+curl -OL http://www.emacswiki.org/emacs/download/frame-fns.el
+curl -OL http://www.emacswiki.org/emacs/download/highlight-current-line.el
+curl -OL http://www.emacswiki.org/emacs/download/vimpulse.el
+curl -OL http://www.emacswiki.org/emacs/download/zoom-frm.el
+curl -OL https://github.com/defunkt/coffee-mode/raw/master/coffee-mode.el
+curl -OL https://github.com/nex3/haml-mode/raw/master/haml-mode.el
+curl -OL https://github.com/nex3/sass-mode/raw/master/sass-mode.el
+curl -OL https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
+curl -OL https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
 
 cd color-theme/themes
 curl -O http://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
@@ -46,7 +46,7 @@ mkdir $f
 pushd $f
 curl -L https://github.com/philjackson/magit/tarball/master >$f.tar.gz
 tar zxf $f.tar.gz
-cd magit*
+cd philjackson-magit*
 cp -v magit*.el $vendordir/
 cp -v magit.texi ~/.dotfiles/info/
 popd
