@@ -50,7 +50,6 @@ cd philjackson-magit*
 cp -v magit*.el $vendordir/
 cp -v magit.texi ~/.dotfiles/info/
 popd
-rm -rf $f
 
 echo "Updating ethan-whitespace"
 f=ethan-wspace
@@ -63,45 +62,43 @@ cd glasserc-ethan-wspace*
 rm -rf $vendordir/$f
 cp -Rv lisp $vendordir/$f
 popd
-rm -rf $f
 
 echo "Updating Pymacs"
 rm -rf $pylib/Pymacs
-curl -O http://pymacs.progiciels-bpi.ca/archives/Pymacs.tar.gz
+curl -L https://github.com/pinard/Pymacs/tarball/master >Pymacs.tar.gz
 tar zxf Pymacs.tar.gz
-pushd Pymacs-*
+pushd pinard-Pymacs-*
 make
 cp -Rv build/lib/Pymacs $pylib
 mkdir -p $vendordir/pymacs
 cp pymacs.el $vendordir/pymacs
 popd
-rm -rf Pymacs-* Pymacs.tar.gz
 
 echo "Updating rope"
 rm -rf $pylib/rope
-curl -O http://bitbucket.org/agr/rope/get/tip.gz
-tar zxf tip.gz --strip-components 1 rope/rope
+curl -LO http://bitbucket.org/agr/rope/get/tip.gz
+tar zxf tip.gz --strip-components 1 \*/rope
 cp -Rv rope $pylib
 rm tip.gz
 
 echo "Updating ropemode"
-curl -O http://bitbucket.org/agr/ropemode/get/tip.gz
+curl -LO http://bitbucket.org/agr/ropemode/get/tip.gz
 tar zxf tip.gz
-pushd ropemode
+pushd agr-ropemode-*
 python setup.py build
 cp -Rv build/lib/ropemode $pylib
 popd
-rm -rf ropemode tip.gz
+rm -v tip.gz
 
 echo "Updating ropemacs"
 rm -rf $pylib/ropemacs
-curl -O http://bitbucket.org/agr/ropemacs/get/tip.gz
+curl -LO http://bitbucket.org/agr/ropemacs/get/tip.gz
 tar zxf tip.gz
-pushd ropemacs
+pushd agr-ropemacs-*
 python setup.py build
 cp -Rv build/lib/ropemacs $pylib
 popd
-rm -rf ropemacs tip.gz
+rm -v tip.gz
 
 popd
 rm -rf $tmp
