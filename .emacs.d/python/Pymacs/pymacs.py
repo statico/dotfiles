@@ -37,6 +37,7 @@ See the Pymacs documentation (check `README') for more information.
 
 
 
+
 __metaclass__ = type
 import os, sys
 
@@ -97,7 +98,7 @@ Arguments are added to the search path for Python modules.
         # while executing any Python code received from the Lisp side.
         if signal is not None:
 
-            # See the comment for IO_ERRORS_WITH_SIGNALS in p4config.py.
+            # See the comment for IO_ERRORS_WITH_SIGNALS in ppppconfig.py.
             self.original_handler = signal.signal(
                     signal.SIGINT, self.interrupt_handler)
 
@@ -396,31 +397,31 @@ def pymacs_load_helper(file_without_extension, prefix):
     if prefix is None:
         prefix = module_components[-1].replace('_', '-') + '-'
     try:
-        object = sys.modules.get(module_name)
-        if object:
-            reload(object)
+        module = sys.modules.get(module_name)
+        if module:
+            reload(module)
         else:
             try:
                 if directory:
                     sys.path.insert(0, directory)
-                object = __import__(module_name)
+                module = __import__(module_name)
             finally:
                 if directory:
                     del sys.path[0]
             # Whenever MODULE_NAME is of the form [PACKAGE.]...MODULE,
             # __import__ returns the outer PACKAGE, not the module.
             for component in module_components[1:]:
-                object = getattr(object, component)
+                module = getattr(module, component)
     except ImportError:
         return None
-    load_hook = object.__dict__.get('pymacs_load_hook')
+    load_hook = module.__dict__.get('pymacs_load_hook')
     if load_hook:
         load_hook()
-    interactions = object.__dict__.get('interactions', {})
+    interactions = module.__dict__.get('interactions', {})
     if not isinstance(interactions, dict):
         interactions = {}
     arguments = []
-    for name, value in object.__dict__.items():
+    for name, value in module.__dict__.items():
         if callable(value) and value is not lisp:
             arguments.append(allocate_python(value))
             arguments.append(lisp[prefix + name.replace('_', '-')])
@@ -435,12 +436,12 @@ def pymacs_load_helper(file_without_extension, prefix):
     if arguments:
         return [lisp.progn,
                 [lisp.pymacs_defuns, [lisp.quote, arguments]],
-                object]
-    return [lisp.quote, object]
+                module]
+    return [lisp.quote, module]
 
-def doc_string(object):
-    if hasattr(object, '__doc__'):
-        return object.__doc__
+def doc_string(function):
+    if hasattr(function, '__doc__'):
+        return function.__doc__
 
 ## Garbage collection matters.
 

@@ -73,6 +73,9 @@
 
 ;;; Published variables and functions.
 
+(defvar pymacs-python-command "python"
+  "Shell command used to start Python interpreter.")
+
 (defvar pymacs-load-path nil
   "List of additional directories to search for Python modules.
 The directories listed will be searched first, in the order given.")
@@ -543,7 +546,7 @@ The timer is used only if `post-gc-hook' is not available.")
                (apply 'start-process "pymacs" buffer
                       (let ((python (getenv "PYMACS_PYTHON")))
                         (if (or (null python) (equal python ""))
-                            "python"
+                            pymacs-python-command
                           python))
                       "-c" (concat "import sys;"
                                    " from Pymacs.pymacs import main;"

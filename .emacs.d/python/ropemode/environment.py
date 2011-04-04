@@ -72,6 +72,9 @@ class Environment(object):
     def push_mark(self):
         pass
 
+    def pop_mark(self):
+        pass
+
     def prefix_value(self, prefix):
         pass
 

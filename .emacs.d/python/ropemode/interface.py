@@ -154,6 +154,10 @@ class RopeMode(object):
             self.env.message('Cannot find the definition!')
 
     @decorators.local_command()
+    def pop_mark(self):
+        self.env.pop_mark()
+
+    @decorators.local_command()
     def definition_location(self):
         definition = self._base_definition_location()
         if definition:
