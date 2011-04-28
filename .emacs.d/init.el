@@ -278,12 +278,15 @@
 
   ;; Set as the Django default for HTML files.
   (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
+  (add-hook 'django-html-mumamo-mode-hook 'zencoding-mode)
+  (add-hook 'sgml-mode-hook 'zencoding-mode)
 
   ;; Useful commands
   (global-set-key (kbd "C-c d") 'sgml-delete-tagged-text))
 
 ;; CSS settings
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
+(add-hook 'sass-mode-hook 'css-color-mode)
 (add-hook 'css-mode-hook 'css-color-mode)
 
 ;; JavaScript settings
