@@ -79,12 +79,12 @@ else
 fi
 
 # EDITOR
-if _has emacs; then
-    export EDITOR=emacs VISUAL=emacs
-elif _has vim; then
+if _has vim; then
     export EDITOR=vim VISUAL=vim
 elif _has vi; then
     export EDITOR=vi VISUAL=vi
+if _has emacs; then
+    export EDITOR=emacs VISUAL=emacs
 fi
 
 # GNU grep
