@@ -11,6 +11,9 @@ startup_message off
 shell -$SHELL
 defutf8 on
 
+# cute, but gets annoying
+nethack off
+
 vbell off
 bell_msg ""
 

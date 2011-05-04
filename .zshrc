@@ -211,7 +211,6 @@ alias sshx='ssh -C -c blowfish -X'
 alias st='git status'
 alias svnl='svn log -v -r HEAD'
 alias svnvimdiff='svn diff | vim -R +setf\ diff\ nolist -'
-alias t='tmux'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias v='vim -R -'
@@ -587,7 +586,7 @@ bindkey -e
 bindkey -s '\eu' '^Ucd ..; ls^M'
 
 # Connect to my most recently used screen session
-bindkey -s '\ej' "^Ussh c -t tmux attach^M"
+bindkey -s '\ej' "^Ussh c -t screen -D -R^M"
 
 # Smart less-adder
 bindkey -s "\el" " 2>&1|less^M"
