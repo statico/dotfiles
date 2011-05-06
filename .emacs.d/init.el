@@ -252,11 +252,6 @@
 (require 'browse-kill-ring)
 (global-set-key (kbd "C-x C-r") 'browse-kill-ring)
 
-;; A vim-like undo system isn't as smart but is easier to work with.
-(require 'undo-tree)
-(global-undo-tree-mode)
-(setq undo-tree-mode-lighter "") ;; Hide "Undo-Tree" in modeline.
-
 ;; Use ack instead of grep - http://betterthangrep.com/
 (load-library "ack")
 (defalias 'grep 'ack)
