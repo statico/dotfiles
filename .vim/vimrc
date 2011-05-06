@@ -289,9 +289,6 @@ set wildmenu                " Show possible completions on command line
 set wildmode=list:longest,full " List all options and complete
 set wildignore=*.class,*.o,*~  " Ignore certain files in tab-completion
 
-" enable filetype plugins -- e.g., ftplugin/xml.vim
-filetype plugin indent on
-
 " Section: Commands & Functions {{{1
 "--------------------------------------------------------------------------
 
@@ -438,6 +435,13 @@ let g:fuf_infoFile = ''
 let g:fuf_file_exclude = '\v\~$|\.(o|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 let g:fuf_keyNextMode = '<C-y>'
 let g:fuf_keyPrevMode = '<C-t>'
+
+" vim-coffee-script
+call pathogen#runtime_append_all_bundles()
+
+" enable filetype plugins -- e.g., ftplugin/xml.vim
+filetype plugin indent on
+
 
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
