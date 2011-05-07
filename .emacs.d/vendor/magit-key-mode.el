@@ -1,4 +1,5 @@
 (require 'assoc)
+(eval-when-compile (require 'cl))
 
 (defvar magit-key-mode-key-maps '()
   "This will be filled lazily with proper `define-key' built
@@ -55,7 +56,9 @@
      (actions
       ("f" "Current" magit-fetch-current)
       ("a" "All" magit-remote-update)
-      ("o" "Other" magit-fetch)))
+      ("o" "Other" magit-fetch))
+     (switches
+      ("-p" "Prune" "--prune")))
 
     (pushing
      (man-page "git-push")
@@ -80,6 +83,7 @@
       ("n" "New" magit-create-branch)
       ("m" "Move" magit-move-branch)
       ("d" "Delete" magit-delete-branch)
+      ("D" "Force Delete" magit-delete-branch-forced)
       ("b" "Checkout" magit-checkout)))
 
     (tagging
@@ -213,15 +217,22 @@ the group FOR-GROUP."
   "Provide help for a key (which the user is prompted for) within
 FOR-GROUP."
   (let* ((opts (magit-key-mode-options-for-group for-group))
-         (seq (read-key-sequence "Enter command prefix: "))
+         (man-page (cadr (assoc 'man-page opts)))
+         (seq (read-key-sequence
+               (format "Enter command prefix%s: "
+                       (if man-page
+                         (format ", `?' for man `%s'" man-page)
+                         ""))))
          (actions (cdr (assoc 'actions opts))))
-    ;; is it an action? If so popup the help for the to-be-run
-    ;; function
-    (if (assoc seq actions)
-        (describe-function (nth 2 (assoc seq actions)))
-      ;; otherwise give the user a man page
-      (man (or (cadr (assoc 'man-page opts))
-               (error "No help associated with %s" seq))))))
+    (cond
+      ;; if it is an action popup the help for the to-be-run function
+      ((assoc seq actions) (describe-function (nth 2 (assoc seq actions))))
+      ;; if there is "?" show a man page if there is one
+      ((equal seq "?")
+       (if man-page
+         (man man-page)
+         (error "No man page associated with `%s'" for-group)))
+      (t (error "No help associated with `%s'" seq)))))
 
 (defun magit-key-mode-exec-at-point ()
   "Run action/args/option at point."
@@ -237,42 +248,45 @@ put it in magit-key-mode-key-maps for fast lookup."
   (let* ((options (magit-key-mode-options-for-group for-group))
          (actions (cdr (assoc 'actions options)))
          (switches (cdr (assoc 'switches options)))
-         (arguments (cdr (assoc 'arguments options))))
-    (let ((map (make-sparse-keymap)))
-      ;; ret dwim
-      (define-key map (kbd "RET") 'magit-key-mode-exec-at-point)
+         (arguments (cdr (assoc 'arguments options)))
+         (map (make-sparse-keymap)))
+    ;; ret dwim
+    (define-key map (kbd "RET") 'magit-key-mode-exec-at-point)
 
-      ;; all maps should 'quit' with C-g
-      (define-key map (kbd "C-g") (lambda ()
-                                    (interactive)
-                                    (magit-key-mode-command nil)))
-      ;; run help
-      (define-key map (kbd "?") `(lambda ()
-                                  (interactive)
-                                  (magit-key-mode-help ',for-group)))
+    ;; all maps should `quit' with `C-g' or `q'
+    (define-key map (kbd "C-g") `(lambda ()
+                                   (interactive)
+                                   (magit-key-mode-command nil)))
+    (define-key map (kbd "q")   `(lambda ()
+                                   (interactive)
+                                   (magit-key-mode-command nil)))
+    ;; run help
+    (define-key map (kbd "?") `(lambda ()
+                                 (interactive)
+                                 (magit-key-mode-help ',for-group)))
 
+    (flet ((defkey (k action)
+             (when (and (lookup-key map (car k))
+                        (not (numberp (lookup-key map (car k)))))
+               (message "Warning: overriding binding for `%s' in %S"
+                        (car k) for-group)
+               (ding)
+               (sit-for 2))
+             (define-key map (car k)
+               `(lambda () (interactive) ,action))))
       (when actions
         (dolist (k actions)
-          (define-key map (car k) `(lambda ()
-                                     (interactive)
-                                     (magit-key-mode-command ',(nth 2 k))))))
+          (defkey k `(magit-key-mode-command ',(nth 2 k)))))
       (when switches
         (dolist (k switches)
-          (define-key map (car k) `(lambda ()
-                                     (interactive)
-                                     (magit-key-mode-add-option
-                                      ',for-group
-                                      ,(nth 2 k))))))
+          (defkey k `(magit-key-mode-add-option ',for-group ,(nth 2 k)))))
       (when arguments
         (dolist (k arguments)
-          (define-key map (car k) `(lambda ()
-                                     (interactive)
-                                     (magit-key-mode-add-argument
-                                      ',for-group
-                                      ,(nth 2 k)
-                                      ',(nth 3 k))))))
-      (aput 'magit-key-mode-key-maps for-group map)
-      map)))
+          (defkey k `(magit-key-mode-add-argument
+                      ',for-group ,(nth 2 k) ',(nth 3 k))))))
+
+    (aput 'magit-key-mode-key-maps for-group map)
+    map))
 
 (defun magit-key-mode-command (func)
   (let ((args '()))

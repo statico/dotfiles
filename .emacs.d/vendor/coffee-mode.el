@@ -197,9 +197,9 @@ path."
   (browse-url "http://jashkenas.github.com/coffee-script/"))
 
 (defun coffee-open-node-reference ()
-  "Open browser to node.js reference."
+  "Open browser to node.js documentation."
   (interactive)
-  (browse-url "http://nodejs.org/api.html"))
+  (browse-url "http://nodejs.org/docs/"))
 
 (defun coffee-open-github ()
   "Open browser to `coffee-mode' project on GithHub."
@@ -250,7 +250,7 @@ path."
 (defvar coffee-boolean-regexp "\\b\\(true\\|false\\|yes\\|no\\|on\\|off\\|null\\)\\b")
 
 ;; Regular Expressions
-(defvar coffee-regexp-regexp "\\/\\([^\\]\\|\\\\.\\)+?\\/")
+(defvar coffee-regexp-regexp "\\/\\(\\\\.\\|\\[\\(\\\\.\\|.\\)+?\\]\\|[^/]\\)+?\\/")
 
 ;; JavaScript Keywords
 (defvar coffee-js-keywords

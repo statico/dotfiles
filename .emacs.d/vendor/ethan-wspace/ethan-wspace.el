@@ -437,6 +437,7 @@ This internally uses `show-trailing-whitespace'."
   "An overlay used to indicate that trailing newlines are missing.")
 
 (make-variable-buffer-local 'ethan-wspace-highlight-no-nl-eof-overlay)
+(put 'ethan-wspace-highlight-no-nl-eof-overlay 'permanent-local t)
 
 (defun ethan-wspace-highlight-no-nl-eof-make-overlay ()
   (setq ethan-wspace-highlight-no-nl-eof-overlay
@@ -462,7 +463,8 @@ With arg, turn highlighting on if arg is positive, off otherwise."
     (save-excursion
       (move-overlay ethan-wspace-highlight-no-nl-eof-overlay (point-max) (point-max))
       (goto-char (point-max))
-      (let* ((str-len (- (frame-width) (current-column)))
+      (let* ((str-len (- (frame-width) (current-column)
+                         1))  ; subtract one so that we don't trigger line-wrap
              (str (concat "eof" (make-string (- str-len 3) ?\ ))))
         (set-text-properties 0 str-len '(face ethan-wspace-face) str)
         (set-text-properties 0 1 '(cursor t face ethan-wspace-face) str)
@@ -495,6 +497,7 @@ With arg, turn highlighting on if arg is positive, off otherwise."
   "The overlay to use when highlighting too-many-newlines.")
 
 (make-variable-buffer-local 'ethan-wspace-highlight-many-nls-eof-overlay)
+(put 'ethan-wspace-highlight-many-nls-eof-overlay 'permanent-local t)
 
 (defun ethan-wspace-highlight-many-nls-eof-make-overlay ()
   (setq ethan-wspace-highlight-many-nls-eof-overlay
@@ -699,7 +702,7 @@ A useful hook might be:
 
 This just activates each whitespace type in this buffer."
   :init-value nil :lighter ethan-wspace-mode-line-element :keymap nil
-  ;(message "Turning on ethan-wspace mode for %s" (buffer-file-name))
+  ;(message "Changing ethan-wspace mode to %s for %s" ethan-wspace-mode (buffer-file-name))
   (if ethan-wspace-mode
       (progn
         (run-hooks 'ethan-wspace-errors-in-buffer-hook)
