@@ -294,6 +294,10 @@
 (define-key dired-mode-map (kbd "U") 'dired-unmark)
 (global-set-key (kbd "C-:") 'dired-jump)
 
+;; speedbar settings
+(global-set-key (kbd "C-M-b") 'speedbar)
+(define-key speedbar-key-map (kbd "u") 'speedbar-up-directory)
+
 ;; Make dired ignore certain files
 (eval-after-load "dired"
   '(require 'dired-x))
