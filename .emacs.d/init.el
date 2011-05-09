@@ -295,6 +295,7 @@
 (global-set-key (kbd "C-:") 'dired-jump)
 
 ;; speedbar settings
+(require 'speedbar)
 (global-set-key (kbd "C-M-b") 'speedbar)
 (define-key speedbar-key-map (kbd "u") 'speedbar-up-directory)
 
