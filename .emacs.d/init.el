@@ -446,6 +446,13 @@
   (setq comint-scroll-show-maximum-output t)
   (setq comint-scroll-to-bottom-on-input t))
 
+;; Helper function to create new shells.
+(defun make-shell (name)
+  (interactive
+   (list (read-string "Name of new shell buffer? ")))
+  (shell name))
+(global-set-key (kbd "M-5") 'make-shell)
+
 ;; Map the window manipulation keys to meta 0, 1, 2, o (from rmm5t)
 (global-set-key (kbd "M-3") 'split-window-horizontally) ; was digit-argument
 (global-set-key (kbd "M-2") 'split-window-vertically) ; was digit-argument
