@@ -25,9 +25,6 @@ curl -OL http://www.emacswiki.org/emacs/download/frame-fns.el
 curl -OL http://www.emacswiki.org/emacs/download/highlight-current-line.el
 curl -OL http://www.emacswiki.org/emacs/download/vimpulse.el
 curl -OL http://www.emacswiki.org/emacs/download/zoom-frm.el
-curl -OL https://github.com/defunkt/coffee-mode/raw/master/coffee-mode.el
-curl -OL https://github.com/nex3/haml-mode/raw/master/haml-mode.el
-curl -OL https://github.com/nex3/sass-mode/raw/master/sass-mode.el
 curl -OL https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
 curl -OL https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
 
