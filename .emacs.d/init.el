@@ -4,6 +4,8 @@
 ;; A lot of things stolen from EmacsWiki and threads like
 ;; http://news.ycombinator.com/item?id=1654164
 
+;; TODO: smex, minimap, pysmell
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Constants
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
