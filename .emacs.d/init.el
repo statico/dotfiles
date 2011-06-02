@@ -275,11 +275,15 @@
 
   ;; Set as the Django default for HTML files.
   (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
-  (add-hook 'django-html-mumamo-mode-hook 'zencoding-mode)
-  (add-hook 'sgml-mode-hook 'zencoding-mode)
 
   ;; Useful commands
-  (global-set-key (kbd "C-c d") 'sgml-delete-tagged-text))
+  (global-set-key (kbd "C-c d") 'sgml-delete-tagged-text)
+
+  ;; Keep zencoding on when we edit HTML.
+  (add-hook 'django-html-mumamo-mode-hook 'zencoding-mode)
+  (add-hook 'html-mumamo-mode-hook 'zencoding-mode)
+  (add-hook 'sgml-mumamo-mode-hook 'zencoding-mode)
+  (add-hook 'sgml-mode-hook 'zencoding-mode))
 
 ;; CSS settings
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
@@ -368,6 +372,7 @@
 (global-set-key (kbd "C-c C-m") 'execute-extended-command)
 (global-set-key (kbd "M-s") 'isearch-forward-regexp)
 (global-set-key (kbd "M-r") 'isearch-backward-regexp)
+(global-set-key (kbd "M-j") 'query-replace-regexp)
 
 ;; Misc aliases
 (defalias 'er 'eval-region)
@@ -486,6 +491,8 @@
 (require 'ethan-wspace)
 (global-ethan-wspace-mode 1)
 (defalias 'ewcam 'ethan-wspace-clean-all-modes)
+(add-hook 'javascript-mode-hook 'ewcam)
+(add-hook 'js-mode-hook 'ewcam)
 
 ;; Vim-like line-joining with C-k
 (defadvice kill-line (before check-position activate)
@@ -524,6 +531,9 @@
 ;; Org Mode
 (add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
 (add-to-list 'auto-mode-alist '("TODO$" . org-mode))
+
+;; ReBuilder
+(setq reb-re-syntax 'string)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Python settings
