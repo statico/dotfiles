@@ -119,7 +119,11 @@ function! WriteIfPossible()
 endfunction
 function! WriteAndSuspend()
     call WriteIfPossible()
-    suspend
+    if $UID != 0
+        " No idea why loading this vimrc as root causes this function to
+        " automatically suspend at startup on some Vims. NO IDEA.
+        suspend
+    endif
 endfunction
 
 " Alt-p pipes the current buffer to the current filetype as a command
@@ -247,7 +251,7 @@ set fileformats=unix,dos,mac  " Prefer Unix
 set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:┄
                             " Unicode chars for diffs/folds, and rely on
                             " Colors for window borders
-set foldmethod=marker       " Use braces by default
+silent! set foldmethod=marker " Use braces by default
 set formatoptions=tcqn1     " t - autowrap normal text
                             " c - autowrap comments
                             " q - gq formats comments
@@ -266,7 +270,7 @@ set listchars=tab:▶\ ,trail:◀,extends:»,precedes:«
                             " Unicode characters for various things
 set matchtime=2             " Tenths of second to hilight matching paren
 set modelines=5             " How many lines of head & tail to look for ml's
-set mouse=nvc               " Use the mouse, but not in insert mode
+silent! set mouse=nvc       " Use the mouse, but not in insert mode
 set nobackup                " No backups left after done editing
 set novisualbell            " No flashing
 set nowritebackup           " No backups made while editing
@@ -421,8 +425,8 @@ let guifontpp_original_font_map="<M-=>"
 " minibufexpl.vim
 function! ToggleMiniBufVerticalness()
     let g:miniBufExplVSplit = g:miniBufExplVSplit ? 0 : 30
-    TMiniBufExplorer
-    TMiniBufExplorer
+    silent! TMiniBufExplorer
+    silent! TMiniBufExplorer
 endfunction
 "let g:miniBufExplorerMoreThanOne=999 " Don't open MBE by default
 let g:miniBufExplorerMoreThanOne=3 " Show when 3+ buffers are open.
