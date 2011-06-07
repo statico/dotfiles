@@ -44,7 +44,6 @@
 (load-snippet "whole-line-or-region")
 (load-snippet "sgml-delete-tagged-text")
 (load-snippet "remove-alist-name")
-(load-snippet "toggle-current-window-dedication")
 
 ;; Executables might be somewhere else
 (add-to-list 'exec-path "~/bin")
@@ -443,6 +442,7 @@
 (global-set-key (kbd "M-o") 'my-other-window)
 
 ;; Toggle dedicated windows
+(load-snippet "toggle-current-window-dedication")
 (global-set-key (kbd "M-6") 'toggle-current-window-dedication)
 
 ;; Set dedicated terminals for long running process
@@ -508,6 +508,10 @@
 (load-snippet "swap-windows")
 (defalias 'sw 'swap-windows)
 (global-set-key (kbd "C-M-S-s") 'swap-windows)
+
+;; Rotate windows
+(load-snippet "rotate-windows")
+(global-set-key (kbd "M-S-<left>") 'rotate-windows)
 
 ;; Disable Flymake for HTML/XML files.
 (require 'flymake)
