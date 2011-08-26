@@ -1,6 +1,8 @@
 ;;; ethan-wspace.el --- whitespace customizations for emacs
 
-;; Copyright (C) 2010 Ethan Glasser-Camp
+;; Copyright (C) 2010-2011 Ethan Glasser-Camp
+;;
+;; This package is released under a BSD license.
 
 ;; Author: Ethan Glasser-Camp <ethan@betacantrips.com>
 ;; Keywords: whitespace, tab, newline, trailing, clean

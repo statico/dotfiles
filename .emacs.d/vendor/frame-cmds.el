@@ -7,9 +7,9 @@
 ;; Copyright (C) 1996-2011, Drew Adams, all rights reserved.
 ;; Created: Tue Mar  5 16:30:45 1996
 ;; Version: 21.0
-;; Last-Updated: Thu Feb 24 15:13:39 2011 (-0800)
+;; Last-Updated: Mon Jul 25 10:56:57 2011 (-0700)
 ;;           By: dradams
-;;     Update #: 2638
+;;     Update #: 2642
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/frame-cmds.el
 ;; Keywords: internal, extensions, mouse, frames, windows, convenience
 ;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
@@ -245,6 +245,8 @@
 ;;
 ;;; Change log:
 ;;
+;; 2011/07/25 dadams
+;;     save-frame-config: Use fboundp, not featurep.
 ;; 2011/01/04 dadams
 ;;     Removed autoload cookie from non-interactive function.
 ;; 2010/10/19 dadams
@@ -559,10 +561,11 @@ give good results in most cases."
 You can restore it with \\[jump-to-frame-config-register]."
   (interactive)
   (frame-configuration-to-register frame-config-register)
-  (when (featurep 'doremi-frm) (doremi-push-current-frame-config))
+  (when (fboundp 'doremi-push-current-frame-config) ; In `doremi-frm.el'.
+    (doremi-push-current-frame-config))
   (message
    (substitute-command-keys
-    (if (featurep 'doremi-frm)
+    (if (fboundp 'doremi-frame-configs) ; In `doremi-frm.el'.
         (format "Use `\\[jump-to-frame-config-register]' (`C-x r j %c') or \
 `\\[doremi-frame-configs]' to restore frames as before (undo)." frame-config-register)
       "Use `\\[jump-to-frame-config-register]' to restore frames as before (undo)."))))
