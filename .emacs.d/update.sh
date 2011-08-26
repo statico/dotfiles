@@ -97,5 +97,15 @@ cp -Rv build/lib/ropemacs $pylib
 popd
 rm -v tip.gz
 
+for subdir in `find $vendordir -type d -depth 1`; do
+  pushd $subdir
+  if [ -d ./.git ]; then
+    echo "Updating git repo $subdir"
+    git pull origin master
+  fi
+  popd
+done
+exit
+
 popd
 rm -rf $tmp
