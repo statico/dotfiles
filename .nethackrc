@@ -8,3 +8,5 @@ OPTIONS=color
 #OPTIONS=IBMgraphics
 
 OPTIONS=autopickup,pickup_types:$
+
+qt_tileheight=24
