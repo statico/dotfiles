@@ -333,6 +333,8 @@
          (hl-line-mode)
          (text-scale-decrease 2)
          (buffer-face-set 'variable-pitch)))
+(dolist (extension '(".coffee" ".jade" ".sass"))
+  (speedbar-add-supported-extension extension))
 
 ;; Make dired ignore certain files
 (eval-after-load "dired"
