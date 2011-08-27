@@ -85,6 +85,9 @@
               js-indent-level tab-width
               css-indent-level tab-width)
 
+;; Don't keep splitting windows for things. It's annoying.
+(setq pop-up-windows nil)
+
 ;; Make search case-insensitive.
 (setq-default case-fold-search t)
 
@@ -512,6 +515,9 @@
 ;; Rotate windows
 (load-snippet "rotate-windows")
 (global-set-key (kbd "M-S-<left>") 'rotate-windows)
+(load-snippet "splits")
+(global-set-key (kbd "C-M-2") 'change-split-type)
+(global-set-key (kbd "C-M-3") 'change-split-type-3)
 
 ;; Disable Flymake for HTML/XML files.
 (require 'flymake)
