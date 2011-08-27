@@ -325,6 +325,7 @@
 (require 'sr-speedbar)
 (setq sr-speedbar-right-side nil)
 (setq speedbar-use-images nil)
+(defun speedbar-timer-fn () '(lambda ()))
 (global-set-key (kbd "C-M-b") 'sr-speedbar-toggle)
 (define-key speedbar-key-map (kbd "u") 'speedbar-up-directory)
 (setq speedbar-mode-hook
@@ -332,10 +333,6 @@
          (hl-line-mode)
          (text-scale-decrease 2)
          (buffer-face-set 'variable-pitch)))
-
-;; nav settings
-(require 'nav)
-(global-set-key (kbd "C-M-b") 'nav)
 
 ;; Make dired ignore certain files
 (eval-after-load "dired"
