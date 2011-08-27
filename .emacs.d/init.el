@@ -185,7 +185,23 @@
  ido-record-commands nil
  ido-max-work-directory-list 0
  ido-max-work-file-list 0)
-(global-set-key (kbd "C-;") 'ido-switch-buffer)
+;(global-set-key (kbd "C-;") 'ido-switch-buffer)
+
+;; Anything
+(require 'anything-match-plugin)
+(require 'anything-config)
+(defun my-anything ()
+  (interactive)
+  (anything-other-buffer
+   '(anything-c-source-buffers
+     anything-c-source-buffer-not-found
+     anything-c-source-file-name-history
+     anything-c-source-files-in-current-dir
+     anything-c-source-ctags)
+   " *my-anything*"))
+(global-set-key (kbd "C-;") 'my-anything)
+(global-set-key (kbd "M-X") 'anything-imenu)
+(global-set-key (kbd "C-M-y") 'anything-show-kill-ring)
 
 ;; Display IDO results vertically, rather than horizontally
 ;; (from timcharper, jpkotta via EmacsWiki)

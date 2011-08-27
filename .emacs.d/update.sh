@@ -18,6 +18,9 @@ curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
 curl -OL http://jblevins.org/projects/markdown-mode/markdown-mode.el
 curl -OL http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
 curl -OL http://www.dr-qubit.org/undo-tree/undo-tree.el
+curl -OL http://www.emacswiki.org/emacs/download/anything.el
+curl -OL http://www.emacswiki.org/emacs/download/anything-config.el
+curl -OL http://www.emacswiki.org/emacs/download/anything-match-plugin.el
 curl -OL http://www.emacswiki.org/emacs/download/browse-kill-ring.el
 curl -OL http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
 curl -OL http://www.emacswiki.org/emacs/download/frame-cmds.el
