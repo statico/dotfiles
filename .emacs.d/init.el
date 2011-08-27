@@ -160,6 +160,9 @@
 (defalias 'sffm 'set-font-face-monaco)
 (defalias 'sffg 'set-font-face-georgia)
 
+(when macgui
+  (set-face-font 'variable-pitch "Lucida Grande"))
+
 ;; Settings for editing text
 (setq sentence-end-double-space nil)
 
@@ -319,9 +322,20 @@
 (global-set-key (kbd "C-:") 'dired-jump)
 
 ;; speedbar settings
-(require 'speedbar)
-(global-set-key (kbd "C-M-b") 'speedbar)
+(require 'sr-speedbar)
+(setq sr-speedbar-right-side nil)
+(setq speedbar-use-images nil)
+(global-set-key (kbd "C-M-b") 'sr-speedbar-toggle)
 (define-key speedbar-key-map (kbd "u") 'speedbar-up-directory)
+(setq speedbar-mode-hook
+      '(lambda ()
+         (hl-line-mode)
+         (text-scale-decrease 2)
+         (buffer-face-set 'variable-pitch)))
+
+;; nav settings
+(require 'nav)
+(global-set-key (kbd "C-M-b") 'nav)
 
 ;; Make dired ignore certain files
 (eval-after-load "dired"
