@@ -331,7 +331,7 @@
 (setq speedbar-mode-hook
       '(lambda ()
          (hl-line-mode)
-         (text-scale-decrease 2)
+         (text-scale-decrease 1)
          (buffer-face-set 'variable-pitch)))
 (dolist (extension '(".coffee" ".jade" ".sass"))
   (speedbar-add-supported-extension extension))
