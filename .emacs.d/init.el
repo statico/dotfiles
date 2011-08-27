@@ -166,6 +166,22 @@
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
+;; Anything - starting to replace IDO below...
+(require 'anything-match-plugin)
+(require 'anything-config)
+(defun my-anything ()
+  (interactive)
+  (anything-other-buffer
+   '(anything-c-source-buffers
+     anything-c-source-buffer-not-found
+     anything-c-source-file-name-history
+     anything-c-source-files-in-current-dir
+     anything-c-source-ctags)
+   " *my-anything*"))
+(global-set-key (kbd "C-;") 'my-anything)
+(global-set-key (kbd "M-X") 'anything-imenu)
+(global-set-key (kbd "C-M-y") 'anything-show-kill-ring)
+
 ;; IDO mode: Better buffer and file completion.
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
@@ -186,22 +202,6 @@
  ido-max-work-directory-list 0
  ido-max-work-file-list 0)
 ;(global-set-key (kbd "C-;") 'ido-switch-buffer)
-
-;; Anything
-(require 'anything-match-plugin)
-(require 'anything-config)
-(defun my-anything ()
-  (interactive)
-  (anything-other-buffer
-   '(anything-c-source-buffers
-     anything-c-source-buffer-not-found
-     anything-c-source-file-name-history
-     anything-c-source-files-in-current-dir
-     anything-c-source-ctags)
-   " *my-anything*"))
-(global-set-key (kbd "C-;") 'my-anything)
-(global-set-key (kbd "M-X") 'anything-imenu)
-(global-set-key (kbd "C-M-y") 'anything-show-kill-ring)
 
 ;; Display IDO results vertically, rather than horizontally
 ;; (from timcharper, jpkotta via EmacsWiki)
@@ -531,9 +531,10 @@
 ;; Rotate windows
 (load-snippet "rotate-windows")
 (global-set-key (kbd "M-S-<left>") 'rotate-windows)
-(load-snippet "splits")
-(global-set-key (kbd "C-M-2") 'change-split-type)
-(global-set-key (kbd "C-M-3") 'change-split-type-3)
+
+;; Manage splitting and tiling.
+(require 'tiling)
+(define-key global-map (kbd "M-\\") 'tiling-cycle) ; accepts prefix number
 
 ;; Disable Flymake for HTML/XML files.
 (require 'flymake)
