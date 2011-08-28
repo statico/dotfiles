@@ -169,6 +169,14 @@
 ;; <Enter> should be smart. (DWIM)
 (global-set-key (kbd "RET") 'newline-and-indent)
 
+;; Project Root is hotness.
+(require 'project-root)
+(global-set-key (kbd "C-c p f") 'project-root-find-file)
+(global-set-key (kbd "C-c p g") 'project-root-grep)
+(global-set-key (kbd "C-c p a") 'project-root-ack)
+(global-set-key (kbd "C-c p d") 'project-root-goto-root)
+(global-set-key (kbd "C-c p l") 'project-root-browse-seen-projects)
+
 ;; Anything - starting to replace IDO below...
 (require 'anything-match-plugin)
 (require 'anything-config)
@@ -180,7 +188,7 @@
      anything-c-source-buffer-not-found
      anything-c-source-file-name-history
      anything-c-source-files-in-current-dir
-     my-anything-c-source-file-search
+     anything-c-source-project-files
      anything-c-source-ctags)
    " *my-anything*"))
 (global-set-key (kbd "C-;") 'my-anything)

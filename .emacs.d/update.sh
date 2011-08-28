@@ -15,6 +15,7 @@ pushd $vendordir
 curl -OL http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
 curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
 curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
+curl -OL http://hg.piranha.org.ua/project-root/raw-file/tip/project-root.el
 curl -OL http://jblevins.org/projects/markdown-mode/markdown-mode.el
 curl -OL http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
 curl -OL http://www.dr-qubit.org/undo-tree/undo-tree.el
