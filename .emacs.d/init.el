@@ -172,6 +172,7 @@
 ;; Anything - starting to replace IDO below...
 (require 'anything-match-plugin)
 (require 'anything-config)
+(load-snippet "custom-anything-sources")
 (defun my-anything ()
   (interactive)
   (anything-other-buffer
@@ -179,6 +180,7 @@
      anything-c-source-buffer-not-found
      anything-c-source-file-name-history
      anything-c-source-files-in-current-dir
+     my-anything-c-source-file-search
      anything-c-source-ctags)
    " *my-anything*"))
 (global-set-key (kbd "C-;") 'my-anything)
