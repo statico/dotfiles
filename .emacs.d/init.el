@@ -123,6 +123,7 @@
 
 ;; Color theme.
 (require 'color-theme)
+(add-to-list 'load-path "~/.emacs.d/vendor/color-theme/themes")
 (color-theme-initialize)
 
 (defun color-theme-dark ()
