@@ -15,3 +15,5 @@
 
 # Custom types and abbreviatinos.
 --type-set=py=.py
+--type-set=sass=.sass
+--type-set=coffee=.coffee
