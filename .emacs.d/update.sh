@@ -9,111 +9,153 @@ vendordir=~/.emacs.d/vendor
 pylib=~/.emacs.d/python
 tmp=/tmp/$LOGNAME-emacs-update
 
-echo "Updating single files"
-pushd $vendordir
-
-curl -OL http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
-curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
-curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
-curl -OL http://hg.piranha.org.ua/project-root/raw-file/tip/project-root.el
-curl -OL http://jblevins.org/projects/markdown-mode/markdown-mode.el
-curl -OL http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
-curl -OL http://www.dr-qubit.org/undo-tree/undo-tree.el
-curl -OL http://www.emacswiki.org/emacs/download/anything.el
-curl -OL http://www.emacswiki.org/emacs/download/anything-config.el
-curl -OL http://www.emacswiki.org/emacs/download/anything-match-plugin.el
-curl -OL http://www.emacswiki.org/emacs/download/browse-kill-ring.el
-curl -OL http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
-curl -OL http://www.emacswiki.org/emacs/download/frame-cmds.el
-curl -OL http://www.emacswiki.org/emacs/download/frame-fns.el
-curl -OL http://www.emacswiki.org/emacs/download/highlight-current-line.el
-curl -OL http://www.emacswiki.org/emacs/download/sr-speedbar.el
-curl -OL http://www.emacswiki.org/emacs/download/tiling.el
-curl -OL http://www.emacswiki.org/emacs/download/vimpulse.el
-curl -OL http://www.emacswiki.org/emacs/download/zoom-frm.el
-curl -OL https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
-curl -OL https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
-curl -OL http://emacs-nav.googlecode.com/hg/nav.el
-
-cd color-theme/themes
-curl -OL https://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
-curl -OL http://www.emacswiki.org/emacs/download/color-theme-tango.el
-
-popd
 rm -rf $tmp
 mkdir $tmp
 pushd $tmp
 
-echo "Updating magit"
-f=magit
-rm -rf $f
-mkdir $f
-pushd $f
-curl -L https://github.com/philjackson/magit/tarball/master >$f.tar.gz
-tar zxf $f.tar.gz
-cd philjackson-magit*
-cp -v magit*.el $vendordir/
-cp -v magit.texi ~/.dotfiles/info/
-popd
+function unpack () {
+  rm -rf $1
+  mkdir $1
+  pushd $1
+  curl -L $2 >$1.tar.gz
+  tar zxf $1.tar.gz
+}
 
-echo "Updating ethan-whitespace"
-f=ethan-wspace
-rm -rf $f
-mkdir $f
-pushd $f
-curl -L https://github.com/glasserc/ethan-wspace/tarball/master >$f.tar.gz
-tar zxf $f.tar.gz
-cd glasserc-ethan-wspace*
-rm -rf $vendordir/$f
-cp -Rv lisp $vendordir/$f
-popd
+case "$1" in
 
-echo "Updating Pymacs"
-rm -rf $pylib/Pymacs
-curl -L https://github.com/pinard/Pymacs/tarball/master >Pymacs.tar.gz
-tar zxf Pymacs.tar.gz
-pushd pinard-Pymacs-*
-make
-cp -Rv build/lib/Pymacs $pylib
-mkdir -p $vendordir/pymacs
-cp pymacs.el $vendordir/pymacs
-popd
+  small)
+    echo "Updating single files"
+    pushd $vendordir
+    curl -OL http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
+    curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
+    curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
+    curl -OL http://hg.piranha.org.ua/project-root/raw-file/tip/project-root.el
+    curl -OL http://jblevins.org/projects/markdown-mode/markdown-mode.el
+    curl -OL http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
+    curl -OL http://www.dr-qubit.org/undo-tree/undo-tree.el
+    curl -OL http://www.emacswiki.org/emacs/download/anything.el
+    curl -OL http://www.emacswiki.org/emacs/download/anything-config.el
+    curl -OL http://www.emacswiki.org/emacs/download/anything-match-plugin.el
+    curl -OL http://www.emacswiki.org/emacs/download/browse-kill-ring.el
+    curl -OL http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
+    curl -OL http://www.emacswiki.org/emacs/download/frame-cmds.el
+    curl -OL http://www.emacswiki.org/emacs/download/frame-fns.el
+    curl -OL http://www.emacswiki.org/emacs/download/highlight-current-line.el
+    curl -OL http://www.emacswiki.org/emacs/download/sr-speedbar.el
+    curl -OL http://www.emacswiki.org/emacs/download/tiling.el
+    curl -OL http://www.emacswiki.org/emacs/download/vimpulse.el
+    curl -OL http://www.emacswiki.org/emacs/download/zoom-frm.el
+    curl -OL https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
+    curl -OL https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
+    curl -OL http://emacs-nav.googlecode.com/hg/nav.el
+    popd
+    ;;
 
-echo "Updating rope"
-rm -rf $pylib/rope
-curl -LO http://bitbucket.org/agr/rope/get/tip.gz
-tar zxf tip.gz --strip-components 1 \*/rope
-cp -Rv rope $pylib
-rm tip.gz
+  themes)
+    pushd $vendordir
+    cd color-theme/themes
+    curl -OL https://github.com/olegshaldybin/color-theme-railscasts/raw/master/color-theme-railscasts.el
+    curl -OL http://www.emacswiki.org/emacs/download/color-theme-tango.el
+    popd
 
-echo "Updating ropemode"
-curl -LO http://bitbucket.org/agr/ropemode/get/tip.gz
-tar zxf tip.gz
-pushd agr-ropemode-*
-python setup.py build
-cp -Rv build/lib/ropemode $pylib
-popd
-rm -v tip.gz
+    unpack solarized https://github.com/sellout/emacs-color-theme-solarized/tarball/master
+    cd sellout-emacs-color-theme*
+    cp -v *.el $vendordir/color-theme/themes
+    popd
 
-echo "Updating ropemacs"
-rm -rf $pylib/ropemacs
-curl -LO http://bitbucket.org/agr/ropemacs/get/tip.gz
-tar zxf tip.gz
-pushd agr-ropemacs-*
-python setup.py build
-cp -Rv build/lib/ropemacs $pylib
-popd
-rm -v tip.gz
+    unpack tomorrow https://github.com/ChrisKempson/Tomorrow-Theme/tarball/master
+    cd ChrisKempson-Tomorrow*
+    cp -v GNU\ Emacs/*.el $vendordir/color-theme/themes
+    popd
 
-for subdir in `find $vendordir -type d -depth 1`; do
-  pushd $subdir
-  if [ -d ./.git ]; then
-    echo "Updating git repo $subdir"
-    git pull origin master
-  fi
-  popd
-done
-exit
+    ;;
+
+  magit)
+    echo "Updating magit"
+    f=magit
+    rm -rf $f
+    mkdir $f
+    pushd $f
+    curl -L https://github.com/philjackson/magit/tarball/master >$f.tar.gz
+    tar zxf $f.tar.gz
+    cd philjackson-magit*
+    cp -v magit*.el $vendordir/
+    cp -v magit.texi ~/.dotfiles/info/
+    popd
+    ;;
+
+  ethan)
+    echo "Updating ethan-whitespace"
+    f=ethan-wspace
+    rm -rf $f
+    mkdir $f
+    pushd $f
+    curl -L https://github.com/glasserc/ethan-wspace/tarball/master >$f.tar.gz
+    tar zxf $f.tar.gz
+    cd glasserc-ethan-wspace*
+    rm -rf $vendordir/$f
+    cp -Rv lisp $vendordir/$f
+    popd
+    ;;
+
+  pymacs)
+    echo "Updating Pymacs"
+    rm -rf $pylib/Pymacs
+    curl -L https://github.com/pinard/Pymacs/tarball/master >Pymacs.tar.gz
+    tar zxf Pymacs.tar.gz
+    pushd pinard-Pymacs-*
+    make
+    cp -Rv build/lib/Pymacs $pylib
+    mkdir -p $vendordir/pymacs
+    cp pymacs.el $vendordir/pymacs
+    popd
+    ;;
+
+  rope)
+    echo "Updating rope"
+    rm -rf $pylib/rope
+    curl -LO http://bitbucket.org/agr/rope/get/tip.gz
+    tar zxf tip.gz --strip-components 1 \*/rope
+    cp -Rv rope $pylib
+    rm tip.gz
+
+    echo "Updating ropemode"
+    curl -LO http://bitbucket.org/agr/ropemode/get/tip.gz
+    tar zxf tip.gz
+    pushd agr-ropemode-*
+    python setup.py build
+    cp -Rv build/lib/ropemode $pylib
+    popd
+    rm -v tip.gz
+
+    echo "Updating ropemacs"
+    rm -rf $pylib/ropemacs
+    curl -LO http://bitbucket.org/agr/ropemacs/get/tip.gz
+    tar zxf tip.gz
+    pushd agr-ropemacs-*
+    python setup.py build
+    cp -Rv build/lib/ropemacs $pylib
+    popd
+    rm -v tip.gz
+    ;;
+
+  submodules)
+    for subdir in `find $vendordir -type d -depth 1`; do
+      pushd $subdir
+      if [ -d ./.git ]; then
+        echo "Updating git repo $subdir"
+        git pull origin master
+      fi
+      popd
+    done
+    ;;
+
+  *)
+    for i in small themes magit ethan pymacs rope submodules; do
+      $0 i
+    done
+
+esac
 
 popd
 rm -rf $tmp
