@@ -177,7 +177,7 @@
 (global-set-key (kbd "C-c p a") 'project-root-ack)
 (global-set-key (kbd "C-c p d") 'project-root-goto-root)
 (global-set-key (kbd "C-c p l") 'project-root-browse-seen-projects)
-(global-set-key (kbd "C-,") 'project-root-find-file)
+(global-set-key (kbd "C-.") 'project-root-find-file)
 
 ;; Anything - starting to replace IDO below...
 (require 'anything-match-plugin)
