@@ -177,11 +177,13 @@
 (global-set-key (kbd "C-c p a") 'project-root-ack)
 (global-set-key (kbd "C-c p d") 'project-root-goto-root)
 (global-set-key (kbd "C-c p l") 'project-root-browse-seen-projects)
+(global-set-key (kbd "C-,") 'project-root-find-file)
 
 ;; Anything - starting to replace IDO below...
 (require 'anything-match-plugin)
 (require 'anything-config)
 (load-snippet "custom-anything-sources")
+(setq anything-samewindow t)
 (defun my-anything ()
   (interactive)
   (anything-other-buffer
@@ -192,7 +194,7 @@
      anything-c-source-project-files
      anything-c-source-ctags)
    " *my-anything*"))
-(global-set-key (kbd "C-;") 'my-anything)
+(global-set-key (kbd "C-:") 'my-anything)
 (global-set-key (kbd "M-X") 'anything-imenu)
 (global-set-key (kbd "C-M-y") 'anything-show-kill-ring)
 
@@ -215,7 +217,7 @@
  ido-record-commands nil
  ido-max-work-directory-list 0
  ido-max-work-file-list 0)
-;(global-set-key (kbd "C-;") 'ido-switch-buffer)
+(global-set-key (kbd "C-;") 'ido-switch-buffer)
 
 ;; Display IDO results vertically, rather than horizontally
 ;; (from timcharper, jpkotta via EmacsWiki)
