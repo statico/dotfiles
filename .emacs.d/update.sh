@@ -56,6 +56,7 @@ case "$1" in
     )
     for url in ${urls[@]} ; do
       curl -sOL $url
+      sleep 1
     done
     wait
     popd
