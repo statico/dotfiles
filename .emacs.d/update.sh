@@ -47,12 +47,15 @@ case "$1" in
       http://www.emacswiki.org/emacs/download/tiling.el
       http://www.emacswiki.org/emacs/download/vimpulse.el
       http://www.emacswiki.org/emacs/download/zoom-frm.el
-      https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
-      https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
       http://emacs-nav.googlecode.com/hg/nav.el
+      https://raw.github.com/voins/mo-git-blame/master/mo-git-blame.el
+      https://raw.github.com/yoshiki/yaml-mode/master/yaml-mode.el
+      https://raw.github.com/nex3/haml-mode/master/haml-mode.el
+      https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el
+      https://raw.github.com/nex3/sass-mode/master/sass-mode.el
     )
     for url in ${urls[@]} ; do
-      (curl -sOL $url ; echo $url) &
+      curl -sOL $url
     done
     wait
     popd
@@ -144,17 +147,6 @@ case "$1" in
     cp -Rv build/lib/ropemacs $pylib
     popd
     rm -v tip.gz
-    ;;
-
-  submodules)
-    for subdir in `find $vendordir -type d -depth 1`; do
-      pushd $subdir
-      if [ -d ./.git ]; then
-        echo "Updating git repo $subdir"
-        git pull origin master
-      fi
-      popd
-    done
     ;;
 
   *)
