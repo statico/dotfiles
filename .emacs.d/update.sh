@@ -152,9 +152,13 @@ case "$1" in
     ;;
 
   *)
-    for i in small themes magit ethan pymacs rope submodules; do
-      $0 i
-    done
+    popd
+    set +x
+    echo
+    echo "Usage: $0 <section>"
+    echo "...where section is one of:"
+    egrep '\w\)$' $0 | sed -e 's/)//'
+    exit 1
 
 esac
 
