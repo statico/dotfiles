@@ -1,9 +1,0 @@
-[submodule ".emacs.d/vendor/haml-mode"]
-	path = .emacs.d/vendor/haml-mode
-	url = git://github.com/nex3/haml-mode.git
-[submodule ".emacs.d/vendor/sass-mode"]
-	path = .emacs.d/vendor/sass-mode
-	url = git://github.com/nex3/sass-mode.git
-[submodule ".emacs.d/vendor/coffee-mode"]
-	path = .emacs.d/vendor/coffee-mode
-	url = git://github.com/defunkt/coffee-mode.git
