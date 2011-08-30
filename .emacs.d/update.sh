@@ -26,29 +26,35 @@ case "$1" in
   small)
     echo "Updating single files"
     pushd $vendordir
-    curl -OL http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
-    curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
-    curl -OL http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
-    curl -OL http://hg.piranha.org.ua/project-root/raw-file/tip/project-root.el
-    curl -OL http://hg.piranha.org.ua/project-root/raw-file/tip/find-cmd.el
-    curl -OL http://jblevins.org/projects/markdown-mode/markdown-mode.el
-    curl -OL http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
-    curl -OL http://www.dr-qubit.org/undo-tree/undo-tree.el
-    curl -OL http://www.emacswiki.org/emacs/download/anything.el
-    curl -OL http://www.emacswiki.org/emacs/download/anything-config.el
-    curl -OL http://www.emacswiki.org/emacs/download/anything-match-plugin.el
-    curl -OL http://www.emacswiki.org/emacs/download/browse-kill-ring.el
-    curl -OL http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
-    curl -OL http://www.emacswiki.org/emacs/download/frame-cmds.el
-    curl -OL http://www.emacswiki.org/emacs/download/frame-fns.el
-    curl -OL http://www.emacswiki.org/emacs/download/highlight-current-line.el
-    curl -OL http://www.emacswiki.org/emacs/download/sr-speedbar.el
-    curl -OL http://www.emacswiki.org/emacs/download/tiling.el
-    curl -OL http://www.emacswiki.org/emacs/download/vimpulse.el
-    curl -OL http://www.emacswiki.org/emacs/download/zoom-frm.el
-    curl -OL https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
-    curl -OL https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
-    curl -OL http://emacs-nav.googlecode.com/hg/nav.el
+    urls=(
+      http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
+      http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
+      http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
+      http://hg.piranha.org.ua/project-root/raw-file/tip/project-root.el
+      http://hg.piranha.org.ua/project-root/raw-file/tip/find-cmd.el
+      http://jblevins.org/projects/markdown-mode/markdown-mode.el
+      http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
+      http://www.dr-qubit.org/undo-tree/undo-tree.el
+      http://www.emacswiki.org/emacs/download/anything.el
+      http://www.emacswiki.org/emacs/download/anything-config.el
+      http://www.emacswiki.org/emacs/download/anything-match-plugin.el
+      http://www.emacswiki.org/emacs/download/browse-kill-ring.el
+      http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
+      http://www.emacswiki.org/emacs/download/frame-cmds.el
+      http://www.emacswiki.org/emacs/download/frame-fns.el
+      http://www.emacswiki.org/emacs/download/highlight-current-line.el
+      http://www.emacswiki.org/emacs/download/sr-speedbar.el
+      http://www.emacswiki.org/emacs/download/tiling.el
+      http://www.emacswiki.org/emacs/download/vimpulse.el
+      http://www.emacswiki.org/emacs/download/zoom-frm.el
+      https://github.com/yoshiki/yaml-mode/raw/master/yaml-mode.el
+      https://github.com/voins/mo-git-blame/raw/master/mo-git-blame.el
+      http://emacs-nav.googlecode.com/hg/nav.el
+    )
+    for url in ${urls[@]} ; do
+      (curl -sOL $url ; echo $url) &
+    done
+    wait
     popd
     ;;
 
