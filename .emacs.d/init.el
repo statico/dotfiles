@@ -564,10 +564,13 @@
 
 ;; Disable Flymake for HTML/XML files.
 (require 'flymake)
+(require 'flymake-cursor)
 (dolist (extension '("html?" "xml"))
   (let ((full-extension (concat "\\." extension "\\'")))
     (setq flymake-allowed-file-name-masks
           (remove-alist-name full-extension flymake-allowed-file-name-masks))))
+(global-set-key (kbd "C-c f n") 'flymake-goto-next-error)
+(global-set-key (kbd "C-c f p") 'flymake-goto-prev-error)
 
 ;; Git
 (require 'magit)

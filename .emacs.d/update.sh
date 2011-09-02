@@ -40,6 +40,7 @@ case "$1" in
       http://www.emacswiki.org/emacs/download/anything-match-plugin.el
       http://www.emacswiki.org/emacs/download/browse-kill-ring.el
       http://www.emacswiki.org/emacs/download/centered-cursor-mode.el
+      http://www.emacswiki.org/emacs/download/flymake-cursor.el
       http://www.emacswiki.org/emacs/download/frame-cmds.el
       http://www.emacswiki.org/emacs/download/frame-fns.el
       http://www.emacswiki.org/emacs/download/highlight-current-line.el
