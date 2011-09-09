@@ -22,13 +22,13 @@
   (autoload 'pymacs-eval "pymacs" nil t)
   (autoload 'pymacs-exec "pymacs" nil t)
   (autoload 'pymacs-load "pymacs" nil t)
+  (require 'pymacs)
+  (pymacs-load "ropemacs" "rope-")
   (setq ropemacs-local-prefix "C-c C-p")
   (setq ropemacs-enable-shortcuts nil)
-  (setq ropemacs-enable-autoimport nil)
+  (setq ropemacs-enable-autoimport t)
   (setq ropemacs-confirm-saving nil)
-  (setq ropemacs-guess-project t)
-  (require 'pymacs)
-  (pymacs-load "ropemacs" "rope-"))
+  (setq ropemacs-guess-project t))
 
 ;; Load pyflakes for flymake with Python.
 (defun init-pyflakes ()
