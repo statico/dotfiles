@@ -673,6 +673,15 @@ if [ -n "$HISTFILE" -a ! -w $HISTFILE ]; then
 fi
 
 # PROMPT AWESOMENESS {{{1
+#
+# Unfortunately, ^L makes the first line disappear. We can fix that by making
+# our own clear-screen function.
+clear-screen-and-precmd () {
+    print -n "\e[2J\e[H"
+    zle redisplay
+    precmd
+}
+zle -N clear-screen-and-precmd
 
 # This is the easiest way to get a newline. SRSLY.
 local newline="
@@ -702,6 +711,7 @@ function colorprompt {
     # it's like temp=join("", $promptstring)
     temp=${(j::)line1}
 
+    bindkey "^L" clear-screen-and-precmd
     precmd() { print -P $temp }
     PS1=${(j::)line2}
 }
@@ -716,11 +726,13 @@ function uncolorprompt {
 	$newline
         "%n %# "
     )
+    bindkey "^L" clear-screen
     unfunction precmd &>/dev/null
     PS1=${(j::)temp}
 }
 
 function simpleprompt {
+    bindkey "^L" clear-screen
     unfunction precmd &>/dev/null
     PS1="%n %# "
 }
@@ -734,16 +746,6 @@ elif [ -n "$SUDO_USER" ]; then
 else
     colorprompt
 fi
-
-# Unfortunately, ^L makes the first line disappear. We can fix that by making
-# our own clear-screen function.
-clear-screen-and-precmd () {
-    print -n "\e[2J\e[H"
-    zle redisplay
-    precmd
-}
-zle -N clear-screen-and-precmd
-bindkey "^L" clear-screen-and-precmd
 
 # SSH {{{1
 
