@@ -1,5 +1,5 @@
-URxvt*font: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-1
-URxvt*boldFont: -*-terminus-medium-r-*-*-12-*-*-*-*-*-*-1
+URxvt*font: -misc-fixed-medium-r-*-*-15-*-*-*-*-*-*-*
+URxvt*boldFont: -misc-fixed-medium-r-*-*-15-*-*-*-*-*-*-*
 
 XTerm*foreground: #ffffff
 XTerm*background: #000000
