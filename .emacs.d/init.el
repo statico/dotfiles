@@ -421,11 +421,12 @@
 
 ;; Misc aliases
 (defalias 'er 'eval-region)
-(defalias 'rb 'rename-buffer)
-(defalias 'qrr 'query-replace-regexp)
 (defalias 'ffap 'find-file-at-point)
-(defalias 'rfab 'rename-file-and-buffer)
 (defalias 'ow 'overwrite-mode)
+(defalias 'qrr 'query-replace-regexp)
+(defalias 'rb 'rename-buffer)
+(defalias 'rfab 'rename-file-and-buffer)
+(defalias 'slines 'sort-lines)
 
 ;; C-w kills a word or region depending on context. (DWIM)
 (defun backward-kill-word-or-kill-region (&optional arg)
