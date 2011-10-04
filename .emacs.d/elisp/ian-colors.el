@@ -27,6 +27,7 @@
  '(highlight-current-line-face ((t (:inherit highlight-current-line))))
  '(lazy-highlight ((((class color) (min-colors 8)) (:background "grey25"))))
  '(linum ((t (:inherit font-lock-comment-delimiter))))
+ '(mode-line ((t (:background "#545d57" :foreground "#c5ffd1" :box (:line-width 2 :color "#1e2320")))))
  '(mode-line ((t (:background "#454d48" :foreground "#acbc90" :box (:line-width 2 :color "#1e2320")))))
  '(mode-line-buffer-id ((t (:foreground "#A5BAF1" :weight bold))))
  '(mode-line-inactive ((t (:background "#2e3330" :foreground "#88b090" :box (:line-width 2 :color "#2e3330")))))
