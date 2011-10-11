@@ -82,6 +82,18 @@ case "$1" in
 
     ;;
 
+  jshint)
+    echo "Updating jshint"
+    f=jshint
+    rm -rf $f
+    mkdir $f
+    pushd $f
+    curl -L https://github.com/daleharvey/jshint-mode/tarball/master >$f.tar.gz
+    tar zxf $f.tar.gz
+    cp -r daleharvey-jshint-mode* $vendordir/jshint-mode
+    popd
+    ;;
+
   magit)
     echo "Updating magit"
     f=magit
