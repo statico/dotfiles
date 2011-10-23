@@ -122,6 +122,22 @@ case "$1" in
     popd
     ;;
 
+  yasnippet)
+    echo "Updating yasnippet"
+    f=yasnippet
+    rm -rf $f
+    mkdir $f
+    pushd $f
+    curl -L http://yasnippet.googlecode.com/files/yasnippet-0.6.1c.tar.bz2 >$f.tar.gz
+    tar zxf $f.tar.gz
+    cd $f*
+    dest=$vendordir/$f
+    rm -rf $dest
+    mkdir -p $dest
+    mv * $dest
+    popd
+    ;;
+
   pymacs)
     echo "Updating Pymacs"
     rm -rf $pylib/Pymacs
