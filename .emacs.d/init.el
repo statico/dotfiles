@@ -594,6 +594,13 @@
 ;; ReBuilder
 (setq reb-re-syntax 'string)
 
+;; YASnippet
+(require 'yasnippet)
+(yas/initialize)
+(setq yas/root-directory '("~/.emacs.d/snippets"
+                           "~/.emacs.d/vendor/yasnippet/snippets"))
+(mapc 'yas/load-directory yas/root-directory)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customize settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
