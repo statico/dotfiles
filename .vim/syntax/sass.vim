@@ -1,93 +1,90 @@
 " Vim syntax file
-" Language: Sass (Syntactically Awesome StyleSheets) 
-" Maintainer: Dmitry A. Ilyashevich <dmitry.ilyashevich@gmail.com>
-" License: This file can be redistribued and/or modified under the same terms
-"   as Vim itself.
-"
-" Version: 0.1
-" Last Change: 2007-08-04
-" Notes: Last synced with Haml 1.7
-"   Based on css.vim
-" TODO: tag names, attributes and values control
+" Language:	Sass
+" Maintainer:	Tim Pope <vimNOSPAM@tpope.org>
+" Filenames:	*.sass
+" Last Change:	2010 Aug 09
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-if version < 600
-  syntax clear
-elseif exists("b:current_syntax")
+if exists("b:current_syntax")
   finish
 endif
 
-if !exists("main_syntax")
-  let main_syntax = 'sass'
-endif
+runtime! syntax/css.vim
 
-syn region  sassAttributes         start="^\s*:[a-zA-Z0-9\-_]\+" end="$" oneline keepend contains=sassAttributesIncluded,sassValue,sassConstantIncluded,sassColour,sassValueInteger,sassValueNumber,sassValueLength,sassValueAngle,sassValueTime,sassValueFrequency
-syn match   sassAttributesIncluded contained ":[a-zA-Z0-9\-_]\+"
+syn case ignore
 
-syn region  sassConstant           start="^\s*![a-zA-Z0-9\-_]\+" end="$" oneline keepend contains=sassConstantIncluded,sassColour,sassStringQQ,sassStringQ,sassValueInteger,sassValueNumber,sassValueLength,sassValueAngle,sassValueTime,sassValueFrequency
-syn match   sassConstantIncluded   contained "![a-zA-Z0-9\-_]\+"
+syn cluster sassCssProperties contains=cssFontProp,cssFontDescriptorProp,cssColorProp,cssTextProp,cssBoxProp,cssGeneratedContentProp,cssPagingProp,cssUIProp,cssRenderProp,cssAuralProp,cssTableProp
+syn cluster sassCssAttributes contains=css.*Attr,scssComment,cssValue.*,cssColor,cssURL,sassDefault,cssImportant,cssError,cssStringQ,cssStringQQ,cssFunction,cssUnicodeEscape,cssRenderProp
 
-syn match   sassColour             contained "#[0-9a-fA-F]\{3\}" 
-syn match   sassColour             contained "#[0-9a-fA-F]\{6\}"
+syn region sassDefinition matchgroup=cssBraces start="{" end="}" contains=TOP
 
-syn match   sassValue              contained " [a-zA-Z0-9-_\"]\+" contains=sassStringQQ,sassStringQ
+syn match sassProperty "\%([{};]\s*\|^\)\@<=\%([[:alnum:]-]\|#{[^{}]*}\)\+:" contains=css.*Prop skipwhite nextgroup=sassCssAttribute contained containedin=sassDefinition
+syn match sassProperty "^\s*\zs\s\%(\%([[:alnum:]-]\|#{[^{}]*}\)\+:\|:[[:alnum:]-]\+\)"hs=s+1 contains=css.*Prop skipwhite nextgroup=sassCssAttribute
+syn match sassProperty "^\s*\zs\s\%(:\=[[:alnum:]-]\+\s*=\)"hs=s+1 contains=css.*Prop skipwhite nextgroup=sassCssAttribute
+syn match sassCssAttribute +\%("\%([^"]\|\\"\)*"\|'\%([^']\|\\'\)*'\|#{[^{}]*}\|[^{};]\)*+ contained contains=@sassCssAttributes,sassVariable,sassFunction,sassInterpolation
+syn match sassDefault "!default\>" contained
+syn match sassVariable "!\%(important\>\|default\>\)\@![[:alnum:]_-]\+"
+syn match sassVariable "$[[:alnum:]_-]\+"
+syn match sassVariableAssignment "\%([!$][[:alnum:]_-]\+\s*\)\@<=\%(||\)\==" nextgroup=sassCssAttribute skipwhite
+syn match sassVariableAssignment "\%([!$][[:alnum:]_-]\+\s*\)\@<=:" nextgroup=sassCssAttribute skipwhite
 
-syn region  sassSelector           start="^\s*[\.\#]\{0,1\}[a-zA-Z0-9\-_]\+" end="$" oneline keepend contains=sassSelectorIncluded
-syn match   sassSelectorIncluded   contained "[\.\#][a-zA-Z0-9\-_]\+"
+syn match sassFunction "\<\%(rgb\|rgba\|red\|green\|blue\|mix\)\>(\@=" contained
+syn match sassFunction "\<\%(hsl\|hsla\|hue\|saturation\|lightness\|adjust-hue\|lighten\|darken\|saturate\|desaturate\|grayscale\|complement\)\>(\@=" contained
+syn match sassFunction "\<\%(alpha\|opacity\|rgba\|opacify\|fade-in\|transparentize\|fade-out\)\>(\@=" contained
+syn match sassFunction "\<\%(unquote\|quote\)\>(\@=" contained
+syn match sassFunction "\<\%(percentage\|round\|ceil\|floor\|abs\)\>(\@=" contained
+syn match sassFunction "\<\%(type-of\|unit\|unitless\|comparable\)\>(\@=" contained
 
-syn match   sassValueInteger     contained "[-+]\=\d\+"
-syn match   sassValueNumber      contained "[-+]\=\d\+\(\.\d*\)\="
-syn match   sassValueLength      contained "[-+]\=\d\+\(\.\d*\)\=\(%\|mm\|cm\|in\|pt\|pc\|em\|ex\|px\)"
-syn match   sassValueAngle       contained "[-+]\=\d\+\(\.\d*\)\=\(deg\|grad\|rad\)"
-syn match   sassValueTime        contained "+\=\d\+\(\.\d*\)\=\(ms\|s\)"
-syn match   sassValueFrequency   contained "+\=\d\+\(\.\d*\)\=\(Hz\|kHz\)"
+syn region sassInterpolation matchgroup=sassInterpolationDelimiter start="#{" end="}" contains=@sassCssAttributes,sassVariable,sassFunction containedin=cssStringQ,cssStringQQ,sassProperty
 
-syn match   sassUnicodeEscape    "\\\x\{1,6}\s\?"
-syn match   sassSpecialCharQQ    contained +\\"+
-syn match   sassSpecialCharQ     contained +\\'+
-syn region  sassStringQQ         start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=sassUnicodeEscape,sassSpecialCharQQ
-syn region  sassStringQ          start=+'+ skip=+\\\\\|\\'+ end=+'+ contains=sassUnicodeEscape,sassSpecialCharQ
+syn match sassMixinName "[[:alnum:]_-]\+" contained nextgroup=sassCssAttribute
+syn match sassMixin  "^="               nextgroup=sassMixinName skipwhite
+syn match sassMixin  "\%([{};]\s*\|^\s*\)\@<=@mixin"   nextgroup=sassMixinName skipwhite
+syn match sassMixing "^\s\+\zs+"        nextgroup=sassMixinName
+syn match sassMixing "\%([{};]\s*\|^\s*\)\@<=@include" nextgroup=sassMixinName skipwhite
+syn match sassExtend "\%([{};]\s*\|^\s*\)\@<=@extend"
 
-syn match   sassComment	         "\s*//.*$" contains=@Spell,sassTodo
-syn keyword sassTodo             TODO FIXME XXX contained
+syn match sassEscape     "^\s*\zs\\"
+syn match sassIdChar     "#[[:alnum:]_-]\@=" nextgroup=sassId
+syn match sassId         "[[:alnum:]_-]\+" contained
+syn match sassClassChar  "\.[[:alnum:]_-]\@=" nextgroup=sassClass
+syn match sassClass      "[[:alnum:]_-]\+" contained
+syn match sassAmpersand  "&"
 
-" Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_haml_syntax_inits")
-  if version < 508
-    let did_haml_syntax_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
+" TODO: Attribute namespaces
+" TODO: Arithmetic (including strings and concatenation)
 
-  HiLink sassSelector           Statement
-  HiLink sassSelectorIncluded   Statement
-  HiLink sassAttributesIncluded Type
-  HiLink sassValue              Normal
+syn region sassInclude start="@import" end=";\|$" contains=scssComment,cssURL,cssUnicodeEscape,cssMediaType
+syn region sassDebugLine end=";\|$" matchgroup=sassDebug start="@debug\>" contains=@sassCssAttributes,sassVariable,sassFunction
+syn region sassWarnLine end=";\|$" matchgroup=sassWarn start="@warn\>" contains=@sassCssAttributes,sassVariable,sassFunction
+syn region sassControlLine matchgroup=sassControl start="@\%(if\|else\%(\s\+if\)\=\|while\|for\|each\)\>" end="[{};]\@=\|$" contains=sassFor,@sassCssAttributes,sassVariable,sassFunction
+syn keyword sassFor from to through in contained
 
-  HiLink sassConstantIncluded   Constant
-"  HiLink sassConstant           Constant
-  HiLink sassColour             Constant
-  HiLink sassNumber             Number
+syn keyword sassTodo        FIXME NOTE TODO OPTIMIZE XXX contained
+syn region  sassComment     start="^\z(\s*\)//"  end="^\%(\z1 \)\@!" contains=sassTodo,@Spell
+syn region  sassCssComment  start="^\z(\s*\)/\*" end="^\%(\z1 \)\@!" contains=sassTodo,@Spell
 
-  HiLink sassStringQQ           sassStringQ
-  HiLink sassStringQ            String
-  HiLink sassUnicodeEscape      sassSpecialCharQ
-  HiLink sassSpecialCharQQ      sassSpecialCharQ
-  HiLink sassSpecialCharQ       String
+hi def link sassCssComment              sassComment
+hi def link sassComment                 Comment
+hi def link sassDefault                 cssImportant
+hi def link sassVariable                Identifier
+hi def link sassFunction                Function
+hi def link sassMixing                  PreProc
+hi def link sassMixin                   PreProc
+hi def link sassExtend                  PreProc
+hi def link sassTodo                    Todo
+hi def link sassInclude                 Include
+hi def link sassDebug                   sassControl
+hi def link sassWarn                    sassControl
+hi def link sassControl                 PreProc
+hi def link sassFor                     PreProc
+hi def link sassEscape                  Special
+hi def link sassIdChar                  Special
+hi def link sassClassChar               Special
+hi def link sassInterpolationDelimiter  Delimiter
+hi def link sassAmpersand               Character
+hi def link sassId                      Identifier
+hi def link sassClass                   Type
 
-  HiLink sassComment		Comment
-  HiLink sassTodo               Todo
-
-  delcommand HiLink
-endif
 let b:current_syntax = "sass"
 
-if main_syntax == 'sass'
-  unlet main_syntax
-endif
-
-" vim: nowrap sw=2 sts=2 ts=8 ff=unix:
+" vim:set sw=2:
