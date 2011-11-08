@@ -28,6 +28,7 @@
 	diffc = diff --cached
 	forkup = pull --rebase upstream
 	h = stash
+	hs = stash save
 	last = log -1
 	newb = checkout -b
 	quicklog = log --oneline -10
