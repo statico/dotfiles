@@ -176,6 +176,8 @@ alias gdw='git diff -w'
 alias gdc='git diff --cached'
 alias gfa='git fetch --all'
 alias gh='git stash'
+alias ghl='git stash list'
+alias ghp='git stash pop'
 alias ghs='git stash save'
 alias gp='git push'
 alias gpo='git push origin'
@@ -216,7 +218,6 @@ alias svnl='svn log -v -r HEAD'
 alias svnvimdiff='svn diff | vim -R +setf\ diff\ nolist -'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
-alias v='vim -R -'
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
 alias x='screen -A -x'
@@ -235,6 +236,12 @@ if _has vim; then
 else
     alias vim=vi
 fi
+
+# Nico is amazing for showing me this.
+alias v='vim -R -'
+for i in /usr/share/vim/vim*/macros/less.sh(N) ; do
+    alias v="$i"
+done
 
 # Linux should definitely have Gnu coreutils, right?
 if _is Linux; then
