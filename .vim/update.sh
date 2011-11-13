@@ -3,8 +3,9 @@
 # Updates Vim plugins.
 #
 
-basedir=~/.dotfiles
-vimdir=$basedir/.vim
+cd ~/.dotfiles
+
+vimdir=.vim
 bundledir=$vimdir/bundle
 tmp=/tmp/$LOGNAME-vim-update
 
