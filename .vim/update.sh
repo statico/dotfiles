@@ -11,6 +11,7 @@ tmp=/tmp/$LOGNAME-vim-update
 
 # URLS --------------------------------------------------------------------
 
+# This is a list of all plugins which are available via Git repos.
 repos=(
   git://git.wincent.com/command-t.git
   https://github.com/altercation/vim-colors-solarized.git
@@ -28,6 +29,8 @@ repos=(
   https://github.com/vim-scripts/moria.git
   )
 
+# Here's a list of everything else to download in the format
+# <destination>;<url>
 other=(
   'vim-fuzzyfinder;https://bitbucket.org/ns9tks/vim-fuzzyfinder/get/tip.zip'
   'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
@@ -42,10 +45,17 @@ case "$1" in
 
     for url in ${repos[@]}; do
       dest="$bundledir/$(basename $url | sed -e 's/\.git$//')"
-      git submodule add $url $dest || true # Argh.
+
+      # Add the submodule if it doesn't already exist. (Using [ -d ] alone
+      # isn't a reliable way of checking.
+      git submodule add $url $dest || true
+
+      # Ignore any changes in the submodules such as when a plugin compiles its
+      # help tags.
       git config submodule.$dest.ignore dirty
     done
 
+    # Init and update everything. Should be idempotent.
     git submodule update --init $bundledir
     git submodule update --rebase $bundledir
     ;;
@@ -62,25 +72,32 @@ case "$1" in
       name=${parts[0]}
       url=${parts[1]}
       dest=$bundledir/$name
+
+      # A temporary filename to hold the downloaded contents.
       f=download
+      curl -L $url >$f
 
       rm -rf $dest $f
 
-      curl -L $url >$f
       if echo $url | egrep '.vim$'; then
-        # Single file
+        # For single files, create the destination directory and download the
+        # file there. The filename.
         mkdir -p $dest
         pushd $dest
         curl -OL $url
         popd
+
       elif echo $url | egrep '.zip$'; then
-        # Zip archive
+        # Zip archives from VCS tend to have an annoying outer wrapper
+        # directory, so unpacking them into their own directory first makes it
+        # easy to remove the wrapper.
         unzip $f -d $name
         mkdir -p $dest
         mv $name/*/* $dest
         rm -rf $name
+
       else
-        # Tarball
+        # Tarballs: TODO
         echo TODO
       fi
 
@@ -92,6 +109,7 @@ case "$1" in
 
   # COMPILING -----------------------------------------------------------
   compile)
+    # Some plugins, particularly Command-T, need to be compiled.
     for dir in $bundledir/*/Rakefile; do
       pushd "$(dirname $dir)"
       rake make || true
@@ -100,6 +118,13 @@ case "$1" in
     ;;
 
   # HELP ----------------------------------------------------------------
+
+  all)
+    $0 repos
+    $0 other
+    $0 compile
+    ;;
+
   *)
     set +x
     echo
