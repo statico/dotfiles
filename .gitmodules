@@ -37,3 +37,6 @@
 [submodule ".vim/bundle/Railscasts-Theme-GUIand256color"]
 	path = .vim/bundle/Railscasts-Theme-GUIand256color
 	url = https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
+[submodule ".vim/bundle/minibufexpl.vim"]
+	path = .vim/bundle/minibufexpl.vim
+	url = https://github.com/fholgado/minibufexpl.vim.git
