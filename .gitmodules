@@ -1,18 +1,12 @@
 [submodule ".vim/bundle/vim-pathogen"]
 	path = .vim/bundle/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
-[submodule "/Users/ian/.dotfiles/.vim/bundle/snipmate.vim"]
-	path = /Users/ian/.dotfiles/.vim/bundle/snipmate.vim
-	url = https://github.com/msanders/snipmate.vim.git
 [submodule "/Users/ian/.dotfiles/.vim/bundle/vim-pathogen"]
 	path = /Users/ian/.dotfiles/.vim/bundle/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
 [submodule "/Users/ian/.dotfiles/.vim/bundle/vim-colors-solarized"]
 	path = /Users/ian/.dotfiles/.vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
-[submodule "/Users/ian/.dotfiles/.vim/bundle/Railscasts-Theme-GUIand256color"]
-	path = /Users/ian/.dotfiles/.vim/bundle/Railscasts-Theme-GUIand256color
-	url = https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
 [submodule "/Users/ian/.dotfiles/.vim/bundle/moria"]
 	path = /Users/ian/.dotfiles/.vim/bundle/moria
 	url = https://github.com/vim-scripts/moria.git
