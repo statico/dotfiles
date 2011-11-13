@@ -23,6 +23,7 @@ repos=(
   https://github.com/tpope/vim-haml.git
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
+  https://github.com/tpope/vim-ragtag.git
   https://github.com/tpope/vim-surround.git
   https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/ZenCoding.vim.git
