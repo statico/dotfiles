@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2010 Chris Wanstrath
 
-;; Version 0.3.0
+;; Version: 0.4.0
 ;; Keywords: CoffeeScript major mode
 ;; Author: Chris Wanstrath <chris@ozmm.org>
 ;; URL: http://github.com/defunkt/coffee-script
@@ -98,6 +98,13 @@
 path."
   :type 'string
   :group 'coffee)
+
+(defcustom js2coffee-command "js2coffee"
+  "The js2coffee command used for evaluating code. Must be in your
+path."
+  :type 'string
+  :group 'coffee)
+
 
 (defcustom coffee-args-repl '("-i")
   "The command line arguments to pass to `coffee-command' to start a REPL."
@@ -234,6 +241,21 @@ If FILENAME is omitted, the current buffer's file name is used."
   (funcall coffee-js-mode)
   (goto-char (point-min)))
 
+(defun coffee-js2coffee-replace-region (start end)
+  "Replace JS to coffee in current buffer."
+  (interactive "r")
+
+  (let ((buffer (get-buffer coffee-compiled-buffer-name)))
+    (when buffer
+      (kill-buffer buffer)))
+
+  (call-process-region start end 
+                       js2coffee-command nil
+                       (current-buffer)
+                       )
+  (delete-region start end)
+  )
+
 (defun coffee-show-version ()
   "Prints the `coffee-mode' version."
   (interactive)
@@ -302,7 +324,7 @@ If FILENAME is omitted, the current buffer's file name is used."
 (defvar coffee-namespace-regexp "\\b\\(class\\s +\\(\\S +\\)\\)\\b")
 
 ;; Booleans
-(defvar coffee-boolean-regexp "\\b\\(true\\|false\\|yes\\|no\\|on\\|off\\|null\\)\\b")
+(defvar coffee-boolean-regexp "\\b\\(true\\|false\\|yes\\|no\\|on\\|off\\|null\\|undefined\\)\\b")
 
 ;; Regular Expressions
 (defvar coffee-regexp-regexp "\\/\\(\\\\.\\|\\[\\(\\\\.\\|.\\)+?\\]\\|[^/]\\)+?\\/")
@@ -705,3 +727,4 @@ line? Returns `t' or `nil'. See the README for more details."
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+;;; coffee-mode.el ends here

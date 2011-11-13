@@ -23,18 +23,10 @@ function unpack () {
 
 case "$1" in
 
-  small)
-    echo "Updating single files"
+  smallslow)
+    echo "Updating single rate-limited files"
     pushd $vendordir
     urls=(
-      http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
-      http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
-      http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
-      http://hg.piranha.org.ua/project-root/raw-file/tip/project-root.el
-      http://hg.piranha.org.ua/project-root/raw-file/tip/find-cmd.el
-      http://jblevins.org/projects/markdown-mode/markdown-mode.el
-      http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
-      http://www.dr-qubit.org/undo-tree/undo-tree.el
       http://www.emacswiki.org/emacs/download/anything.el
       http://www.emacswiki.org/emacs/download/anything-config.el
       http://www.emacswiki.org/emacs/download/anything-match-plugin.el
@@ -48,6 +40,27 @@ case "$1" in
       http://www.emacswiki.org/emacs/download/tiling.el
       http://www.emacswiki.org/emacs/download/vimpulse.el
       http://www.emacswiki.org/emacs/download/zoom-frm.el
+    )
+    for url in ${urls[@]} ; do
+      curl -sOL $url
+      sleep 2
+    done
+    wait
+    popd
+    ;;
+
+  small)
+    echo "Updating single files"
+    pushd $vendordir
+    urls=(
+      http://google-styleguide.googlecode.com/svn/trunk/google-c-style.el
+      http://hg.rooijan.za.net/addons/raw-file/tip/ack-emacs.el
+      http://hg.rooijan.za.net/addons/raw-file/tip/ack.el
+      #http://hg.piranha.org.ua/project-root/raw-file/tip/project-root.el
+      #http://hg.piranha.org.ua/project-root/raw-file/tip/find-cmd.el
+      http://jblevins.org/projects/markdown-mode/markdown-mode.el
+      http://nschum.de/src/emacs/highlight-symbol/highlight-symbol.el
+      http://www.dr-qubit.org/undo-tree/undo-tree.el
       http://emacs-nav.googlecode.com/hg/nav.el
       https://raw.github.com/voins/mo-git-blame/master/mo-git-blame.el
       https://raw.github.com/yoshiki/yaml-mode/master/yaml-mode.el
@@ -57,7 +70,6 @@ case "$1" in
     )
     for url in ${urls[@]} ; do
       curl -sOL $url
-      sleep 1
     done
     wait
     popd
