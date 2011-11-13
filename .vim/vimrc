@@ -434,7 +434,7 @@ function! ToggleMiniBufVerticalness()
     silent! TMiniBufExplorer
 endfunction
 "let g:miniBufExplorerMoreThanOne=999 " Don't open MBE by default
-let g:miniBufExplorerMoreThanOne=3 " Show when 3+ buffers are open.
+"let g:miniBufExplorerMoreThanOne=3 " Show when 3+ buffers are open.
 
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']

@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/vim-ragtag"]
 	path = .vim/bundle/vim-ragtag
 	url = https://github.com/tpope/vim-ragtag.git
+[submodule ".vim/bundle/closetag.vim"]
+	path = .vim/bundle/closetag.vim
+	url = https://github.com/docunext/closetag.vim.git
