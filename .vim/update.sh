@@ -38,11 +38,11 @@ case "$1" in
   # GIT -----------------------------------------------------------------
   repos)
     set -x
-    cd $basedir
 
     for url in ${repos[@]}; do
       dest="$bundledir/$(basename $url | sed -e 's/\.git$//')"
       git submodule add $url $dest || true # Argh.
+      git config submodule.$dest.ignore dirty
     done
 
     git submodule update --init $bundledir
