@@ -387,6 +387,11 @@ endif
 " Section: Plugin settings {{{1
 "--------------------------------------------------------------------------
 
+" A new Vim package system
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
+call pathogen#helptags()
+
 " for any plugins that use this, make their keymappings use comma
 let mapleader = ","
 let maplocalleader = ","
