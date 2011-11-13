@@ -30,7 +30,7 @@ repos=(
 
 other=(
   'vim-fuzzyfinder;https://bitbucket.org/ns9tks/vim-fuzzyfinder/get/tip.zip'
-  'zenburn/color;http://slinky.imukuppi.org/zenburn/zenburn.vim'
+  'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
   )
 
