@@ -123,6 +123,13 @@
 ;; If a file has changed and I haven't modified it, don't bother me.
 (global-auto-revert-mode 1)
 
+;; From http://www.emacswiki.org/emacs/SmoothScrolling -
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
+
 ;; Color theme.
 (require 'color-theme)
 (add-to-list 'load-path "~/.emacs.d/vendor/color-theme/themes")
@@ -588,7 +595,7 @@
 (add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
 (add-to-list 'auto-mode-alist '("TODO$" . org-mode))
 
-;; ReBuilder
+;; ReBuilder for regexes
 (setq reb-re-syntax 'string)
 
 ;; YASnippet
