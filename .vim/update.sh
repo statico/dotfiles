@@ -74,11 +74,7 @@ case "$1" in
       url=${parts[1]}
       dest=$bundledir/$name
 
-      # A temporary filename to hold the downloaded contents.
-      f=download
-      curl -L $url >$f
-
-      rm -rf $dest $f
+      rm -rf $dest
 
       if echo $url | egrep '.vim$'; then
         # For single files, create the destination directory and download the
@@ -92,10 +88,12 @@ case "$1" in
         # Zip archives from VCS tend to have an annoying outer wrapper
         # directory, so unpacking them into their own directory first makes it
         # easy to remove the wrapper.
+        f=download.zip
+        curl -L $url >$f
         unzip $f -d $name
         mkdir -p $dest
         mv $name/*/* $dest
-        rm -rf $name
+        rm -rf $name $f
 
       else
         # Tarballs: TODO
