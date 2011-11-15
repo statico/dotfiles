@@ -534,6 +534,10 @@ highlight SpecialKey ctermbg=Yellow guibg=Yellow
 " make menu selections visible
 highlight PmenuSel ctermfg=black ctermbg=magenta
 
+" the sign column slows down remote terminals
+highlight clear SignColumn
+highlight link SignColumn Ignore
+
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------
 
