@@ -20,6 +20,7 @@ repos=(
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/msanders/snipmate.vim.git
   https://github.com/scrooloose/nerdtree.git
+  https://github.com/scrooloose/syntastic.git
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-haml.git
   https://github.com/tpope/vim-markdown.git
