@@ -70,9 +70,12 @@ map <C-n> :MBEbn<CR>
 map <C-p> :MBEbp<CR>
 
 " Let's try this new FuzzyFinder plugin...
-nmap ; :FufBuffer<CR>
+"nmap ; :FufBuffer<CR>
 nmap <D-e> :FufFile<CR>
 nmap <M-e> :FufFile<CR>
+
+" Let's try replacing FuzzyFinder with Command-T...
+nmap ; :CommandT<CR>
 
 " Emacs-like bindings in normal mode
 nmap <C-x>o <C-w><C-w>
@@ -291,7 +294,7 @@ set tabstop=4               " The One True Tab
 set notitle                 " Don't set the title of the Vim window
 set wildmenu                " Show possible completions on command line
 set wildmode=list:longest,full " List all options and complete
-set wildignore=*.class,*.o,*~  " Ignore certain files in tab-completion
+set wildignore=*.class,*.o,*~,.git,third_party,node_modules  " Ignore certain files in tab-completion
 
 " Section: Commands & Functions {{{1
 "--------------------------------------------------------------------------
@@ -445,8 +448,9 @@ let g:fuf_file_exclude = '\v\~$|\.(o|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|
 let g:fuf_keyNextMode = '<C-y>'
 let g:fuf_keyPrevMode = '<C-t>'
 
-" vim-coffee-script
-call pathogen#runtime_append_all_bundles()
+" Command-T
+let g:CommandTMatchWindowAtTop = 1
+let g:CommandTCancelMap = ['<C-g>', '<C-c>', '<Esc>']
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
