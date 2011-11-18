@@ -30,6 +30,7 @@ repos=(
   https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/ZenCoding.vim.git
   https://github.com/vim-scripts/moria.git
+  https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
   )
 

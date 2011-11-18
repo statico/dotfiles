@@ -1,4 +1,4 @@
-colorscheme railscasts
+colorscheme oceandeep
 
 hi NonText guifg=#555555 gui=NONE term=NONE
 hi clear LineNr
