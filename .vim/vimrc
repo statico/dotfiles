@@ -70,12 +70,12 @@ map <C-n> :MBEbn<CR>
 map <C-p> :MBEbp<CR>
 
 " Let's try this new FuzzyFinder plugin...
-"nmap ; :FufBuffer<CR>
+nmap ; :FufBuffer<CR>
 nmap <D-e> :FufFile<CR>
 nmap <M-e> :FufFile<CR>
 
 " Let's try replacing FuzzyFinder with Command-T...
-nmap ; :CommandT<CR>
+"nmap ; :CommandT<CR>
 
 " Emacs-like bindings in normal mode
 nmap <C-x>o <C-w><C-w>
@@ -452,14 +452,13 @@ let g:fuf_keyPrevMode = '<C-t>'
 let g:CommandTMatchWindowAtTop = 1
 let g:CommandTCancelMap = ['<C-g>', '<C-c>', '<Esc>']
 
-    " Syntastic
-    let g:syntastic_enable_signs=1
-    let g:syntastic_auto_jump=1
-    let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-    set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-
+" Syntastic
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_jump=0
+let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
