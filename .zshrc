@@ -162,6 +162,7 @@ alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
 alias e='emacs'
 alias ec='emacsclient --no-wait'
+alias f='fg'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
@@ -600,6 +601,9 @@ bindkey -s '\ej' "^Ussh c -t screen -D -R^M"
 
 # Smart less-adder
 bindkey -s "\el" " 2>&1|less^M"
+
+# This lets me use ^Z to toggle between open text editors.
+bindkey -s '^Z' '^Ufg^M'
 
 # More custom bindings
 bindkey "^O" copy-prev-shell-word
