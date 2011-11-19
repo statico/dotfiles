@@ -37,7 +37,7 @@ function link() {
     dest=$2
 
     if [ -e $dest ]; then
-        if [ -s $dest ]; then
+        if [ -L $dest ]; then
             # Already symlinked -- I'll assume correctly.
             return
         else
