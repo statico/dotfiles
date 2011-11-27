@@ -456,9 +456,9 @@ let g:CommandTCancelMap = ['<C-g>', '<C-c>', '<Esc>']
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on

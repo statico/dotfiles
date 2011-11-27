@@ -29,6 +29,7 @@ repos=(
   https://github.com/tpope/vim-surround.git
   https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/ZenCoding.vim.git
+  https://github.com/vim-scripts/keepcase.vim.git
   https://github.com/vim-scripts/moria.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
@@ -61,8 +62,7 @@ case "$1" in
     done
 
     # Init and update everything. Should be idempotent.
-    git submodule update --init $bundledir
-    git submodule update --rebase $bundledir
+    git submodule update --init --rebase $bundledir
     ;;
 
   # TARBALLS AND SINGLE FILES -------------------------------------------

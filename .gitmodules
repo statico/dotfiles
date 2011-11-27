@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/oceandeep"]
 	path = .vim/bundle/oceandeep
 	url = https://github.com/vim-scripts/oceandeep.git
+[submodule ".vim/bundle/keepcase.vim"]
+	path = .vim/bundle/keepcase.vim
+	url = https://github.com/vim-scripts/keepcase.vim.git
