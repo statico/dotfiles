@@ -58,3 +58,6 @@
 [submodule ".vim/bundle/keepcase.vim"]
 	path = .vim/bundle/keepcase.vim
 	url = https://github.com/vim-scripts/keepcase.vim.git
+[submodule ".vim/bundle/vim-conque"]
+	path = .vim/bundle/vim-conque
+	url = https://github.com/rson/vim-conque.git

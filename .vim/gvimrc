@@ -16,5 +16,10 @@ set visualbell
 set errorbells
 set cursorline
 
+" Make ^Z swap between a terminal, like Emacs.
+let g:ConqueTerm_CloseOnEnd = 1
+let g:ConqueTerm_EscKey = '<C-w>'
+let g:ConqueTerm_CWInsert = 1
+
 " now load specifics to this machine
 source ~/.gvimlocal
