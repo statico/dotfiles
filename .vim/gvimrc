@@ -8,7 +8,7 @@ hi link LineNr NonText
 "set listchars=eol:¶,tab:»\ ,trail:·,extends:⇒
 
 set guicursor+=a:blinkon0
-set guioptions=aigrLm
+set guioptions=aigm
 set mousemodel=popup
 set scrolloff=6
 set sidescrolloff=6
