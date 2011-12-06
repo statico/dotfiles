@@ -31,7 +31,7 @@
 	hs = stash save
 	last = log -1
 	newb = checkout -b
-	quicklog = log --oneline -10
+	quicklog = log --oneline --decorate -10
 	r = remote
 	rewind-one = reset --hard HEAD^
 	st = status
