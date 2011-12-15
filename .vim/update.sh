@@ -9,6 +9,13 @@ vimdir=.vim
 bundledir=$vimdir/bundle
 tmp=/tmp/$LOGNAME-vim-update
 
+if [ -n "$INSECURE" ]; then
+  curl='curl --insecure'
+  export GIT_SSL_NO_VERIFY=true
+else
+  curl='curl'
+fi
+
 # URLS --------------------------------------------------------------------
 
 # This is a list of all plugins which are available via Git repos.
@@ -86,7 +93,7 @@ case "$1" in
         # file there. The filename.
         mkdir -p $dest
         pushd $dest
-        curl -OL $url
+        $curl -OL $url
         popd
 
       elif echo $url | egrep '.zip$'; then
@@ -94,7 +101,7 @@ case "$1" in
         # directory, so unpacking them into their own directory first makes it
         # easy to remove the wrapper.
         f=download.zip
-        curl -L $url >$f
+        $curl -L $url >$f
         unzip $f -d $name
         mkdir -p $dest
         mv $name/*/* $dest
