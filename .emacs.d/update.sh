@@ -94,6 +94,21 @@ case "$1" in
 
     ;;
 
+  evernote)
+    echo "Updating evernote"
+    f=evernote
+    dest=$vendordir/evernote-mode
+    rm -rf $f
+    mkdir $f
+    pushd $f
+    curl -L http://emacs-evernote-mode.googlecode.com/files/evernote-mode-0_41.zip >$f.zip
+    unzip $f.zip
+    cp -r evernote-mode* $dest
+    cd $dest/ruby
+    ruby setup.rb
+    popd
+    ;;
+
   jshint)
     echo "Updating jshint"
     f=jshint
