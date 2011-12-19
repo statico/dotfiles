@@ -128,6 +128,7 @@ case "$1" in
       rake make || true
       popd
     done
+    echo "Compile OK"
     ;;
 
   # HELP ----------------------------------------------------------------
@@ -136,6 +137,8 @@ case "$1" in
     $0 repos
     $0 other
     $0 compile
+    echo
+    echo "Update OK"
     ;;
 
   *)
