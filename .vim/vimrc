@@ -106,7 +106,7 @@ nnoremap <CR> za
 vnoremap <space> zf
 
 " Search for the word under the cursor in the current directory
-nmap <C-k> :!clear; ack -C "\b<cword>\b" \| less -FRX <CR><CR>
+nmap <C-k> :!clear; ack -C "\b<cword>\b" \| less -FRX <CR>
 
 " CTRL-z is too close, plus I use it very frequently, and i want to write
 " first
@@ -294,7 +294,7 @@ set tabstop=4               " The One True Tab
 set notitle                 " Don't set the title of the Vim window
 set wildmenu                " Show possible completions on command line
 set wildmode=list:longest,full " List all options and complete
-set wildignore=*.class,*.o,*~,.git,third_party,node_modules  " Ignore certain files in tab-completion
+set wildignore=*.class,*.o,*~,*.pyc,.git,third_party,node_modules  " Ignore certain files in tab-completion
 
 " Section: Commands & Functions {{{1
 "--------------------------------------------------------------------------
