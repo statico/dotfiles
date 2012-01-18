@@ -64,3 +64,6 @@
 [submodule ".vim/bundle/vim-javascript"]
 	path = .vim/bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule ".vim/bundle/bufkill-vim"]
+	path = .vim/bundle/bufkill-vim
+	url = https://github.com/hced/bufkill-vim.git

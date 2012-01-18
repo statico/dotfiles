@@ -69,6 +69,9 @@ nmap <C-e> :e#<CR>
 map <C-n> :MBEbn<CR>
 map <C-p> :MBEbp<CR>
 
+" Let's try buffkill-vim using my favorite Emacs binding...
+nmap <Esc>k :BD<CR>
+
 " Let's try this new FuzzyFinder plugin...
 nmap ; :FufBuffer<CR>
 nmap <D-e> :FufFile<CR>
