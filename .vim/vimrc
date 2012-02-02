@@ -74,6 +74,7 @@ nmap <Esc>k :BD<CR>
 
 " Let's try this new FuzzyFinder plugin...
 nmap ; :FufBuffer<CR>
+nmap <Leader>r :FufTag<CR>
 nmap <D-e> :FufFile<CR>
 nmap <M-e> :FufFile<CR>
 
