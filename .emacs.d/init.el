@@ -432,6 +432,8 @@
 (defalias 'rb 'rename-buffer)
 (defalias 'rfab 'rename-file-and-buffer)
 (defalias 'slines 'sort-lines)
+(defalias 'afm 'auto-fill-mode)
+(defalias 'llm 'longlines-mode)
 
 ;; C-w kills a word or region depending on context. (DWIM)
 (defun backward-kill-word-or-kill-region (&optional arg)
