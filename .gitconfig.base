@@ -32,6 +32,7 @@
 	last = log -1
 	newb = checkout -b
 	quicklog = log --oneline --decorate -10
+	quicklog-long = log --oneline --decorate
 	r = remote
 	rewind-one = reset --hard HEAD^
 	st = status
