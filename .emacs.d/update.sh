@@ -67,6 +67,8 @@ case "$1" in
       https://raw.github.com/nex3/haml-mode/master/haml-mode.el
       https://raw.github.com/defunkt/coffee-mode/master/coffee-mode.el
       https://raw.github.com/nex3/sass-mode/master/sass-mode.el
+      https://raw.github.com/diasjorge/jekyll.el/master/jekyll-mumamo.el
+      https://raw.github.com/diasjorge/jekyll.el/master/jekyll.el
     )
     for url in ${urls[@]} ; do
       curl -sOL $url
