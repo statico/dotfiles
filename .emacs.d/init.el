@@ -607,14 +607,6 @@
                            "~/.emacs.d/vendor/yasnippet/snippets"))
 (mapc 'yas/load-directory yas/root-directory)
 
-;; Jekyll Blog Editing Mode
-;; (require 'jekyll)
-;; (add-to-list 'jekyll-modes-list '("xml" 'xml-mode))
-;; (add-to-list 'jekyll-modes-list '("html" 'html-mode))
-;; (add-to-list 'auto-mode-alist '("_\\(posts\\|drafts\\).*\\.md$" . jekyll-markdown-mumamo-mode))
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customize settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

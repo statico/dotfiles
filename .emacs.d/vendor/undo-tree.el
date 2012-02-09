@@ -1,11 +1,12 @@
+
 ;;; undo-tree.el --- Treat undo history as a tree
 
 
-;; Copyright (C) 2009-2012 Toby Cubitt
+;; Copyright (C) 2009-2011 Toby Cubitt
 
 ;; Author: Toby Cubitt <toby-undo-tree@dr-qubit.org>
-;; Version: 0.3.3
-;; Keywords: convenience, files, undo, redo, history, tree
+;; Version: 0.3.1
+;; Keywords: undo, redo, history, tree
 ;; URL: http://www.dr-qubit.org/emacs.php
 ;; Git Repository: http://www.dr-qubit.org/git/undo-tree.git
 
@@ -75,10 +76,10 @@
 ;; Quick-Start
 ;; ===========
 ;;
-;; If you're the kind of person who likes to jump in the car and drive,
-;; without bothering to first figure out whether the button on the left dips
-;; the headlights or operates the ejector seat (after all, you'll soon figure
-;; it out when you push it), then here's the minimum you need to know:
+;; If you're the kind of person who likes jump in the car and drive, without
+;; bothering to first figure out whether the button on the left dips the
+;; headlights or operates the ejector seat (after all, you'll soon figure it
+;; out when you push it), then here's the minimum you need to know:
 ;;
 ;; `undo-tree-mode' and `global-undo-tree-mode'
 ;;   Enable undo-tree mode (either in the current buffer or globally).
@@ -130,10 +131,10 @@
 ;; .  >
 ;;   Scroll right.
 ;;
-;; <pgup>  M-v
+;; <pgup>
 ;;   Scroll up.
 ;;
-;; <pgdown>  C-v
+;; <pgdown>
 ;;   Scroll down.
 ;;
 ;;
@@ -469,7 +470,7 @@
 ;;
 ;; Emacs allows a very useful and powerful method of undoing only selected
 ;; changes: when a region is active, only changes that affect the text within
-;; that region will be undone. With the standard Emacs undo system, changes
+;; that region will are undone. With the standard Emacs undo system, changes
 ;; produced by undoing-in-region naturally get added onto the end of the
 ;; linear undo history:
 ;;
@@ -605,14 +606,6 @@
 
 ;;; Change Log:
 ;;
-;; Version 0.3.3;
-;; * added `term-mode' to `undo-tree-incompatible-major-modes'
-;;
-;; Version 0.3.2
-;; * added additional check in `undo-list-GCd-marker-elt-p' to guard against
-;;   undo elements being mis-identified as marker elements.
-;; * fixed bug in `undo-list-transfer-to-tree'
-;;
 ;; Version 0.3.1
 ;; * use `get-buffer-create' when creating the visualizer buffer in
 ;;   `undo-tree-visualize', to fix bug caused by `global-undo-tree-mode' being
@@ -741,7 +734,7 @@ when `undo-tree-mode' is enabled."
   :group 'undo-tree
   :type 'string)
 
-(defcustom undo-tree-incompatible-major-modes '(term-mode)
+(defcustom undo-tree-incompatible-major-modes nil
   "List of major-modes in which `undo-tree-mode' should not be enabled.
 \(See `turn-on-undo-tree-mode'.\)"
   :group 'undo-tree
@@ -1296,18 +1289,7 @@ Comparison is done with `eq'."
   `(markerp (car-safe ,elt)))
 
 (defmacro undo-list-GCd-marker-elt-p (elt)
-  ;; Return t if ELT is a marker element whose marker has been moved to the
-  ;; object-pool, so may potentially have been garbage-collected.
-  ;; Note: Valid marker undo elements should be uniquely identified as cons
-  ;; cells with a symbol in the car (replacing the marker), and a number in
-  ;; the cdr. However, to guard against future changes to undo element
-  ;; formats, we perform an additional redundant check on the symbol name.
-  `(and (car-safe ,elt)
-	(symbolp (car ,elt))
-	(let ((str (symbol-name (car ,elt))))
-	  (and (> (length str) 12)
-	       (string= (substring str 0 12) "undo-tree-id")))
-	(numberp (cdr-safe ,elt))))
+  `(and (symbolp (car-safe ,elt)) (numberp (cdr-safe ,elt))))
 
 
 (defun undo-tree-move-GC-elts-to-pool (elt)
@@ -1402,8 +1384,11 @@ Comparison is done with `eq'."
   ;; if `buffer-undo-tree' is empty, create initial undo-tree
   (when (null buffer-undo-tree) (setq buffer-undo-tree (make-undo-tree)))
   ;; make sure there's a canary at end of `buffer-undo-list'
-  (when (null buffer-undo-list)
-    (setq buffer-undo-list '(nil undo-tree-canary)))
+  (if (null buffer-undo-list)
+      (setq buffer-undo-list '(nil undo-tree-canary))
+    (let ((elt (last buffer-undo-list)))
+      (unless (eq (car elt) 'undo-tree-canary)
+	(setcdr elt '(nil undo-tree-canary)))))
 
   (unless (eq (cadr buffer-undo-list) 'undo-tree-canary)
     ;; create new node from first changeset in `buffer-undo-list', save old
@@ -1432,8 +1417,7 @@ Comparison is done with `eq'."
 	(setq node (undo-tree-grow-backwards node nil))
 	(setf (undo-tree-root buffer-undo-tree) node)
 	(setq buffer-undo-list '(nil undo-tree-canary))
-	(setf (undo-tree-size buffer-undo-tree) size)
-	(setq buffer-undo-list '(nil undo-tree-canary))))
+	(setf (undo-tree-size buffer-undo-tree) size)))
     ;; discard undo history if necessary
     (undo-tree-discard-history)))
 
@@ -1523,10 +1507,6 @@ Comparison is done with `eq'."
 	  nil)
 	 ;; discard root
          (t
-	  ;; clear any register referring to root
-	  (let ((r (undo-tree-node-register node)))
-	    (when (and r (eq (get-register r) node))
-	      (set-register r nil)))
           ;; make child of root into new root
           (setq node (setf (undo-tree-root buffer-undo-tree)
                            (car (undo-tree-node-next node))))
@@ -1549,10 +1529,6 @@ Comparison is done with `eq'."
       (let* ((parent (undo-tree-node-previous node))
              (current (nth (undo-tree-node-branch parent)
                            (undo-tree-node-next parent))))
-	;; clear any register referring to the discarded node
-	(let ((r (undo-tree-node-register node)))
-	  (when (and r (eq (get-register r) node))
-	    (set-register r nil)))
 	;; update undo-tree size
 	(decf (undo-tree-size buffer-undo-tree)
 	      (+ (undo-list-byte-size (undo-tree-node-undo node))
@@ -2252,7 +2228,6 @@ of either NODE itself or some node above it in the tree."
 ;;; =====================================================================
 ;;;                        Undo-tree commands
 
-;;;###autoload
 (define-minor-mode undo-tree-mode
   "Toggle undo-tree mode.
 With no argument, this command toggles the mode.
@@ -2281,7 +2256,7 @@ Within the undo-tree visualizer, the following keys are available:
     (setq buffer-undo-tree nil)))
 
 
-(defun turn-on-undo-tree-mode (&optional print-message)
+(defun turn-on-undo-tree-mode ()
   "Enable `undo-tree-mode' in the current buffer, when appropriate.
 Some major modes implement their own undo system, which should
 not normally be overridden by `undo-tree-mode'. This command does
@@ -2296,11 +2271,11 @@ keybindings (C-/ and C-_) have been overridden somewhere other
 than in the global map. In addition, `undo-tree-mode' will not be
 enabled if the buffer's `major-mode' appears in
 `undo-tree-incompatible-major-modes'."
-  (interactive "p")
+  (interactive)
   (if (or (key-binding [remap undo])
 	  (undo-tree-overridden-undo-bindings-p)
 	  (memq major-mode undo-tree-incompatible-major-modes))
-      (when print-message
+      (when (interactive-p)
 	(message "Buffer does not support undo-tree-mode;\
  undo-tree-mode NOT enabled"))
     (undo-tree-mode 1)))
@@ -2325,7 +2300,6 @@ key bindings do not count.)"
       (global-set-key [?\C-_] binding2))))
 
 
-;;;###autoload
 (define-globalized-minor-mode global-undo-tree-mode
   undo-tree-mode turn-on-undo-tree-mode)
 
