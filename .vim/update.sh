@@ -23,7 +23,6 @@ repos=(
   git://git.wincent.com/command-t.git
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/docunext/closetag.vim.git
-  https://github.com/fholgado/minibufexpl.vim.git
   https://github.com/hced/bufkill-vim.git
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/msanders/snipmate.vim.git
