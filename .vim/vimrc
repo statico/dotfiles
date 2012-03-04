@@ -63,11 +63,9 @@ nmap \9 :e #9<CR>
 " You don't know what you're missing if you don't use this.
 nmap <C-e> :e#<CR>
 
-" MiniBufExplorer's bnext and bprev skip deleted buffers.
-"map <C-n> :bnext<CR>
-"map <C-p> :bprev<CR>
-map <C-n> :MBEbn<CR>
-map <C-p> :MBEbp<CR>
+" Move between open buffers.
+map <C-n> :bnext<CR>
+map <C-p> :bprev<CR>
 
 " Let's try buffkill-vim using my favorite Emacs binding...
 nmap <Esc>k :BD<CR>
