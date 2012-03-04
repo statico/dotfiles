@@ -256,7 +256,7 @@
 
 ;; C-z toggles between shell. (C-x C-z still suspends.)
 (require 'shell)
-(define-key shell-mode-map (kbd "C-z") 'bury-buffer)
+(define-key shell-mode-map (kbd "C-z") 'switch-to-previous-buffer)
 (global-set-key (kbd "C-z") (if gui 'shell 'suspend-emacs))
 
 ;; Make buffer names unique.
@@ -399,6 +399,10 @@
   (interactive)
   (find-file (expand-file-name "~/.emacs.d/init.el")))
 (global-set-key (kbd "C-M-0") 'open-init-dot-el)
+(defun open-local-el ()
+  (interactive)
+  (find-file (expand-file-name "~/.local.el")))
+(global-set-key (kbd "C-M-)") 'open-local-el)
 
 ;; Useful for editing config files
 (global-set-key (kbd "C-M-9") '(lambda ()
