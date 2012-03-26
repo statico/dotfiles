@@ -166,6 +166,9 @@
 (defun set-font-face-georgia ()
   (interactive)
   (set-font-face "Georgia 16" t))
+(defun set-font-face-terminus ()
+  (interactive)
+  (set-font-face "Terminus 10" t))
 (defalias 'sffi 'set-font-face-inconsolata)
 (defalias 'sffm 'set-font-face-monaco)
 (defalias 'sffg 'set-font-face-georgia)
@@ -307,32 +310,28 @@
 (define-key ac-complete-mode-map "\r" nil) ;; Interferes with CSS
 
 ;; HTML-editing settings
-(when (>= emacs-major-version 23)
-  (load "~/.emacs.d/vendor/nxhtml-2.08/autostart.el")
-
-  ;; No silly background colors for different modes.
-  (setq mumamo-background-colors nil)
-
-  ;; Set as the Django default for HTML files.
-  (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
-
-  ;; Useful commands
-  (global-set-key (kbd "C-c d") 'sgml-delete-tagged-text)
-
-  ;; Keep zencoding on when we edit HTML.
-  (add-hook 'django-html-mumamo-mode-hook 'zencoding-mode)
-  (add-hook 'html-mumamo-mode-hook 'zencoding-mode)
-  (add-hook 'sgml-mumamo-mode-hook 'zencoding-mode)
-  (add-hook 'sgml-mode-hook 'zencoding-mode))
+;;(when (>= emacs-major-version 23)
+;;  (load "~/.emacs.d/vendor/nxhtml-2.08/autostart.el")
+;;
+;;  ;; No silly background colors for different modes.
+;;  (setq mumamo-background-colors nil)
+;;
+;;  ;; Set as the Django default for HTML files.
+;;  (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
+;;
+;;  ;; Useful commands
+;;  (global-set-key (kbd "C-c d") 'sgml-delete-tagged-text)
+;;
+;;  ;; Keep zencoding on when we edit HTML.
+;;  (add-hook 'django-html-mumamo-mode-hook 'zencoding-mode)
+;;  (add-hook 'html-mumamo-mode-hook 'zencoding-mode)
+;;  (add-hook 'sgml-mumamo-mode-hook 'zencoding-mode)
+;;  (add-hook 'sgml-mode-hook 'zencoding-mode))
 
 ;; CSS settings
 (add-to-list 'auto-mode-alist '("\\.less$" . css-mode))
 (add-hook 'sass-mode-hook 'css-color-mode)
 (add-hook 'css-mode-hook 'css-color-mode)
-
-;; JavaScript settings
-(require 'js)
-(defvar javascript-mode-syntax-table js-mode-syntax-table) ;; monkey patch
 
 ;; dired settings
 (require 'dired)
@@ -597,19 +596,15 @@
   (setq magit-git-executable path)
   (setq mo-git-blame-git-executable path))
 
-;; Org Mode
-(add-to-list 'auto-mode-alist '("NOTES$" . org-mode))
-(add-to-list 'auto-mode-alist '("TODO$" . org-mode))
-
 ;; ReBuilder for regexes
 (setq reb-re-syntax 'string)
 
 ;; YASnippet
-(require 'yasnippet)
-(yas/initialize)
-(setq yas/root-directory '("~/.emacs.d/snippets"
-                           "~/.emacs.d/vendor/yasnippet/snippets"))
-(mapc 'yas/load-directory yas/root-directory)
+;; (require 'yasnippet)
+;; (yas/initialize)
+;; (setq yas/root-directory '("~/.emacs.d/snippets"
+;;                            "~/.emacs.d/vendor/yasnippet/snippets"))
+;; (mapc 'yas/load-directory yas/root-directory)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customize settings
