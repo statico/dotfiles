@@ -5,3 +5,4 @@
 .#*
 .unison.*.unison.tmp-bad
 *_flymake.*
+.vim/bundle/*/doc/tags
