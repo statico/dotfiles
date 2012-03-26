@@ -57,26 +57,19 @@ case "$1" in
   # GIT -----------------------------------------------------------------
   repos)
     set -x
-
+    mkdir -p $bundledir
     for url in ${repos[@]}; do
       dest="$bundledir/$(basename $url | sed -e 's/\.git$//')"
-
-      # Add the submodule if it doesn't already exist. (Using [ -d ] alone
-      # isn't a reliable way of checking.
-      git submodule add $url $dest || true
-
-      # Ignore any changes in the submodules such as when a plugin compiles its
-      # help tags.
-      git config submodule.$dest.ignore dirty
+      rm -rf $dest
+      git clone $url $dest
+      rm -rf $dest/.git
     done
-
-    # Init and update everything. Should be idempotent.
-    git submodule update --init --rebase $bundledir
     ;;
 
   # TARBALLS AND SINGLE FILES -------------------------------------------
   other)
     set -x
+    mkdir -p $bundledir
     rm -rf $tmp
     mkdir $tmp
     pushd $tmp
