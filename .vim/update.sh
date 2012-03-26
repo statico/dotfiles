@@ -42,6 +42,7 @@ repos=(
   https://github.com/vim-scripts/moria.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
+  https://github.com/michaeljsmith/vim-indent-object
   )
 
 # Here's a list of everything else to download in the format
