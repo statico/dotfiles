@@ -1,0 +1,7 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1464
+
+This color scheme contains four color schemes: two dark and two light color schemes. All highlighting groups have similar brightness. In the dark schemes bold highlighting is avoided, but used where it is reasonable. Different highlighting groups can be distinguished easily without a cluttered appearance. The highlights of all four color schemes have similar colors, but differ in contrast. 
+
+This color scheme is for the GUI version of Vim and makes only some minor tweaks for the console version.
+
+This color scheme is optimized for Vim 7.0, but works for Vim 6.0, too.

@@ -1,0 +1,65 @@
+@import "nib"
+
+// comment test
+
+padding-overloaded = true;
+padding = 2px;
+primary-color = red;
+
+if padding-overloaded
+  padding(x,y)
+    margin 15px
+
+border-radius()
+  -webkit-border-radius arguments
+  -moz-border-radius arguments
+  border-radius arguments
+
+.a-class
+  border-radius border-radius()
+  -moz-transform scale(1.2)
+
+body a:hover
+  font 12px/1.4 "Lucida Grande", Arial, sans-serif
+  background black !important
+  text-shadow 2px 2px 2px #fff
+
+  td a:hover
+    font 12px
+  td
+    font 12px
+
+[name="myprop"]
+  background rgba(255,255,255,0.5)
+
+#container
+  border-radius 5px
+  color: #000
+  float: left
+  display: block
+
+#myid
+  font 12px/1.4 "Lucida Grande", Arial, sans-serif
+
+body a:hover
+  font 12px/1.4 "Lucida Grande", Arial, sans-serif
+  background black !important
+  text-shadow 2px 2px 
+  color #ccc
+
+#butter.gump tr
+  border min(2px)
+  min-width min(2px)
+  color red(10) lighten-by(he) border-radius() image-size()
+  border-radius border-radius()
+
+form input {
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+vendor(prop, args)
+  {prop} args
+  -moz-{prop} args
+  -webkit-{prop} args

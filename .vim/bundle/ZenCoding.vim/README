@@ -1,0 +1,77 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2981
+
+
+This is vim script support expanding abbreviation like zen-coding.
+ref: http://code.google.com/p/zen-coding/
+
+There is a movie using zencoding.vim
+ref: http://mattn.github.com/zencoding-vim
+
+Source Repository.
+ref: http://github.com/mattn/zencoding-vim
+
+Type abbreviation
+   +-------------------------------------
+   | html:5_
+   +-------------------------------------
+"_" is a cursor position. and type "<c-y>," (Ctrl + y and Comma)
+NOTE: Don't worry about key map. you can change it easily.
+   +-------------------------------------
+   | <!DOCTYPE HTML>
+   | <html lang="en">
+   | <head>
+   |     <title></title>
+   |     <meta charset="UTF-8">
+   | </head>
+   | <body>
+   |      _
+   | </body>
+   | </html>
+   +-------------------------------------
+Type following
+   +-------------------------------------
+   | div#foo$*2>div.bar
+   +-------------------------------------
+And type "<c-y>,"
+   +-------------------------------------
+   |<div id="foo1">
+   |    <div class="bar">_</div>
+   |</div>
+   |<div id="foo2">
+   |    <div class="bar"></div>
+   |</div>
+   | _
+   +-------------------------------------
+
+Tutorial:
+
+  http://github.com/mattn/zencoding-vim/raw/master/TUTORIAL
+
+How work this:
+
+  http://mattn.github.com/zencoding-vim
+
+Tips:
+
+You can customize behavior of expanding with overriding config.
+This configuration will be marged at loading plugin. 
+
+  let g:user_zen_settings = {
+  \  'indentation' : '  ',
+  \  'perl' : {
+  \    'aliases' : {
+  \      'req' : 'require '
+  \    },
+  \    'snippets' : {
+  \      'use' : "use strict\nuse warnings\n\n",
+  \      'warn' : "warn \"|\";",
+  \    }
+  \  }
+  \}
+
+  let g:user_zen_expandabbr_key = '<c-e>'
+
+  let g:use_zen_complete_tag = 1
+
+You can set language attribute in html using zen_settings['lang'].
+

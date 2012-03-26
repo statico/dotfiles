@@ -1,0 +1,10 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=13
+
+This script eases redundant typing when writing html or xml files (even if you're very good with ctrl-p and ctrl-n  :).  Hitting ctrl-_ will initiate a search for the most recent open tag above that is not closed in the intervening space and then insert the matching close tag at the cursor.  In normal mode, the close tag is inserted one character after cursor rather than at it, as if a<C-_> had been used.  This allows putting close tags at the ends of lines while in normal mode, but disallows inserting them in the first column.
+                                                                              
+For HTML, a configurable list of tags are ignored in the matching process.  By default, the following tags will not be matched and thus not closed automatically: Area, Base, Br, DD, DT, HR, Img, Input, LI, Link, Meta, P, and Param.
+                                                                              
+For XML, all tags must have a closing match or be terminated by />, as in <empty-element/>.  These empty element tags are ignored for matching.
+                                                                              
+Comments are not currently handled very well, so commenting out HTML in certain ways may cause a "tag mismatch" message and no completion.  ie, having '<!-- a href="blah">link!</a -->' between the cursor and the most recent open tag above doesn't work.  Well matched tags in comments don't cause a problem.
+
