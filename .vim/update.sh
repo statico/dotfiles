@@ -5,7 +5,7 @@
 
 cd ~/.dotfiles
 
-vimdir=.vim
+vimdir=$PWD/.vim
 bundledir=$vimdir/bundle
 tmp=/tmp/$LOGNAME-vim-update
 
