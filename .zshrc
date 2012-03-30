@@ -196,7 +196,7 @@ alias l="ls -lh"
 alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
-alias nerdcrap='cat /dev/urandom | xxd | grep --color=never "be ef"'
+alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
 alias netwhat='lsof -i +c 40'
 alias nls='netstat -l | grep tcp'
 alias nlsn='netstat -ln | grep tcp'
