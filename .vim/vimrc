@@ -483,7 +483,7 @@ function! StartGeneralShell()
     let term = conque_term#open('zsh')
     let s:myterm = term.idx
 endfunction
-nmap <C-z> :call StartGeneralShell()<CR>
+"nmap <C-z> :call StartGeneralShell()<CR>
 
 function! MyConqueStartup(term)
     setlocal nolist
