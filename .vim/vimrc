@@ -69,6 +69,8 @@ map <C-p> :bprev<CR>
 
 " Let's try buffkill-vim using my favorite Emacs binding...
 nmap <Esc>k :BD<CR>
+nmap <M-k> :BD<CR>
+nmap <D-k> :BD<CR>
 
 " Let's try this new FuzzyFinder plugin...
 nmap ; :FufBuffer<CR>
@@ -80,11 +82,12 @@ nmap <M-e> :FufFile<CR>
 "nmap ; :CommandT<CR>
 
 " Emacs-like bindings in normal mode
-nmap <C-x>o <C-w><C-w>
 nmap <C-x>0 <C-w>c
 nmap <C-x>1 <C-w>o
 nmap <C-x>1 <C-w>s
 nmap <C-x>1 <C-w>v
+nmap <C-x>o <C-w><C-w>
+nmap <M-o> <C-w><C-w>
 
 " Emacs-like bindings in insert mode
 imap <C-e> <C-o>$
@@ -461,6 +464,34 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
+
+" Conque
+let g:ConqueTerm_FastMode = 1
+let g:ConqueTerm_CWInsert = 1
+let g:ConqueTerm_InsertOnEnter = 1
+
+function! StartGeneralShell()
+    call WriteIfPossible()
+    if exists('s:myterm')
+        let term = conque_term#get_instance(s:myterm)
+        if !empty(term)
+            call term.focus()
+            return
+        endif
+    endif
+
+    let term = conque_term#open('zsh')
+    let s:myterm = term.idx
+endfunction
+nmap <C-z> :call StartGeneralShell()<CR>
+
+function! MyConqueStartup(term)
+    setlocal nolist
+    imap <buffer> <C-z> <Esc><C-z>
+    nmap <buffer> <C-z> :e#<CR>
+endfunction
+call conque_term#register_function('after_startup', 'MyConqueStartup')
+
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on

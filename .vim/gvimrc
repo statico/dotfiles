@@ -1,4 +1,4 @@
-colorscheme oceandeep
+colorscheme zenburn
 
 hi NonText guifg=#555555 gui=NONE term=NONE
 hi clear LineNr
@@ -16,10 +16,21 @@ set visualbell
 set errorbells
 set cursorline
 
-" Make ^Z swap between a terminal, like Emacs.
-let g:ConqueTerm_CloseOnEnd = 1
-let g:ConqueTerm_EscKey = '<C-w>'
-let g:ConqueTerm_CWInsert = 1
+if has("gui_macvim")
+    macmenu &File.Open\.\.\. key=<nop>
+    "macmenu &File.Close key=<nop>
+    nmap <D-0> <C-w>c
+    nmap <D-1> <C-w>o
+    nmap <D-2> <C-w><C-s>
+    nmap <D-3> <C-w><C-v>
+    nmap <D-o> <C-w><C-w>
+    nmap <D-6> :ConqueTermSplit zsh<CR>
+    imap <D-0> <Esc><C-w>c
+    imap <D-1> <Esc><C-w>o
+    imap <D-2> <Esc><C-w><C-s>
+    imap <D-3> <Esc><C-w><C-v>
+    imap <D-o> <Esc><C-w><C-w>
+endif
 
 " now load specifics to this machine
 source ~/.gvimlocal

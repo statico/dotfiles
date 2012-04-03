@@ -33,7 +33,7 @@ function _is() {
 
 # Returns whether out terminal supports color.
 function _color() {
-    return $( [ -z "$INSIDE_EMACS" ] )
+    return $( [ -z "$INSIDE_EMACS" -a -z "$VIMRUNTIME" ] )
 }
 
 # ENVIRONMENT {{{1
@@ -737,7 +737,7 @@ function uncolorprompt {
         "[%m:%/]"
         "%(1j. (%j jobs).)"
         "%(?.. (error %?%))"
-	$newline
+        $newline
         "%n %# "
     )
     bindkey "^L" clear-screen
