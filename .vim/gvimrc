@@ -30,6 +30,7 @@ if has("gui_macvim")
     imap <D-2> <Esc><C-w><C-s>
     imap <D-3> <Esc><C-w><C-v>
     imap <D-o> <Esc><C-w><C-w>
+    imap <D-k> <Esc>:BD<CR>
 endif
 
 " now load specifics to this machine
