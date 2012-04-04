@@ -171,7 +171,7 @@ that are part of Git repositories).
                         i     q, then open commit
                         o     open commit in horizontal split
                         O     open commit in new tab
-                        <CR>  reblame at commit
+                        -     reblame at commit
                         ~     reblame at [count]th first grandparent
                         P     reblame at [count]th parent (like HEAD^[count])
 
@@ -186,6 +186,11 @@ that are part of Git repositories).
                         "git instaweb" from a terminal).  If a range is given,
                         it is appropriately appended to the URL as an anchor.
 
+                        To use with GitHub FI, point g:fugitive_github_domains
+                        at a list of domains:
+>
+                        let g:fugitive_github_domains = ['git.example.com']
+~
 :[range]Gbrowse!        Like :Gbrowse, but put the URL on the clipboard rather
                         than opening it.
 

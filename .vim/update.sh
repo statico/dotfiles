@@ -8,6 +8,7 @@ cd ~/.dotfiles
 vimdir=$PWD/.vim
 bundledir=$vimdir/bundle
 tmp=/tmp/$LOGNAME-vim-update
+me=.vim/update.sh
 
 if [ -n "$INSECURE" ]; then
   curl='curl --insecure'
@@ -126,9 +127,9 @@ case "$1" in
   # HELP ----------------------------------------------------------------
 
   all)
-    $0 repos
-    $0 other
-    $0 compile
+    $me repos
+    $me other
+    $me compile
     echo
     echo "Update OK"
     ;;
@@ -138,7 +139,7 @@ case "$1" in
     echo
     echo "Usage: $0 <section>"
     echo "...where section is one of:"
-    egrep '\w\)$' $0 | sed -e 's/)//'
+    grep -E '\w\)$' $me | sed -e 's/)//'
     exit 1
 
 esac
