@@ -378,6 +378,10 @@ function psl () {
     fi
 }
 
+function gc () {
+    git commit -m "$*"
+}
+
 # RCS helper functions
 # TODO: Replade 'add .' with 'add -A' when all workstations have a newer Git.
 function sta () {
