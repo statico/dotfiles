@@ -24,7 +24,6 @@ if has("gui_macvim")
     nmap <D-2> <C-w><C-s>
     nmap <D-3> <C-w><C-v>
     nmap <D-o> <C-w><C-w>
-    nmap <D-6> :ConqueTermSplit zsh<CR>
     imap <D-0> <Esc><C-w>c
     imap <D-1> <Esc><C-w>o
     imap <D-2> <Esc><C-w><C-s>

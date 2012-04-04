@@ -465,34 +465,6 @@ let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 "set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
 
-" Conque
-let g:ConqueTerm_FastMode = 1
-let g:ConqueTerm_CWInsert = 1
-let g:ConqueTerm_InsertOnEnter = 1
-
-function! StartGeneralShell()
-    call WriteIfPossible()
-    if exists('s:myterm')
-        let term = conque_term#get_instance(s:myterm)
-        if !empty(term)
-            call term.focus()
-            return
-        endif
-    endif
-
-    let term = conque_term#open('zsh')
-    let s:myterm = term.idx
-endfunction
-"nmap <C-z> :call StartGeneralShell()<CR>
-
-function! MyConqueStartup(term)
-    setlocal nolist
-    imap <buffer> <C-z> <Esc><C-z>
-    nmap <buffer> <C-z> :e#<CR>
-endfunction
-call conque_term#register_function('after_startup', 'MyConqueStartup')
-
-
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
 
