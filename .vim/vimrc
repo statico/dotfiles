@@ -280,6 +280,7 @@ set matchtime=2             " Tenths of second to hilight matching paren
 set modelines=5             " How many lines of head & tail to look for ml's
 silent! set mouse=nvc       " Use the mouse, but not in insert mode
 set nobackup                " No backups left after done editing
+set nonumber                " No line numbers to start
 set novisualbell            " No flashing
 set nowritebackup           " No backups made while editing
 set printoptions=paper:letter " US paper
@@ -473,17 +474,23 @@ filetype plugin indent on
 "--------------------------------------------------------------------------
 
 " make sure colored syntax mode is on
-if has("terminfo")
+if $TERM == "xterm-256color"
+  let g:zenburn_high_Contrast = 1
+  set t_Co=256
+  colorscheme zenburn
+  highlight Normal ctermbg=234
+elseif has("terminfo")
+  colorscheme default
   set t_Co=8
   set t_Sf=[3%p1%dm
   set t_Sb=[4%p1%dm
 else
+  colorscheme default
   set t_Co=8
   set t_Sf=[3%dm
   set t_Sb=[4%dm
 endif
 syntax on
-colorscheme default
 
 " window splits & ruler were too bright - change to white on grey
 " (shouldn't change GUI or non-color term appearance)

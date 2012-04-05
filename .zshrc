@@ -43,7 +43,11 @@ function _color() {
 # be "rxvt" just about works everywhere. (If you want to know if you're in
 # screen, use SHLVL or TERMCAP.)
 if _color; then
-    export TERM=rxvt
+    if [ -n "$ITERM_SESSION_ID" ]; then
+        export TERM=xterm-256color
+    else
+        export TERM=rxvt
+    fi
 else
     export TERM=xterm
 fi
