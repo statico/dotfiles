@@ -22,10 +22,12 @@ fi
 # This is a list of all plugins which are available via Git repos.
 repos=(
   git://git.wincent.com/command-t.git
+  https://github.com/Lokaltog/vim-powerline.git
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/docunext/closetag.vim.git
   https://github.com/hced/bufkill-vim.git
   https://github.com/kchmck/vim-coffee-script.git
+  https://github.com/michaeljsmith/vim-indent-object
   https://github.com/msanders/snipmate.vim.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/scrooloose/nerdtree.git
@@ -42,7 +44,6 @@ repos=(
   https://github.com/vim-scripts/moria.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
-  https://github.com/michaeljsmith/vim-indent-object
   )
 
 # Here's a list of everything else to download in the format

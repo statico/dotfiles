@@ -272,6 +272,7 @@ set hlsearch                " Hilight searching
 set ignorecase              " Case insensitive
 set incsearch               " Search as you type
 set infercase               " Completion recognizes capitalization
+set laststatus=2            " Always show the status bar
 set linebreak               " Break long lines by word, not char
 set list                    " Show invisble characters in listchars
 set listchars=tab:▶\ ,trail:◀,extends:»,precedes:«
@@ -281,7 +282,7 @@ set modelines=5             " How many lines of head & tail to look for ml's
 silent! set mouse=nvc       " Use the mouse, but not in insert mode
 set nobackup                " No backups left after done editing
 set nonumber                " No line numbers to start
-set novisualbell            " No flashing
+set visualbell t_vb=        " No flashing or beeping at all
 set nowritebackup           " No backups made while editing
 set printoptions=paper:letter " US paper
 set ruler                   " Show row/col and percentage
