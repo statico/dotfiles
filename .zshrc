@@ -44,7 +44,11 @@ function _color() {
 # screen, use SHLVL or TERMCAP.)
 if _color; then
     if [ -n "$ITERM_SESSION_ID" ]; then
-        export TERM=xterm-256color
+        if [ "$TERM" = "screen" ]; then
+            export TERM=screen-256color
+        else
+            export TERM=xterm-256color
+        fi
     else
         export TERM=rxvt
     fi

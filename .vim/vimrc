@@ -475,7 +475,7 @@ filetype plugin indent on
 "--------------------------------------------------------------------------
 
 " make sure colored syntax mode is on
-if $TERM == "xterm-256color"
+if $TERM == "xterm-256color" || $TERM == "screen-256color"
   let g:zenburn_high_Contrast = 1
   set t_Co=256
   colorscheme zenburn
