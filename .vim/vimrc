@@ -474,12 +474,16 @@ filetype plugin indent on
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
 
-" make sure colored syntax mode is on
-if $TERM == "xterm-256color" || $TERM == "screen-256color"
-  let g:zenburn_high_Contrast = 1
-  set t_Co=256
+function! ColorTermZenburn()
   colorscheme zenburn
   highlight Normal ctermbg=234
+  let g:zenburn_high_Contrast = 1
+endfunction
+
+" make sure colored syntax mode is on
+if $TERM == "xterm-256color" || $TERM == "screen-256color"
+  set t_Co=256
+  call ColorTermZenburn()
 elseif has("terminfo")
   colorscheme default
   set t_Co=8
