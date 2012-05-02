@@ -310,6 +310,9 @@ set wildignore=*.class,*.o,*~,*.pyc,.git,third_party,node_modules  " Ignore cert
 command! Q q
 command! W w
 
+" http://stackoverflow.com/questions/1005/getting-root-permissions-on-a-file-inside-of-vi
+cmap w!! w !sudo tee >/dev/null %
+
 " insert date
 command! DS r!date
 
