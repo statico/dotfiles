@@ -530,7 +530,8 @@ highlight clear Search
 highlight Search term=NONE cterm=NONE ctermfg=white ctermbg=black
 
 " make hilighted matching parents less offensive
-highlight MatchParen term=NONE cterm=NONE ctermfg=black ctermbg=green
+highlight clear MatchParen
+highlight link MatchParen Search
 
 " colors for NERD_tree
 highlight treeDir cterm=none ctermfg=blue
