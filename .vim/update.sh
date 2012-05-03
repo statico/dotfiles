@@ -40,7 +40,6 @@ repos=(
   https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/keepcase.vim.git
   https://github.com/vim-scripts/lighttpd-syntax.git
-  https://github.com/vim-scripts/moria.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
   )
