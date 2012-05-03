@@ -71,15 +71,6 @@ nmap <Esc>k :BD<CR>
 nmap <M-k> :BD<CR>
 nmap <D-k> :BD<CR>
 
-" Let's try this new FuzzyFinder plugin...
-nmap ; :FufBuffer<CR>
-nmap <Leader>r :FufTag<CR>
-nmap <D-e> :FufFile<CR>
-nmap <M-e> :FufFile<CR>
-
-" Let's try replacing FuzzyFinder with Command-T...
-"nmap ; :CommandT<CR>
-
 " Emacs-like bindings in normal mode
 nmap <C-x>0 <C-w>c
 nmap <C-x>1 <C-w>o
@@ -451,23 +442,19 @@ endfunction
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
 
-" fuf.vim
-let g:fuf_infoFile = ''
-let g:fuf_file_exclude = '\v\~$|\.(o|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
-let g:fuf_keyNextMode = '<C-y>'
-let g:fuf_keyPrevMode = '<C-t>'
-
-" Command-T
-let g:CommandTMatchWindowAtTop = 1
-let g:CommandTCancelMap = ['<C-g>', '<C-c>', '<Esc>']
+" Let's try ctrlp.vim (which replaces FuzzyFinder and Command-T)
+let g:ctrlp_map = '<Leader>t'
+let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_dotfiles = 0
+nmap ; :CtrlPBuffer<CR>
 
 " Syntastic
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
