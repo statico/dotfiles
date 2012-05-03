@@ -21,7 +21,6 @@ fi
 
 # This is a list of all plugins which are available via Git repos.
 repos=(
-  git://git.wincent.com/command-t.git
   https://github.com/Lokaltog/vim-powerline.git
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/docunext/closetag.vim.git
@@ -47,7 +46,6 @@ repos=(
 # Here's a list of everything else to download in the format
 # <destination>;<url>
 other=(
-  'vim-fuzzyfinder;https://bitbucket.org/ns9tks/vim-fuzzyfinder/get/tip.zip'
   'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
   'wombat/colors;http://files.werx.dk/wombat.vim'
@@ -113,23 +111,11 @@ case "$1" in
     rm -rf $tmp
     ;;
 
-  # COMPILING -----------------------------------------------------------
-  compile)
-    # Some plugins, particularly Command-T, need to be compiled.
-    for dir in $bundledir/*/Rakefile; do
-      pushd "$(dirname $dir)"
-      rake make || true
-      popd
-    done
-    echo "Compile OK"
-    ;;
-
   # HELP ----------------------------------------------------------------
 
   all)
     $me repos
     $me other
-    $me compile
     echo
     echo "Update OK"
     ;;
