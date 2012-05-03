@@ -53,6 +53,7 @@ other=(
   'vim-fuzzyfinder;https://bitbucket.org/ns9tks/vim-fuzzyfinder/get/tip.zip'
   'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
+  'wombat/colors;http://files.werx.dk/wombat.vim'
   )
 
 case "$1" in
