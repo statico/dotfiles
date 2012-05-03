@@ -21,14 +21,13 @@ nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 vmap \B <Esc>:!tabtable<CR>
 nmap \c mt:%!indent -kr --no-tabs<CR>'t
 nmap \d :%!perltidy<CR>
-nmap \e :TMiniBufExplorer<CR>
+nmap \e :NERDTreeToggle<CR>
 nmap \f :source ~/.vim/plugin/jpythonfold.vim<CR>
 nmap \g mt\d't
 nmap \h mt\H't
 nmap \H :%!tidy -icq -asxhtml -w 80 -utf8<CR>
 nmap \i i<CR><CR>> <Esc><Up><Up>gqapo<CR><Up>
 nmap \I S<Esc><Up>gqapo<CR><Up>
-nmap \j :CMiniBufExplorer<CR>:NERDTreeToggle<CR>
 nmap \k :TlistToggle<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
