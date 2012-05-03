@@ -10,54 +10,27 @@
 " Section: Key mappings {{{1
 "--------------------------------------------------------------------------
 
-" weird stuff that might confuse other Vim regulars
-nnoremap ' `
-nnoremap ` '
-
 " useful macros I use the most
 nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
-vmap \B <Esc>:!tabtable<CR>
 nmap \c mt:%!indent -kr --no-tabs<CR>'t
 nmap \d :%!perltidy<CR>
 nmap \e :NERDTreeToggle<CR>
-nmap \f :source ~/.vim/plugin/jpythonfold.vim<CR>
-nmap \g mt\d't
-nmap \h mt\H't
-nmap \H :%!tidy -icq -asxhtml -w 80 -utf8<CR>
-nmap \i i<CR><CR>> <Esc><Up><Up>gqapo<CR><Up>
-nmap \I S<Esc><Up>gqapo<CR><Up>
-nmap \k :TlistToggle<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
 nmap \q :nohlsearch<CR>
-"nmap \r mt?^-- $<CR>O<Esc>'tVG{kdO<Esc>kgqap:nohlsearch<CR>O
-"nmap \r mto<Esc>'tVG{kdO<Esc>kgqap:nohlsearch<CR>O
-nmap \r ggj<C-v>}kecsquash<Esc>k0
 nmap \s :setlocal invspell<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \u :setlocal list!<CR>:setlocal list?<CR>
-nmap \v :call ToggleMiniBufVerticalness()<CR>
 nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nmap \x :w<CR>:%! xmllint --format - <CR>
 nmap \Y :vertical resize 40<CR>:wincmd l<CR>
 nmap \y :exec "vertical resize " . (80 + (&number * &numberwidth))<CR>:wincmd l<CR>
 nmap \z :w<CR>:!<Up><CR>
-
-nmap \0 :buffers<CR>
-nmap \1 :e #1<CR>
-nmap \2 :e #2<CR>
-nmap \3 :e #3<CR>
-nmap \4 :e #4<CR>
-nmap \5 :e #5<CR>
-nmap \6 :e #6<CR>
-nmap \7 :e #7<CR>
-nmap \8 :e #8<CR>
-nmap \9 :e #9<CR>
 
 " You don't know what you're missing if you don't use this.
 nmap <C-e> :e#<CR>
@@ -167,54 +140,6 @@ endfunction
 nnoremap <C-w>h :call KeepCurrentLine('h')<CR>
 nnoremap <C-w>l :call KeepCurrentLine('l')<CR>
 
-
-" Keyboard mapping for cursor keys on broken terminals {{{2
-" [works for XTerminals - 970818]
-map  <ESC>[A <Up>
-map  <ESC>[B <Down>
-map  <ESC>[C <Right>
-map  <ESC>[D <Left>
-imap <ESC>[A <Up>
-imap <ESC>[B <Down>
-imap <ESC>[C <Right>
-imap <ESC>[D <Left>
-
-" Allow multiple undos when creating a large edited section. {{{2
-" http://www.vim.org/tips/tip.php?tip_id=1054
-"" function! EnterStuff()
-""     let theLine = getline(line("."))
-""     let pos = col("'^")
-""     execute "normal mqu\<C-r>`q"
-""     if(pos > strlen(theLine))
-""         startinsert!
-""     else
-""         if(pos > 1)
-""             normal l
-""         endif
-""         startinsert
-""     endif
-"" endfunction
-"" function! ChangeUndoMode(theNum)
-""     if(a:theNum == 1)
-""         inoremap <C-w> <C-w>^O^[
-""         inoremap <Enter> <ESC>:call EnterStuff()<Enter><Enter>
-""     elseif(a:theNum == 2)
-""         inoremap <C-w> <C-w>^O^[
-""         inoremap <BS> <BS>^O^[
-""         inoremap <DEL> <DEL>^O^[
-""         inoremap <Enter> <ESC>:call EnterStuff()<Enter><Enter>
-""     else
-""         iunmap <C-w>
-""         iunmap <BS>
-""         iunmap <DEL>
-""         iunmap <Enter>
-""     endif
-"" endfunction
-"" call ChangeUndoMode(1)
-"nmap \sun :call ChangeUndoMode(1)<Enter>
-"nmap \gun :call ChangeUndoMode(2)<Enter>
-"nmap \bun :call ChangeUndoMode(3)<Enter>
-
 " Section: Abbrevations {{{1
 "--------------------------------------------------------------------------
 
@@ -224,11 +149,6 @@ cno $c e <C-\>eCurrentFileDir()<CR>
 function! CurrentFileDir()
    return "e " . expand("%:p:h") . "/"
 endfunction
-
-" Perl: warnings, strict, use Test::More
-iab uw;   use strict;<CR>use warnings;<CR>
-iab ubp;  <C-o>:set paste<CR>#!/usr/bin/perl<CR>use strict;<CR>use warnings;<CR><C-o>:set nopaste<CR>
-iab utm;  use Test::More 'no_plan';<CR>use strict;<CR>use warnings;<CR>
 
 " Section: Vim options {{{1
 "--------------------------------------------------------------------------
@@ -303,9 +223,6 @@ command! W w
 " http://stackoverflow.com/questions/1005/getting-root-permissions-on-a-file-inside-of-vi
 cmap w!! w !sudo tee >/dev/null %
 
-" insert date
-command! DS r!date
-
 " trim spaces at EOL
 command! TEOL %s/ \+$//
 command! CLEAN retab | TEOL
@@ -341,41 +258,6 @@ function! Rename(name, bang)
 endfunction
 
 
-" Display output of shell commands in new window
-" http://vim.wikia.com/wiki/Display_output_of_shell_commands_in_new_window
-" Modified by ian to reuse the same window
-command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
-function! s:RunShellCommand(cmdline)
-
-  if exists('s:ShellCommandBuffer')
-    if bufloaded(s:ShellCommandBuffer)
-      exec 'bwipeout '.s:ShellCommandBuffer
-    endif
-  endif
-
-  echo a:cmdline
-  let expanded_cmdline = a:cmdline
-  for part in split(a:cmdline, ' ')
-     if part[0] =~ '\v[%#<]'
-        let expanded_part = fnameescape(expand(part))
-        let expanded_cmdline = substitute(expanded_cmdline, part, expanded_part, '')
-     endif
-  endfor
-
-  vertical botright new
-  let s:ShellCommandBuffer = bufnr('%')
-  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-
-  call setline(1, 'You entered:    ' . a:cmdline)
-  call setline(2, 'Expanded Form:  ' .expanded_cmdline)
-  call setline(3,substitute(getline(2),'.','=','g'))
-  execute '$read !'. expanded_cmdline
-
-  "setlocal nomodifiable
-  1
-endfunction
-
-
 " Section: Python specifics {{{1
 "--------------------------------------------------------------------------
 
@@ -399,9 +281,6 @@ call pathogen#helptags()
 let mapleader = ","
 let maplocalleader = ","
 
-" ftplugin/mail.vim
-let no_plugin_maps = 0
-
 " perl.vim
 let perl_include_pod = 1
 
@@ -418,31 +297,14 @@ let explDirsFirst = -1
 " vimspell.vim
 let spell_auto_type = ""
 
-" cvscommand.vim
-let CVSCommandDiffOpt = "" " let .cvsrc handle this
-
 " taglist.vim
 let Tlist_Use_Right_Window = 1
 let Tlist_WinWidth = 30
 
-" guifont++.vim
-let guifontpp_smaller_font_map="<M-->"
-let guifontpp_larger_font_map="<M-+>"
-let guifontpp_original_font_map="<M-=>"
-
-" minibufexpl.vim
-function! ToggleMiniBufVerticalness()
-    let g:miniBufExplVSplit = g:miniBufExplVSplit ? 0 : 30
-    silent! TMiniBufExplorer
-    silent! TMiniBufExplorer
-endfunction
-"let g:miniBufExplorerMoreThanOne=999 " Don't open MBE by default
-"let g:miniBufExplorerMoreThanOne=3 " Show when 3+ buffers are open.
-
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
 
-" Let's try ctrlp.vim (which replaces FuzzyFinder and Command-T)
+" ctrlp.vim (replaces FuzzyFinder and Command-T)
 let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
@@ -463,13 +325,15 @@ filetype plugin indent on
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
 
+" Helper to initialize Zenburn colors in 256-color mode.
 function! ColorTermZenburn()
   colorscheme zenburn
   highlight Normal ctermbg=234
   let g:zenburn_high_Contrast = 1
 endfunction
 
-" make sure colored syntax mode is on
+" Make sure colored syntax mode is on, and make it Just Work with newer 256
+" color terminals like iTerm2.
 if $TERM == "xterm-256color" || $TERM == "screen-256color"
   set t_Co=256
   call ColorTermZenburn()
