@@ -50,6 +50,7 @@ other=(
   'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
   'wombat/colors;http://files.werx.dk/wombat.vim'
+  'actionscript/syntax;http://www.vim.org/scripts/download_script.php?src_id=10123;actionscript.vim'
   )
 
 case "$1" in
@@ -78,19 +79,12 @@ case "$1" in
       parts=($(echo $pair | tr ';' '\n'))
       name=${parts[0]}
       url=${parts[1]}
+      filename=${parts[2]}
       dest=$bundledir/$name
 
       rm -rf $dest
 
-      if echo $url | egrep '.vim$'; then
-        # For single files, create the destination directory and download the
-        # file there. The filename.
-        mkdir -p $dest
-        pushd $dest
-        $curl -OL $url
-        popd
-
-      elif echo $url | egrep '.zip$'; then
+      if echo $url | egrep '.zip$'; then
         # Zip archives from VCS tend to have an annoying outer wrapper
         # directory, so unpacking them into their own directory first makes it
         # easy to remove the wrapper.
@@ -102,8 +96,17 @@ case "$1" in
         rm -rf $name $f
 
       else
-        # Tarballs: TODO
-        echo TODO
+        # Assume single files. Create the destination directory and download
+        # the file there.
+        mkdir -p $dest
+        pushd $dest
+        if [ -n "$filename" ]; then
+          $curl -L $url >$filename
+        else
+          $curl -OL $url
+        fi
+        popd
+
       fi
 
     done
