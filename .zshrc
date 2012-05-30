@@ -726,7 +726,7 @@ function colorprompt {
 
     mode=${1:-0}
     line1=(
-        "%{[${mode}m%}[%m:%/]"
+        "%{[${mode}m%}%m: %~"
         "%(1j.%{[36;1m%} (%j jobs)%{[0m%}.)"
         "%(?..%{[31;1m%} (error %?%)%{[0m%})"
     )
@@ -747,7 +747,7 @@ function uncolorprompt {
     newline="
 "
     temp=(
-        "[%m:%/]"
+        "%m: %~"
         "%(1j. (%j jobs).)"
         "%(?.. (error %?%))"
         $newline
