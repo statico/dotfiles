@@ -313,6 +313,9 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_dotfiles = 0
 nmap ; :CtrlPBuffer<CR>
 
+" Powerline
+let g:Powerline_symbols = "unicode"
+
 " Syntastic
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
