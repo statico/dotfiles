@@ -711,8 +711,16 @@ clear-screen-and-precmd () {
 zle -N clear-screen-and-precmd
 
 # This is the easiest way to get a newline. SRSLY.
-local newline="
+local __newline="
 "
+
+# Yeah yeah yeah.
+if `echo $LANG | grep -E -i 'utf-?8' &>/dev/null`; then
+  __sigil="▸"
+else
+  __sigil="%#"
+fi
+
 
 # However, we're not going to use newlines because it causes excess scrolling
 # when resizing a terminal. The solution is to have precmd() print the first
@@ -732,7 +740,7 @@ function colorprompt {
     )
     line2=(
         "%{%(!.[31;5m.[${mode}m)%}%n "
-        "%#%{[0m%} "
+        "$__sigil%{[0m%} "
     )
 
     # it's like temp=join("", $promptstring)
@@ -744,14 +752,12 @@ function colorprompt {
 }
 
 function uncolorprompt {
-    newline="
-"
     temp=(
         "%m: %~"
         "%(1j. (%j jobs).)"
         "%(?.. (error %?%))"
-        $newline
-        "%n %# "
+        $__newline
+        "%n $__sigil "
     )
     bindkey "^L" clear-screen
     unfunction precmd &>/dev/null
