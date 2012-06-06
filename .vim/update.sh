@@ -24,6 +24,7 @@ repos=(
   https://github.com/Lokaltog/vim-powerline.git
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/docunext/closetag.vim.git
+  https://github.com/digitaltoad/vim-jade.git
   https://github.com/hced/bufkill-vim.git
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/kien/ctrlp.vim.git
