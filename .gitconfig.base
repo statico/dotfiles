@@ -8,6 +8,8 @@
 	editor = vim
 	pager = less -FRX
 	excludesfile = ~/.gitignore
+[gist]
+  private = yes
 [github]
 	user = statico
 [alias]
