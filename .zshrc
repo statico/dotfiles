@@ -225,6 +225,7 @@ alias sd='svn diff --diff-cmd=diff --extensions="-ydw -W$COLUMNS"'
 alias slurp='wget -t 5 -c -nH -r -N --no-parent'
 alias sshx='ssh -C -c blowfish -X'
 alias st='git status'
+alias stt='git status -uall'
 alias svnl='svn log -v -r HEAD'
 alias svnvimdiff='svn diff | vim -R +setf\ diff\ nolist -'
 alias tree="tree -F -A -I CVS"
