@@ -29,6 +29,7 @@ repos=(
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/kien/ctrlp.vim.git
   https://github.com/michaeljsmith/vim-indent-object.git
+  https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/plasticboy/vim-markdown.git
   https://github.com/scrooloose/nerdtree.git

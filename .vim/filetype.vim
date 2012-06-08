@@ -70,7 +70,7 @@ au BufNewFile,BufRead *conkyrc setf conkyrc
 au BufNewFile,BufRead *templates/*.html setf htmldjango
 au BufNewFile,BufRead .vimlocal,.gvimlocal setf vim
 au BufNewFile,BufRead .zshlocal setf zsh
-au BufNewFile,BufRead .gitconfig* setf gitconfig
+au BufNewFile,BufRead .gitconfig* setlocal ft=gitconfig nolist ts=4 sw=4 noet
 au BufNewFile,BufRead /etc/apache*/* setf apache
 au BufNewFile,BufRead /tmp/crontab* setf crontab
 au BufNewFile,BufRead /tmp/mutt-* setlocal spell nolist nohlsearch

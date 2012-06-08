@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    {{!}}
+  </head>
+  <body>
+    <div id="common">
+      <h1>Mustache/Handlebars Showdown</h1>
+
+      Basic mustache {{hello}}
+      {{ hello}}, {{hello }} and {{ hello }} are OK
+      
+      <de>{{d d d}}
+
+      {{Everything will be hilighted here}}
+
+      Mustaches hilighted in
+      <span class="color:{{awesome_color}};font-size:1.2em">attribute value</span>
+
+      {{#repo}}
+      This is an mustache [enumerable] section
+      <li>{{ name }}</li>
+      {{/repo}}
+
+      {{{ unescaped }}}
+
+      {{! <> this is a comment TODO:}}
+      
+      This is a partial {{> partial1 }}
+
+      {{=<% %>=}}Sorry, cusomized delimiter not handled yet<%={{}}=%>
+
+      Thanks goes to {{@defunkt}}
+      Feedback/blames go to {{@juvenn}}
+      {{Frustrations}} go to /dev/null
+    </div>
+
+    <div id="handlebars">
+      <h1>Differences Between Handlebars.js and Mustache</h1>
+
+      Paths
+      {{person/name}} {{person.name}}
+      {{#person}}{{name}} - {{../company/name}}{{/person}}
+
+      Strings
+      <ul>{{#posts}}<li>{{{link_to "Post" this}}}</li>{{/posts}}</ul>
+
+      Hash
+      {{{link "See more..." href=story.url class="story"}}}
+
+      Helpers
+      {{#with story}}<p>{{{body}}}</p>{{/with}}
+      {{#each comments}}<p>{{{body}}}</p>{{/each}}
+
+      Conditionals
+      {{#if isActive}}
+        <img src="star.gif" alt="Active">
+      {{else}}
+        <img src="cry.gif" alt="Inactive">
+      {{/if}}
+
+      {{#unless isActive}}Inactive{{/unless}}
+    </div>
+    
+  </body>
+</html>
