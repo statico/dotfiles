@@ -44,6 +44,7 @@
 	svnup = svn rebase
 	today = diff --stat 'HEAD@{midnight}'
 	tree = log --graph --oneline --all
+	undo = reset --soft HEAD^
 	unstage = reset HEAD
 	up = pull --rebase origin
 	yesterday = diff --stat 'HEAD@{yesterday}' 'HEAD@{midnight}'
