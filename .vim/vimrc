@@ -412,6 +412,16 @@ highlight PmenuSel ctermfg=black ctermbg=magenta
 highlight clear SignColumn
 highlight link SignColumn Ignore
 
+" Markdown could be more fruit salady.
+highlight link markdownH1 PreProc
+highlight link markdownH2 PreProc
+highlight link markdownLink Character
+highlight link markdownBold String
+highlight link markdownItalic Statement
+highlight link markdownCode Delimiter
+highlight link markdownCodeBlock Delimiter
+highlight link markdownListMarker Todo
+
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------
 
