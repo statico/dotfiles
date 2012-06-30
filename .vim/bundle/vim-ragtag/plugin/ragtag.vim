@@ -71,9 +71,9 @@ function! s:Init()
   if &ft == "php"
     inoremap <buffer> <C-X><Lt> <?php
     inoremap <buffer> <C-X>>    ?>
-    inoremap <buffer> <SID>ragtagOopen    <?php<Space>print<Space>
+    inoremap <buffer> <SID>ragtagOopen    <?php<Space>echo<Space>
     let b:surround_45 = "<?php \r ?>"
-    let b:surround_61 = "<?php print \r ?>"
+    let b:surround_61 = "<?php echo \r ?>"
   elseif &ft == "htmltt" || &ft == "tt2html"
     inoremap <buffer> <C-X><Lt> [%
     inoremap <buffer> <C-X>>    %]
@@ -182,9 +182,9 @@ function! s:Init()
       runtime! indent/html.vim
     endif
   endif
-  " Pet peeve.  Do people still not close their <p> and <li> tags?
   if exists("g:html_indent_tags") && g:html_indent_tags !~ '\\|p\>'
     let g:html_indent_tags = g:html_indent_tags.'\|p\|li\|dt\|dd'
+    let g:html_indent_tags = g:html_indent_tags.'\|article\|aside\|audio\|bdi\|canvas\|command\|datalist\|details\|figcaption\|figure\|footer\|header\|hgroup\|mark\|meter\|nav\|output\|progress\|rp\|rt\|ruby\|section\|summary\|time\|video'
   endif
   set indentkeys+=!^F
   let b:surround_indent = 1

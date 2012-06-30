@@ -12,6 +12,7 @@ if version < 600
 else
   runtime! syntax/html.vim
   unlet b:current_syntax
+  syntax clear Javascript
 endif
 
 if version < 600

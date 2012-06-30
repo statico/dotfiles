@@ -74,6 +74,10 @@ I can't see the fancy symbols, what's wrong?
 
     Make sure that vim is compiled with the ``--with-features=big`` flag.
 
+The fancy symbols look a bit blurry or "off"!
+    Make sure that you have patched all variants of your font (i.e. both the 
+    regular and the bold font files).
+
 I'm unable to patch my font, what should I do?
     Font patching is only known to work on most Linux and OS X machines. If 
     you have followed the instructions in the fontpatcher README and still 
@@ -119,6 +123,9 @@ I'm using tmux and Powerline looks like crap, what's wrong?
     your ``.tmux.conf`` to solve this issue::
 
         set -g default-terminal "screen-256color"
+
+    If you use iTerm2, make sure that you have enabled the setting 'Set 
+    locale variables automatically' in Profiles > Terminal > Environment.
 
 If you have any other issues and you can't find the answer in the docs, 
 please submit an issue on GitHub.

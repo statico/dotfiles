@@ -969,8 +969,8 @@ function! s:compareNodes(n1, n2)
     return a:n1.path.compareTo(a:n2.path)
 endfunction
 
-"FUNCTION: TreeFileNode.clearBoomarks() {{{3
-function! s:TreeFileNode.clearBoomarks()
+"FUNCTION: TreeFileNode.clearBookmarks() {{{3
+function! s:TreeFileNode.clearBookmarks()
     for i in s:Bookmark.Bookmarks()
         if i.path.equals(self.path)
             call i.delete()
@@ -1617,7 +1617,7 @@ function! s:TreeDirNode._initChildren(silent)
     "get an array of all the files in the nodes dir
     let dir = self.path
     let globDir = dir.str({'format': 'Glob'})
-    let filesStr = globpath(globDir, '*') . "\n" . globpath(globDir, '.*')
+    let filesStr = globpath(globDir, '*',1) . "\n" . globpath(globDir, '.*',1)
     let files = split(filesStr, "\n")
 
     if !a:silent && len(files) > g:NERDTreeNotificationThreshold
@@ -4031,7 +4031,7 @@ function! s:clearBookmarks(bookmarks)
     if a:bookmarks ==# ''
         let currentNode = s:TreeFileNode.GetSelected()
         if currentNode != {}
-            call currentNode.clearBoomarks()
+            call currentNode.clearBookmarks()
         endif
     else
         for name in split(a:bookmarks, ' ')

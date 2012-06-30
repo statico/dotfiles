@@ -31,11 +31,11 @@ repos=(
   https://github.com/michaeljsmith/vim-indent-object.git
   https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
-  https://github.com/plasticboy/vim-markdown.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-haml.git
+  https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-ragtag.git
   https://github.com/tpope/vim-surround.git

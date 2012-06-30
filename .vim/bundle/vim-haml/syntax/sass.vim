@@ -43,6 +43,10 @@ syn match sassMixing "^\s\+\zs+"        nextgroup=sassMixinName
 syn match sassMixing "\%([{};]\s*\|^\s*\)\@<=@include" nextgroup=sassMixinName skipwhite
 syn match sassExtend "\%([{};]\s*\|^\s*\)\@<=@extend"
 
+syn match sassFunctionName "[[:alnum:]_-]\+" contained nextgroup=sassCssAttribute
+syn match sassFunctionDecl "\%([{};]\s*\|^\s*\)\@<=@function"   nextgroup=sassFunctionName skipwhite
+syn match sassReturn "\%([{};]\s*\|^\s*\)\@<=@return"
+
 syn match sassEscape     "^\s*\zs\\"
 syn match sassIdChar     "#[[:alnum:]_-]\@=" nextgroup=sassId
 syn match sassId         "[[:alnum:]_-]\+" contained
@@ -71,6 +75,8 @@ hi def link sassFunction                Function
 hi def link sassMixing                  PreProc
 hi def link sassMixin                   PreProc
 hi def link sassExtend                  PreProc
+hi def link sassFunctionDecl            PreProc
+hi def link sassReturn                  PreProc
 hi def link sassTodo                    Todo
 hi def link sassInclude                 Include
 hi def link sassDebug                   sassControl

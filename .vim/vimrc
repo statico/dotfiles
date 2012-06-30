@@ -315,7 +315,7 @@ let g:ctrlp_switch_buffer = 0
 nmap ; :CtrlPBuffer<CR>
 
 " Powerline
-let g:Powerline_symbols = "unicode"
+"let g:Powerline_symbols = "unicode"
 
 " Syntastic
 let g:syntastic_enable_signs=1
