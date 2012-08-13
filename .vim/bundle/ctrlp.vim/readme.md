@@ -19,10 +19,10 @@ Full path fuzzy __file__, __buffer__, __mru__, __tag__, __...__ finder for Vim.
 Check `:help ctrlp-commands` and `:help ctrlp-extensions` for other commands.
 
 ##### Once CtrlP is open:
+* Press `<F5>` to purge the cache for the current directory to get new files, remove deleted files and apply new ignore options.
 * Press `<c-f>` and `<c-b>` to cycle between modes.
 * Press `<c-d>` to switch to filename only search instead of full path.
 * Press `<c-r>` to switch to regexp mode.
-* Press `<F5>` to purge the cache for the current directory and get new files.
 * Use `<c-n>`, `<c-p>` to select the next/previous string in the prompt's history.
 * Use `<c-y>` to create a new file and its parent directories.
 * Use `<c-z>` to mark/unmark multiple files and `<c-o>` to open them.
@@ -43,16 +43,15 @@ Use `:difft` when opening multiple files to run `:difft` on the first 4 files.
     let g:ctrlp_cmd = 'CtrlP'
     ```
 
-* When invoked, unless a starting directory is specified, CtrlP will set its local working directory
-according to this variable:
+* When invoked, unless a starting directory is specified, CtrlP will set its local working directory according to this variable:
 
     ```vim
-    let g:ctrlp_working_path_mode = 2
+    let g:ctrlp_working_path_mode = 'rc'
     ```
 
-    0 - don't manage working directory.  
-    1 - the directory of the current file.  
-    2 - the nearest ancestor that contains one of these directories or files:
+    `{empty-string}` - don't manage working directory.  
+    `c` - the directory of the current file.  
+    `r` - the nearest ancestor that contains one of these directories or files:
     `.git` `.hg` `.svn` `.bzr` `_darcs`
 
     Define additional root markers with the `g:ctrlp_root_markers` option.

@@ -26,6 +26,23 @@ endif
 if !exists("g:syntastic_enable_signs")
     let g:syntastic_enable_signs = 1
 endif
+
+if !exists("g:syntastic_error_symbol")
+    let g:syntastic_error_symbol = '>>'
+endif
+
+if !exists("g:syntastic_warning_symbol")
+    let g:syntastic_warning_symbol = '>>'
+endif
+
+if !exists("g:syntastic_style_error_symbol")
+    let g:syntastic_style_error_symbol = 'S>'
+endif
+
+if !exists("g:syntastic_style_warning_symbol")
+    let g:syntastic_style_warning_symbol = 'S>'
+endif
+
 if !has('signs')
     let g:syntastic_enable_signs = 0
 endif
@@ -274,10 +291,10 @@ endfunction
 
 if g:syntastic_enable_signs
     "define the signs used to display syntax and style errors/warns
-    sign define SyntasticError text=>> texthl=error
-    sign define SyntasticWarning text=>> texthl=todo
-    sign define SyntasticStyleError text=S> texthl=error
-    sign define SyntasticStyleWarning text=S> texthl=todo
+    exe 'sign define SyntasticError text='.g:syntastic_error_symbol.' texthl=error'
+    exe 'sign define SyntasticWarning text='.g:syntastic_warning_symbol.' texthl=todo'
+    exe 'sign define SyntasticStyleError text='.g:syntastic_style_error_symbol.' texthl=error'
+    exe 'sign define SyntasticStyleWarning text='.g:syntastic_style_warning_symbol.' texthl=todo'
 endif
 
 "start counting sign ids at 5000, start here to hopefully avoid conflicting
@@ -348,6 +365,7 @@ endfunction
 "display the cached errors for this buf in the location list
 function! s:ShowLocList()
     if !empty(s:LocList())
+        call setloclist(0, s:LocList())
         let num = winnr()
         exec "lopen " . g:syntastic_loc_list_height
         if num != winnr()
@@ -472,6 +490,15 @@ function! s:LoadChecker(checker, ft)
     exec "runtime syntax_checkers/" . a:ft . "/" . a:checker . ".vim"
 endfunction
 
+"the script changes &shellpipe and &shell to stop the screen flicking when
+"shelling out to syntax checkers. Not all OSs support the hacks though
+function! s:OSSupportsShellpipeHack()
+    if !exists("s:os_supports_shellpipe_hack")
+        let s:os_supports_shellpipe_hack = !s:running_windows && (s:uname !~ "FreeBSD") && (s:uname !~ "OpenBSD")
+    endif
+    return s:os_supports_shellpipe_hack
+endfunction
+
 "return a string representing the state of buffer according to
 "g:syntastic_stl_format
 "
@@ -536,7 +563,7 @@ function! SyntasticMake(options)
     let old_shell = &shell
     let old_errorformat = &l:errorformat
 
-    if !s:running_windows && (s:uname !~ "FreeBSD")
+    if s:OSSupportsShellpipeHack()
         "this is a hack to stop the screen needing to be ':redraw'n when
         "when :lmake is run. Otherwise the screen flickers annoyingly
         let &shellpipe='&>'
@@ -560,7 +587,7 @@ function! SyntasticMake(options)
     let &shellpipe=old_shellpipe
     let &shell=old_shell
 
-    if !s:running_windows && s:uname =~ "FreeBSD"
+    if s:OSSupportsShellpipeHack()
         redraw!
     endif
 
@@ -613,7 +640,7 @@ function! SyntasticLoadChecker(checkers, ft)
 
     if exists(opt_name)
         let opt_val = {opt_name}
-        if index(a:checkers, opt_val) != -1 && executable(opt_val)
+        if index(a:checkers, opt_val) != -1
             call s:LoadChecker(opt_val, a:ft)
         else
             echoerr &ft . " syntax not supported or not installed."

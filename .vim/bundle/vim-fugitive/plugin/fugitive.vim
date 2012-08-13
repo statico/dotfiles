@@ -67,7 +67,7 @@ endfunction
 function! s:recall()
   let rev = s:sub(s:buffer().rev(), '^/', '')
   if rev ==# ':'
-    return matchstr(getline('.'),'^#\t\%([[:alpha:] ]\+: *\)\=\zs.\{-\}\ze\%( (new commits)\)\=$\|^\d\{6} \x\{40\} \d\t\zs.*')
+    return matchstr(getline('.'),'^#\t\%([[:alpha:] ]\+: *\)\=\zs.\{-\}\ze\%( ([^()[:digit:]]\+)\)\=$\|^\d\{6} \x\{40\} \d\t\zs.*')
   endif
   return rev
 endfunction
@@ -679,6 +679,23 @@ function! fugitive#reload_status() abort
   endfor
 endfunction
 
+function! s:stage_info(lnum) abort
+  let filename = matchstr(getline(a:lnum),'^#\t\zs.\{-\}\ze\%( ([^()[:digit:]]\+)\)\=$')
+  let lnum = a:lnum
+  while lnum && getline(lnum) !~# '^#.*:$'
+    let lnum -= 1
+  endwhile
+  if !lnum
+    return ['', '']
+  elseif getline(lnum+1) =~# '^# .*"git \%(reset\|rm --cached\) ' || getline(lnum) ==# '# Changes to be committed:'
+    return [matchstr(filename, ': *\zs.*'), 'staged']
+  elseif getline(lnum+2) =~# '^# .*"git checkout ' || getline(lnum) ==# '# Changes not staged for commit:'
+    return [matchstr(filename, ': *\zs.*'), 'unstaged']
+  else
+    return [filename, 'untracked']
+  endif
+endfunction
+
 function! s:StageReloadSeek(target,lnum1,lnum2)
   let jump = a:target
   let f = matchstr(getline(a:lnum1-1),'^#\t\%([[:alpha:] ]\+: *\)\=\zs.*')
@@ -688,22 +705,20 @@ function! s:StageReloadSeek(target,lnum1,lnum2)
   silent! edit!
   1
   redraw
-  call search('^#\t\%([[:alpha:] ]\+: *\)\=\V'.jump.'\%( (new commits)\)\=\$','W')
+  call search('^#\t\%([[:alpha:] ]\+: *\)\=\V'.jump.'\%( ([^()[:digit:]]\+)\)\=\$','W')
 endfunction
 
 function! s:StageDiff(diff) abort
-  let section = getline(search('^# .*:$','bcnW'))
-  let line = getline('.')
-  let filename = matchstr(line,'^#\t\%([[:alpha:] ]\+: *\)\=\zs.\{-\}\ze\%( (new commits)\)\=$')
-  if filename ==# '' && section ==# '# Changes to be committed:'
-    return 'Git diff --cached'
+  let [filename, section] = s:stage_info(line('.'))
+  if filename ==# '' && section ==# 'staged'
+    return 'Git! diff --cached'
   elseif filename ==# ''
-    return 'Git diff'
-  elseif line =~# '^#\trenamed:' && filename =~# ' -> '
+    return 'Git! diff'
+  elseif filename =~# ' -> '
     let [old, new] = split(filename,' -> ')
     execute 'Gedit '.s:fnameescape(':0:'.new)
     return a:diff.' HEAD:'.s:fnameescape(old)
-  elseif section ==# '# Changes to be committed:'
+  elseif section ==# 'staged'
     execute 'Gedit '.s:fnameescape(':0:'.filename)
     return a:diff.' -'
   else
@@ -713,20 +728,18 @@ function! s:StageDiff(diff) abort
 endfunction
 
 function! s:StageDiffEdit() abort
-  let section = getline(search('^# .*:$','bcnW'))
-  let line = getline('.')
-  let filename = matchstr(line,'^#\t\%([[:alpha:] ]\+: *\)\=\zs.\{-\}\ze\%( (new commits)\)\=$')
+  let [filename, section] = s:stage_info(line('.'))
   let arg = (filename ==# '' ? '.' : filename)
-  if section ==# '# Changes to be committed:'
+  if section ==# 'staged'
     return 'Git! diff --cached '.s:shellesc(arg)
-  elseif section ==# '# Untracked files:'
+  elseif section ==# 'untracked'
     let repo = s:repo()
     call repo.git_chomp_in_tree('add','--intent-to-add',arg)
     if arg ==# '.'
       silent! edit!
       1
-      if !search('^# Change\%(d but not updated\|s not staged for commit\):$','W')
-        call search('^# Change','W')
+      if !search('^# .*:\n#.*\n# .*"git checkout \|^# Changes not staged for commit:$','W')
+        call search('^# .*:$','W')
       endif
     else
       call s:StageReloadSeek(arg,line('.'),line('.'))
@@ -741,32 +754,33 @@ function! s:StageToggle(lnum1,lnum2) abort
   try
     let output = ''
     for lnum in range(a:lnum1,a:lnum2)
-      let line = getline(lnum)
+      let [filename, section] = s:stage_info(lnum)
       let repo = s:repo()
-      if line ==# '# Changes to be committed:'
-        call repo.git_chomp_in_tree('reset','-q')
-        silent! edit!
-        1
-        if !search('^# Untracked files:$','W')
-          call search('^# Change','W')
+      if getline('.') =~# '^# .*:$'
+        if section ==# 'staged'
+          call repo.git_chomp_in_tree('reset','-q')
+          silent! edit!
+          1
+          if !search('^# .*:\n# .*"git add .*\n#\n\|^# Untracked files:$','W')
+            call search('^# .*:$','W')
+          endif
+          return ''
+        elseif section ==# 'unstaged'
+          call repo.git_chomp_in_tree('add','-u')
+          silent! edit!
+          1
+          if !search('^# .*:\n# .*"git add .*\n#\n\|^# Untracked files:$','W')
+            call search('^# .*:$','W')
+          endif
+          return ''
+        else
+          call repo.git_chomp_in_tree('add','.')
+          silent! edit!
+          1
+          call search('^# .*:$','W')
+          return ''
         endif
-        return ''
-      elseif line =~# '^# Change\%(d but not updated\|s not staged for commit\):$'
-        call repo.git_chomp_in_tree('add','-u')
-        silent! edit!
-        1
-        if !search('^# Untracked files:$','W')
-          call search('^# Change','W')
-        endif
-        return ''
-      elseif line ==# '# Untracked files:'
-        call repo.git_chomp_in_tree('add','.')
-        silent! edit!
-        1
-        call search('^# Change','W')
-        return ''
       endif
-      let filename = matchstr(line,'^#\t\%([[:alpha:] ]\+: *\)\=\zs.\{-\}\ze\%( (\a\+ [[:alpha:], ]\+)\)\=$')
       if filename ==# ''
         continue
       endif
@@ -774,16 +788,17 @@ function! s:StageToggle(lnum1,lnum2) abort
         let first_filename = filename
       endif
       execute lnum
-      let section = getline(search('^# .*:$','bnW'))
-      if line =~# '^#\trenamed:' && filename =~ ' -> '
+      if filename =~ ' -> '
         let cmd = ['mv','--'] + reverse(split(filename,' -> '))
         let filename = cmd[-1]
-      elseif section =~? ' to be '
+      elseif section ==# 'staged'
         let cmd = ['reset','-q','--',filename]
-      elseif line =~# '^#\tdeleted:'
+      elseif getline(lnum) =~# '^#\tdeleted:'
         let cmd = ['rm','--',filename]
-      else
+      elseif getline(lnum) =~# '^#\tmodified:'
         let cmd = ['add','--',filename]
+      else
+        let cmd = ['add','-A','--',filename]
       endif
       let output .= call(repo.git_chomp_in_tree,cmd,s:repo())."\n"
     endfor
@@ -802,26 +817,25 @@ function! s:StagePatch(lnum1,lnum2) abort
   let reset = []
 
   for lnum in range(a:lnum1,a:lnum2)
-    let line = getline(lnum)
-    if line ==# '# Changes to be committed:'
+    let [filename, section] = s:stage_info(lnum)
+    if getline('.') =~# '^# .*:$' && section ==# 'staged'
       return 'Git reset --patch'
-    elseif line =~# '^# Change\%(d but not updated\|s not staged for commit\):$'
+    elseif getline('.') =~# '^# .*:$' && section ==# 'unstaged'
       return 'Git add --patch'
-    endif
-    let filename = matchstr(line,'^#\t\%([[:alpha:] ]\+: *\)\=\zs.\{-\}\ze\%( (new commits)\)\=$')
-    if filename ==# ''
+    elseif getline('.') =~# '^# .*:$' && section ==# 'untracked'
+      return 'Git add -N .'
+    elseif filename ==# ''
       continue
     endif
     if !exists('first_filename')
       let first_filename = filename
     endif
     execute lnum
-    let section = getline(search('^# .*:$','bnW'))
-    if line =~# '^#\trenamed:' && filename =~ ' -> '
+    if filename =~ ' -> '
       let reset += [split(filename,' -> ')[1]]
-    elseif section =~? ' to be '
+    elseif section ==# 'staged'
       let reset += [filename]
-    elseif line !~# '^#\tdeleted:'
+    elseif getline(lnum) !~# '^#\tdeleted:'
       let add += [filename]
     endif
   endfor
@@ -836,7 +850,7 @@ function! s:StagePatch(lnum1,lnum2) abort
       silent! edit!
       1
       redraw
-      call search('^#\t\%([[:alpha:] ]\+: *\)\=\V'.first_filename.'\%( (new commits)\)\=\$','W')
+      call search('^#\t\%([[:alpha:] ]\+: *\)\=\V'.first_filename.'\%( ([^()[:digit:]]\+)\)\=\$','W')
     endif
   catch /^fugitive:/
     return 'echoerr v:errmsg'
@@ -1006,7 +1020,7 @@ function! s:Log(cmd,...)
     let path = ''
   endif
   let cmd = ['--no-pager', 'log', '--no-color']
-  let cmd += [escape('--pretty=format:fugitive://'.s:repo().dir().'//%H'.path.'::'.g:fugitive_summary_format,'%')]
+  let cmd += ['--pretty=format:fugitive://'.s:repo().dir().'//%H'.path.'::'.g:fugitive_summary_format]
   if empty(filter(a:000[0 : index(a:000,'--')],'v:val !~# "^-"'))
     if s:buffer().commit() =~# '\x\{40\}'
       let cmd += [s:buffer().commit()]
@@ -1024,7 +1038,7 @@ function! s:Log(cmd,...)
   let dir = getcwd()
   try
     execute cd.'`=s:repo().tree()`'
-    let &grepprg = call(s:repo().git_command,cmd,s:repo())
+    let &grepprg = escape(call(s:repo().git_command,cmd,s:repo()),'%')
     let &grepformat = '%f::%m'
     exe a:cmd
   finally
@@ -2166,13 +2180,19 @@ augroup fugitive_files
   autocmd BufReadCmd  index{,.lock}
         \ if fugitive#is_git_dir(expand('<amatch>:p:h')) |
         \   exe s:BufReadIndex() |
+        \ elseif filereadable(expand('<amatch>')) |
+        \   read <amatch> |
+        \   1delete |
         \ endif
   autocmd FileReadCmd fugitive://**//[0-3]/**          exe s:FileRead()
   autocmd BufReadCmd  fugitive://**//[0-3]/**          exe s:BufReadIndexFile()
   autocmd BufWriteCmd fugitive://**//[0-3]/**          exe s:BufWriteIndexFile()
   autocmd BufReadCmd  fugitive://**//[0-9a-f][0-9a-f]* exe s:BufReadObject()
   autocmd FileReadCmd fugitive://**//[0-9a-f][0-9a-f]* exe s:FileRead()
-  autocmd FileType git       call s:JumpInit()
+  autocmd FileType git
+        \ if exists('b:git_dir') |
+        \  call s:JumpInit() |
+        \ endif
 augroup END
 
 " }}}1
@@ -2255,7 +2275,7 @@ function! s:GF(mode) abort
         let file = '/'.matchstr(getline('.'),' -> \zs.*')
         return s:Edit(a:mode,0,file)
       elseif getline('.') =~# '^#\t[[:alpha:] ]\+: *.'
-        let file = '/'.matchstr(getline('.'),': *\zs.\{-\}\ze\%( (new commits)\)\=$')
+        let file = '/'.matchstr(getline('.'),': *\zs.\{-\}\ze\%( ([^()[:digit:]]\+)\)\=$')
         return s:Edit(a:mode,0,file)
       elseif getline('.') =~# '^#\t.'
         let file = '/'.matchstr(getline('.'),'#\t\zs.*')
