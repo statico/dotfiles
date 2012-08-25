@@ -43,6 +43,7 @@ repos=(
   https://github.com/vim-scripts/keepcase.vim.git
   https://github.com/vim-scripts/lighttpd-syntax.git
   https://github.com/vim-scripts/oceandeep.git
+  https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
   )
 
@@ -53,6 +54,7 @@ other=(
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
   'wombat/colors;http://files.werx.dk/wombat.vim'
   'actionscript/syntax;http://www.vim.org/scripts/download_script.php?src_id=10123;actionscript.vim'
+  'navajo-night/colors;http://vim.sourceforge.net/scripts/download_script.php?src_id=805;navajo-night.vim'
   )
 
 case "$1" in
