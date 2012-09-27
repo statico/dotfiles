@@ -211,7 +211,7 @@ set tabstop=4               " The One True Tab
 set notitle                 " Don't set the title of the Vim window
 set wildmenu                " Show possible completions on command line
 set wildmode=list:longest,full " List all options and complete
-set wildignore=*.class,*.o,*~,*.pyc,.git,third_party,node_modules  " Ignore certain files in tab-completion
+set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in tab-completion
 
 " Section: Commands & Functions {{{1
 "--------------------------------------------------------------------------

@@ -176,33 +176,35 @@ alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
 alias g='git'
-alias ga='git add'
-alias gap='git add --all --patch'
 alias gA='git add --all'
+alias ga='git add'
+alias gap='clear; git add --all --patch'
 alias gb='git branch'
 alias gd='git diff'
-alias gdw='git diff -w'
 alias gdc='git diff --cached'
+alias gdw='git diff -w'
 alias gf='git fetch'
+alias gfmom='git fetch origin ; git merge origin/master'
 alias gfa='git fetch --all'
 alias gh='git stash'
 alias ghl='git stash list'
 alias ghp='git stash pop'
 alias ghs='git stash save'
 alias ghw='git stash show -p'
-alias gm='git merge'
-alias gp='git push'
-alias gpo='git push origin'
-alias gs='git show -p'
-alias gu='git add --update'
-alias gus='git unstage'
-alias gup='git fetch ; git merge origin'
 alias gl='git quicklog'
 alias gll='git quicklog-long'
+alias gm='git merge'
+alias gmom='git merge origin/master'
+alias gp='git push'
 alias gpgdecrypt='gpg --decrypt-files'
 alias gpge='gpg --edit-key'
 alias gpgencrypt='gpg --default-recipient-self --armor --encrypt-files'
 alias gpgrk='gpg --recv-keys'
+alias gpo='git push origin'
+alias gs='git show -p'
+alias gu='git add --update'
+alias gup='git fetch ; git merge origin'
+alias gus='git unstage'
 alias i4='sed "s/^/    /"'
 alias k='tree'
 alias l="ls -lh"
@@ -400,6 +402,7 @@ function psl () {
 
 function gc () {
     git commit -m "$*"
+    git log --oneline --decorate -n 10
 }
 
 # RCS helper functions
@@ -449,6 +452,7 @@ function sci () {
         echo "# ----------- committing -----------"
         git cim "$*"
         echo "# -------------- done --------------"
+        git log --oneline --decorate -n 10
     elif _try git add .; then
         echo "# ------------ staging -------------"
         echo "# Note: this git doesn't support -A"
