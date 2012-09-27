@@ -65,6 +65,7 @@ au BufNewFile,BufRead *.xps     setf perl
 au BufNewFile,BufRead *.xsl     setlocal ft=xslt ts=2 sw=2 et
 au BufNewFile,BufRead *.yaml    setlocal ft=yaml
 au BufNewFile,BufRead *.yml     setlocal ft=yaml
+au BufNewFile,BufRead *.zone    setlocal nolist ts=4 sw=4 noet
 au BufNewFile,BufRead *.zsh     setf zsh
 au BufNewFile,BufRead *conkyrc setf conkyrc
 au BufNewFile,BufRead *templates/*.html setf htmldjango
