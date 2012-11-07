@@ -1,8 +1,9 @@
-colorscheme zenburn
+#colorscheme zenburn
+#hi NonText guifg=#555555 gui=NONE term=NONE
+#hi clear LineNr
+#hi link LineNr NonText
 
-hi NonText guifg=#555555 gui=NONE term=NONE
-hi clear LineNr
-hi link LineNr NonText
+colorscheme oceandeep
 
 "set fillchars=vert:│,fold:-,diff:┄,stl:\ ,stlnc:\ 
 "set listchars=eol:¶,tab:»\ ,trail:·,extends:⇒

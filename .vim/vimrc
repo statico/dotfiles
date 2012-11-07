@@ -17,6 +17,7 @@ nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :CoffeeCompile watch<CR>
 nmap \d :%!perltidy<CR>
 nmap \e :NERDTreeToggle<CR>
+nmap \h :Hexmode<CR><CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
@@ -105,6 +106,49 @@ function! RunUsingCurrentFiletype()
     execute 'write'
     execute '! clear; '.&filetype.' <% '
 endfunction
+
+" Hex mode from http://vim.wikia.com/wiki/Improved_hex_editing
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
+
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
+
 
 " Section: Hacks {{{1
 "--------------------------------------------------------------------------
@@ -391,16 +435,7 @@ highlight clear MatchParen
 highlight link MatchParen Search
 
 " colors for NERD_tree
-highlight treeDir cterm=none ctermfg=blue
-highlight treeLink cterm=bold ctermfg=cyan
-highlight treeExecFile cterm=bold ctermfg=green
-highlight def link treePart Ignore
-highlight def link treePartFile Ignore
-highlight def link treeClosable Ignore
-highlight def link treeOpenable Ignore
-highlight def link treeFlag Ignore
-highlight def link treeDirSlash treeDir
-highlight def link treeRO treeFile
+highlight def link NERDTreeRO NERDTreeFile
 
 " make trailing spaces visible
 highlight SpecialKey ctermbg=Yellow guibg=Yellow
