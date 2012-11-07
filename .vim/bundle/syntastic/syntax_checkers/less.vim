@@ -9,6 +9,14 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
+" To send additional options to less use the variable g:syntastic_less_options.
+" The default is
+"   let g:syntastic_less_options = "--no-color"
+"
+" To use less-lint instead of less set the variable
+" g:syntastic_less_use_less_lint.
+
 if exists("loaded_less_syntax_checker")
     finish
 endif
@@ -23,13 +31,20 @@ if !exists("g:syntastic_less_options")
     let g:syntastic_less_options = "--no-color"
 endif
 
-function! SyntaxCheckers_less_GetLocList()
-    let makeprg = 'lessc '. g:syntastic_less_options .' '.  shellescape(expand('%')) . ' /dev/null'
+if !exists("g:syntastic_less_use_less_lint")
+    let g:syntastic_less_use_less_lint = 0
+endif
 
-    "lessc >= 1.2
+if g:syntastic_less_use_less_lint
+    let s:check_file = 'node ' . expand('<sfile>:p:h') . '/less-lint.js'
+else
+    let s:check_file = 'lessc'
+end
+
+function! SyntaxCheckers_less_GetLocList()
+    let makeprg = s:check_file . ' ' . g:syntastic_less_options . ' ' .
+                \ shellescape(expand('%')) . ' /dev/null'
     let errorformat = '%m in %f:%l:%c'
-    "lessc < 1.2
-    let errorformat .= ', Syntax %trror on line %l in %f,Syntax %trror on line %l,! Syntax %trror: on line %l: %m,%-G%.%#'
 
     return SyntasticMake({ 'makeprg': makeprg,
                          \ 'errorformat': errorformat,

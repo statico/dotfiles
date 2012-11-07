@@ -19,6 +19,10 @@ if !executable("puppet")
     finish
 endif
 
+if !exists("g:syntastic_puppet_validate_disable")
+    let g:syntastic_puppet_validate_disable = 0
+endif
+
 if !exists("g:syntastic_puppet_lint_disable")
     let g:syntastic_puppet_lint_disable = 0
 endif
@@ -27,25 +31,30 @@ if !executable("puppet-lint")
     let g:syntastic_puppet_lint_disable = 1
 endif
 
-function! s:PuppetExtractVersion()
-    let output = system("puppet --version")
-    let output = substitute(output, '\n$', '', '')
-    return split(output, '\.')
+function! s:PuppetVersion()
+    if !exists("s:puppet_version")
+        let output = system("puppet --version 2>/dev/null")
+        let output = substitute(output, '\n$', '', '')
+        let s:puppet_version = split(output, '\.')
+    endif
+    return s:puppet_version
 endfunction
 
-function! s:PuppetLintExtractVersion()
-    let output = system("puppet-lint --version")
-    let output = substitute(output, '\n$', '', '')
-    let output = substitute(output, '^puppet-lint ', '', 'i')
-    return split(output, '\.')
+function! s:PuppetLintVersion()
+    if !exists("s:puppet_lint_version")
+        let output = system("puppet-lint --version 2>/dev/null")
+        let output = substitute(output, '\n$', '', '')
+        let output = substitute(output, '^puppet-lint ', '', 'i')
+        let s:puppet_lint_version = split(output, '\.')
+    endif
+    return s:puppet_lint_version
 endfunction
 
-let s:puppetVersion = s:PuppetExtractVersion()
-let s:lintVersion = s:PuppetLintExtractVersion()
-
-if !(s:lintVersion[0] >= '0' && s:lintVersion[1] >= '1' && s:lintVersion[2] >= '10')
-    let g:syntastic_puppet_lint_disable = 1
-endif
+if !g:syntastic_puppet_lint_disable
+    if !SyntasticIsVersionAtLeast(s:PuppetLintVersion(), [0,1,10])
+        let g:syntastic_puppet_lint_disable = 1
+    endif
+end
 
 function! s:getPuppetLintErrors()
     if !exists("g:syntastic_puppet_lint_arguments")
@@ -57,15 +66,15 @@ function! s:getPuppetLintErrors()
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'subtype': 'Style' })
 endfunction
 
-function! s:getPuppetMakeprg() 
+function! s:getPuppetMakeprg()
     "If puppet is >= version 2.7 then use the new executable
-    if s:puppetVersion[0] >= '2' && s:puppetVersion[1] >= '7'
+    if SyntasticIsVersionAtLeast(s:PuppetVersion(), [2,7,0])
         let makeprg = 'puppet parser validate ' .
                     \ shellescape(expand('%')) .
                     \ ' --color=false'
 
         "add --ignoreimport for versions < 2.7.10
-        if s:puppetVersion[2] < '10'
+        if s:PuppetVersion()[2] < '10'
             let makeprg .= ' --ignoreimport'
         endif
 
@@ -76,16 +85,19 @@ function! s:getPuppetMakeprg()
 endfunction
 
 function! SyntaxCheckers_puppet_GetLocList()
+    let errors = []
 
-    let makeprg = s:getPuppetMakeprg()
+    if !g:syntastic_puppet_validate_disable
+        let makeprg = s:getPuppetMakeprg()
 
-    "some versions of puppet (e.g. 2.7.10) output the message below if there
-    "are any syntax errors
-    let errorformat = '%-Gerr: Try ''puppet help parser validate'' for usage,'
-    let errorformat .= 'err: Could not parse for environment %*[a-z]: %m at %f:%l'
+        "some versions of puppet (e.g. 2.7.10) output the message below if there
+        "are any syntax errors
+        let errorformat = '%-Gerr: Try ''puppet help parser validate'' for usage,'
+        let errorformat .= 'err: Could not parse for environment %*[a-z]: %m at %f:%l'
 
-    let errors = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
- 
+        let errors = errors + SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+    endif
+
     if !g:syntastic_puppet_lint_disable
         let errors = errors + s:getPuppetLintErrors()
     endif

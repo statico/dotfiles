@@ -19,10 +19,6 @@ let g:loaded_syntastic_plugin = 1
 
 let s:running_windows = has("win16") || has("win32")
 
-if !s:running_windows
-    let s:uname = system('uname')
-endif
-
 if !exists("g:syntastic_enable_signs")
     let g:syntastic_enable_signs = 1
 endif
@@ -55,6 +51,12 @@ if !has('balloon_eval')
 endif
 
 if !exists("g:syntastic_enable_highlighting")
+    let g:syntastic_enable_highlighting = 1
+endif
+
+" highlighting requires getmatches introduced in 7.1.040
+if g:syntastic_enable_highlighting == 1 &&
+            \ (v:version < 701 || v:version == 701 && has('patch040'))
     let g:syntastic_enable_highlighting = 1
 endif
 
@@ -132,9 +134,7 @@ function! s:UpdateErrors(auto_invoked)
         call s:CacheErrors()
     end
 
-    if s:BufHasErrorsOrWarningsToDisplay()
-        call setloclist(0, s:LocList())
-    endif
+    call setloclist(0, s:LocList())
 
     if g:syntastic_enable_balloons
         call s:RefreshBalloons()
@@ -145,7 +145,7 @@ function! s:UpdateErrors(auto_invoked)
     endif
 
     if g:syntastic_enable_highlighting
-        call s:HightlightErrors()
+        call s:HighlightErrors()
     endif
 
     if g:syntastic_auto_jump && s:BufHasErrorsOrWarningsToDisplay()
@@ -200,7 +200,7 @@ function! s:CacheErrors()
         "functions legally for filetypes like "gentoo-metadata"
         let fts = substitute(&ft, '-', '_', 'g')
         for ft in split(fts, '\.')
-            if s:Checkable(ft)
+            if SyntasticCheckable(ft)
                 let errors = SyntaxCheckers_{ft}_GetLocList()
                 "keep only lines that effectively match an error/warning
                 let errors = s:FilterLocList({'valid': 1}, errors)
@@ -243,7 +243,10 @@ function! s:ModeMapAllowsAutoChecking()
 endfunction
 
 function! s:BufHasErrorsOrWarningsToDisplay()
-    return len(s:Errors()) || (!g:syntastic_quiet_warnings && !empty(s:LocList()))
+    if empty(s:LocList())
+        return 0
+    endif
+    return len(s:Errors()) || !g:syntastic_quiet_warnings
 endfunction
 
 function! s:Errors()
@@ -383,7 +386,7 @@ endfunction
 "
 "If the 'force_highlight_callback' key is set for an error item, then invoke
 "the callback even if it can be highlighted automatically.
-function! s:HightlightErrors()
+function! s:HighlightErrors()
     call s:ClearErrorHighlights()
 
     let fts = substitute(&ft, '-', '_', 'g')
@@ -418,16 +421,6 @@ function! s:ClearErrorHighlights()
             call matchdelete(match['id'])
         endif
     endfor
-endfunction
-
-"check if a syntax checker exists for the given filetype - and attempt to
-"load one
-function! s:Checkable(ft)
-    if !exists("g:loaded_" . a:ft . "_syntax_checker")
-        exec "runtime syntax_checkers/" . a:ft . ".vim"
-    endif
-
-    return exists("*SyntaxCheckers_". a:ft ."_GetLocList")
 endfunction
 
 "set up error ballons for the current set of errors
@@ -494,9 +487,39 @@ endfunction
 "shelling out to syntax checkers. Not all OSs support the hacks though
 function! s:OSSupportsShellpipeHack()
     if !exists("s:os_supports_shellpipe_hack")
-        let s:os_supports_shellpipe_hack = !s:running_windows && (s:uname !~ "FreeBSD") && (s:uname !~ "OpenBSD")
+        let s:os_supports_shellpipe_hack = !s:running_windows && (s:uname() !~ "FreeBSD") && (s:uname() !~ "OpenBSD")
     endif
     return s:os_supports_shellpipe_hack
+endfunction
+
+function! s:uname()
+    if !exists('s:uname')
+        let s:uname = system('uname')
+    endif
+    return s:uname
+endfunction
+
+"check if a syntax checker exists for the given filetype - and attempt to
+"load one
+function! SyntasticCheckable(ft)
+    if !exists("g:loaded_" . a:ft . "_syntax_checker")
+        exec "runtime syntax_checkers/" . a:ft . ".vim"
+    endif
+
+    return exists("*SyntaxCheckers_". a:ft ."_GetLocList")
+endfunction
+
+"the args must be arrays of the form [major, minor, macro]
+function SyntasticIsVersionAtLeast(installed, required)
+    if a:installed[0] != a:required[0]
+        return a:installed[0] > a:required[0]
+    endif
+
+    if a:installed[1] != a:required[1]
+        return a:installed[1] > a:required[1]
+    endif
+
+    return a:installed[2] >= a:required[2]
 endfunction
 
 "return a string representing the state of buffer according to

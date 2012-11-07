@@ -1,3 +1,3 @@
 if has("autocmd")
-  au BufNewFile,BufRead *.handlebars,*.hbs set filetype=handlebars
+  au BufNewFile,BufRead *.handlebars,*.hbs,*.hb set filetype=handlebars
 endif

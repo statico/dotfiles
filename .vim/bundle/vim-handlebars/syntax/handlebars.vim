@@ -43,7 +43,7 @@ syn region  hbsSection         start="{{[#/]"lc=2 end=/}}/me=e-2        containe
 syn region  hbsPartial         start=/{{[<>]/lc=2 end=/}}/me=e-2        containedin=hbsInside
 syn region  hbsMarkerSet       start=/{{=/lc=2    end=/=}}/me=e-2       containedin=hbsInside
 
-syn region  hbsComment         start=/!/            end=/}}/me=e-2      containedin=htmlHead contains=Todo
+syn region  hbsComment         start=/{{!/          end=/}}/me=e-2      containedin=htmlHead contains=Todo
 syn region  hbsQString         start=/'/ skip=/\\'/ end=/'/             containedin=hbsInside
 syn region  hbsDQString        start=/"/ skip=/\\"/ end=/"/             containedin=hbsInside
 
