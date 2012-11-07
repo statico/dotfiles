@@ -205,6 +205,7 @@ alias gs='git show -p'
 alias gu='git add --update'
 alias gup='git fetch ; git merge origin'
 alias gus='git unstage'
+alias gvm="vim `git status -uall | egrep '#\tmodified:' | cut -d: -f2`"
 alias i4='sed "s/^/    /"'
 alias k='tree'
 alias l="ls -lh"
