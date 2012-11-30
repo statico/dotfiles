@@ -399,7 +399,7 @@ endfunction
 
 " Make sure colored syntax mode is on, and make it Just Work with newer 256
 " color terminals like iTerm2.
-if $TERM == "xterm-256color" || $TERM == "screen-256color"
+if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
   set t_Co=256
   call ColorTermZenburn()
 elseif has("terminfo")
