@@ -28,6 +28,7 @@ repos=(
   https://github.com/hced/bufkill-vim.git
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/kien/ctrlp.vim.git
+  https://github.com/majutsushi/tagbar.git
   https://github.com/michaeljsmith/vim-indent-object.git
   https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
