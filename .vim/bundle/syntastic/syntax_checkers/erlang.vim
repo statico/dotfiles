@@ -20,6 +20,10 @@ if !executable("escript")
 endif
 
 let s:check_file = expand('<sfile>:p:h') . '/erlang_check_file.erl'
+if !exists("g:syntastic_erlc_include_path")
+    let g:syntastic_erlc_include_path=""
+endif
+
 
 function! SyntaxCheckers_erlang_GetLocList()
     let extension = expand('%:e')
@@ -31,10 +35,10 @@ function! SyntaxCheckers_erlang_GetLocList()
         if match(shebang, 'escript') >= 0
             let makeprg = 'escript -s '.shellescape(expand('%:p'))
         else
-            let makeprg = s:check_file . ' '. shellescape(expand('%:p'))
+            let makeprg = s:check_file . ' '. shellescape(expand('%:p')).' '.g:syntastic_erlc_include_path
         endif
     else
-        let makeprg =  s:check_file . ' ' . shellescape(expand('%:p'))
+        let makeprg =  s:check_file . ' ' . shellescape(expand('%:p')).' '.g:syntastic_erlc_include_path
     endif
     let errorformat = '%f:%l:\ %tarning:\ %m,%E%f:%l:\ %m'
 

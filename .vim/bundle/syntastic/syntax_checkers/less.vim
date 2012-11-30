@@ -43,7 +43,7 @@ end
 
 function! SyntaxCheckers_less_GetLocList()
     let makeprg = s:check_file . ' ' . g:syntastic_less_options . ' ' .
-                \ shellescape(expand('%')) . ' /dev/null'
+                \ shellescape(expand('%')) . ' ' . syntastic#util#DevNull()
     let errorformat = '%m in %f:%l:%c'
 
     return SyntasticMake({ 'makeprg': makeprg,

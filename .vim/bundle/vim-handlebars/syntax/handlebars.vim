@@ -1,8 +1,8 @@
 " Handlebars syntax
 " Language:    Handlebars
 " Maintainer:  Bruno Michel <brmichel@free.fr>
-" Last Change: Jun 23th, 2011
-" Version:	   0.1
+" Last Change: Oct 24th, 2012
+" Version:	   0.2
 " URL:         https://github.com/nono/vim-handlebars
 
 
@@ -29,6 +29,8 @@ else
 endif
 
 
+syn keyword hbsTodo             TODO FIXME XXX contained
+
 syn match   hbsError            /}}}\?/
 syn match   hbsInsideError      /{{[{#<>=!\/]\?/   containedin=@hbsInside
 
@@ -43,7 +45,8 @@ syn region  hbsSection         start="{{[#/]"lc=2 end=/}}/me=e-2        containe
 syn region  hbsPartial         start=/{{[<>]/lc=2 end=/}}/me=e-2        containedin=hbsInside
 syn region  hbsMarkerSet       start=/{{=/lc=2    end=/=}}/me=e-2       containedin=hbsInside
 
-syn region  hbsComment         start=/{{!/          end=/}}/me=e-2      containedin=htmlHead contains=Todo
+syn region  hbsComment         start=/{{!/rs=s+2    end=/}}/re=e-2      containedin=htmlHead contains=hbsTodo,Todo
+syn region  hbsBlockComment    start=/{{!--/rs=s+2  end=/--}}/re=e-2    containedin=htmlHead contains=hbsTodo,Todo
 syn region  hbsQString         start=/'/ skip=/\\'/ end=/'/             containedin=hbsInside
 syn region  hbsDQString        start=/"/ skip=/\\"/ end=/"/             containedin=hbsInside
 
@@ -62,6 +65,8 @@ if version >= 508 || !exists("did_lisp_syntax_inits")
     command -nargs=+ HiLink hi def link <args>
   endif
 
+  HtmlHiLink hbsTodo          Todo
+
   HtmlHiLink hbsError         Error
   HtmlHiLink hbsInsideError   Error
 
@@ -76,6 +81,7 @@ if version >= 508 || !exists("did_lisp_syntax_inits")
   HtmlHiLink hbsPartial       Include
   HtmlHiLink hbsMarkerSet     Number
 
+  HtmlHiLink hbsBlockComment  Comment
   HtmlHiLink hbsComment       Comment
   HtmlHiLink hbsQString       String
   HtmlHiLink hbsDQString      String

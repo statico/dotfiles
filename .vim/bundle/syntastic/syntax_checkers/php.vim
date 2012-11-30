@@ -24,8 +24,19 @@ if !exists("g:syntastic_phpcs_conf")
     let g:syntastic_phpcs_conf = ""
 endif
 
-if !exists("g:syntastic_phpcs_disable")
+if !exists("g:syntastic_phpcs_disable") || !executable('phpcs')
     let g:syntastic_phpcs_disable = 0
+endif
+
+
+if !exists("g:syntastic_phpmd_disable") || !executable('phpmd')
+    let g:syntastic_phpmd_disable = 0
+endif
+
+
+"Support passing selected rules to phpmd
+if !exists("g:syntastic_phpmd_rules")
+    let g:syntastic_phpmd_rules = "codesize,design,unusedcode,naming"
 endif
 
 function! SyntaxCheckers_php_GetHighlightRegex(item)
@@ -37,16 +48,19 @@ function! SyntaxCheckers_php_GetHighlightRegex(item)
 endfunction
 
 function! SyntaxCheckers_php_GetLocList()
-
-    let errors = []
-
     let makeprg = "php -l -d error_reporting=E_ALL -d display_errors=1 -d log_errors=0 ".shellescape(expand('%'))
     let errorformat='%-GNo syntax errors detected in%.%#,Parse error: %#syntax %trror\ , %m in %f on line %l,Parse %trror: %m in %f on line %l,Fatal %trror: %m in %f on line %l,%-G\s%#,%-GErrors parsing %.%#'
     let errors = SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
 
-    if empty(errors) && !g:syntastic_phpcs_disable && executable("phpcs")
-        let errors = errors + s:GetPHPCSErrors()
-    endif
+    if empty(errors)
+        if !g:syntastic_phpcs_disable
+            let errors = errors + s:GetPHPCSErrors()
+        endif
+
+        if !g:syntastic_phpmd_disable
+            let errors = errors + s:GetPHPMDErrors()
+        endif
+    end
 
     return errors
 endfunction
@@ -55,4 +69,11 @@ function! s:GetPHPCSErrors()
     let makeprg = "phpcs " . g:syntastic_phpcs_conf . " --report=csv ".shellescape(expand('%'))
     let errorformat = '%-GFile\,Line\,Column\,Type\,Message\,Source\,Severity,"%f"\,%l\,%c\,%t%*[a-zA-Z]\,"%m"\,%*[a-zA-Z0-9_.-]\,%*[0-9]'
     return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'subtype': 'Style' })
+endfunction
+
+"Helper function. This one runs and parses phpmd tool output.
+function! s:GetPHPMDErrors()
+    let makeprg = "phpmd " . shellescape(expand('%')) . " text " . g:syntastic_phpmd_rules
+    let errorformat = '%E%f:%l%m'
+    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'subtype' : 'Style' })
 endfunction

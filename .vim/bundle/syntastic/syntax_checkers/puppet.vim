@@ -72,30 +72,33 @@ function! s:getPuppetMakeprg()
         let makeprg = 'puppet parser validate ' .
                     \ shellescape(expand('%')) .
                     \ ' --color=false'
-
-        "add --ignoreimport for versions < 2.7.10
-        if s:PuppetVersion()[2] < '10'
-            let makeprg .= ' --ignoreimport'
-        endif
-
     else
-        let makeprg = 'puppet --color=false --parseonly --ignoreimport '.shellescape(expand('%'))
+        let makeprg = 'puppet --color=false --parseonly '.shellescape(expand('%'))
     endif
     return makeprg
+endfunction
+
+function! s:getPuppetEfm()
+    "some versions of puppet (e.g. 2.7.10) output the message below if there
+    "are any syntax errors
+    let errorformat = '%-Gerr: Try ''puppet help parser validate'' for usage,'
+    let errorformat .= 'err: Could not parse for environment %*[a-z]: %m at %f:%l'
+
+    "Puppet 3.0.0 changes this from "err:" to "Error:"
+    "reset errorformat in that case
+    if SyntasticIsVersionAtLeast(s:PuppetVersion(), [3,0,0])
+        let errorformat = '%-GError: Try ''puppet help parser validate'' for usage,'
+        let errorformat .= 'Error: Could not parse for environment %*[a-z]: %m at %f:%l'
+    endif
+
+    return errorformat
 endfunction
 
 function! SyntaxCheckers_puppet_GetLocList()
     let errors = []
 
     if !g:syntastic_puppet_validate_disable
-        let makeprg = s:getPuppetMakeprg()
-
-        "some versions of puppet (e.g. 2.7.10) output the message below if there
-        "are any syntax errors
-        let errorformat = '%-Gerr: Try ''puppet help parser validate'' for usage,'
-        let errorformat .= 'err: Could not parse for environment %*[a-z]: %m at %f:%l'
-
-        let errors = errors + SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+        let errors = errors + SyntasticMake({ 'makeprg': s:getPuppetMakeprg(), 'errorformat': s:getPuppetEfm() })
     endif
 
     if !g:syntastic_puppet_lint_disable

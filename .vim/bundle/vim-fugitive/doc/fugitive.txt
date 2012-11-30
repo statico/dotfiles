@@ -39,9 +39,11 @@ that are part of Git repositories).
                         <CR>  |:Gedit|
                         -     |:Git| add
                         -     |:Git| reset (staged files)
-                        C     |:Gcommit|
                         cA    |:Gcommit| --amend --reuse-message=HEAD
                         ca    |:Gcommit| --amend
+                        cc    |:Gcommit|
+                        cva   |:Gcommit| --amend --verbose
+                        cvc   |:Gcommit| --verbose
                         D     |:Gdiff|
                         ds    |:Gsdiff|
                         dp    |:Git!| diff (p for patch; use :Gw to apply)
@@ -171,7 +173,7 @@ that are part of Git repositories).
 :Gblame [flags]         Run git-blame on the file and open the results in a
                         scroll bound vertical split.  Press enter on a line to
                         reblame the file as it was in that commit.  You can
-                        give any of ltwfsMC as flags and they will be passed
+                        give any of ltfnsewMC as flags and they will be passed
                         along to git-blame.  The following maps, which work on
                         the cursor line commit where sensible, are provided:
 
@@ -201,7 +203,7 @@ that are part of Git repositories).
                         To use with GitHub FI, point g:fugitive_github_domains
                         at a list of domains:
 >
-                        let g:fugitive_github_domains = ['git.example.com']
+                        let g:fugitive_github_domains = ['https://example.com']
 ~
 :[range]Gbrowse!        Like :Gbrowse, but put the URL on the clipboard rather
                         than opening it.

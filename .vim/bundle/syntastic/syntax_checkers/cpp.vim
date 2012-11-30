@@ -11,7 +11,6 @@
 "============================================================================
 
 " in order to also check header files add this to your .vimrc:
-" (this usually creates a .gch file in your source directory)
 "
 "   let g:syntastic_cpp_check_header = 1
 "
@@ -110,6 +109,7 @@ function! SyntaxCheckers_cpp_GetLocList()
         if exists('g:syntastic_cpp_check_header')
             let makeprg = g:syntastic_cpp_compiler.' -c '.shellescape(expand('%')) .
                         \ ' ' . g:syntastic_cpp_compiler_options .
+                        \ ' ' . syntastic#c#GetNullDevice() .
                         \ ' ' . syntastic#c#GetIncludeDirs('cpp')
         else
             return []
