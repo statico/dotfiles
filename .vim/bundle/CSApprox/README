@@ -1,0 +1,54 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2390
+
+CSApprox.vim
+
+============
+DESCRIPTION
+============
+
+It's hard to find colorschemes for terminal Vim.  Most colorschemes are
+written to only support GVim, and don't work at all in terminal Vim.
+
+This plugin makes GVim-only colorschemes Just Work in terminal Vim, as long
+as the terminal supports 88 or 256 colors - and most do these days.  This
+usually requires no user interaction (but see the help for what to do if
+things don't Just Work).  After getting this plugin happily installed, any
+time you use :colorscheme it will do its magic and make the colorscheme Just
+Work.
+
+Whenever you change colorschemes using the :colorscheme command this script
+will be executed.  It will take the colors that the scheme specified for use
+in the GUI and use an approximation algorithm to try to gracefully degrade
+them to the closest color available in your terminal.  If you are running in
+a GUI or if your terminal doesn't support 88 or 256 colors, no changes are
+made.  Also, no changes will be made if the colorscheme seems to have been
+high color already.
+
+If for some reason this transparent method isn't suitable to you (for instance
+if your environment can't be configured to meet the |csapprox-requirements|,
+or you need to work in Vim 6), another option is also available: using the
+|:CSApproxSnapshot| command to create a new GUI/88-/256-color terminal
+colorscheme.  To use this command, a user would generally start GVim, choose a
+colorscheme that sets up the desired colors, and then use |:CSApproxSnapshot|
+to create a new colorscheme based on those colors that works in high color
+terminals.  This method is more flexible than the transparent mode and works
+in more places, but also requires more user intervention, and makes it harder
+to deal with colorschemes being updated and such.
+
+======
+NOTES
+======
+
+Ideally, this plugin should require absolutely no configuration, but you may
+need some tweaking to make sure vim realizes that your terminal supports more
+than 16 colors.  Also, konsole and Eterm users will want to make sure that
+this plugin realizes that the terminal does not use colors that are exactly
+xterm-compatible; they will want to skim through the help articles
+|csapprox-palettes| and |csapprox-configuration| for a better end result.
+
+==============
+SCREENSHOTS
+==============
+
+Some quick side-by-side screenshots can be found at
+http://www.cs.drexel.edu/~mjw452/CSApprox/
