@@ -3,7 +3,8 @@
 #hi clear LineNr
 #hi link LineNr NonText
 
-colorscheme oceandeep
+set background=dark
+colorscheme solarized
 
 "set fillchars=vert:│,fold:-,diff:┄,stl:\ ,stlnc:\ 
 "set listchars=eol:¶,tab:»\ ,trail:·,extends:⇒
