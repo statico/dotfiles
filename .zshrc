@@ -135,7 +135,7 @@ fi
 # PATH MODIFICATIONS {{{1
 
 # Functions which modify the path given a directory, but only if the directory
-# exists and is not already in the path.
+# exists and is not already in the path. (Super useful in ~/.zshlocal)
 
 function _prepend_to_path() {
     if [ -d $1 -a -z ${path[(r)$1]} ]; then
@@ -156,8 +156,6 @@ _prepend_to_path /usr/local/bin
 _prepend_to_path /usr/local/sbin
 
 _append_to_path /usr/games
-_append_to_path /usr/X11R6/bin
-_append_to_path /usr/local/mysql/bin
 _append_to_path /usr/sbin
 
 # Add our docs, too
