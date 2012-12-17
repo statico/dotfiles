@@ -1,18 +1,11 @@
 # vim:ft=zsh:ts=4:sw=4:et:
-#
-# ╝╔═║╔═ ╝╔═╝  ══║╔═╝║ ║  ╔═╝╔═║╔═ ╔═╝╝╔═╝
-# ║╔═║║ ║ ══║  ╔╝ ══║╔═║  ║  ║ ║║ ║╔═╝║║ ║
-# ╝╝ ╝╝ ╝ ══╝  ══╝══╝╝ ╝  ══╝══╝╝ ╝╝  ╝══╝
-#
+#   ___           _      ____   _       ___           __ _
+#  |_ _|__ _ _ _ ( )___ |_  /__| |_    / __|___ _ _  / _(_)__ _
+#   | |/ _` | ' \|/(_-<  / /(_-< ' \  | (__/ _ \ ' \|  _| / _` |
+#  |___\__,_|_||_| /__/ /___/__/_||_|  \___\___/_||_|_| |_\__, |
+#                                                         |___/
 
 # INTERNAL UTILITY FUNCTIONS {{{1
-
-if [ -e ~/.zshdebug ]; then
-    function LOG () { echo "[36;1m# $*[0m" }
-else
-    function LOG () { }
-fi
-LOG "Starting Zsh"
 
 # Returns whether the given command is executable or aliased.
 function _has() {
@@ -36,12 +29,12 @@ function _color() {
     return $( [ -z "$INSIDE_EMACS" -a -z "$VIMRUNTIME" ] )
 }
 
-# ENVIRONMENT {{{1
+# ENVIRONMENT VARIABLES {{{1
 
-# Yes, this defeats the point of the TERM variable. But, face it, everything
-# uses modern ANSI escape sequences, and I've found that forcing everything to
-# be "rxvt" just about works everywhere. (If you want to know if you're in
-# screen, use SHLVL or TERMCAP.)
+# Yes, this defeats the point of the TERM variable, but everything pretty much
+# uses modern ANSI escape sequences. I've found that forcing everything to be
+# "rxvt" just about works everywhere. (If you want to know if you're in screen,
+# use SHLVL or TERMCAP.)
 if _color; then
     if [ -n "$ITERM_SESSION_ID" ]; then
         if [ "$TERM" = "screen" ]; then
@@ -95,6 +88,32 @@ elif _has emacs; then
     export EDITOR=emacs VISUAL=emacs
 fi
 
+# Overridable locale support.
+if [ -z $$LC_ALL ]; then
+    export LC_ALL=C
+fi
+if [ -z $LANG ]; then
+    export LANG=en_US
+fi
+
+# History control.
+SAVEHIST=100000
+HISTSIZE=100000
+if [ -e ~/priv/ ]; then
+    HISTFILE=~/priv/zsh_history
+elif [ -e ~/secure/ ]; then
+    HISTFILE=~/secure/zsh_history
+else
+    HISTFILE=~/.zsh_history
+fi
+if [ -n "$HISTFILE" -a ! -w $HISTFILE ]; then
+    echo
+    echo "[31;1m HISTFILE [$HISTFILE] not writable! [0m"
+    echo
+fi
+
+# APPLICATION CUSTOMIZATIONS {{{1
+
 # GNU grep
 if _color; then
     export GREP_OPTIONS='--color=auto'
@@ -111,14 +130,6 @@ if _color; then
     export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
     export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
     export CLICOLOR=1
-fi
-
-# Overridable locale support.
-if [ -z $$LC_ALL ]; then
-    export LC_ALL=C
-fi
-if [ -z $LANG ]; then
-    export LANG=en_US
 fi
 
 # PATH MODIFICATIONS {{{1
@@ -198,9 +209,7 @@ alias gm='git merge'
 alias gmom='git merge origin/master'
 alias gp='git push'
 alias gpgdecrypt='gpg --decrypt-files'
-alias gpge='gpg --edit-key'
 alias gpgencrypt='gpg --default-recipient-self --armor --encrypt-files'
-alias gpgrk='gpg --recv-keys'
 alias gpo='git push origin'
 alias gs='git show -p'
 alias gu='git add --update'
@@ -215,12 +224,8 @@ alias lt='ls -lt'
 alias ltr='ls -ltr'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
 alias netwhat='lsof -i +c 40'
-alias nls='netstat -l | grep tcp'
-alias nlsn='netstat -ln | grep tcp'
 alias nmu='nodemon =nodeunit'
 alias ndu='node --debug-brk =nodeunit'
-alias nologout='setopt ignore_eof'
-alias pd='perldoc'
 alias pt='pstree -pul'
 alias px='pilot-xfer -i'
 alias r='screen -D -R'
@@ -231,13 +236,10 @@ alias rxvt-invert="echo -n '[?5t'"
 alias rxvt-scrollbar="echo -n '[?30t'"
 alias scp='scp -C -p'
 alias screen='screen -U'
-alias sd='svn diff --diff-cmd=diff --extensions="-ydw -W$COLUMNS"'
 alias slurp='wget -t 5 -c -nH -r -N --no-parent'
 alias sshx='ssh -C -c blowfish -X'
 alias st='git status'
 alias stt='git status -uall'
-alias svnl='svn log -v -r HEAD'
-alias svnvimdiff='svn diff | vim -R +setf\ diff\ nolist -'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
@@ -272,7 +274,111 @@ if _is Linux; then
     fi
 fi
 
-# COMPLETION {{{1
+# FUNCTIONS {{{1
+
+# ack is really useful. I usually look for code and then edit all of the files
+# containing that code. Changing `ack' to `vack' does this for me.
+function vack () {
+  vim `ack -l $@`
+}
+
+# Quick commands to sync CWD between terminals.
+function pin () {
+    rm -f ~/.pindir
+    echo $PWD >~/.pindir
+    chmod 0600 ~/.pindir >/dev/null 2>&1
+}
+function pout () {
+    cd `cat ~/.pindir`
+}
+
+# A quick grep-for-processes.
+function psl () {
+    if _is SunOS; then
+        ps -Af | grep -i $1 | grep -v grep
+    else
+        ps auxww | grep -i $1 | grep -v grep
+    fi
+}
+
+# Make a new command.
+function vix () {
+    if [ -z "$1" ]; then
+        echo "usage: $0 <newfilename>"
+        return 1
+    fi
+
+    if [ ! -e $1 ]; then
+        touch $1
+        chmod 0755 $1
+    fi
+
+    $EDITOR $1
+}
+
+# Make a new command in ~/bin
+function makecommand () {
+    if [ -z "$1" ]; then
+        echo "Gotta specify a command name, champ" >&2
+        return 1
+    fi
+
+    mkdir -p ~/bin
+    local cmd=~/bin/$1
+    if [ -e $cmd ]; then
+        echo "Command $1 already exists" >&2
+    else
+        echo "#!${2:-/bin/sh}" >$cmd
+    fi
+
+    vix $cmd
+}
+
+# View a Python module in Vim.
+function vipy () {
+    p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
+    if [ $? = 0 ]; then
+        vi -R "$p"
+    fi
+    # errors will be printed by python
+}
+
+function rxvt-title () {
+    echo -n "]2;$*"
+}
+
+function screen-title () {
+    echo -n "k$*\\"
+}
+
+# Everything Git-related
+
+# Commit what's been staged, use args as message.
+function gc () {
+    git commit -m "$*"
+    git log --oneline --decorate -n 10
+}
+
+# Commit everything, use args as message.
+function sci () {
+    if [ $# = 0 ]; then
+        echo "usage: $0 message..." >&2
+        return 1
+    fi
+    echo "# ------------ staging -------------"
+    git status
+    echo "# ----------- committing -----------"
+    git cim "$*"
+    echo "# -------------- done --------------"
+    git log --oneline --decorate -n 10
+}
+
+# Don't page inside of emacs
+if [ -n "$INSIDE_EMACS" ]; then
+    alias git='git --no-pager'
+fi
+
+# ZSH-SPECIFIC COMPLETION {{{1
 
 # ---------------------------------------------
 # The following lines were added by compinstall
@@ -362,266 +468,7 @@ if [[ "$EMACS" = "t" ]]; then
     unsetopt zle
 fi
 
-# PRANK-PROTECTION {{{1
-
-function {
-    _try mesg n
-    _try mesg -n
-}
-
-# FUNCTIONS {{{1
-
-# ack is really useful. I usually look for code and then edit all of the files
-# containing that code. Changing `ack' to `vack' does this for me.
-function vack () {
-  vim `ack -l $@`
-}
-
-# Quick commands to sync CWD between terminals.
-function pin () {
-    rm -f ~/.pindir
-    echo $PWD >~/.pindir
-    chmod 0600 ~/.pindir >/dev/null 2>&1
-}
-function pout () {
-    cd `cat ~/.pindir`
-}
-
-# Run a command each time I hit 'q', quit on ^|
-function loopify () {
-    while true; do
-        clear
-        $@ 2>&1 | less || break
-    done
-}
-
-# A quick grep-for-processes.
-function psl () {
-    if _is SunOS; then
-        ps -Af | grep -i $1 | grep -v grep
-    else
-        ps auxww | grep -i $1 | grep -v grep
-    fi
-}
-
-function gc () {
-    git commit -m "$*"
-    git log --oneline --decorate -n 10
-}
-
-# RCS helper functions
-# TODO: Replade 'add .' with 'add -A' when all workstations have a newer Git.
-function sta () {
-    if [ -d .svn ]; then
-        svn status $@
-    elif [ -d CVS ]; then
-        cvs -n update
-    elif _try git add -A; then
-        git status
-    elif _try git add .; then
-        echo "# Note: this git doesn't support -A"
-        git status
-    else
-        echo "no versioning information found" >&2
-        return 1
-    fi
-}
-function stv () {
-    if [ -d .svn ]; then
-        svn diff | less -FRX
-    elif [ -d CVS ]; then
-        cvs diff | less -FRX
-    elif _try git add -A; then
-        git diff --cached
-    elif _try git add .; then
-        echo "# Note: this git doesn't support -A"
-        git diff --cached
-    else
-        echo "no versioning information found" >&2
-        return 1
-    fi
-}
-function sci () {
-    if [ $# = 0 ]; then
-        echo "usage: $0 message..." >&2
-        return 1
-    fi
-    if [ -d .svn ]; then
-        svn ci -m "$*"
-    elif [ -d CVS ]; then
-        cvs ci -m "$*"
-    elif _try git add -A; then
-        echo "# ------------ staging -------------"
-        git status
-        echo "# ----------- committing -----------"
-        git cim "$*"
-        echo "# -------------- done --------------"
-        git log --oneline --decorate -n 10
-    elif _try git add .; then
-        echo "# ------------ staging -------------"
-        echo "# Note: this git doesn't support -A"
-        git status
-        echo "# ----------- committing -----------"
-        git cim "$*"
-        echo "# -------------- done --------------"
-    else
-        echo "no versioning information found" >&2
-        return 1
-    fi
-}
-function svclean () {
-    if [ -d .svn ]; then
-        svn status | perl -lne'if(/^\?/){ /.{6} (.+)/;system("rm",$1)}'
-    elif [ -d CVS ]; then
-        echo "not yet implemented for CVS"
-    else
-        echo "no versioning information found" >&2
-        return 1
-    fi
-}
-function ckpt () {
-    if _try git show; then
-      sci 'checkpoint'
-    else
-      echo "Be more specific with other versioning systems."
-      echo "(I.e., when you can't squash commits before pushing.)"
-    fi
-}
-
-function gg () {
-    if _has gitx; then
-        # On OS X? Try GitX.app
-        gitx --all
-    else
-        gitk --all &!
-        if _is Darwin; then
-            # gitk on OS X doesn't appear in the foreground automatically
-            osascript -e 'tell app "Wish" to activate' >/dev/null 2>&1
-        fi
-    fi
-}
-
-# Do you miss `git add -A` ?
-function svnaddall () {
-    svn status | grep \? | f2 | xargs svn add
-    svn status | grep \! | f2 | xargs svn rm
-}
-
-# Don't page inside of emacs
-if [ -n "$INSIDE_EMACS" ]; then
-    alias git='git --no-pager'
-fi
-
-# Make a new command.
-vix () {
-    if [ -z "$1" ]; then
-        echo "usage: $0 <newfilename>"
-        return 1
-    fi
-
-    if [ ! -e $1 ]; then
-        touch $1
-        chmod 0755 $1
-    fi
-
-    $EDITOR $1
-}
-
-# Make a new command in ~/bin
-makecommand () {
-    if [ -z "$1" ]; then
-        echo "Gotta specify a command name, champ" >&2
-        return 1
-    fi
-
-    mkdir -p ~/bin
-    local cmd=~/bin/$1
-    if [ -e $cmd ]; then
-        echo "Command $1 already exists" >&2
-    else
-        echo "#!${2:-/bin/sh}" >$cmd
-    fi
-
-    vix $cmd
-}
-makeplcommand () {
-    makecommand $1 /usr/bin/perl
-}
-makepycommand () {
-    makecommand $1 /usr/bin/python
-}
-
-# Remote perldoc
-pdoc () {
-    w3m -dump http://search.cpan.org/perldoc\?$* | less
-}
-
-# Edit a Perl module. (From simon cozens / dnb)
-_module_editor_wrapper () {
-    cmd=$1
-    shift
-    if [ "$1" = "-e" ]; then
-        perl $@
-    else
-        $cmd `perldoc -l $1 | sed -e 's/pod$/pm/'`
-    fi
-}
-vipm ()  { _module_editor_wrapper vim  $@ }
-gvipm () { _module_editor_wrapper gvim $@ }
-
-# View a Python module in Vim.
-function vipy () {
-    p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
-    if [ $? = 0 ]; then
-        vi -R "$p"
-    fi
-    # errors will be printed by python
-}
-
-# Read pod documents nicely.
-pless () {
-    pod2man $@ | nroff -man | less
-}
-
-# Instal a Perl module via apt.
-function dpan () {
-    pkgs=($(perl -le'print join " ",map {s/::/-/g;lc "lib$_-perl"}@ARGV' $@))
-    echo ">> sudo apt-get install $pkgs"
-    sudo apt-get install $pkgs
-}
-
-# Make an HTML listing for current directory full of images.
-makelisting () {
-    /bin/ls -1 $@ | \
-    perl -MCGI=':standard','*table' -le'
-@i=<>;
-print start_html({-style=>"font-family:sans-serif;font-size:small"}),
-    "<p>These graphics are not the property of this web site and are not
-    subject to the license or conditions expressed elsewhere on the site.</p>",
-    start_table({-border=>0,-cellspacing=>0,-cellpadding=>3});
-while (@i) {
-    print td(
-        [
-            map { td($_) }
-            map { qq(<img src="$_" alt="$_" title="$_" align="middle"/>) }
-            splice(@i,0,4)
-        ]
-    ), Tr;
-}
-print end_table, end_html;
-' >index.html
-
-}
-
-function rxvt-title () {
-    echo -n "]2;$*"
-}
-
-function screen-title () {
-    echo -n "k$*\\"
-}
-
-# KEYBINDINGS {{{1
+# ZSH KEYBINDINGS {{{1
 
 # First, primarily use emacs key bindings
 bindkey -e
@@ -660,18 +507,7 @@ bindkey "^W" backward-delete-to-slash
 # AUTO_PUSHD is set so we can always use popd
 bindkey -s '\ep' '^Upopd >/dev/null; dirs -v^M'
 
-# Choose from the directory stack - zsh-users list, 29 Oct 2005
-select-from-cd-stack() {
-    LBUFFER=$LBUFFER"~+"
-    zle menu-complete
-    if [[ ${LBUFFER[-2,-1]} = "~+" ]]; then
-        LBUFFER=${LBUFFER[1,-3]}
-    fi
-}
-zle -N select-from-cd-stack
-bindkey "\e[20~" select-from-cd-stack
-
-# OPTIONS {{{1
+# ZSH OPTIONS {{{1
 
 # Changing Directories
 setopt auto_cd
@@ -681,6 +517,7 @@ setopt pushd_silent
 
 # Completion
 setopt auto_param_slash
+setopt complete_in_word
 setopt glob_complete
 setopt list_beep
 setopt list_packed
@@ -689,6 +526,7 @@ setopt no_beep
 
 # History
 setopt append_history
+setopt share_history
 unsetopt bang_hist
 unsetopt extended_history
 
@@ -698,28 +536,8 @@ setopt notify
 # Input/Output
 #unsetopt clobber
 
-# HISTORY CONTROL {{{1
-
-SAVEHIST=100000
-HISTSIZE=100000
-if [ -e ~/priv/ ]; then
-    HISTFILE=~/priv/zsh_history
-elif [ -e ~/secure/ ]; then
-    HISTFILE=~/secure/zsh_history
-else
-    HISTFILE=~/.zsh_history
-fi
-
-# make sure history file isn't owned by root
-# (a common problem)
-if [ -n "$HISTFILE" -a ! -w $HISTFILE ]; then
-    echo
-    echo "[31;1;5m HISTFILE [$HISTFILE] not writable! [0m"
-    echo
-fi
-
 # PROMPT AWESOMENESS {{{1
-#
+
 # Unfortunately, ^L makes the first line disappear. We can fix that by making
 # our own clear-screen function.
 clear-screen-and-precmd () {
@@ -733,17 +551,16 @@ zle -N clear-screen-and-precmd
 local __newline="
 "
 
-# Yeah yeah yeah.
+# Unicode looks cool.
 if `echo $LANG | grep -E -i 'utf-?8' &>/dev/null`; then
   __sigil="▸"
 else
   __sigil="%#"
 fi
 
-
-# However, we're not going to use newlines because it causes excess scrolling
-# when resizing a terminal. The solution is to have precmd() print the first
-# line and set PS1 to the second line. See http://xrl.us/bf3wh for more info.
+# Don't use newlines in the prompt because it causes excess scrolling when
+# resizing a terminal. The solution is to have precmd() print the first line
+# and set PS1 to the second line. See: http://xrl.us/bf3wh
 
 function colorprompt {
     if ! _color; then
@@ -866,23 +683,13 @@ function {
     fi
 }
 
-# LOCAL CONFIG {{{1
+# SOURCE LOCAL CONFIG {{{1
+
 if [ -e ~/.zshlocal ]; then
-    LOG "Sourcing ~/.zshlocal..."
     . ~/.zshlocal
 fi
 
 # }}} Done.
 
-# Experimental Additions
-
-setopt share_history
-setopt complete_in_word
-
-alias -g ...='../..'
-alias -g ....='../../..'
-alias -g .....='../../../..'
-
 # Don't end with errors.
-LOG "Done."
 true
