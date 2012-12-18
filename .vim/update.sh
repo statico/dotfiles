@@ -22,6 +22,7 @@ fi
 # This is a list of all plugins which are available via Git repos.
 repos=(
   https://github.com/Lokaltog/vim-powerline.git
+  https://github.com/altercation/vim-colors-solarized.git
   https://github.com/docunext/closetag.vim.git
   https://github.com/digitaltoad/vim-jade.git
   https://github.com/hced/bufkill-vim.git
@@ -40,16 +41,22 @@ repos=(
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-ragtag.git
   https://github.com/tpope/vim-surround.git
+  https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/keepcase.vim.git
   https://github.com/vim-scripts/lighttpd-syntax.git
+  https://github.com/vim-scripts/oceandeep.git
+  https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
   )
 
 # Here's a list of everything else to download in the format
 # <destination>;<url>
 other=(
+  'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
+  'wombat/colors;http://files.werx.dk/wombat.vim'
   'actionscript/syntax;http://www.vim.org/scripts/download_script.php?src_id=10123;actionscript.vim'
+  'navajo-night/colors;http://vim.sourceforge.net/scripts/download_script.php?src_id=805;navajo-night.vim'
   )
 
 case "$1" in
