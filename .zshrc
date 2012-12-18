@@ -363,6 +363,7 @@ function sci () {
         echo "usage: $0 message..." >&2
         return 1
     fi
+    git add -A
     echo "# ------------ staging -------------"
     git status
     echo "# ----------- committing -----------"
