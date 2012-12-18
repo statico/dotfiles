@@ -11,10 +11,10 @@ tmp=/tmp/$LOGNAME-vim-update
 me=.vim/update.sh
 
 if [ -n "$INSECURE" ]; then
-  curl='curl --insecure'
+  curl='curl --silent --insecure'
   export GIT_SSL_NO_VERIFY=true
 else
-  curl='curl'
+  curl='curl --silent'
 fi
 
 # URLS --------------------------------------------------------------------
@@ -51,6 +51,8 @@ repos=(
 other=(
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
   'actionscript/syntax;http://www.vim.org/scripts/download_script.php?src_id=10123;actionscript.vim'
+  'tomorrow-night/colors;https://raw.github.com/chriskempson/tomorrow-theme/master/vim/colors/Tomorrow-Night.vim'
+  'tomorrow-night-bright/colors;https://raw.github.com/chriskempson/tomorrow-theme/master/vim/colors/Tomorrow-Night-Bright.vim'
   )
 
 case "$1" in
@@ -74,7 +76,6 @@ case "$1" in
 
   # TARBALLS AND SINGLE FILES -------------------------------------------
   other)
-    set -x
     mkdir -p $bundledir
     rm -rf $tmp
     mkdir $tmp
@@ -86,6 +87,7 @@ case "$1" in
       url=${parts[1]}
       filename=${parts[2]}
       dest=$bundledir/$name
+      echo "Fetching $url into $dest/$filename"
 
       rm -rf $dest
 
