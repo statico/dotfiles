@@ -57,11 +57,16 @@ case "$1" in
 
   # GIT -----------------------------------------------------------------
   repos)
-    set -x
     mkdir -p $bundledir
     for url in ${repos[@]}; do
+      if [ -n "$2" ]; then
+        if ! (echo "$url" | grep "$2" &>/dev/null) ; then
+          continue
+        fi
+      fi
       dest="$bundledir/$(basename $url | sed -e 's/\.git$//')"
       rm -rf $dest
+      echo "Cloning $url into $dest"
       git clone $url $dest
       rm -rf $dest/.git
     done
@@ -127,9 +132,11 @@ case "$1" in
   *)
     set +x
     echo
-    echo "Usage: $0 <section>"
+    echo "Usage: $0 <section> [<filter>]"
     echo "...where section is one of:"
     grep -E '\w\)$' $me | sed -e 's/)//'
+    echo
+    echo "<filter> can be used with the 'repos' section."
     exit 1
 
 esac
