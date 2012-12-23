@@ -2,6 +2,18 @@
 #
 # Updates Vim plugins.
 #
+# Update everything (long):
+#
+#   ./update.sh
+#
+# Update just the things from Git:
+#
+#   ./update.sh repos
+#
+# Update just one plugin from the list of Git repos:
+#
+#   ./update.sh repos powerline
+#
 
 cd ~/.dotfiles
 
@@ -10,6 +22,7 @@ bundledir=$vimdir/bundle
 tmp=/tmp/$LOGNAME-vim-update
 me=.vim/update.sh
 
+# I have an old server with outdated CA certs.
 if [ -n "$INSECURE" ]; then
   curl='curl --insecure'
   export GIT_SSL_NO_VERIFY=true
@@ -19,7 +32,8 @@ fi
 
 # URLS --------------------------------------------------------------------
 
-# This is a list of all plugins which are available via Git repos.
+# This is a list of all plugins which are available via Git repos. git:// URLs
+# don't work.
 repos=(
   https://github.com/Lokaltog/vim-powerline.git
   https://github.com/altercation/vim-colors-solarized.git
@@ -50,7 +64,7 @@ repos=(
   )
 
 # Here's a list of everything else to download in the format
-# <destination>;<url>
+# <destination>;<url>[;<filename>]
 other=(
   'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
   'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
