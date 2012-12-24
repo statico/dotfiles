@@ -215,6 +215,10 @@ alias gup='git fetch ; git merge origin'
 alias gus='git unstage'
 alias gvc='vim `git diff --name-only --diff-filter=U`'
 alias i4='sed "s/^/    /"'
+alias icat='lsbom -f -l -s -pf'
+alias iinstall='sudo installer -target / -pkg'
+alias ils='ls /var/db/receipts/'
+alias ishow='pkgutil --files'
 alias k='tree'
 alias l="ls -lh"
 alias ll="l -a"
