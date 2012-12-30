@@ -264,6 +264,13 @@ else
     alias vim=vi
 fi
 
+# The Silver Searcher is even faster than Ack.
+# https://github.com/ggreer/the_silver_searcher
+if _has ag; then
+    alias ack=ag
+    alias ag='ag --color-path 1\;31 --color-match 1\;32'
+fi
+
 # Nico is amazing for showing me this.
 alias v='vim -R -'
 for i in /usr/share/vim/vim*/macros/less.sh(N) ; do
