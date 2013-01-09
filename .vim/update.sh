@@ -72,6 +72,7 @@ other=(
   'wombat/colors;http://files.werx.dk/wombat.vim'
   'actionscript/syntax;http://www.vim.org/scripts/download_script.php?src_id=10123;actionscript.vim'
   'navajo-night/colors;http://vim.sourceforge.net/scripts/download_script.php?src_id=805;navajo-night.vim'
+  'glsl/syntax;http://www.vim.org/scripts/download_script.php?src_id=3194;glsl.vim'
   )
 
 case "$1" in
