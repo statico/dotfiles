@@ -39,6 +39,7 @@ au BufNewFile,BufRead *.as      setlocal ft=actionscript nolist ts=4 sw=4 noet
 au BufNewFile,BufRead *.bb      setf xdefaults
 au BufNewFile,BufRead *.csv     setf csv
 au BufNewFile,BufRead *.flr     setf actionscript
+au BufNewFile,BufRead *.glsl    setf glsl
 au BufNewFile,BufRead *.html,*.htm  call s:SelectHTML()
 au BufNewFile,BufRead *.html    setlocal nocindent smartindent
 au BufNewFile,BufRead *.ini     setf conf
