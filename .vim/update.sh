@@ -50,6 +50,7 @@ repos=(
   https://github.com/pangloss/vim-javascript.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
+  https://github.com/skammer/vim-css-color.git
   https://github.com/timcharper/textile.vim
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-haml.git
