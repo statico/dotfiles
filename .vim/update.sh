@@ -40,28 +40,21 @@ repos=(
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/ap/vim-css-color.git
   https://github.com/docunext/closetag.vim.git
-  https://github.com/digitaltoad/vim-jade.git
   https://github.com/hced/bufkill-vim.git
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/kien/ctrlp.vim.git
-  https://github.com/majutsushi/tagbar.git
-  https://github.com/michaeljsmith/vim-indent-object.git
-  https://github.com/mikewest/vimroom.git
   https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
-  https://github.com/timcharper/textile.vim
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-haml.git
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
-  https://github.com/tpope/vim-ragtag.git
   https://github.com/tpope/vim-surround.git
   https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/keepcase.vim.git
   https://github.com/vim-scripts/lighttpd-syntax.git
-  https://github.com/vim-scripts/oceandeep.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
   )
@@ -70,10 +63,7 @@ repos=(
 # <destination>;<url>[;<filename>]
 other=(
   'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
-  'L9;https://bitbucket.org/ns9tks/vim-l9/get/tip.zip'
   'wombat/colors;http://files.werx.dk/wombat.vim'
-  'actionscript/syntax;http://www.vim.org/scripts/download_script.php?src_id=10123;actionscript.vim'
-  'navajo-night/colors;http://vim.sourceforge.net/scripts/download_script.php?src_id=805;navajo-night.vim'
   'glsl/syntax;http://www.vim.org/scripts/download_script.php?src_id=3194;glsl.vim'
   )
 
