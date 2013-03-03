@@ -38,7 +38,6 @@ repos=(
   https://github.com/Lokaltog/vim-easymotion.git
   https://github.com/Lokaltog/vim-powerline.git
   https://github.com/altercation/vim-colors-solarized.git
-  https://github.com/skammer/vim-css-color.git
   https://github.com/docunext/closetag.vim.git
   https://github.com/hced/bufkill-vim.git
   https://github.com/kchmck/vim-coffee-script.git
