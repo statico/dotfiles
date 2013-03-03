@@ -52,6 +52,7 @@ repos=(
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-surround.git
+  https://github.com/tpope/vim-sleuth.git
   https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/keepcase.vim.git
   https://github.com/vim-scripts/lighttpd-syntax.git
