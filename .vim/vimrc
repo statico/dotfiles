@@ -73,6 +73,11 @@ nnoremap <space> za
 nnoremap <CR> za
 vnoremap <space> zf
 
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
 " Search for the word under the cursor in the current directory
 nmap <C-k> :!clear; ack -C "\b<cword>\b" \| less -FRX <CR>
 
