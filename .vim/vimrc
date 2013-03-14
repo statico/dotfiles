@@ -81,27 +81,6 @@ map <C-l> <C-W>l
 " Search for the word under the cursor in the current directory
 nmap <C-k> :!clear; ack -C "\b<cword>\b" \| less -FRX <CR>
 
-" CTRL-z is too close, plus I use it very frequently, and i want to write
-" first
-if !has('gui_running')
-    nmap - :call WriteAndSuspend()<CR>
-endif
-function! WriteIfPossible()
-    if &buftype != 'hidden' && !&readonly
-        if bufname('%') != ""
-            execute 'write'
-        endif
-    endif
-endfunction
-function! WriteAndSuspend()
-    call WriteIfPossible()
-    if $UID != 0
-        " No idea why loading this vimrc as root causes this function to
-        " automatically suspend at startup on some Vims. NO IDEA.
-        suspend
-    endif
-endfunction
-
 " Alt-p pipes the current buffer to the current filetype as a command
 " (good for perl, python, ruby, shell, gnuplot...)
 nmap <M-p>  :call RunUsingCurrentFiletype()<CR>
@@ -203,6 +182,7 @@ endfunction
 
 set autoindent              " Carry over indenting from previous line
 set autoread                " Don't bother me hen a file changes
+set autowrite               " Write on :next/:prev/^Z
 set backspace=indent,eol,start
                             " Allow backspace beyond insertion point
 set cindent                 " Automatic program indenting
