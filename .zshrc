@@ -383,7 +383,7 @@ function sci () {
     echo "# ----------- committing -----------"
     git cim "$*"
     echo "# -------------- done --------------"
-    git log --oneline --decorate -n 10
+    git quicklog
 }
 
 # Don't page inside of emacs
