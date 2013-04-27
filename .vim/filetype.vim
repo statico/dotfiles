@@ -59,6 +59,7 @@ au BufNewFile,BufRead *.scm     setf scheme
 au BufNewFile,BufRead *.scss    setf scss
 au BufNewFile,BufRead *.ss      setf scheme
 au BufNewFile,BufRead *.t       setf perl
+au BufNewFile,BufRead *.ts      set foldlevel=999
 au BufNewFile,BufRead *.ttml    setf xml
 au BufNewFile,BufRead *.xhtml   setf xml
 au BufNewFile,BufRead *.xml     setlocal ft=xml  ts=2 sw=2 et
