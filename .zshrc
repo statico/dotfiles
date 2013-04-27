@@ -149,11 +149,16 @@ function _append_to_path() {
     fi
 }
 
+function _force_prepend_to_path() {
+    path=($1 ${(@)path:#$1})
+}
+
 # Note that there is NO dot directory appended!
 
-_prepend_to_path ~/bin
-_prepend_to_path /usr/local/bin
-_prepend_to_path /usr/local/sbin
+_force_prepend_to_path /usr/local/sbin
+_force_prepend_to_path /usr/local/bin
+_force_prepend_to_path ~/bin
+_force_prepend_to_path /usr/local/heroku/bin
 
 _append_to_path /usr/games
 _append_to_path /usr/sbin
