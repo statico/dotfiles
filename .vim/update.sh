@@ -49,6 +49,7 @@ repos=(
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
   https://github.com/terryma/vim-multiple-cursors.git
+  https://github.com/tomasr/molokai.git
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-haml.git
   https://github.com/tpope/vim-markdown.git

@@ -1,5 +1,5 @@
 set background=dark
-colors wombat
+colors molokai
 hi Normal guibg=#292929
 hi Visual guibg=#505050
 
