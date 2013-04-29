@@ -37,6 +37,7 @@ fi
 repos=(
   https://github.com/Lokaltog/vim-easymotion.git
   https://github.com/Lokaltog/vim-powerline.git
+  https://github.com/airblade/vim-gitgutter.git
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/ap/vim-css-color.git
   https://github.com/docunext/closetag.vim.git
