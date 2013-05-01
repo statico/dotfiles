@@ -80,7 +80,7 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <C-k> :!clear; ack -C "\b<cword>\b" \| less -FRX <CR>
+nmap <C-k> :Ag "\b<cword>\b" <CR>
 
 " Alt-p pipes the current buffer to the current filetype as a command
 " (good for perl, python, ruby, shell, gnuplot...)
