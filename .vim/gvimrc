@@ -1,7 +1,5 @@
 set background=dark
 colors molokai
-hi Normal guibg=#292929
-hi Visual guibg=#505050
 
 set columns=80 lines=50
 set guicursor+=a:blinkon0
