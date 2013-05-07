@@ -85,7 +85,8 @@ au BufNewFile,BufRead Makefile setlocal nolist
 au BufNewFile,BufRead pf.conf setf pf
 au BufNewFile,BufRead pf.conf.* setf pf
 
-au FileType gitcommit,make setlocal nolist ts=4 sts=4 sw=4 noet
+au FileType gitcommit setlocal nolist ts=4 sts=4 sw=4 noet
+au FileType make setlocal nolist ts=4 sts=4 sw=4 noet
 
 au BufNewFile,BufRead *.tt2
             \ if ( getline(1) . getline(2) . getline(3) =~ '<\chtml'
