@@ -33,8 +33,8 @@
 	hs = stash save
 	last = log -1
 	newb = checkout -b
-	quicklog = log --oneline --decorate -10 --pretty=format:'%C(yellow)%h%C(reset)%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-	quicklog-long = log --oneline --decorate --pretty=format:'%C(yellow)%h%C(reset)%C(cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	quicklog = log --oneline --decorate -10 --pretty=format:'%C(yellow)%h%C(reset)%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	quicklog-long = log --oneline --decorate --pretty=format:'%C(yellow)%h%C(reset)%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 	r = remote
 	rewind-one = reset --hard HEAD^
 	st = status
