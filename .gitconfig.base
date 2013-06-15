@@ -75,3 +75,5 @@
 	decorate = short
 [merge]
 	conflictstyle = diff3
+[push]
+	default = simple
