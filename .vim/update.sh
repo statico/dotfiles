@@ -35,6 +35,7 @@ fi
 # This is a list of all plugins which are available via Git repos. git:// URLs
 # don't work.
 repos=(
+  https://github.com/StanAngeloff/php.vim.git
   https://github.com/groenewege/vim-less.git
   https://github.com/digitaltoad/vim-jade.git
   https://github.com/rking/ag.vim.git

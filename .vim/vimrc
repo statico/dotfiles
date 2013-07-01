@@ -213,7 +213,6 @@ set incsearch               " Search as you type
 set infercase               " Completion recognizes capitalization
 set laststatus=2            " Always show the status bar
 set linebreak               " Break long lines by word, not char
-set list                    " Show invisble characters in listchars
 set listchars=tab:▶\ ,trail:◀,extends:»,precedes:«
                             " Unicode characters for various things
 set matchtime=2             " Tenths of second to hilight matching paren
