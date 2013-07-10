@@ -46,7 +46,7 @@ repos=(
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/ap/vim-css-color.git
   https://github.com/docunext/closetag.vim.git
-  https://github.com/hced/bufkill-vim.git
+  https://github.com/vim-scripts/bufkill.vim.git
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/kien/ctrlp.vim.git
   https://github.com/leafgarland/typescript-vim.git

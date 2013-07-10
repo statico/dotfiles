@@ -10,24 +10,47 @@
 "
 "============================================================================
 
-if !exists('g:syntastic_haskell_checker_args')
-    let g:syntastic_haskell_checker_args = '--hlintOpt="--language=XmlSyntax"'
+if exists("g:loaded_syntastic_haskell_ghc_mod_checker")
+    finish
 endif
+let g:loaded_syntastic_haskell_ghc_mod_checker=1
 
-function! SyntaxCheckers_haskell_GetLocList()
-    let ghcmod = 'ghc-mod ' . g:syntastic_haskell_checker_args
-    let makeprg =
-          \ "{ ".
-          \ ghcmod . " check ". shellescape(expand('%')) . "; " .
-          \ ghcmod . " lint " . shellescape(expand('%')) . ";" .
-          \ " }"
-    let errorformat = '%-G\\s%#,%f:%l:%c:%trror: %m,%f:%l:%c:%tarning: %m,'.
-                \ '%f:%l:%c: %trror: %m,%f:%l:%c: %tarning: %m,%f:%l:%c:%m,'.
-                \ '%E%f:%l:%c:,%Z%m,'
-
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+function! SyntaxCheckers_haskell_ghc_mod_IsAvailable()
+    return executable('ghc-mod')
 endfunction
 
-function! SyntaxCheckers_lhaskell_GetLocList()
-    return SyntaxCheckers_haskell_GetLocList()
+function! SyntaxCheckers_haskell_ghc_mod_GetLocList()
+    let errorformat =
+        \ '%-G%\s%#,' .
+        \ '%f:%l:%c:%trror: %m,' .
+        \ '%f:%l:%c:%tarning: %m,'.
+        \ '%f:%l:%c: %trror: %m,' .
+        \ '%f:%l:%c: %tarning: %m,' .
+        \ '%f:%l:%c:%m,' .
+        \ '%E%f:%l:%c:,' .
+        \ '%Z%m'
+
+    let makeprg = syntastic#makeprg#build({
+        \ 'exe': 'ghc-mod check',
+        \ 'args': '--hlintOpt="--language=XmlSyntax"',
+        \ 'filetype': 'haskell',
+        \ 'subchecker': 'ghc_mod' })
+    let loclist1 = SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat })
+
+    let makeprg = syntastic#makeprg#build({
+        \ 'exe': 'ghc-mod lint',
+        \ 'args': '--hlintOpt="--language=XmlSyntax"',
+        \ 'filetype': 'haskell',
+        \ 'subchecker': 'ghc_mod' })
+    let loclist2 = SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat })
+
+    return loclist1 + loclist2
 endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'haskell',
+    \ 'name': 'ghc_mod'})

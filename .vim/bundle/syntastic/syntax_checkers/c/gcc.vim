@@ -19,6 +19,11 @@
 "
 "   let g:syntastic_c_no_include_search = 1
 "
+" To disable the include of the default include dirs (such as /usr/include)
+" add this line to your .vimrc:
+"
+"   let g:syntastic_c_no_default_include_dirs = 1
+"
 " To enable header files being re-checked on every file write add the
 " following line to your .vimrc. Otherwise the header files are checked only
 " one time on initially loading the file.
@@ -62,15 +67,23 @@
 " format:
 "
 "   let g:syntastic_c_errorformat = '%f:%l:%c: %trror: %m'
+"
+" Set your compiler executable with e.g. (defaults to gcc)
+"
+"   let g:syntastic_c_compiler = 'clang'
 
-if exists('loaded_gcc_syntax_checker')
+if exists('g:loaded_syntastic_c_gcc_checker')
     finish
 endif
-let loaded_gcc_syntax_checker = 1
+let g:loaded_syntastic_c_gcc_checker = 1
 
-if !executable('gcc')
-    finish
+if !exists('g:syntastic_c_compiler')
+    let g:syntastic_c_compiler = 'gcc'
 endif
+
+function! SyntaxCheckers_c_gcc_IsAvailable()
+    return executable(g:syntastic_c_compiler)
+endfunction
 
 let s:save_cpo = &cpo
 set cpo&vim
@@ -83,14 +96,20 @@ if !exists('g:syntastic_c_config_file')
     let g:syntastic_c_config_file = '.syntastic_c_config'
 endif
 
-function! SyntaxCheckers_c_GetLocList()
-    let makeprg = 'gcc -fsyntax-only '
-    let errorformat = '%-G%f:%s:,%-G%f:%l: %#error: %#(Each undeclared '.
-               \ 'identifier is reported only%.%#,%-G%f:%l: %#error: %#for '.
-               \ 'each function it appears%.%#,%-GIn file included%.%#,'.
-               \ '%-G %#from %f:%l\,,%f:%l:%c: %trror: %m,%f:%l:%c: '.
-               \ '%tarning: %m,%f:%l:%c: %m,%f:%l: %trror: %m,'.
-               \ '%f:%l: %tarning: %m,%f:%l: %m'
+function! SyntaxCheckers_c_gcc_GetLocList()
+    let makeprg = g:syntastic_c_compiler . ' -x c -fsyntax-only '
+    let errorformat =
+        \ '%-G%f:%s:,' .
+        \ '%-G%f:%l: %#error: %#(Each undeclared identifier is reported only%.%#,' .
+        \ '%-G%f:%l: %#error: %#for each function it appears%.%#,' .
+        \ '%-GIn file included%.%#,' .
+        \ '%-G %#from %f:%l\,,' .
+        \ '%f:%l:%c: %trror: %m,' .
+        \ '%f:%l:%c: %tarning: %m,' .
+        \ '%f:%l:%c: %m,' .
+        \ '%f:%l: %trror: %m,' .
+        \ '%f:%l: %tarning: %m,'.
+        \ '%f:%l: %m'
 
     if exists('g:syntastic_c_errorformat')
         let errorformat = g:syntastic_c_errorformat
@@ -99,13 +118,14 @@ function! SyntaxCheckers_c_GetLocList()
     " add optional user-defined compiler options
     let makeprg .= g:syntastic_c_compiler_options
 
-    let makeprg .= ' '.shellescape(expand('%')).
-               \ ' '.syntastic#c#GetIncludeDirs('c')
+    let makeprg .= ' ' . syntastic#util#shexpand('%') .
+               \ ' ' . syntastic#c#GetIncludeDirs('c')
 
     " determine whether to parse header files as well
-    if expand('%') =~? '.h$'
+    if expand('%') =~? '\.h$'
         if exists('g:syntastic_c_check_header')
-            let makeprg = 'gcc -c '.shellescape(expand('%')) .
+            let makeprg = g:syntastic_c_compiler .
+                        \ ' -c ' . syntastic#util#shexpand('%') .
                         \ ' ' . g:syntastic_c_compiler_options .
                         \ ' ' . syntastic#c#GetNullDevice() .
                         \ ' ' . syntastic#c#GetIncludeDirs('c')
@@ -137,7 +157,7 @@ function! SyntaxCheckers_c_GetLocList()
     endif
 
     " add optional config file parameters
-    let makeprg .= ' '.syntastic#c#ReadConfig(g:syntastic_c_config_file)
+    let makeprg .= ' ' . syntastic#c#ReadConfig(g:syntastic_c_config_file)
 
     " process makeprg
     let errors = SyntasticMake({ 'makeprg': makeprg,
@@ -152,6 +172,10 @@ function! SyntaxCheckers_c_GetLocList()
         return errors
     endif
 endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'c',
+    \ 'name': 'gcc'})
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

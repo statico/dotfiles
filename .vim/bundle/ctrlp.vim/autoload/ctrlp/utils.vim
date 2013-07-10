@@ -15,7 +15,7 @@ endf
 
 fu! ctrlp#utils#opts()
 	let s:lash = ctrlp#utils#lash()
-	let usrhome = $HOME.s:lash($HOME)
+	let usrhome = $HOME . s:lash( $HOME )
 	let cahome = exists('$XDG_CACHE_HOME') ? $XDG_CACHE_HOME : usrhome.'.cache'
 	let cadir = isdirectory(usrhome.'.ctrlp_cache')
 		\ ? usrhome.'.ctrlp_cache' : cahome.s:lash(cahome).'ctrlp'
@@ -104,16 +104,6 @@ fu! ctrlp#utils#fnesc(path, type, ...)
 		en
 	en
 	retu a:0 ? escape(path, a:1) : path
-endf
-
-fu! ctrlp#utils#dircompl(...)
-	let [hsl, str] = [match(a:1, '[\/]'), '']
-	let par = substitute(a:1, '[^\/]*$', '', '')
-	let path = !hsl ? par : hsl > 0 ? getcwd().s:lash().par : getcwd()
-	for dir in split(globpath(ctrlp#utils#fnesc(path, 'g', ','), '*/'), '\n')
-		let str .= par.split(dir, '[\/]')[-1]."\n"
-	endfo
-	retu str
 endf
 "}}}
 

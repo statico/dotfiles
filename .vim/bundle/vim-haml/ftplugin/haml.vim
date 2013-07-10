@@ -18,6 +18,7 @@ let s:match_words = ""
 
 runtime! ftplugin/html.vim ftplugin/html_*.vim ftplugin/html/*.vim
 unlet! b:did_ftplugin
+set matchpairs-=<:>
 
 " Override our defaults if these were set by an included ftplugin.
 if exists("b:undo_ftplugin")

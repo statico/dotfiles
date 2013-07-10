@@ -72,7 +72,18 @@ function! ag#Ag(cmd, args)
     exec "nnoremap <silent> <buffer> h <C-W><CR><C-W>K"
     exec "nnoremap <silent> <buffer> H <C-W><CR><C-W>K<C-W>b"
     exec "nnoremap <silent> <buffer> v <C-W><CR><C-W>H<C-W>b<C-W>J<C-W>t"
-    exec "nnoremap <silent> <buffer> gv <C-W><CR><C-W>H<C-W>b<C-W>J"
+
+    exec "nnoremap <silent> <buffer> gv <C-w><cr><C-w>H<C-w>b<C-w>J80<C-w>-5<C-w>+"
+    " Interpretation:
+    " ^w<cr>  jump to quickfix under cursor (this is a default quickfix window binding)
+    " ^wH  slam the new window to the left wall
+    " ^wb  go to the bottom-right window, which is the quickfix window
+    " ^wJ  slam it to the floor
+    " 80^w-  Decrease this window by (at most) 80 lines.
+    " 5^w+  Undecrease the quickfix window by 5, so you can see what you're doing
+
+    " TODO: j  Now you probably want to do something on the next line
+
     echom "ag.vim keys: q=quit <cr>/t/h/v=enter/tab/split/vsplit go/T/H/gv=preview versions of same"
   endif
 endfunction
@@ -85,17 +96,17 @@ function! ag#AgFromSearch(cmd, args)
 endfunction
 
 function! ag#GetDocLocations()
-    let dp = ''
-    for p in split(&rtp,',')
-        let p = p.'/doc/'
-        if isdirectory(p)
-            let dp = p.'*.txt '.dp
-        endif
-    endfor
-    return dp
+  let dp = ''
+  for p in split(&rtp,',')
+    let p = p.'/doc/'
+    if isdirectory(p)
+      let dp = p.'*.txt '.dp
+    endif
+  endfor
+  return dp
 endfunction
 
 function! ag#AgHelp(cmd,args)
-    let args = a:args.' '.ag#GetDocLocations()
-    call ag#Ag(a:cmd,args)
+  let args = a:args.' '.ag#GetDocLocations()
+  call ag#Ag(a:cmd,args)
 endfunction

@@ -6,7 +6,16 @@
 "             Parantapa Bhattacharya <parantapa@gmail.com>
 "
 "============================================================================
-function! SyntaxCheckers_python_GetHighlightRegex(i)
+if exists("g:loaded_syntastic_python_pyflakes_checker")
+    finish
+endif
+let g:loaded_syntastic_python_pyflakes_checker=1
+
+function! SyntaxCheckers_python_pyflakes_IsAvailable()
+    return executable('pyflakes')
+endfunction
+
+function! SyntaxCheckers_python_pyflakes_GetHighlightRegex(i)
     if match(a:i['text'], 'is assigned to but never used') > -1
                 \ || match(a:i['text'], 'imported but unused') > -1
                 \ || match(a:i['text'], 'undefined name') > -1
@@ -22,13 +31,25 @@ function! SyntaxCheckers_python_GetHighlightRegex(i)
     return ''
 endfunction
 
-function! SyntaxCheckers_python_GetLocList()
-    let makeprg = 'pyflakes '.g:syntastic_python_checker_args.' '.shellescape(expand('%'))
-    let errorformat = '%E%f:%l: could not compile,%-Z%p^,%E%f:%l:%c: %m,%E%f:%l: %m,%-G%.%#'
+function! SyntaxCheckers_python_pyflakes_GetLocList()
+    let makeprg = syntastic#makeprg#build({
+        \ 'exe': 'pyflakes',
+        \ 'filetype': 'python',
+        \ 'subchecker': 'pyflakes' })
 
-    let errors = SyntasticMake({ 'makeprg': makeprg,
-                               \ 'errorformat': errorformat,
-                               \ 'defaults': {'text': "Syntax error"} })
+    let errorformat =
+        \ '%E%f:%l: could not compile,'.
+        \ '%-Z%p^,'.
+        \ '%E%f:%l:%c: %m,'.
+        \ '%E%f:%l: %m,'.
+        \ '%-G%.%#'
 
-    return errors
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'defaults': {'text': "Syntax error"} })
 endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'python',
+    \ 'name': 'pyflakes'})

@@ -1,10 +1,6 @@
 " Vim indent file
-" Language:		Javascript
-" Maintainer:		Darrick Wiebe <darrick at innatesoftware.com>
-" URL:			http://github.com/pangloss/vim-javascript
-" Version:              1.0.0
-" Last Change:          August 31, 2009
-" Acknowledgement:      Based off of vim-ruby maintained by Nikolai Weibull http://vim-ruby.rubyforge.org
+" Language: Javascript
+" Acknowledgement: Based off of vim-ruby maintained by Nikolai Weibull http://vim-ruby.rubyforge.org
 
 " 0. Initialization {{{1
 " =================
@@ -19,7 +15,7 @@ setlocal nosmartindent
 
 " Now, set up our indentation expression and keys that trigger it.
 setlocal indentexpr=GetJavascriptIndent()
-setlocal indentkeys=0{,0},0),0],!^F,o,O,e
+setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
 
 " Only define the function once.
 if exists("*GetJavascriptIndent")
@@ -32,14 +28,19 @@ set cpo&vim
 " 1. Variables {{{1
 " ============
 
+let s:js_keywords = '^\s*\(break\|case\|catch\|continue\|debugger\|default\|delete\|do\|else\|finally\|for\|function\|if\|in\|instanceof\|new\|return\|switch\|this\|throw\|try\|typeof\|var\|void\|while\|with\)'
+
 " Regex of syntax group names that are or delimit string or are comments.
-let s:syng_strcom = 'javaScript\%(String\|RegexpString\|CommentTodo\|LineComment\|Comment\|DocComment\)'
+let s:syng_strcom = 'string\|regex\|comment\c'
 
 " Regex of syntax group names that are strings.
-let s:syng_string = 'javaScript\%(RegexpString\)'
+let s:syng_string = 'regex\c'
 
 " Regex of syntax group names that are strings or documentation.
-let s:syng_multiline = 'javaScriptDocComment\|javaScriptComment'
+let s:syng_multiline = 'comment\c'
+
+" Regex of syntax group names that are line comment.
+let s:syng_linecom = 'linecomment\c'
 
 " Expression used to check whether we should skip a match with searchpair().
 let s:skip_expr = "synIDattr(synID(line('.'),col('.'),1),'name') =~ '".s:syng_strcom."'"
@@ -58,6 +59,11 @@ let s:one_line_scope_regex = '\<\%(if\|else\|for\|while\)\>[^{;]*' . s:line_term
 " Regex that defines blocks.
 let s:block_regex = '\%({\)\s*\%(|\%([*@]\=\h\w*,\=\s*\)\%(,\s*[*@]\=\h\w*\)*|\)\=' . s:line_term
 
+let s:var_stmt = '^\s*var'
+
+let s:comma_first = '^\s*,'
+let s:comma_last = ',\s*$'
+
 " 2. Auxiliary Functions {{{1
 " ======================
 
@@ -73,7 +79,12 @@ endfunction
 
 " Check if the character at lnum:col is inside a multi-line comment.
 function s:IsInMultilineComment(lnum, col)
-  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
+  return !s:IsLineComment(a:lnum, a:col) && synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_multiline
+endfunction
+
+" Check if the character at lnum:col is a line comment.
+function s:IsLineComment(lnum, col)
+  return synIDattr(synID(a:lnum, a:col, 1), 'name') =~ s:syng_linecom
 endfunction
 
 " Find line above 'lnum' that isn't empty, in a comment, or in a string.
@@ -116,18 +127,75 @@ function s:GetMSL(lnum, in_one_line_scope)
       " Don't use lines that are part of a one line scope as msl unless the
       " flag in_one_line_scope is set to 1
       "
-      if a:in_one_line_scope 
-	break
+      if a:in_one_line_scope
+        break
       end
       let msl_one_line = s:Match(lnum, s:one_line_scope_regex)
       if msl_one_line == 0
-	break
+        break
       endif
     endif
     let lnum = s:PrevNonBlankNonString(lnum - 1)
   endwhile
   return msl
 endfunction
+
+function s:RemoveTrailingComments(content)
+  let single = '\/\/\(.*\)\s*$'
+  let multi = '\/\*\(.*\)\*\/\s*$'
+  return substitute(substitute(a:content, single, '', ''), multi, '', '')
+endfunction
+
+" Find if the string is inside var statement (but not the first string)
+function s:InMultiVarStatement(lnum)
+  let lnum = s:PrevNonBlankNonString(a:lnum - 1)
+
+"  let type = synIDattr(synID(lnum, indent(lnum) + 1, 0), 'name')
+
+  " loop through previous expressions to find a var statement
+  while lnum > 0
+    let line = getline(lnum)
+
+    " if the line is a js keyword
+    if (line =~ s:js_keywords)
+      " check if the line is a var stmt
+      " if the line has a comma first or comma last then we can assume that we
+      " are in a multiple var statement
+      if (line =~ s:var_stmt)
+        return lnum
+      endif
+
+      " other js keywords, not a var
+      return 0
+    endif
+
+    let lnum = s:PrevNonBlankNonString(lnum - 1)
+  endwhile
+
+  " beginning of program, not a var
+  return 0
+endfunction
+
+" Find line above with beginning of the var statement or returns 0 if it's not
+" this statement
+function s:GetVarIndent(lnum)
+  let lvar = s:InMultiVarStatement(a:lnum)
+  let prev_lnum = s:PrevNonBlankNonString(a:lnum - 1)
+
+  if lvar
+    let line = s:RemoveTrailingComments(getline(prev_lnum))
+
+    " if the previous line doesn't end in a comma, return to regular indent
+    if (line !~ s:comma_last)
+      return indent(prev_lnum) - &sw
+    else
+      return indent(lvar) + &sw
+    endif
+  endif
+
+  return -1
+endfunction
+
 
 " Check if line 'lnum' has more opening brackets than closing ones.
 function s:LineHasOpeningBrackets(lnum)
@@ -202,7 +270,7 @@ function s:ExitingOneLineScope(lnum)
     else
       let prev_msl = s:GetMSL(msl - 1, 1)
       if s:Match(prev_msl, s:one_line_scope_regex)
-	return prev_msl
+        return prev_msl
       endif
     endif
   endif
@@ -222,16 +290,39 @@ function GetJavascriptIndent()
   " 3.2. Work on the current line {{{2
   " -----------------------------
 
+  let ind = -1
   " Get the current line.
   let line = getline(v:lnum)
-  let ind = -1
+  " previous nonblank line number
+  let prevline = prevnonblank(v:lnum - 1)
 
   " If we got a closing bracket on an empty line, find its match and indent
   " according to it.  For parentheses we indent to its column - 1, for the
   " others we indent to the containing line's MSL's level.  Return -1 if fail.
-  let col = matchend(line, '^\s*[]})]')
+  let col = matchend(line, '^\s*[],})]')
   if col > 0 && !s:IsInStringOrComment(v:lnum, col)
     call cursor(v:lnum, col)
+
+    let lvar = s:InMultiVarStatement(v:lnum)
+    if lvar
+      let prevline_contents = s:RemoveTrailingComments(getline(prevline))
+
+      " check for comma first
+      if (line[col - 1] =~ ',')
+        " if the previous line ends in comma or semicolon don't indent
+        if (prevline_contents =~ '[;,]\s*$')
+          return indent(s:GetMSL(line('.'), 0))
+        " get previous line indent, if it's comma first return prevline indent
+        elseif (prevline_contents =~ s:comma_first)
+          return indent(prevline)
+        " otherwise we indent 1 level
+        else
+          return indent(lvar) + &sw
+        endif
+      endif
+    endif
+
+
     let bs = strpart('(){}[]', stridx(')}]', line[col - 1]) * 2, 2)
     if searchpair(escape(bs[0], '\['), '', bs[1], 'bW', s:skip_expr) > 0
       if line[col-1]==')' && col('.') != col('$') - 1
@@ -243,10 +334,21 @@ function GetJavascriptIndent()
     return ind
   endif
 
+  " If the line is comma first, dedent 1 level
+  if (getline(prevline) =~ s:comma_first)
+    return indent(prevline) - &sw
+  endif
+
   " If we are in a multi-line comment, cindent does the right thing.
-  if s:IsInMultilineComment(v:lnum, 1)
+  if s:IsInMultilineComment(v:lnum, 1) && !s:IsLineComment(v:lnum, 1)
     return cindent(v:lnum)
   endif
+
+  " Check for multiple var assignments
+"  let var_indent = s:GetVarIndent(v:lnum)
+"  if var_indent >= 0
+"    return var_indent
+"  endif
 
   " 3.3. Work on the previous line. {{{2
   " -------------------------------
@@ -254,16 +356,15 @@ function GetJavascriptIndent()
   " If the line is empty and the previous nonblank line was a multi-line
   " comment, use that comment's indent. Deduct one char to account for the
   " space in ' */'.
-  let nonblank_lnum = prevnonblank(v:lnum - 1)
-  if line =~ '^\s*$' && s:IsInMultilineComment(nonblank_lnum, 1)
-    return indent(nonblank_lnum) - 1
+  if line =~ '^\s*$' && s:IsInMultilineComment(prevline, 1)
+    return indent(prevline) - 1
   endif
 
   " Find a non-blank, non-multi-line string line above the current line.
   let lnum = s:PrevNonBlankNonString(v:lnum - 1)
 
   " If the line is empty and inside a string, use the previous line.
-  if line =~ '^\s*$' && lnum != nonblank_lnum
+  if line =~ '^\s*$' && lnum != prevline
     return indent(prevnonblank(v:lnum))
   endif
 
@@ -325,6 +426,3 @@ endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-" vim:set sw=2 sts=2 ts=8 noet:
-

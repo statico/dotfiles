@@ -10,6 +10,11 @@
 "
 " Tested with checkstyle 5.5
 "============================================================================
+if exists("g:loaded_syntastic_java_checkstyle_checker")
+    finish
+endif
+let g:loaded_syntastic_java_checkstyle_checker=1
+
 if !exists("g:syntastic_java_checkstyle_classpath")
     let g:syntastic_java_checkstyle_classpath = 'checkstyle-5.5-all.jar'
 endif
@@ -18,16 +23,38 @@ if !exists("g:syntastic_java_checkstyle_conf_file")
     let g:syntastic_java_checkstyle_conf_file = 'sun_checks.xml'
 endif
 
-function! SyntaxCheckers_java_GetLocList()
+function! SyntaxCheckers_java_checkstyle_IsAvailable()
+    return executable('java')
+endfunction
 
-    let makeprg = 'java -cp ' . g:syntastic_java_checkstyle_classpath . ' com.puppycrawl.tools.checkstyle.Main -c '
-               \. g:syntastic_java_checkstyle_conf_file . ' '
-               \. expand ( '%:p:h' ) . '/' . expand ( '%:t' )
-               \. ' 2>&1 '
+function! SyntaxCheckers_java_checkstyle_GetLocList()
 
-    " check style format
-    let errorformat = '%f:%l:%c:\ %m,%f:%l:\ %m'
+    let fname = fnameescape( expand('%:p:h') . '/' . expand('%:t') )
 
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+    if has('win32unix')
+        let fname = substitute(system('cygpath -m ' . fname), '\%x00', '', 'g')
+    endif
+
+    let makeprg = syntastic#makeprg#build({
+        \ 'exe': 'java',
+        \ 'args': '-cp ' . g:syntastic_java_checkstyle_classpath .
+        \         ' com.puppycrawl.tools.checkstyle.Main -c ' . g:syntastic_java_checkstyle_conf_file,
+        \ 'fname': fname,
+        \ 'filetype': 'java',
+        \ 'subchecker': 'checkstyle' })
+
+    let errorformat =
+        \ '%f:%l:%c:\ %m,' .
+        \ '%f:%l:\ %m'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'subtype': 'Style',
+        \ 'postprocess': ['cygwinRemoveCR'] })
 
 endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'java',
+    \ 'name': 'checkstyle'})

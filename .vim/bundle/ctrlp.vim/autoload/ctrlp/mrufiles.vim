@@ -38,13 +38,15 @@ fu! s:chop(mrufs)
 	retu a:mrufs
 endf
 
-fu! s:reformat(mrufs)
+fu! s:reformat(mrufs, ...)
+	let cwd = getcwd()
+	let cwd .= cwd !~ '[\/]$' ? ctrlp#utils#lash() : ''
 	if {s:re}
-		let cwd = exists('+ssl') ? tr(getcwd(), '/', '\') : getcwd()
+		let cwd = exists('+ssl') ? tr(cwd, '/', '\') : cwd
 		cal filter(a:mrufs, '!stridx(v:val, cwd)')
 	en
-	let cwd = getcwd()
-	let idx = strlen(cwd) + ( cwd !~ '[\/]$' )
+	if a:0 && a:1 == 'raw' | retu a:mrufs | en
+	let idx = strlen(cwd)
 	if exists('+ssl') && &ssl
 		let cwd = tr(cwd, '\', '/')
 		cal map(a:mrufs, 'tr(v:val, "\\", "/")')
@@ -116,11 +118,16 @@ fu! ctrlp#mrufiles#add(fn)
 endf
 
 fu! ctrlp#mrufiles#list(...)
-	retu a:0 ? a:1 == 'raw' ? s:mergelists() : 0 : s:reformat(s:mergelists())
+	retu a:0 ? a:1 == 'raw' ? s:reformat(s:mergelists(), a:1) : 0
+		\ : s:reformat(s:mergelists())
 endf
 
 fu! ctrlp#mrufiles#bufs()
 	retu s:mrbs
+endf
+
+fu! ctrlp#mrufiles#tgrel()
+	let {s:re} = !{s:re}
 endf
 
 fu! ctrlp#mrufiles#cachefile()

@@ -122,7 +122,7 @@ that are part of Git repositories).
 
 :{range}Gread! [args]  |:read| the output of a Git command after {range}.
 
-                                                *fugitive-:Gwrite*
+                                        *fugitive-:Gw* *fugitive-:Gwrite*
 :Gwrite                 Write to the current file's path and stage the results.
                         When run in a work tree file, it is effectively git
                         add.  Elsewhere, it is effectively git-checkout.  A
@@ -182,7 +182,7 @@ that are part of Git repositories).
                         D     resize to end of date/time column
                         q     close blame and return to blamed window
                         gq    q, then |:Gedit| to return to work tree version
-                        i     q, then open commit
+                        <CR>  q, then open commit
                         o     open commit in horizontal split
                         O     open commit in new tab
                         -     reblame at commit
@@ -257,6 +257,10 @@ P                       Go to the current file in the [count]th parent.
 
                                                 *fugitive-C*
 C                       Go to the commit containing the current file.
+
+                                                *fugitive-.*
+.                       Start a |:| command line with the current revision
+                        prepopulated at the end of the line.
 
                                                 *fugitive-a*
 a                       Show the current tag, commit, or tree in an alternate

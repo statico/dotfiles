@@ -44,11 +44,11 @@ The following features and functionality are provided by the NERD tree:
     as you left it
   * You can have a separate NERD tree for each tab, share trees across tabs,
     or a mix of both.
-  * By default the script overrides the default file browser (netw), so if
-    you :edit a directory a (slighly modified) NERD tree will appear in the
+  * By default the script overrides the default file browser (netrw), so if
+    you :edit a directory a (slightly modified) NERD tree will appear in the
     current window
   * A programmable menu system is provided (simulates right clicking on a node)
-    * one default menu plugin is provided to perform basic filesytem
+    * one default menu plugin is provided to perform basic filesystem
       operations (create/delete/move/copy files/directories)
   * There's an API for adding your own keymappings
 
@@ -81,6 +81,10 @@ A. Stick this in your vimrc: `autocmd vimenter * NERDTree`
 __Q. How can I open a NERDTree automatically when vim starts up if no files were specified?__
 
 A. Stick this in your vimrc `autocmd vimenter * if !argc() | NERDTree | endif`
+
+__Q. How can I map a specific key or shortcut to open NERDTree?__
+
+A. Stick this in your vimrc to open NERDTree with `Ctrl+n` (you can set whatever key you want): `map <C-n> :NERDTreeToggle<CR>`
 
 __Q. How can I close vim if the only window left open is a NERDTree?__
 

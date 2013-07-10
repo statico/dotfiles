@@ -8,13 +8,39 @@
 "             Want To Public License, Version 2, as published by Sam Hocevar.
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "============================================================================
+if exists("g:loaded_syntastic_javascript_gjslint_checker")
+    finish
+endif
+let g:loaded_syntastic_javascript_gjslint_checker=1
+
 if !exists("g:syntastic_javascript_gjslint_conf")
     let g:syntastic_javascript_gjslint_conf = ""
 endif
 
-function! SyntaxCheckers_javascript_GetLocList()
-    let makeprg = "gjslint " . g:syntastic_javascript_gjslint_conf . " --nosummary --unix_mode --nodebug_indentation --nobeep " . shellescape(expand('%'))
-    let errorformat="%f:%l:(New Error -%\\?\%n) %m,%f:%l:(-%\\?%n) %m,%-G1 files checked, no errors found.,%-G%.%#"
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+function! SyntaxCheckers_javascript_gjslint_IsAvailable()
+    return executable('gjslint')
 endfunction
+
+function! SyntaxCheckers_javascript_gjslint_GetLocList()
+    let makeprg = syntastic#makeprg#build({
+        \ 'exe': 'gjslint',
+        \ 'args': g:syntastic_javascript_gjslint_conf . " --nosummary --unix_mode --nodebug_indentation --nobeep",
+        \ 'filetype': 'javascript',
+        \ 'subchecker': 'gjslint' })
+
+    let errorformat =
+        \ "%f:%l:(New Error -%\\?\%n) %m," .
+        \ "%f:%l:(-%\\?%n) %m," .
+        \ "%-G1 files checked," .
+        \ " no errors found.," .
+        \ "%-G%.%#"
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat })
+endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'javascript',
+    \ 'name': 'gjslint'})
 

@@ -1,19 +1,9 @@
 " Handlebars syntax
 " Language:    Handlebars
 " Maintainer:  Bruno Michel <brmichel@free.fr>
-" Last Change: Oct 24th, 2012
-" Version:	   0.2
+" Last Change: Mar 8th, 2013
+" Version:	   0.3
 " URL:         https://github.com/nono/vim-handlebars
-
-
-" Read the HTML syntax to start with
-if version < 600
-  so <sfile>:p:h/html.vim
-else
-  runtime! syntax/html.vim
-  unlet b:current_syntax
-  syntax clear Javascript
-endif
 
 if version < 600
   syntax clear
@@ -21,12 +11,12 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-" Standard HiLink will not work with included syntax files
-if version < 508
-  command! -nargs=+ HtmlHiLink hi link <args>
-else
-  command! -nargs=+ HtmlHiLink hi def link <args>
+if !exists("main_syntax")
+  let main_syntax = 'html'
 endif
+
+ru! syntax/html.vim
+unlet b:current_syntax
 
 
 syn keyword hbsTodo             TODO FIXME XXX contained
@@ -65,26 +55,26 @@ if version >= 508 || !exists("did_lisp_syntax_inits")
     command -nargs=+ HiLink hi def link <args>
   endif
 
-  HtmlHiLink hbsTodo          Todo
+  HiLink hbsTodo          Todo
 
-  HtmlHiLink hbsError         Error
-  HtmlHiLink hbsInsideError   Error
+  HiLink hbsError         Error
+  HiLink hbsInsideError   Error
 
-  HtmlHiLink hbsHandlebars    Identifier
-  HtmlHiLink hbsUnescape      Special
-  HtmlHiLink hbsOperators     Operator
+  HiLink hbsHandlebars    Identifier
+  HiLink hbsUnescape      Special
+  HiLink hbsOperators     Operator
 
-  HtmlHiLink hbsConditionals  Conditional
-  HtmlHiLink hbsHelpers       Repeat
+  HiLink hbsConditionals  Conditional
+  HiLink hbsHelpers       Repeat
 
-  HtmlHiLink hbsSection       Number
-  HtmlHiLink hbsPartial       Include
-  HtmlHiLink hbsMarkerSet     Number
+  HiLink hbsSection       Number
+  HiLink hbsPartial       Include
+  HiLink hbsMarkerSet     Number
 
-  HtmlHiLink hbsBlockComment  Comment
-  HtmlHiLink hbsComment       Comment
-  HtmlHiLink hbsQString       String
-  HtmlHiLink hbsDQString      String
+  HiLink hbsBlockComment  Comment
+  HiLink hbsComment       Comment
+  HiLink hbsQString       String
+  HiLink hbsDQString      String
 
   delcommand HiLink
 endif

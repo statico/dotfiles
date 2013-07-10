@@ -12,8 +12,31 @@
 " Use a BufWritePre autocommand to that end:
 "   autocmd FileType go autocmd BufWritePre <buffer> Fmt
 "============================================================================
-function! SyntaxCheckers_go_GetLocList()
-    let makeprg = 'gofmt -l % 1>/dev/null'
-    let errorformat = '%f:%l:%c: %m,%-G%.%#'
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat, 'defaults': {'type': 'e'} })
+if exists("g:loaded_syntastic_go_gofmt_checker")
+    finish
+endif
+let g:loaded_syntastic_go_gofmt_checker=1
+
+function! SyntaxCheckers_go_gofmt_IsAvailable()
+    return executable('gofmt')
 endfunction
+
+function! SyntaxCheckers_go_gofmt_GetLocList()
+    let makeprg = syntastic#makeprg#build({
+        \ 'exe': 'gofmt',
+        \ 'args': '-l',
+        \ 'tail': '1>' . syntastic#util#DevNull(),
+        \ 'filetype': 'go',
+        \ 'subchecker': 'gofmt' })
+
+    let errorformat = '%f:%l:%c: %m,%-G%.%#'
+
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat,
+        \ 'defaults': {'type': 'e'} })
+endfunction
+
+call g:SyntasticRegistry.CreateAndRegisterChecker({
+    \ 'filetype': 'go',
+    \ 'name': 'gofmt'})

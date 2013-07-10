@@ -1,9 +1,11 @@
-" Language:     Colored CSS Color Preview
+" Language:     Colorful CSS Color Preview
 " Author:       Aristotle Pagaltzis <pagaltzis@gmx.de>
-" Last Change:  2010 Jul 3
+" Last Change:  2013-03-09
 " Licence:      No Warranties. WTFPL. But please tell me!
-" Version:      0.7.1
+" Version:      0.7.3
 " vim:et:ts=2 sw=2 sts=2
+"
+" KNOWN PROBLEMS: compatibility with `cursorline` -- https://github.com/ap/vim-css-color/issues/24
 
 let s:hex={}
 for i in range(0, 255)
@@ -183,7 +185,7 @@ if has("gui_running") || &t_Co==256
       let vg = s:xvquant[g]
       let vb = s:xvquant[b]
       let cidx = vr * 36 + vg * 6 + vb + 16
-      let ccol = [ s:cubergb[vr], s:cubergb[vg], s:cubergb[vg], cidx ]
+      let ccol = [ s:cubergb[vr], s:cubergb[vg], s:cubergb[vb], cidx ]
 
       for [tr,tg,tb,idx] in [ ccol ] + s:xtermcolor
         let dr = tr - r
@@ -342,7 +344,7 @@ if has("gui_running") || &t_Co==256
   syn keyword cssColor000000 black   contained
   syn keyword cssColorc0c0c0 silver  contained
   syn keyword cssColor808080 gray    contained
-  syn keyword cssColorffffff white   contained
+  syn match cssColorffffff "\<white\(-\)\@!\>" contained
   syn keyword cssColor800000 maroon  contained
   syn keyword cssColorff0000 red     contained
   syn keyword cssColor800080 purple  contained
@@ -492,10 +494,6 @@ if has("gui_running") || &t_Co==256
   let view = winsaveview()
   %call s:PreviewCSSColorInLine()
   call winrestview(view)
-
-  " fix highlighting of "white" in `white-space` etc
-  " this really belongs in Vim's own syntax/css.vim ...
-  setlocal iskeyword+=-
 
   autocmd CursorMoved  <buffer> silent call s:PreviewCSSColorInLine()
   autocmd CursorMovedI <buffer> silent call s:PreviewCSSColorInLine()
