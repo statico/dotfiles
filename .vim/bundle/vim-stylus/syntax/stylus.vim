@@ -330,7 +330,7 @@ syn match stylusProperty "\%([{};]\s*\|^\)\@<=\%([[:alnum:]-]\|#{[^{}]*}\)\+:" c
 syn match stylusProperty "^\s*\zs\s\%(\%([[:alnum:]-]\|#{[^{}]*}\)\+[ :]\|:[[:alnum:]-]\+\)"hs=s+1 contains=@stylusCssProperties,@stylusCssSelectors skipwhite nextgroup=stylusCssAttribute
 syn match stylusProperty "^\s*\zs\s\%(:\=[[:alnum:]-]\+\s*=\)"hs=s+1 contains=@stylusCssProperties,@stylusCssSelectors skipwhite nextgroup=stylusCssAttribute
 
-syn match stylusCssAttribute +\%("\%([^"]\|\\"\)*"\|'\%([^']\|\\'\)*'\|#{[^{}]*}\|[^{};]\)*+ contained contains=@stylusCssValues,cssImportant,stylusFunction,stylusVariable,stylusControl,stylusUserFunction,stylusInterpolation,stylusComment,cssComment
+syn match stylusCssAttribute +\%("\%([^"]\|\\"\)*"\|'\%([^']\|\\'\)*'\|#{[^{}]*}\|[^{};]\)*+ contained contains=@stylusCssValues,cssImportant,stylusFunction,stylusVariable,stylusControl,stylusUserFunction,stylusInterpolation,cssString,stylusComment,cssComment
 
 syn match stylusInterpolation %{[[:alnum:]_-]\+}%
 
@@ -352,9 +352,7 @@ syn match stylusEscape     "^\s*\zs\\"
 syn match stylusId         "[[:alnum:]_-]\+" contained
 syn match stylusIdChar     "#[[:alnum:]_-]\@=" nextgroup=stylusId
 
-" TODO: Fix the weird region/containment situation. This region should not be
-" allowed in a url() function... thingy! Then we can get rid of that pesky '\s'.
-syn region stylusComment    start="//\s" end="$" contains=cssTodo,@Spell fold
+syn region stylusComment    start="//" end="$" contains=cssTodo,@Spell fold
 
 hi def link stylusComment               Comment
 hi def link stylusVariable              Identifier
