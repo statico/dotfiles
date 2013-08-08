@@ -40,7 +40,6 @@ repos=(
   https://github.com/groenewege/vim-less.git
   https://github.com/digitaltoad/vim-jade.git
   https://github.com/rking/ag.vim.git
-  https://github.com/Lokaltog/vim-easymotion.git
   https://github.com/Lokaltog/vim-powerline.git
   https://github.com/airblade/vim-gitgutter.git
   https://github.com/altercation/vim-colors-solarized.git
@@ -54,7 +53,6 @@ repos=(
   https://github.com/pangloss/vim-javascript.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
-  https://github.com/terryma/vim-multiple-cursors.git
   https://github.com/tomasr/molokai.git
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-haml.git
