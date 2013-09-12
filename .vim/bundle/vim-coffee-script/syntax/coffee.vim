@@ -10,10 +10,9 @@ endif
 
 " Include JavaScript for coffeeEmbed.
 syn include @coffeeJS syntax/javascript.vim
-silent! unlet b:current_syntax
 
 " Highlight long strings.
-syntax sync fromstart
+syn sync minlines=100
 
 " CoffeeScript identifiers can have dollar signs.
 setlocal isident+=$
@@ -107,11 +106,12 @@ syn match coffeeFloat /\i\@<![-+]\?\d*\.\@<!\.\d\+\%([eE][+-]\?\d\+\)\?/
 \                     display
 hi def link coffeeFloat Float
 
-" An error for reserved keywords, taken from the RESERVED array:
-" http://coffeescript.org/documentation/docs/lexer.html#section-67
-syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\|__bind\|__indexOf\|implements\|interface\|package\|private\|protected\|public\|static\|yield\)\>/
-\                             display
-hi def link coffeeReservedError Error
+" An error for reserved keywords
+if !exists("coffee_no_reserved_words_error")
+  syn match coffeeReservedError /\<\%(case\|default\|function\|var\|void\|with\|const\|let\|enum\|export\|import\|native\|__hasProp\|__extends\|__slice\|__bind\|__indexOf\|implements\|interface\|let\|package\|private\|protected\|public\|static\|yield\)\>/
+  \                             display
+  hi def link coffeeReservedError Error
+endif
 
 " A normal object assignment
 syn match coffeeObjAssign /@\?\I\i*\s*\ze::\@!/ contains=@coffeeIdentifier display
@@ -134,7 +134,7 @@ hi def link coffeeHeregexComment coffeeComment
 
 " Embedded JavaScript
 syn region coffeeEmbed matchgroup=coffeeEmbedDelim
-\                      start=/`/ skip=/\\\\\|\\`/ end=/`/ keepend
+\                      start=/`/ skip=/\\\\\|\\`/ end=/`/
 \                      contains=@coffeeJS
 hi def link coffeeEmbedDelim Delimiter
 
@@ -148,23 +148,17 @@ hi def link coffeeEscape SpecialChar
 
 " A regex -- must not follow a parenthesis, number, or identifier, and must not
 " be followed by a number
-syn region coffeeRegex start=#\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!/=\@!\s\@!#
-\                      end=#/[gimy]\{,4}\d\@!#
-\                      oneline contains=@coffeeBasicString,coffeeRegexCharSet
-syn region coffeeRegexCharSet start=/\[/ end=/]/ contained
-\                             contains=@coffeeBasicString
+syn region coffeeRegex start=/\%(\%()\|\i\@<!\d\)\s*\|\i\)\@<!\/=\@!\s\@!/
+\                      skip=/\[[^\]]\{-}\/[^\]]\{-}\]/
+\                      end=/\/[gimy]\{,4}\d\@!/
+\                      oneline contains=@coffeeBasicString
 hi def link coffeeRegex String
-hi def link coffeeRegexCharSet coffeeRegex
 
 " A heregex
-syn region coffeeHeregex start=#///# end=#///[gimy]\{,4}#
-\                        contains=@coffeeInterpString,coffeeHeregexComment,
-\                                  coffeeHeregexCharSet
+syn region coffeeHeregex start=/\/\/\// end=/\/\/\/[gimy]\{,4}/
+\                        contains=@coffeeInterpString,coffeeHeregexComment
 \                        fold
-syn region coffeeHeregexCharSet start=/\[/ end=/]/ contained
-\                               contains=@coffeeInterpString
 hi def link coffeeHeregex coffeeRegex
-hi def link coffeeHeregexCharSet coffeeHeregex
 
 " Heredoc strings
 syn region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
@@ -174,12 +168,16 @@ syn region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeBasicString
 hi def link coffeeHeredoc String
 
 " An error for trailing whitespace, as long as the line isn't just whitespace
-syn match coffeeSpaceError /\S\@<=\s\+$/ display
-hi def link coffeeSpaceError Error
+if !exists("coffee_no_trailing_space_error")
+  syn match coffeeSpaceError /\S\@<=\s\+$/ display
+  hi def link coffeeSpaceError Error
+endif
 
 " An error for trailing semicolons, for help transitioning from JavaScript
-syn match coffeeSemicolonError /;$/ display
-hi def link coffeeSemicolonError Error
+if !exists("coffee_no_trailing_semicolon_error")
+  syn match coffeeSemicolonError /;$/ display
+  hi def link coffeeSemicolonError Error
+endif
 
 " Ignore reserved words in dot accesses.
 syn match coffeeDotAccess /\.\@<!\.\s*\I\i*/he=s+1 contains=@coffeeIdentifier
