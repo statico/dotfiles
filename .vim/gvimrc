@@ -4,6 +4,9 @@ colors molokai
 " Gutter color default is annoying. Make it blend in.
 hi SignColumn guibg=NONE
 
+" Command-Shift-F is fullscreen.
+nmap <D-F> :set fullscreen!<CR>
+
 set columns=80 lines=50
 set guicursor+=a:blinkon0
 set guioptions=aigm
