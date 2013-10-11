@@ -20,7 +20,8 @@ call s:set('g:gitgutter_signs',                 1)
 call s:set('g:gitgutter_highlight_lines',       0)
 let s:highlight_lines = g:gitgutter_highlight_lines
 call s:set('g:gitgutter_sign_column_always',    0)
-call s:set('g:gitgutter_eager' ,                1)
+call s:set('g:gitgutter_realtime',              1)
+call s:set('g:gitgutter_eager',                 1)
 call s:set('g:gitgutter_sign_added',            '+')
 call s:set('g:gitgutter_sign_modified',         '~')
 call s:set('g:gitgutter_sign_removed',          '_')
@@ -29,6 +30,7 @@ call s:set('g:gitgutter_diff_args',             '')
 call s:set('g:gitgutter_escape_grep',           0)
 
 let s:file = ''
+let s:hunk_summary = [0, 0, 0]
 
 function! s:init()
   if !exists('g:gitgutter_initialised')
@@ -82,6 +84,18 @@ function! s:directory_of_file()
   return shellescape(fnamemodify(s:file(), ':h'))
 endfunction
 
+" https://github.com/tpope/vim-dispatch/blob/9cdd05a87f8a47120335be03dfcd8358544221cd/autoload/dispatch/windows.vim#L8-L17
+function! s:escape(str)
+  if &shellxquote ==# '"'
+    return '"' . substitute(a:str, '"', '""', 'g') . '"'
+  else
+    let esc = exists('+shellxescape') ? &shellxescape : '"&|<>()@^'
+    return &shellquote .
+          \ substitute(a:str, '['.esc.']', '&', 'g') .
+          \ get({'(': ')', '"(': ')"'}, &shellquote, &shellquote)
+  endif
+endfunction
+
 function! s:discard_stdout_and_stderr()
   if !exists('s:discard')
     if &shellredir ==? '>%s 2>&1'
@@ -94,17 +108,18 @@ function! s:discard_stdout_and_stderr()
 endfunction
 
 function! s:command_in_directory_of_file(cmd)
-  return 'cd ' . s:directory_of_file() . ' && ' . a:cmd
+  let s:cmd_in_dir = 'pushd ' . s:directory_of_file() . ' && ' . a:cmd
+  return substitute(s:cmd_in_dir, "'", '"', 'g')
 endfunction
 
 function! s:is_in_a_git_repo()
-  let cmd = 'git rev-parse' . s:discard_stdout_and_stderr()
+  let cmd = s:escape('git rev-parse' . s:discard_stdout_and_stderr())
   call system(s:command_in_directory_of_file(cmd))
   return !v:shell_error
 endfunction
 
 function! s:is_tracked_by_git()
-  let cmd = 'git ls-files --error-unmatch' . s:discard_stdout_and_stderr() . ' ' . shellescape(s:file())
+  let cmd = s:escape('git ls-files --error-unmatch' . s:discard_stdout_and_stderr() . ' ' . shellescape(s:file()))
   call system(s:command_in_directory_of_file(cmd))
   return !v:shell_error
 endfunction
@@ -191,12 +206,23 @@ endfunction
 
 " Diff processing {{{
 
-function! s:run_diff()
-  let cmd = 'git diff --no-ext-diff --no-color -U0 ' . g:gitgutter_diff_args . ' ' . shellescape(s:file())
+function! s:run_diff(realtime)
+  if a:realtime
+    let blob_name = ':./' . fnamemodify(s:file(),':t')
+    let cmd = 'diff -U0 ' . g:gitgutter_diff_args . ' <(git show '. blob_name .') - '
+  else
+    let cmd = 'git diff --no-ext-diff --no-color -U0 ' . g:gitgutter_diff_args . ' ' . shellescape(s:file())
+  endif
   if s:grep_available
     let cmd .= s:grep_command
   endif
-  let diff = system(s:command_in_directory_of_file(cmd))
+  let cmd = s:escape(cmd)
+  if a:realtime
+    let buffer_contents = join(getline(1, '$'), "\n") . "\n"
+    let diff = system(s:command_in_directory_of_file(cmd), buffer_contents)
+  else
+    let diff = system(s:command_in_directory_of_file(cmd))
+  endif
   return diff
 endfunction
 
@@ -217,6 +243,7 @@ function! s:parse_diff(diff)
 endfunction
 
 function! s:process_hunks(hunks)
+  let s:hunk_summary = [0, 0, 0]
   let modified_lines = []
   for hunk in a:hunks
     call extend(modified_lines, s:process_hunk(hunk))
@@ -233,18 +260,25 @@ function! s:process_hunk(hunk)
 
   if s:is_added(from_count, to_count)
     call s:process_added(modifications, from_count, to_count, to_line)
+    let s:hunk_summary[0] += to_count
 
   elseif s:is_removed(from_count, to_count)
     call s:process_removed(modifications, from_count, to_count, to_line)
+    let s:hunk_summary[2] += from_count
 
   elseif s:is_modified(from_count, to_count)
     call s:process_modified(modifications, from_count, to_count, to_line)
+    let s:hunk_summary[1] += to_count
 
   elseif s:is_modified_and_added(from_count, to_count)
     call s:process_modified_and_added(modifications, from_count, to_count, to_line)
+    let s:hunk_summary[0] += to_count - from_count
+    let s:hunk_summary[1] += from_count
 
   elseif s:is_modified_and_removed(from_count, to_count)
     call s:process_modified_and_removed(modifications, from_count, to_count, to_line)
+    let s:hunk_summary[1] += to_count
+    let s:hunk_summary[2] += from_count - to_count
 
   endif
   return modifications
@@ -408,11 +442,16 @@ function! GitGutterAll()
 endfunction
 command GitGutterAll call GitGutterAll()
 
-function! GitGutter(file)
+" Supply optional argument to use realtime mode.
+function! GitGutter(file, ...)
   call s:set_file(a:file)
   if s:is_active()
     call s:init()
-    let diff = s:run_diff()
+    if a:0 == 1
+      let diff = s:run_diff(1)
+    else
+      let diff = s:run_diff(0)
+    endif
     let s:hunks = s:parse_diff(diff)
     let modified_lines = s:process_hunks(s:hunks)
     if g:gitgutter_sign_column_always
@@ -526,6 +565,13 @@ function! GitGutterGetHunks()
   return s:is_active() ? s:hunks : []
 endfunction
 
+" Returns an array that contains a summary of the current hunk status.
+" The format is [ added, modified, removed ], where each value represents
+" the number of lines added/modified/removed respectively.
+function! GitGutterGetHunkSummary()
+  return s:hunk_summary
+endfunction
+
 nnoremap <silent> <Plug>GitGutterNextHunk :<C-U>execute v:count1 . "GitGutterNextHunk"<CR>
 nnoremap <silent> <Plug>GitGutterPrevHunk :<C-U>execute v:count1 . "GitGutterPrevHunk"<CR>
 
@@ -536,14 +582,19 @@ endif
 
 augroup gitgutter
   autocmd!
+
+  if g:gitgutter_realtime
+    autocmd CursorHold,CursorHoldI * call GitGutter(s:current_file(), 1)
+  endif
+
   if g:gitgutter_eager
-    autocmd BufEnter,BufWritePost,FileWritePost * call GitGutter(s:current_file())
+    autocmd BufEnter,BufWritePost,FileWritePost,FileChangedShellPost * call GitGutter(s:current_file())
     autocmd TabEnter * call GitGutterAll()
     if !has('gui_win32')
       autocmd FocusGained * call GitGutterAll()
     endif
   else
-    autocmd BufReadPost,BufWritePost,FileReadPost,FileWritePost * call GitGutter(s:current_file())
+    autocmd BufReadPost,BufWritePost,FileReadPost,FileWritePost,FileChangedShellPost * call GitGutter(s:current_file())
   endif
   autocmd ColorScheme * call s:define_sign_column_highlight() | call s:define_highlights()
 augroup END
