@@ -1,43 +1,40 @@
 "============================================================================
-"File:        coffeelint.vim
+"File:        handlebars.vim
 "Description: Syntax checking plugin for syntastic.vim
-"Maintainer:  Lincoln Stoll <l@lds.li>
+"Maintainer:  Martin Grenfell <martin.grenfell at gmail dot com>
 "License:     This program is free software. It comes without any warranty,
 "             to the extent permitted by applicable law. You can redistribute
 "             it and/or modify it under the terms of the Do What The Fuck You
 "             Want To Public License, Version 2, as published by Sam Hocevar.
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
-"
 "============================================================================
-if exists("g:loaded_syntastic_coffee_coffeelint_checker")
+if exists("g:loaded_syntastic_handlebars_handlebars_checker")
     finish
 endif
-let g:loaded_syntastic_coffee_coffeelint_checker=1
+let g:loaded_syntastic_handlebars_handlebars_checker=1
 
-function! SyntaxCheckers_coffee_coffeelint_IsAvailable()
-    return executable('coffeelint')
+function! SyntaxCheckers_handlebars_handlebars_IsAvailable()
+    return executable('handlebars')
 endfunction
 
-function! SyntaxCheckers_coffee_coffeelint_GetLocList()
+function! SyntaxCheckers_handlebars_handlebars_GetLocList()
     let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'coffeelint',
-        \ 'args': '--csv',
-        \ 'filetype': 'coffee',
-        \ 'subchecker': 'coffeelint' })
+        \ 'exe': 'handlebars',
+        \ 'filetype': 'handlebars',
+        \ 'subchecker': 'handlebars' })
 
     let errorformat =
-        \ '%f\,%l\,%\d%#\,%trror\,%m,' .
-        \ '%f\,%l\,%trror\,%m,' .
-        \ '%f\,%l\,%\d%#\,%tarn\,%m,' .
-        \ '%f\,%l\,%tarn\,%m'
+        \ 'Error: %m on line %l:,'.
+        \ '%-Z%p^,' .
+        \ "Error: %m,".
+        \ '%-Z%p^,' .
+        \ '%-G'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
-        \ 'errorformat': errorformat,
-        \ 'subtype': 'Style',
-        \ 'returns': [0, 1] })
+        \ 'errorformat': errorformat })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
-    \ 'filetype': 'coffee',
-    \ 'name': 'coffeelint'})
+    \ 'filetype': 'handlebars',
+    \ 'name': 'handlebars'})

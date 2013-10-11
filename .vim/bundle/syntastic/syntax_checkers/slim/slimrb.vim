@@ -21,8 +21,8 @@ endfunction
 
 function! s:SlimrbVersion()
     if !exists('s:slimrb_version')
-        let s:slimrb_version = syntastic#util#parseVersion('slimrb --version 2>' . syntastic#util#DevNull())
-    end
+        let s:slimrb_version = syntastic#util#getVersion('slimrb --version 2>' . syntastic#util#DevNull())
+    endif
     return s:slimrb_version
 endfunction
 
