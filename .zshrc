@@ -325,12 +325,8 @@ function vix () {
         echo "usage: $0 <newfilename>"
         return 1
     fi
-
-    if [ ! -e $1 ]; then
-        touch $1
-        chmod 0755 $1
-    fi
-
+    touch $1
+    chmod -v 0755 $1
     $EDITOR $1
 }
 
