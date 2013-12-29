@@ -35,22 +35,22 @@ fi
 # This is a list of all plugins which are available via Git repos. git:// URLs
 # don't work.
 repos=(
-  https://github.com/elzr/vim-json.git
-  https://github.com/StanAngeloff/php.vim.git
-  https://github.com/groenewege/vim-less.git
-  https://github.com/digitaltoad/vim-jade.git
-  https://github.com/rking/ag.vim.git
+
   https://github.com/Lokaltog/vim-powerline.git
+  https://github.com/StanAngeloff/php.vim.git
   https://github.com/airblade/vim-gitgutter.git
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/ap/vim-css-color.git
+  https://github.com/digitaltoad/vim-jade.git
   https://github.com/docunext/closetag.vim.git
-  https://github.com/vim-scripts/bufkill.vim.git
+  https://github.com/elzr/vim-json.git
+  https://github.com/groenewege/vim-less.git
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/kien/ctrlp.vim.git
   https://github.com/leafgarland/typescript-vim.git
   https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
+  https://github.com/rking/ag.vim.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
   https://github.com/tomasr/molokai.git
@@ -58,13 +58,16 @@ repos=(
   https://github.com/tpope/vim-haml.git
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
-  https://github.com/tpope/vim-surround.git
   https://github.com/tpope/vim-sleuth.git
+  https://github.com/tpope/vim-surround.git
   https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
+  https://github.com/vim-scripts/bufkill.vim.git
   https://github.com/vim-scripts/keepcase.vim.git
   https://github.com/vim-scripts/lighttpd-syntax.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
+  https://github.com/amix/vim-zenroom2.git
+
   )
 
 # Here's a list of everything else to download in the format
