@@ -57,6 +57,7 @@ repos=(
   https://github.com/tomasr/molokai.git
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-haml.git
+  https://github.com/tpope/vim-liquid.git
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-sleuth.git
@@ -81,7 +82,7 @@ other=(
 case "$1" in
 
   # GIT -----------------------------------------------------------------
-  repos)
+  repos|repo)
     mkdir -p $bundledir
     for url in ${repos[@]}; do
       if [ -n "$2" ]; then
