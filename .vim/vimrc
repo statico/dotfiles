@@ -17,6 +17,7 @@ nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :CoffeeCompile watch<CR>
 nmap \d :%!perltidy<CR>
 nmap \e :NERDTreeToggle<CR>
+nmap \f :Goyo<CR>
 nmap \g :Gstatus<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
@@ -31,7 +32,7 @@ nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nmap \x :w<CR>:%! xmllint --format - <CR>
 nmap \Y :vertical resize 40<CR>:wincmd l<CR>
 nmap \y :exec "vertical resize " . (80 + (&number * &numberwidth))<CR>:wincmd l<CR>
-nmap \z :w<CR>:!<Up><CR>
+nmap \z :w<CR>:!open %<CR><CR>
 
 " You don't know what you're missing if you don't use this.
 nmap <C-e> :e#<CR>
