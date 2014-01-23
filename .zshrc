@@ -276,7 +276,7 @@ fi
 # https://github.com/ggreer/the_silver_searcher
 if _has ag; then
     alias ack=ag
-    alias ag='ag --color-path 1\;31 --color-match 1\;32'
+    alias ag='ag --color-path 1\;31 --color-match 1\;32 --color'
 fi
 
 # Nico is amazing for showing me this.
