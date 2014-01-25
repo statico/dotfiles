@@ -15,9 +15,8 @@ if exists("g:loaded_syntastic_text_atdtool_checker")
 endif
 let g:loaded_syntastic_text_atdtool_checker = 1
 
-function! SyntaxCheckers_text_atdtool_IsAvailable()
-    return executable('atdtool')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_text_atdtool_GetHighlightRegex(item)
     let term = matchstr(a:item['text'], '\m "\zs[^"]\+\ze"\($\| | suggestions:\)')
@@ -28,12 +27,8 @@ function! SyntaxCheckers_text_atdtool_GetHighlightRegex(item)
     return term
 endfunction
 
-function! SyntaxCheckers_text_atdtool_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'atdtool',
-        \ 'tail': '2>' . syntastic#util#DevNull(),
-        \ 'filetype': 'text',
-        \ 'subchecker': 'atdtool' })
+function! SyntaxCheckers_text_atdtool_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'tail': '2> ' . syntastic#util#DevNull() })
 
     let errorformat =
         \ '%W%f:%l:%c: %m,'.
@@ -45,8 +40,8 @@ function! SyntaxCheckers_text_atdtool_GetLocList()
         \ 'returns': [0],
         \ 'subtype': 'Style' })
 
-    for n in range(len(loclist))
-        let loclist[n]['text'] = substitute(loclist[n]['text'], '\n\s\+', ' | ', 'g')
+    for e in loclist
+        let e['text'] = substitute(e['text'], '\m\n\s\+', ' | ', 'g')
     endfor
 
     return loclist
@@ -55,3 +50,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'text',
     \ 'name': 'atdtool'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

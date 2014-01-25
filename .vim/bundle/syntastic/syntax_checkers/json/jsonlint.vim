@@ -12,18 +12,13 @@
 if exists("g:loaded_syntastic_json_jsonlint_checker")
     finish
 endif
-let g:loaded_syntastic_json_jsonlint_checker=1
+let g:loaded_syntastic_json_jsonlint_checker = 1
 
-function! SyntaxCheckers_json_jsonlint_IsAvailable()
-    return executable('jsonlint')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_json_jsonlint_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'jsonlint',
-        \ 'post_args': '--compact',
-        \ 'filetype': 'json',
-        \ 'subchecker': 'jsonlint' })
+function! SyntaxCheckers_json_jsonlint_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'post_args': '--compact' })
 
     let errorformat =
         \ '%ELine %l:%c,'.
@@ -41,3 +36,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'json',
     \ 'name': 'jsonlint'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

@@ -12,22 +12,23 @@
 "
 " Note: this script requires CoffeeScript version 1.6.2 or newer.
 "
+
 if exists("g:loaded_syntastic_coffee_coffee_checker")
     finish
 endif
-let g:loaded_syntastic_coffee_coffee_checker=1
+let g:loaded_syntastic_coffee_coffee_checker = 1
 
-function! SyntaxCheckers_coffee_coffee_IsAvailable()
-    return executable("coffee") &&
-        \ syntastic#util#versionIsAtLeast(syntastic#util#getVersion('coffee --version 2>' . syntastic#util#DevNull()), [1,6,2])
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_coffee_coffee_IsAvailable() dict
+    let exe = self.getExec()
+    return executable(exe) &&
+        \ syntastic#util#versionIsAtLeast(syntastic#util#getVersion(exe . ' --version 2>' . syntastic#util#DevNull()), [1,6,2])
 endfunction
 
-function! SyntaxCheckers_coffee_coffee_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'coffee',
-        \ 'args': '-cp',
-        \ 'filetype': 'coffee',
-        \ 'subchecker': 'coffee' })
+function! SyntaxCheckers_coffee_coffee_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': '-cp' })
 
     let errorformat =
         \ '%E%f:%l:%c: %trror: %m,' .
@@ -40,9 +41,16 @@ function! SyntaxCheckers_coffee_coffee_GetLocList()
         \ '%-Z%p^,' .
         \ '%-G%.%#'
 
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'coffee',
     \ 'name': 'coffee'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

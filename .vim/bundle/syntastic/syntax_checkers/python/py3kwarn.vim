@@ -4,20 +4,17 @@
 "Authors:     Liam Curry <liam@curry.name>
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_python_py3kwarn_checker")
     finish
 endif
-let g:loaded_syntastic_python_py3kwarn_checker=1
+let g:loaded_syntastic_python_py3kwarn_checker = 1
 
-function! SyntaxCheckers_python_py3kwarn_IsAvailable()
-    return executable('py3kwarn')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_python_py3kwarn_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'py3kwarn',
-        \ 'filetype': 'python',
-        \ 'subchecker': 'py3kwarn' })
+function! SyntaxCheckers_python_py3kwarn_GetLocList() dict
+    let makeprg = self.makeprgBuild({})
 
     let errorformat = '%W%f:%l:%c: %m'
 
@@ -29,3 +26,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'python',
     \ 'name': 'py3kwarn'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

@@ -9,20 +9,17 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_pod_podchecker_checker")
     finish
 endif
-let g:loaded_syntastic_pod_podchecker_checker=1
+let g:loaded_syntastic_pod_podchecker_checker = 1
 
-function! SyntaxCheckers_pod_podchecker_IsAvailable()
-    return executable("podchecker")
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_pod_podchecker_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'podchecker',
-        \ 'filetype': 'pod',
-        \ 'subchecker': 'podchecker' })
+function! SyntaxCheckers_pod_podchecker_GetLocList() dict
+    let makeprg = self.makeprgBuild({})
 
     let errorformat =
         \ '%W%[%#]%[%#]%[%#] WARNING: %m at line %l in file %f,' .
@@ -35,8 +32,7 @@ function! SyntaxCheckers_pod_podchecker_GetLocList()
         \ 'errorformat': errorformat,
         \ 'returns': [0, 1, 2] })
 
-    for n in range(len(loclist))
-        let e = loclist[n]
+    for e in loclist
         if e['valid'] && e['lnum'] == 0
             let e['lnum'] = str2nr(matchstr(e['text'], '\m\<line \zs\d\+\ze'))
         endif
@@ -49,3 +45,7 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'pod',
     \ 'name': 'podchecker'})
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

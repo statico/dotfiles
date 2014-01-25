@@ -11,7 +11,7 @@ set cpo&vim
 " convenience function to determine the 'null device' parameter
 " based on the current operating system
 function! syntastic#c#NullOutput()
-    let known_os = has('win32') || has('unix') || has('mac')
+    let known_os = has('unix') || has('mac') || syntastic#util#isRunningWindows()
     return known_os ? '-o ' . syntastic#util#DevNull() : ''
 endfunction
 
@@ -38,15 +38,15 @@ function! syntastic#c#ReadConfig(file)
     call filter(lines, 'v:val !~ ''\v^(\s*#|$)''')
 
     " remove leading and trailing spaces
-    call map(lines, 'substitute(v:val, ''^\s\+'', "", "")')
-    call map(lines, 'substitute(v:val, ''\s\+$'', "", "")')
+    call map(lines, 'substitute(v:val, ''\m^\s\+'', "", "")')
+    call map(lines, 'substitute(v:val, ''\m\s\+$'', "", "")')
 
     let parameters = []
     for line in lines
-        let matches = matchlist(line, '\C^\s*-I\s*\(\S\+\)')
+        let matches = matchlist(line, '\m\C^\s*-I\s*\(\S\+\)')
         if matches != [] && matches[1] != ''
             " this one looks like an absolute path
-            if match(matches[1], '^\%(/\|\a:\)') != -1
+            if match(matches[1], '\m^\%(/\|\a:\)') != -1
                 call add(parameters, '-I' . matches[1])
             else
                 call add(parameters, '-I' . filepath . syntastic#util#Slash() . matches[1])
@@ -56,7 +56,7 @@ function! syntastic#c#ReadConfig(file)
         endif
     endfor
 
-    return join(map(parameters, 'syntastic#util#shescape(fnameescape(v:val))'), ' ')
+    return join(map(parameters, 'syntastic#util#shescape(fnameescape(v:val))'))
 endfunction
 
 " GetLocList() for C-like compilers
@@ -67,7 +67,7 @@ function! syntastic#c#GetLocList(filetype, subchecker, options)
         return []
     endtry
 
-    let makeprg = g:syntastic_{a:filetype}_compiler . ' ' . flags . ' ' . syntastic#util#shexpand('%')
+    let makeprg = expand(g:syntastic_{a:filetype}_compiler) . ' ' . flags . ' ' . syntastic#util#shexpand('%')
 
     let errorformat = s:GetCheckerVar('g', a:filetype, a:subchecker, 'errorformat', a:options['errorformat'])
 
@@ -178,7 +178,7 @@ function! s:GetIncludeDirs(filetype)
         call extend(include_dirs, g:syntastic_{a:filetype}_include_dirs)
     endif
 
-    return join(map(syntastic#util#unique(include_dirs), 'syntastic#util#shescape(fnameescape("-I" . v:val))'), ' ')
+    return join(map(syntastic#util#unique(include_dirs), 'syntastic#util#shescape(fnameescape("-I" . v:val))'))
 endfunction
 
 " search the first 100 lines for include statements that are
@@ -187,11 +187,11 @@ function! s:SearchHeaders()
     let includes = ''
     let files = []
     let found = []
-    let lines = filter(getline(1, 100), 'v:val =~# "^\s*#\s*include"')
+    let lines = filter(getline(1, 100), 'v:val =~# ''\m^\s*#\s*include''')
 
     " search current buffer
     for line in lines
-        let file = matchstr(line, '"\zs\S\+\ze"')
+        let file = matchstr(line, '\m"\zs\S\+\ze"')
         if file != ''
             call add(files, file)
             continue
@@ -217,7 +217,7 @@ function! s:SearchHeaders()
                 continue
             endtry
 
-            let lines = filter(lines, 'v:val =~# "^\s*#\s*include"')
+            call filter(lines, 'v:val =~# ''\m^\s*#\s*include''')
 
             for handler in s:handlers
                 if index(found, handler["regex"]) != -1

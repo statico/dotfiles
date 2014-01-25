@@ -9,16 +9,20 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_go_govet_checker")
     finish
 endif
-let g:loaded_syntastic_go_govet_checker=1
+let g:loaded_syntastic_go_govet_checker = 1
 
-function! SyntaxCheckers_go_govet_IsAvailable()
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_go_govet_IsAvailable() dict
     return executable('go')
 endfunction
 
-function! SyntaxCheckers_go_govet_GetLocList()
+function! SyntaxCheckers_go_govet_GetLocList() dict
     let makeprg = 'go vet'
     let errorformat = '%Evet: %.%\+: %f:%l:%c: %m,%W%f:%l: %m,%-G%.%#'
 
@@ -38,3 +42,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'go',
     \ 'name': 'govet'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

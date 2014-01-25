@@ -13,11 +13,7 @@
 if exists("g:loaded_syntastic_sass_sass_checker")
     finish
 endif
-let g:loaded_syntastic_sass_sass_checker=1
-
-function! SyntaxCheckers_sass_sass_IsAvailable()
-    return executable("sass")
-endfunction
+let g:loaded_syntastic_sass_sass_checker = 1
 
 "sass caching for large files drastically speeds up the checking, but store it
 "in a temp location otherwise sass puts .sass_cache dirs in the users project
@@ -34,16 +30,16 @@ if executable("compass")
     let s:imports = "--compass"
 endif
 
-function! SyntaxCheckers_sass_sass_GetLocList()
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_sass_sass_GetLocList() dict
     if !g:syntastic_sass_check_partials && expand('%:t')[0] == '_'
         return []
     endif
 
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'sass',
-        \ 'args': '--cache-location ' . s:sass_cache_location . ' ' . s:imports . ' --check',
-        \ 'filetype': 'sass',
-        \ 'subchecker': 'sass' })
+    let makeprg = self.makeprgBuild({
+        \ 'args': '--cache-location ' . s:sass_cache_location . ' ' . s:imports . ' --check' })
 
     let errorformat =
         \ '%ESyntax %trror: %m,' .
@@ -76,3 +72,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'sass',
     \ 'name': 'sass'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

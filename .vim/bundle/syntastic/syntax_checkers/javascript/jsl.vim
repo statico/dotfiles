@@ -8,33 +8,23 @@
 "             Want To Public License, Version 2, as published by Sam Hocevar.
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "============================================================================
+
 if exists("g:loaded_syntastic_javascript_jsl_checker")
     finish
 endif
-let g:loaded_syntastic_javascript_jsl_checker=1
+let g:loaded_syntastic_javascript_jsl_checker = 1
 
 if !exists("g:syntastic_javascript_jsl_conf")
     let g:syntastic_javascript_jsl_conf = ""
 endif
 
-function s:ConfFlag()
-    if !empty(g:syntastic_javascript_jsl_conf)
-        return "-conf " . g:syntastic_javascript_jsl_conf
-    endif
+let s:save_cpo = &cpo
+set cpo&vim
 
-    return ""
-endfunction
-
-function! SyntaxCheckers_javascript_jsl_IsAvailable()
-    return executable('jsl')
-endfunction
-
-function! SyntaxCheckers_javascript_jsl_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'jsl',
-        \ 'args': s:ConfFlag() . " -nologo -nofilelisting -nosummary -nocontext -process",
-        \ 'filetype': 'javascript',
-        \ 'subchecker': 'jsl' })
+function! SyntaxCheckers_javascript_jsl_GetLocList() dict
+    let makeprg = self.makeprgBuild({
+        \ 'args': (!empty(g:syntastic_javascript_jsl_conf) ? "-conf " . g:syntastic_javascript_jsl_conf : "") .
+        \       " -nologo -nofilelisting -nosummary -nocontext -process" })
 
     let errorformat =
         \ '%W%f(%l): lint warning: %m,'.
@@ -54,3 +44,7 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'javascript',
     \ 'name': 'jsl'})
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

@@ -54,6 +54,7 @@ function! g:SyntasticSignsNotifier.enabled()
 endfunction
 
 function! g:SyntasticSignsNotifier.refresh(loclist)
+    call syntastic#log#debug(g:SyntasticDebugNotifications, 'signs: refresh')
     let old_signs = copy(self._bufSignIds())
     if self.enabled()
         call self._signErrors(a:loclist)
@@ -101,14 +102,12 @@ endfunction
 " Place signs by all syntax errors in the buffer
 function! g:SyntasticSignsNotifier._signErrors(loclist)
     let loclist = a:loclist
-    if loclist.hasErrorsOrWarningsToDisplay()
+    if !loclist.isEmpty()
 
         " errors some first, so that they are not masked by warnings
         let buf = bufnr('')
         let issues = copy(loclist.errors())
-        if !loclist.quietWarnings()
-            call extend(issues, loclist.warnings())
-        endif
+        call extend(issues, loclist.warnings())
         call filter(issues, 'v:val["bufnr"] == buf')
         let seen = {}
 
@@ -120,7 +119,7 @@ function! g:SyntasticSignsNotifier._signErrors(loclist)
                 let sign_subtype = get(i, 'subtype', '')
                 let sign_type = 'Syntastic' . sign_subtype . sign_severity
 
-                exec "sign place " . s:next_sign_id . " line=" . i['lnum'] . " name=" . sign_type . " buffer=" . i['bufnr']
+                execute "sign place " . s:next_sign_id . " line=" . i['lnum'] . " name=" . sign_type . " buffer=" . i['bufnr']
                 call add(self._bufSignIds(), s:next_sign_id)
                 let s:next_sign_id += 1
             endif
@@ -132,7 +131,7 @@ endfunction
 function! g:SyntasticSignsNotifier._removeSigns(ids)
     if has('signs')
         for i in a:ids
-            exec "sign unplace " . i
+            execute "sign unplace " . i
             call remove(self._bufSignIds(), index(self._bufSignIds(), i))
         endfor
     endif

@@ -12,7 +12,7 @@
 if exists('g:loaded_syntastic_javascript_jshint_checker')
     finish
 endif
-let g:loaded_syntastic_javascript_jshint_checker=1
+let g:loaded_syntastic_javascript_jshint_checker = 1
 
 if !exists('g:syntastic_jshint_exec')
     let g:syntastic_jshint_exec = 'jshint'
@@ -22,21 +22,22 @@ if !exists('g:syntastic_javascript_jshint_conf')
     let g:syntastic_javascript_jshint_conf = ''
 endif
 
-function! SyntaxCheckers_javascript_jshint_IsAvailable()
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_javascript_jshint_IsAvailable() dict
     return executable(expand(g:syntastic_jshint_exec))
 endfunction
 
-function! SyntaxCheckers_javascript_jshint_GetLocList()
+function! SyntaxCheckers_javascript_jshint_GetLocList() dict
     let jshint_new = s:JshintNew()
-    let makeprg = syntastic#makeprg#build({
+    let makeprg = self.makeprgBuild({
         \ 'exe': expand(g:syntastic_jshint_exec),
-        \ 'post_args': (jshint_new ? ' --verbose ' : '') . s:Args(),
-        \ 'filetype': 'javascript',
-        \ 'subchecker': 'jshint' })
+        \ 'post_args': (jshint_new ? ' --verbose ' : '') . s:Args() })
 
     let errorformat = jshint_new ?
-        \ '%f: line %l\, col %c\, %m \(%t%*\d\)' :
-        \ '%E%f: line %l\, col %c\, %m'
+        \ '%A%f: line %l\, col %v\, %m \(%t%*\d\)' :
+        \ '%E%f: line %l\, col %v\, %m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
@@ -44,11 +45,11 @@ function! SyntaxCheckers_javascript_jshint_GetLocList()
         \ 'defaults': {'bufnr': bufnr('')} })
 endfunction
 
-function s:JshintNew()
+function! s:JshintNew()
     return syntastic#util#versionIsAtLeast(syntastic#util#getVersion(expand(g:syntastic_jshint_exec) . ' --version'), [1, 1])
 endfunction
 
-function s:Args()
+function! s:Args()
     " node-jshint uses .jshintrc as config unless --config arg is present
     return !empty(g:syntastic_javascript_jshint_conf) ? ' --config ' . g:syntastic_javascript_jshint_conf : ''
 endfunction
@@ -57,3 +58,7 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'javascript',
     \ 'name': 'jshint'})
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

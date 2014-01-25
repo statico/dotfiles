@@ -14,18 +14,13 @@
 if exists("g:loaded_syntastic_scss_sass_checker")
     finish
 endif
-let g:loaded_syntastic_scss_sass_checker=1
+let g:loaded_syntastic_scss_sass_checker = 1
 
-function! SyntaxCheckers_scss_sass_IsAvailable()
-    return SyntaxCheckers_sass_sass_IsAvailable()
-endfunction
-
-function! SyntaxCheckers_scss_sass_GetLocList()
-    return SyntaxCheckers_sass_sass_GetLocList()
-endfunction
+runtime! syntax_checkers/sass/*.vim
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'scss',
-    \ 'name': 'sass'})
+    \ 'name': 'sass',
+    \ 'redirect': 'sass/sass'})
 
-runtime! syntax_checkers/sass/*.vim
+" vim: set et sts=4 sw=4:

@@ -9,21 +9,17 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_nroff_mandoc_checker")
     finish
 endif
-let g:loaded_syntastic_nroff_mandoc_checker=1
+let g:loaded_syntastic_nroff_mandoc_checker = 1
 
-function! SyntaxCheckers_nroff_mandoc_IsAvailable()
-    return executable("mandoc")
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_nroff_mandoc_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'mandoc',
-        \ 'args': '-Tlint',
-        \ 'filetype': 'nroff',
-        \ 'subchecker': 'mandoc' })
+function! SyntaxCheckers_nroff_mandoc_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': '-Tlint' })
 
     let errorformat =
         \ '%E%f:%l:%c: %tRROR: %m,' .
@@ -39,3 +35,7 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'nroff',
     \ 'name': 'mandoc'})
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

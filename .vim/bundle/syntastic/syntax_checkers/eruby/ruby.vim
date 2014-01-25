@@ -13,19 +13,22 @@
 if exists("g:loaded_syntastic_eruby_ruby_checker")
     finish
 endif
-let g:loaded_syntastic_eruby_ruby_checker=1
+let g:loaded_syntastic_eruby_ruby_checker = 1
 
 if !exists("g:syntastic_ruby_exec")
     let g:syntastic_ruby_exec = "ruby"
 endif
 
-function! SyntaxCheckers_eruby_ruby_IsAvailable()
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_eruby_ruby_IsAvailable() dict
     return executable(expand(g:syntastic_ruby_exec))
 endfunction
 
-function! SyntaxCheckers_eruby_ruby_GetLocList()
+function! SyntaxCheckers_eruby_ruby_GetLocList() dict
     let exe = expand(g:syntastic_ruby_exec)
-    if !has('win32')
+    if !syntastic#util#isRunningWindows()
         let exe = 'RUBYOPT= ' . exe
     endif
 
@@ -63,3 +66,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'eruby',
     \ 'name': 'ruby'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

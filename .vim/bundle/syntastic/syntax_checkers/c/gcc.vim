@@ -10,28 +10,27 @@
 "
 "============================================================================
 
-
 if exists('g:loaded_syntastic_c_gcc_checker')
     finish
 endif
 let g:loaded_syntastic_c_gcc_checker = 1
 
 if !exists('g:syntastic_c_compiler')
-    let g:syntastic_c_compiler = 'gcc'
+    let g:syntastic_c_compiler = executable('gcc') ? 'gcc' : 'clang'
 endif
-
-function! SyntaxCheckers_c_gcc_IsAvailable()
-    return executable(g:syntastic_c_compiler)
-endfunction
 
 let s:save_cpo = &cpo
 set cpo&vim
+
+function! SyntaxCheckers_c_gcc_IsAvailable() dict
+    return executable(expand(g:syntastic_c_compiler))
+endfunction
 
 if !exists('g:syntastic_c_compiler_options')
     let g:syntastic_c_compiler_options = '-std=gnu99'
 endif
 
-function! SyntaxCheckers_c_gcc_GetLocList()
+function! SyntaxCheckers_c_gcc_GetLocList() dict
     return syntastic#c#GetLocList('c', 'gcc', {
         \ 'errorformat':
         \     '%-G%f:%s:,' .
@@ -47,7 +46,7 @@ function! SyntaxCheckers_c_gcc_GetLocList()
         \     '%f:%l: %m',
         \ 'main_flags': '-x c -fsyntax-only',
         \ 'header_flags': '-x c',
-        \ 'header_names': '\.h$' })
+        \ 'header_names': '\m\.h$' })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

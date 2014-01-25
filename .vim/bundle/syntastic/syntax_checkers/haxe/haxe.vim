@@ -13,13 +13,12 @@
 if exists("g:loaded_syntastic_haxe_haxe_checker")
     finish
 endif
-let g:loaded_syntastic_haxe_haxe_checker=1
+let g:loaded_syntastic_haxe_haxe_checker = 1
 
-function! SyntaxCheckers_haxe_haxe_IsAvailable()
-    return executable('haxe')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_haxe_haxe_GetLocList()
+function! SyntaxCheckers_haxe_haxe_GetLocList() dict
     if exists('b:vaxe_hxml')
         let hxml = b:vaxe_hxml
     elseif exists('g:vaxe_hxml')
@@ -30,11 +29,8 @@ function! SyntaxCheckers_haxe_haxe_GetLocList()
     let hxml = fnamemodify(hxml, ':p')
 
     if !empty(hxml)
-        let makeprg = syntastic#makeprg#build({
-            \ 'exe': 'haxe',
-            \ 'fname': syntastic#util#shescape(fnameescape(fnamemodify(hxml, ':t'))),
-            \ 'filetype': 'haxe',
-            \ 'subchecker': 'haxe' })
+        let makeprg = self.makeprgBuild({
+            \ 'fname': syntastic#util#shescape(fnameescape(fnamemodify(hxml, ':t'))) })
 
         let errorformat = '%E%f:%l: characters %c-%*[0-9] : %m'
 
@@ -50,3 +46,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'haxe',
     \ 'name': 'haxe'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

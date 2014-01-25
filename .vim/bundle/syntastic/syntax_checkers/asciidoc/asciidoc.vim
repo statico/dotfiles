@@ -15,16 +15,11 @@ if exists("g:loaded_syntastic_asciidoc_asciidoc_checker")
 endif
 let g:loaded_syntastic_asciidoc_asciidoc_checker = 1
 
-function! SyntaxCheckers_asciidoc_asciidoc_IsAvailable()
-    return executable("asciidoc")
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_asciidoc_asciidoc_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'asciidoc',
-        \ 'args': syntastic#c#NullOutput(),
-        \ 'filetype': 'asciidoc',
-        \ 'subchecker': 'asciidoc' })
+function! SyntaxCheckers_asciidoc_asciidoc_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': syntastic#c#NullOutput() })
 
     let errorformat =
         \ '%Easciidoc: %tRROR: %f: line %l: %m,' .
@@ -45,3 +40,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'asciidoc',
     \ 'name': 'asciidoc'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

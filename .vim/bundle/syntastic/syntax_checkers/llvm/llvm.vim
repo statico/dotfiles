@@ -9,21 +9,17 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_llvm_llvm_checker")
     finish
 endif
-let g:loaded_syntastic_llvm_llvm_checker=1
+let g:loaded_syntastic_llvm_llvm_checker = 1
 
-function! SyntaxCheckers_llvm_llvm_IsAvailable()
-    return executable("llc")
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_llvm_llvm_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'llc',
-        \ 'args': syntastic#c#NullOutput(),
-        \ 'filetype': 'llvm',
-        \ 'subchecker': 'llvm' })
+function! SyntaxCheckers_llvm_llvm_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': syntastic#c#NullOutput() })
 
     let errorformat = 'llc: %f:%l:%c: %trror: %m'
 
@@ -34,5 +30,10 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'llvm',
-    \ 'name': 'llvm'})
+    \ 'name': 'llvm',
+    \ 'exec': 'llc'})
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

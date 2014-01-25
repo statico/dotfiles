@@ -21,16 +21,11 @@ if exists("g:loaded_syntastic_objcpp_oclint_checker")
 endif
 let g:loaded_syntastic_objcpp_oclint_checker = 1
 
-function! SyntaxCheckers_objcpp_oclint_IsAvailable()
-    return SyntaxCheckers_c_oclint_IsAvailable()
-endfunction
-
-function! SyntaxCheckers_objcpp_oclint_GetLocList()
-    return SyntaxCheckers_c_oclint_GetLocList()
-endfunction
+runtime! syntax_checkers/c/*.vim
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'objcpp',
-    \ 'name': 'oclint'})
+    \ 'name': 'oclint',
+    \ 'redirect': 'c/oclint'})
 
-runtime! syntax_checkers/c/*.vim
+" vim: set et sts=4 sw=4:

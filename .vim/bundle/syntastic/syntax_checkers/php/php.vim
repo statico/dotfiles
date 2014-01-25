@@ -13,26 +13,19 @@
 if exists("g:loaded_syntastic_php_php_checker")
     finish
 endif
-let g:loaded_syntastic_php_php_checker=1
+let g:loaded_syntastic_php_php_checker = 1
 
-function! SyntaxCheckers_php_php_IsAvailable()
-    return executable("php")
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
 function! SyntaxCheckers_php_php_GetHighlightRegex(item)
-    let unexpected = matchstr(a:item['text'], "unexpected '[^']\\+'")
-    if len(unexpected) < 1
-        return ''
-    endif
-    return '\V'.split(unexpected, "'")[1]
+    let term = matchstr(a:item['text'], "\\munexpected '\\zs[^']\\+\\ze'")
+    return term != '' ? '\V' . term : ''
 endfunction
 
-function! SyntaxCheckers_php_php_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'php',
-        \ 'args': '-l -d error_reporting=E_ALL -d display_errors=1 -d log_errors=0 -d xdebug.cli_color=0',
-        \ 'filetype': 'php',
-        \ 'subchecker': 'php' })
+function! SyntaxCheckers_php_php_GetLocList() dict
+    let makeprg = self.makeprgBuild({
+        \ 'args': '-l -d error_reporting=E_ALL -d display_errors=1 -d log_errors=0 -d xdebug.cli_color=0' })
 
     let errorformat =
         \ '%-GNo syntax errors detected in%.%#,'.
@@ -50,3 +43,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'php',
     \ 'name': 'php'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

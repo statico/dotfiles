@@ -13,18 +13,13 @@
 if exists("g:loaded_syntastic_cucumber_cucumber_checker")
     finish
 endif
-let g:loaded_syntastic_cucumber_cucumber_checker=1
+let g:loaded_syntastic_cucumber_cucumber_checker = 1
 
-function! SyntaxCheckers_cucumber_cucumber_IsAvailable()
-    return executable('cucumber')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_cucumber_cucumber_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'cucumber',
-        \ 'args': '--dry-run --quiet --strict --format pretty',
-        \ 'filetype': 'cucumber',
-        \ 'subchecker': 'cucumber' })
+function! SyntaxCheckers_cucumber_cucumber_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': '--dry-run --quiet --strict --format pretty' })
 
     let errorformat =
         \ '%f:%l:%c:%m,' .
@@ -40,3 +35,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'cucumber',
     \ 'name': 'cucumber'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

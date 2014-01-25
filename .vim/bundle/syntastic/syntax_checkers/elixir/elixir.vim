@@ -9,17 +9,21 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_elixir_elixir_checker")
     finish
 endif
-let g:loaded_syntastic_elixir_elixir_checker=1
+let g:loaded_syntastic_elixir_elixir_checker = 1
+
+let s:save_cpo = &cpo
+set cpo&vim
 
 " TODO: we should probably split this into separate checkers
-function! SyntaxCheckers_elixir_elixir_IsAvailable()
+function! SyntaxCheckers_elixir_elixir_IsAvailable() dict
     return executable('elixir') && executable('mix')
 endfunction
 
-function! SyntaxCheckers_elixir_elixir_GetLocList()
+function! SyntaxCheckers_elixir_elixir_GetLocList() dict
 
     let make_options = {}
     let compile_command = 'elixir'
@@ -30,10 +34,7 @@ function! SyntaxCheckers_elixir_elixir_GetLocList()
         let make_options['cwd'] = fnamemodify(mix_file, ':p:h')
     endif
 
-    let make_options['makeprg'] = syntastic#makeprg#build({
-        \ 'exe': compile_command,
-        \ 'filetype': 'elixir',
-        \ 'subchecker': 'elixir' })
+    let make_options['makeprg'] = self.makeprgBuild({ 'exe': compile_command })
 
     let make_options['errorformat'] = '** %*[^\ ] %f:%l: %m'
 
@@ -43,3 +44,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'elixir',
     \ 'name': 'elixir'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

@@ -13,17 +13,13 @@
 if exists('g:loaded_syntastic_tex_lacheck_checker')
     finish
 endif
-let g:loaded_syntastic_tex_lacheck_checker=1
+let g:loaded_syntastic_tex_lacheck_checker = 1
 
-function! SyntaxCheckers_tex_lacheck_IsAvailable()
-    return executable('lacheck')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_tex_lacheck_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'lacheck',
-        \ 'filetype': 'tex',
-        \ 'subchecker': 'lacheck' })
+function! SyntaxCheckers_tex_lacheck_GetLocList() dict
+    let makeprg = self.makeprgBuild({})
 
     let errorformat =
         \ '%-G** %f:,' .
@@ -37,3 +33,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'tex',
     \ 'name': 'lacheck'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

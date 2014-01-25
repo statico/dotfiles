@@ -8,33 +8,35 @@
 "             Want To Public License, Version 2, as published by Sam Hocevar.
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "============================================================================
+
 if exists("g:loaded_syntastic_handlebars_handlebars_checker")
     finish
 endif
-let g:loaded_syntastic_handlebars_handlebars_checker=1
+let g:loaded_syntastic_handlebars_handlebars_checker = 1
 
-function! SyntaxCheckers_handlebars_handlebars_IsAvailable()
-    return executable('handlebars')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_handlebars_handlebars_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'handlebars',
-        \ 'filetype': 'handlebars',
-        \ 'subchecker': 'handlebars' })
+function! SyntaxCheckers_handlebars_handlebars_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': '-f ' . syntastic#util#DevNull() })
 
     let errorformat =
-        \ 'Error: %m on line %l:,'.
-        \ '%-Z%p^,' .
-        \ "Error: %m,".
-        \ '%-Z%p^,' .
-        \ '%-G'
+        \ '%EError: %m on line %l:,'.
+        \ "%EError: %m,".
+        \ '%Z%p^,' .
+        \ '%-G%.%#'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
-        \ 'errorformat': errorformat })
+        \ 'errorformat': errorformat,
+        \ 'defaults': {'bufnr': bufnr("")} })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'handlebars',
     \ 'name': 'handlebars'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

@@ -8,6 +8,7 @@
 "             Want To Public License, Version 2, as published by Sam Hocevar.
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "============================================================================
+
 if exists("g:loaded_syntastic_c_checkpatch_checker")
     finish
 endif
@@ -20,17 +21,17 @@ elseif executable("./scripts/checkpatch.pl")
     let g:syntastic_c_checker_checkpatch_location = './scripts/checkpatch.pl'
 endif
 
-function SyntaxCheckers_c_checkpatch_IsAvailable()
+let s:save_cpo = &cpo
+set cpo&vim
+
+function! SyntaxCheckers_c_checkpatch_IsAvailable() dict
     return exists("g:syntastic_c_checker_checkpatch_location")
 endfunction
 
-
-function! SyntaxCheckers_c_checkpatch_GetLocList()
-    let makeprg = syntastic#makeprg#build({
+function! SyntaxCheckers_c_checkpatch_GetLocList() dict
+    let makeprg = self.makeprgBuild({
         \ 'exe': g:syntastic_c_checker_checkpatch_location,
-        \ 'args': '--no-summary --no-tree --terse --file',
-        \ 'filetype': 'c',
-        \ 'subchecker': 'checkpatch' })
+        \ 'args': '--no-summary --no-tree --terse --file' })
 
     let errorformat =
         \ '%f:%l: %tARNING: %m,' .
@@ -45,4 +46,10 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'c',
-    \ 'name': 'checkpatch'})
+    \ 'name': 'checkpatch',
+    \ 'exec': 'checkpatch.pl'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

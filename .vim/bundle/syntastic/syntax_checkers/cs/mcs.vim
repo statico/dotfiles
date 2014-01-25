@@ -13,18 +13,13 @@
 if exists("g:loaded_syntastic_cs_mcs_checker")
     finish
 endif
-let g:loaded_syntastic_cs_mcs_checker=1
+let g:loaded_syntastic_cs_mcs_checker = 1
 
-function! SyntaxCheckers_cs_mcs_IsAvailable()
-    return executable('mcs')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_cs_mcs_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'mcs',
-        \ 'args': '--parse',
-        \ 'filetype': 'cs',
-        \ 'subchecker': 'mcs' })
+function! SyntaxCheckers_cs_mcs_GetLocList() dict
+    let makeprg = self.makeprgBuild({ 'args': '--parse' })
 
     let errorformat = '%f(%l\,%c): %trror %m'
 
@@ -37,3 +32,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'cs',
     \ 'name': 'mcs'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:

@@ -15,17 +15,13 @@
 if exists("g:loaded_syntastic_python_pep8_checker")
     finish
 endif
-let g:loaded_syntastic_python_pep8_checker=1
+let g:loaded_syntastic_python_pep8_checker = 1
 
-function! SyntaxCheckers_python_pep8_IsAvailable()
-    return executable('pep8')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_python_pep8_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-        \ 'exe': 'pep8',
-        \ 'filetype': 'python',
-        \ 'subchecker': 'pep8' })
+function! SyntaxCheckers_python_pep8_GetLocList() dict
+    let makeprg = self.makeprgBuild({})
 
     let errorformat = '%f:%l:%c: %m'
 
@@ -34,8 +30,8 @@ function! SyntaxCheckers_python_pep8_GetLocList()
         \ 'errorformat': errorformat,
         \ 'subtype': 'Style' })
 
-    for n in range(len(loclist))
-        let loclist[n]['type'] = loclist[n]['text'] =~? '^W' ? 'W' : 'E'
+    for e in loclist
+        let e['type'] = e['text'] =~? '^W' ? 'W' : 'E'
     endfor
 
     return loclist
@@ -44,3 +40,8 @@ endfunction
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'python',
     \ 'name': 'pep8'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:
