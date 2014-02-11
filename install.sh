@@ -2,7 +2,7 @@
 #
 # Ian's dotfile installer. Usage:
 #
-#   curl http://github.com/statico/dotfiles/raw/master/install.sh | sh
+#   curl https://github.com/statico/dotfiles/raw/master/install.sh | sh
 #
 # or:
 #
