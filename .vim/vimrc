@@ -17,7 +17,8 @@ nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :CoffeeCompile watch<CR>
 nmap \d :%!perltidy<CR>
 nmap \e :NERDTreeToggle<CR>
-nmap \f mt:Goyo<CR>'tzz
+nmap \f mt:Goyo 100<CR>'tzz
+nmap \F mt:Goyo<CR>'tzz
 nmap \g :Gstatus<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
@@ -75,6 +76,7 @@ nnoremap <space> za
 nnoremap <CR> za
 vnoremap <space> zf
 
+" Window movement shortcuts from Mark
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -83,14 +85,12 @@ map <C-l> <C-W>l
 " Search for the word under the cursor in the current directory
 nmap <C-k> :Ag "\b<cword>\b" <CR>
 
-" Alt-p pipes the current buffer to the current filetype as a command
-" (good for perl, python, ruby, shell, gnuplot...)
-nmap <M-p>  :call RunUsingCurrentFiletype()<CR>
-nmap <Esc>p :call RunUsingCurrentFiletype()<CR>
-function! RunUsingCurrentFiletype()
-    execute 'write'
-    execute '! clear; '.&filetype.' <% '
-endfunction
+" Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
+nmap <Esc>n :cnext<CR>
+nmap <Esc>p :cprevious<CR>
+nmap <D-˜> :cnext<CR>
+nmap <D-π> :cprevious<CR>
+nmap <D-ç> :cclose<CR>
 
 " Hex mode from http://vim.wikia.com/wiki/Improved_hex_editing
 " ex command for toggling hex mode - define mapping if desired
