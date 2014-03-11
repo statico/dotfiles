@@ -77,6 +77,6 @@
 [merge]
 	conflictstyle = diff3
 [push]
-	default = simple
+	default = matching
 [pull]
-	default = simple
+	default = matching
