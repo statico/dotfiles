@@ -93,7 +93,7 @@ case "$1" in
       dest="$bundledir/$(basename $url | sed -e 's/\.git$//')"
       rm -rf $dest
       echo "Cloning $url into $dest"
-      git clone $url $dest
+      git clone -q $url $dest
       rm -rf $dest/.git
     done
     ;;
