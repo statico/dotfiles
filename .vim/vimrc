@@ -42,11 +42,6 @@ nmap <C-e> :e#<CR>
 map <C-n> :bnext<CR>
 map <C-p> :bprev<CR>
 
-" Let's try buffkill-vim using my favorite Emacs binding...
-nmap <Esc>k :BD<CR>
-nmap <M-k> :BD<CR>
-nmap <D-k> :BD<CR>
-
 " Emacs-like bindings in normal mode
 nmap <C-x>0 <C-w>c
 nmap <C-x>1 <C-w>o
@@ -83,7 +78,8 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <C-k> :Ag "\b<cword>\b" <CR>
+nmap <M-k> :Ag "\b<cword>\b" <CR>
+nmap <Esc>k :Ag "\b<cword>\b" <CR>
 
 " Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
 nmap <Esc>n :cnext<CR>
@@ -91,6 +87,9 @@ nmap <Esc>p :cprevious<CR>
 nmap <D-˜> :cnext<CR>
 nmap <D-π> :cprevious<CR>
 nmap <D-ç> :cclose<CR>
+
+" Show line numbers in the quickfix window
+autocmd FileType qf set number
 
 " Hex mode from http://vim.wikia.com/wiki/Improved_hex_editing
 " ex command for toggling hex mode - define mapping if desired
@@ -367,6 +366,7 @@ filetype plugin indent on
 function! ColorTermZenburn()
   colorscheme zenburn
   highlight Normal ctermbg=234
+  highlight CursorLine ctermbg=236
   let g:zenburn_high_Contrast = 1
 endfunction
 
