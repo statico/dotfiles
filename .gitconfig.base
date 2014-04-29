@@ -53,6 +53,7 @@
 	diff = auto
 	status = auto
 	branch = auto
+	ui = auto
 [color "diff"]
 	meta = blue
 	frag = black
@@ -74,9 +75,22 @@
 	mergeoptions = --no-ff
 [log]
 	decorate = short
-[merge]
-	conflictstyle = diff3
 [push]
-	default = matching
+	default = simple
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
+[diff]
+	tool = Kaleidoscope
+[difftool]
+	prompt = false
+[mergetool]
+	prompt = false
+[merge]
+	tool = Kaleidoscope
 [pull]
-	default = matching
+	default = simple
+[rerere]
+	enabled = 1
