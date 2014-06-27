@@ -52,6 +52,7 @@ repos=(
   https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
+  https://github.com/scrooloose/nerdcommenter.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
   https://github.com/tomasr/molokai.git

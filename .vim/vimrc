@@ -14,12 +14,12 @@
 nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
-nmap \c :CoffeeCompile watch<CR>
 nmap \d :%!perltidy<CR>
 nmap \e :NERDTreeToggle<CR>
 nmap \f mt:Goyo 100<CR>'tzz
 nmap \F mt:Goyo<CR>'tzz
 nmap \g :Gstatus<CR>
+nmap \k :CoffeeCompile watch<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
