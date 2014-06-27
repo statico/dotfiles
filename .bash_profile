@@ -76,3 +76,4 @@ alias whois='whois -h geektools.com'
 alias x='screen -A -x'
 
 ulimit -c 0
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi

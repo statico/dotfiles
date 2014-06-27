@@ -53,11 +53,12 @@ nmap <M-o> <C-w><C-w>
 " Emacs-like bindings in insert mode
 imap <C-e> <C-o>$
 
-" Emacs-like bindings in command line
+" Emacs-like bindings in command line -- `:help emacs-keys`
 cnoremap <C-a>  <Home>
 cnoremap <C-b>  <Left>
 cnoremap <C-f>  <Right>
-cnoremap <C-d>  <Delete>
+cnoremap <C-d>  <Del>
+cnoremap <C-e>  <End>
 cnoremap <M-b>  <S-Left>
 cnoremap <M-f>  <S-Right>
 cnoremap <M-d>  <S-right><Delete>
@@ -78,15 +79,21 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <M-k> :Ag "\b<cword>\b" <CR>
-nmap <Esc>k :Ag "\b<cword>\b" <CR>
+nmap <M-k> :Ag! "\b<cword>\b" <CR>
+nmap <Esc>k :Ag! "\b<cword>\b" <CR>
+nmap ˚! :Ag "\b<cword>\b" <CR>
 
 " Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
 nmap <Esc>n :cnext<CR>
 nmap <Esc>p :cprevious<CR>
-nmap <D-˜> :cnext<CR>
+nmap <D-~> :cnext<CR>
 nmap <D-π> :cprevious<CR>
 nmap <D-ç> :cclose<CR>
+
+" Alt-W to delete a buffer and remove it from the list but keep the window
+" (courtesy bufkill.vim)
+nmap <Esc>w :BD<CR>
+nmap ∑ :BD<CR>
 
 " Show line numbers in the quickfix window
 autocmd FileType qf set number
@@ -176,6 +183,16 @@ nnoremap <C-w>l :call KeepCurrentLine('l')<CR>
 cno $c e <C-\>eCurrentFileDir()<CR>
 function! CurrentFileDir()
    return "e " . expand("%:p:h") . "/"
+endfunction
+
+cno $n Rename <C-\>eRenameCurrentFileAtDir()<CR>
+function! RenameCurrentFileAtDir()
+   return "Rename " . expand("%:p:h") . "/"
+endfunction
+
+cno $s save <C-\>eSaveCurrentFileAtDir()<CR>
+function! SaveCurrentFileAtDir()
+   return "saveas " . expand("%:p:h") . "/"
 endfunction
 
 " Section: Vim options {{{1
