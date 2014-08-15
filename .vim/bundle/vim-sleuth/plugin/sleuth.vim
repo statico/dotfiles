@@ -13,6 +13,7 @@ function! s:guess(lines) abort
   let heuristics = {'spaces': 0, 'hard': 0, 'soft': 0}
   let ccomment = 0
   let podcomment = 0
+  let triplequote = 0
 
   for line in a:lines
 
@@ -38,6 +39,25 @@ function! s:guess(lines) abort
         let podcomment = 0
       endif
       continue
+    endif
+
+    if line =~# '^=\w'
+      let podcomment = 1
+    endif
+    if podcomment
+      if line =~# '^=\%(end\|cut\)\>'
+        let podcomment = 0
+      endif
+      continue
+    endif
+
+    if triplequote
+      if line =~# '^[^"]*"""[^"]*$'
+        let triplequote = 0
+      endif
+      continue
+    elseif line =~# '^[^"]*"""[^"]*$'
+      let triplequote = 1
     endif
 
     let softtab = repeat(' ', 8)
@@ -116,11 +136,12 @@ function! s:detect() abort
   let dir = expand('%:p:h')
   while isdirectory(dir) && dir !=# fnamemodify(dir, ':h')
     for pattern in patterns
-      for neighbor in split(glob(dir.'/'.pattern), "\n")
-        if neighbor !=# expand('%:p')
-          call extend(options, s:guess(readfile(neighbor, '', 1024)), 'keep')
+      for neighbor in split(glob(dir.'/'.pattern), "\n")[0:7]
+        if neighbor !=# expand('%:p') && filereadable(neighbor)
+          call extend(options, s:guess(readfile(neighbor, '', 256)), 'keep')
         endif
         if s:apply_if_ready(options)
+          let b:sleuth_culprit = neighbor
           return
         endif
       endfor

@@ -14,35 +14,30 @@ if exists('g:loaded_syntastic_html_jshint_checker')
 endif
 let g:loaded_syntastic_html_jshint_checker = 1
 
-if !exists('g:syntastic_jshint_exec')
-    let g:syntastic_jshint_exec = 'jshint'
-endif
-
-if !exists('g:syntastic_html_jshint_conf')
-    let g:syntastic_html_jshint_conf = ''
-endif
-
 let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_html_jshint_IsAvailable() dict
-    let exe = expand(g:syntastic_jshint_exec)
-    return executable(exe) &&
-        \ syntastic#util#versionIsAtLeast(syntastic#util#getVersion(exe . ' --version'), [2,4])
+    call syntastic#log#deprecationWarn('jshint_exec', 'html_jshint_exec')
+    return executable(self.getExec()) &&
+        \ syntastic#util#versionIsAtLeast(syntastic#util#getVersion(self.getExecEscaped() . ' --version'), [2,4])
 endfunction
 
 function! SyntaxCheckers_html_jshint_GetLocList() dict
-    let makeprg = self.makeprgBuild({
-        \ 'exe': expand(g:syntastic_jshint_exec),
-        \ 'post_args': '--verbose --extract always' .
-        \       (!empty(g:syntastic_html_jshint_conf) ? ' --config ' . g:syntastic_html_jshint_conf : '') })
+    call syntastic#log#deprecationWarn('html_jshint_conf', 'html_jshint_args',
+        \ "'--config ' . syntastic#util#shexpand(OLD_VAR)")
+
+    let makeprg = self.makeprgBuild({ 'args_after': '--verbose --extract always' })
 
     let errorformat = '%A%f: line %l\, col %v\, %m \(%t%*\d\)'
+
+    call self.setWantSort(1)
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'bufnr': bufnr('')} })
+        \ 'defaults': {'bufnr': bufnr('')},
+        \ 'returns': [0, 2] })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

@@ -48,26 +48,11 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! SyntaxCheckers_html_validator_Preprocess(errors)
-    let out = []
-    for e in a:errors
-        let parts = matchlist(e, '\v^"([^"]+)"(.+)')
-        if len(parts) >= 3
-            " URL decode, except leave alone any "+"
-            let parts[1] = substitute(parts[1], '\m%\(\x\x\)', '\=nr2char("0x".submatch(1))', 'g')
-            let parts[1] = substitute(parts[1], '\m\\"', '"', 'g')
-            let parts[1] = substitute(parts[1], '\m\\\\', '\\', 'g')
-            call add(out, '"' . parts[1] . '"' . parts[2])
-        endif
-    endfor
-    return out
-endfunction
-
 function! SyntaxCheckers_html_validator_GetLocList() dict
     let fname = syntastic#util#shexpand('%')
-    let makeprg = self.getExec() . ' -s --compressed -F out=gnu -F asciiquotes=yes' .
-        \ (!empty(g:syntastic_html_validator_parser) ? ' -F parser=' . g:syntastic_html_validator_parser : '') .
-        \ (!empty(g:syntastic_html_validator_nsfilter) ? ' -F nsfilter=' . g:syntastic_html_validator_nsfilter : '') .
+    let makeprg = self.getExecEscaped() . ' -s --compressed -F out=gnu -F asciiquotes=yes' .
+        \ (g:syntastic_html_validator_parser != '' ? ' -F parser=' . g:syntastic_html_validator_parser : '') .
+        \ (g:syntastic_html_validator_nsfilter != '' ? ' -F nsfilter=' . g:syntastic_html_validator_nsfilter : '') .
         \ ' -F doc=@' . fname . '\;type=text/html\;filename=' . fname . ' ' . g:syntastic_html_validator_api
 
     let errorformat =
@@ -87,7 +72,7 @@ function! SyntaxCheckers_html_validator_GetLocList() dict
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'preprocess': 'SyntaxCheckers_html_validator_Preprocess',
+        \ 'preprocess': 'validator',
         \ 'returns': [0] })
 endfunction
 

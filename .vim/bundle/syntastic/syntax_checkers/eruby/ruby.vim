@@ -15,27 +15,21 @@ if exists("g:loaded_syntastic_eruby_ruby_checker")
 endif
 let g:loaded_syntastic_eruby_ruby_checker = 1
 
-if !exists("g:syntastic_ruby_exec")
-    let g:syntastic_ruby_exec = "ruby"
-endif
-
 let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_eruby_ruby_IsAvailable() dict
-    return executable(expand(g:syntastic_ruby_exec))
+    if !exists('g:syntastic_eruby_ruby_exec') && exists('g:syntastic_ruby_exec')
+        let g:syntastic_eruby_ruby_exec = g:syntastic_ruby_exec
+    endif
+    return executable(self.getExec())
 endfunction
 
 function! SyntaxCheckers_eruby_ruby_GetLocList() dict
-    let exe = expand(g:syntastic_ruby_exec)
-    if !syntastic#util#isRunningWindows()
-        let exe = 'RUBYOPT= ' . exe
-    endif
-
     let fname = "'" . escape(expand('%'), "\\'") . "'"
 
     " TODO: encodings became useful in ruby 1.9 :)
-    if syntastic#util#versionIsAtLeast(syntastic#util#getVersion('ruby --version'), [1, 9])
+    if syntastic#util#versionIsAtLeast(syntastic#util#getVersion(self.getExecEscaped(). ' --version'), [1, 9])
         let enc = &fileencoding != '' ? &fileencoding : &encoding
         let encoding_spec = ', :encoding => "' . (enc ==? 'utf-8' ? 'UTF-8' : 'BINARY') . '"'
     else
@@ -44,11 +38,11 @@ function! SyntaxCheckers_eruby_ruby_GetLocList() dict
 
     "gsub fixes issue #7, rails has it's own eruby syntax
     let makeprg =
-        \ exe . ' -rerb -e ' .
+        \ self.getExecEscaped() . ' -rerb -e ' .
         \ syntastic#util#shescape('puts ERB.new(File.read(' .
         \     fname . encoding_spec .
         \     ').gsub(''<%='',''<%''), nil, ''-'').src') .
-        \ ' | ' . exe . ' -c'
+        \ ' | ' . self.getExecEscaped() . ' -c'
 
     let errorformat =
         \ '%-GSyntax OK,'.
@@ -57,9 +51,12 @@ function! SyntaxCheckers_eruby_ruby_GetLocList() dict
         \ '%Z%p^,'.
         \ '%-C%.%#'
 
+    let env = syntastic#util#isRunningWindows() ? {} : { 'RUBYOPT': '' }
+
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
+        \ 'env': env,
         \ 'defaults': { 'bufnr': bufnr(""), 'vcol': 1 } })
 endfunction
 

@@ -8,9 +8,8 @@ private directories.
 
 Install to `~/.vim/autoload/pathogen.vim`.  Or copy and paste:
 
-    mkdir -p ~/.vim/autoload ~/.vim/bundle; \
-    curl -Sso ~/.vim/autoload/pathogen.vim \
-        https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+    mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+    curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 If you're using Windows, change all occurrences of `~/.vim` to `~\vimfiles`.
 
@@ -31,7 +30,7 @@ Now any plugins you wish to install can be extracted to a subdirectory
 under `~/.vim/bundle`, and they will be added to the `'runtimepath'`.
 Observe:
 
-    cd ~/.vim/bundle
+    cd ~/.vim/bundle && \
     git clone git://github.com/tpope/vim-sensible.git
 
 Now [sensible.vim](https://github.com/tpope/vim-sensible) is installed.
@@ -102,6 +101,14 @@ If you really must use one:
     :e name.vba
     :!mkdir ~/.vim/bundle/name
     :UseVimball ~/.vim/bundle/name
+
+> Why don't my plugins load when I use Vim sessions?
+
+Vim sessions default to capturing all global options, which includes the
+`'runtimepath'` that pathogen.vim manipulates.  This can cause other problems
+too, so I recommend turning that behavior off:
+
+    set sessionoptions-=options
 
 ## Contributing
 

@@ -26,7 +26,7 @@ set cpo&vim
 function! SyntaxCheckers_css_prettycss_GetHighlightRegex(item)
     let term = matchstr(a:item["text"], '\m (\zs[^)]\+\ze)$')
     if term != ''
-        let term = '\V' . term
+        let term = '\V' . escape(term, '\')
     endif
     return term
 endfunction
@@ -43,12 +43,13 @@ function! SyntaxCheckers_css_prettycss_GetLocList() dict
     let loclist = SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'bufnr': bufnr("")},
-        \ 'postprocess': ['sort'] })
+        \ 'defaults': {'bufnr': bufnr("")} })
 
     for e in loclist
         let e["text"] .= ')'
     endfor
+
+    call self.setWantSort(1)
 
     return loclist
 endfunction

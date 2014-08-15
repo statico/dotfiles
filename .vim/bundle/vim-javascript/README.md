@@ -1,20 +1,30 @@
-# vim-javascript
+# vim-javascript v0.9.0
 
 JavaScript bundle for vim, this bundle provides syntax and indent plugins.
 
-> Indentation of javascript in vim is terrible, and this is the very end of it.
+## A Quick Note on Regexes
 
-## Features
+Vim 7.4 was released recently, and unfortunately broke how this plugin
+handles regexes. There was no real easy way for us to fix this unless we
+completely rewrote how regexes work.
 
-1. very correct indentation for javascript
-2. support javascript indentation in html (provided by [lepture](https://github.com/lepture))
+Good News: There was a recent update to Vim 7.4 that fixes this issue.
+
+Make sure you are at least using Vim 7.4, with patches 1-7.
+
+If you are stuck on an older version of Vim 7.4 with no way to update,
+then simply perform the following commands to fix your current buffer:
+
+```
+:set regexpengine=1
+:syntax enable
+```
 
 ## Installation
 
-- Install with [Vundle](https://github.com/gmarik/vundle)
+### Install with [Vundle](https://github.com/gmarik/vundle)
 
-If you are not using vundle, you really should have a try.
-Edit your vimrc:
+Add to vimrc:
 
     Bundle "pangloss/vim-javascript"
 
@@ -23,35 +33,49 @@ And install it:
     :so ~/.vimrc
     :BundleInstall
 
+### Install with [pathogen](https://github.com/tpope/vim-pathogen)
 
-- Install with [pathogen](https://github.com/tpope/vim-pathogen)
-
-If you prefer tpope's pathogen, that's ok. Just clone it:
-
-    cd ~/.vim/bundle
-    git clone https://github.com/pangloss/vim-javascript.git
+      cd ~/.vim/bundle
+      git clone https://github.com/pangloss/vim-javascript.git
 
 ## Configuration
 
-[html indentation](http://www.vim.org/scripts/script.php?script_id=2075)
-provided by Andy Wokula is faster. But you need to make some configuration.
+The following variables control certain syntax highlighting features. You can
+add them to your `.vimrc` to enable/disable their features.
 
-Suggested configuration:
+#### javascript_enable_domhtmlcss
 
-```vim
-let g:html_indent_inctags = "html,body,head,tbody"
-let g:html_indent_script1 = "inc"
-let g:html_indent_style1 = "inc"
-```
+Enables HTML/CSS syntax highlighting in your JavaScript file.
 
-Head over to [vim.org](http://www.vim.org/scripts/script.php?script_id=2075)
-for more information.
+Default Value: 0
+
+#### b:javascript_fold
+
+Enables JavaScript code folding.
+
+Default Value: 1
+
+#### g:javascript_conceal
+
+Enables concealing characters. For example, `function` is replaced with `ƒ`
+
+Default Value: 0
+
+#### javascript_ignore_javaScriptdoc
+
+Disables JSDoc syntax highlighting
+
+Default Value: 0
 
 ## Contributing
 
-If you'd like to be added as a contributor the price of admission is 1 pull request.
-Please follow the general code style guides (read the code) and in your pull request explain
-the reason for the proposed change and how it is valuable.
+This project uses the [git
+flow](http://nvie.com/posts/a-successful-git-branching-model/) model for
+development. There's [a handy git module for git
+flow](//github.com/nvie/gitflow). If you'd like to be added as a contributor,
+the price of admission is 1 pull request. Please follow the general code style
+guides (read the code) and in your pull request explain the reason for the
+proposed change and how it is valuable.
 
 ## Bug report
 

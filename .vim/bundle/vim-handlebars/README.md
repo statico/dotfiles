@@ -1,6 +1,11 @@
 Vim plugin for Handlebars
 =========================
 
+Deprecation
+-----------
+
+**Important**: this plugin is deprecated, you should use [mustache/vim-mode](https://github.com/mustache/vim-mode) instead!
+
 About
 -----
 
@@ -23,7 +28,6 @@ Install
     cd vim-handlebars
     cp -R ftdetect/* ~/.vim/ftdetect/
     cp -R ftplugin/* ~/.vim/ftplugin/
-    cp -R indent/* ~/.vim/indent/
     cp -R syntax/* ~/.vim/syntax/
     vim example.handlebars
 

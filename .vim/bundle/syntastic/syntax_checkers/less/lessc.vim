@@ -23,7 +23,7 @@ endif
 let g:loaded_syntastic_less_lessc_checker = 1
 
 if !exists("g:syntastic_less_options")
-    let g:syntastic_less_options = "--no-color"
+    let g:syntastic_less_options = ""
 endif
 
 if !exists("g:syntastic_less_use_less_lint")
@@ -33,21 +33,22 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-if g:syntastic_less_use_less_lint
-    let s:check_file = 'node ' . expand('<sfile>:p:h') . syntastic#util#Slash() . 'less-lint.js'
-else
-    let s:check_file = 'lessc'
-endif
+let s:node_file = 'node ' . syntastic#util#shescape(expand('<sfile>:p:h') . syntastic#util#Slash() . 'less-lint.js')
 
 function! SyntaxCheckers_less_lessc_IsAvailable() dict
-    return g:syntastic_less_use_less_lint ? executable('node') : executable('lessc')
+    return g:syntastic_less_use_less_lint ? executable('node') : executable(self.getExec())
 endfunction
 
 function! SyntaxCheckers_less_lessc_GetLocList() dict
+    if !exists('s:check_file')
+        let s:check_file = g:syntastic_less_use_less_lint ? s:node_file : self.getExecEscaped()
+    endif
+
     let makeprg = self.makeprgBuild({
         \ 'exe': s:check_file,
         \ 'args': g:syntastic_less_options,
-        \ 'tail': syntastic#util#DevNull() })
+        \ 'args_after': '--no-color',
+        \ 'tail': '> ' . syntastic#util#DevNull() })
 
     let errorformat =
         \ '%m in %f on line %l\, column %c:,' .

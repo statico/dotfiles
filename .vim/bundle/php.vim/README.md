@@ -1,52 +1,49 @@
 php.vim
 =======
 
-This project is a fork of [php.vim--Garvin][garvin] which in turn is an update
-of the [php.vim][php-vim] script which in turn is an updated version of the
-php.vim syntax file distributed with Vim. Whew!
+This project is a fork of [php.vim--Garvin][garvin] which in turn is an update of the [php.vim][php-vim] script which in turn is an updated version of the php.vim syntax file distributed with Vim. Whew!
 
+:point_right: Accepting [pull requests](https://github.com/StanAngeloff/php.vim/issues/15) for [PHP 5.6 new features](http://docs.php.net/manual/en/migration56.new-features.php). :point_left:
 
   [garvin]:  https://github.com/vim-scripts/php.vim--Garvin
   [php-vim]: http://www.vim.org/scripts/script.php?script_id=2874
 
-Improvements
-------------
+Configuration
+-------------
 
-- Spell checking was enabled in strings and comments (both single and
-  multi-line).
-- Spell checking was enabled in heredocs, e.g., `<<<EOD`.
-- The PHP built-in and extension-provided functions list was updated for
-  PHP 5.3.
-- Compatibility with [html5.vim][html5].
-- Support for not-so-common extensions was turned off, e.g., `mssql_*`.
-- Basic support for PHP 5.4 syntax was added.
+- `g:php_syntax_extensions_enabled`, `g:php_syntax_extensions_disabled`  
+  `b:php_syntax_extensions_enabled`, `b:php_syntax_extensions_disabled`
 
+  A list of extension names (lowercase) for which built-in functions, constants, classes and interfaces is enabled / disabled.
 
-  [html5]: https://github.com/othree/html5.vim
+### Overriding Highlighting
 
-Customising
------------
+Syntax highlighting can be configured to distinguish groups by overriding the defaults. For example, all code in PHP comments is highlighted as `phpComment`, however there are pieces you can tweak, e.g., how `@tags` appear.
+There are [many groups you can choose from](https://github.com/StanAngeloff/php.vim/blob/48fc7311fa07c2b83888e7a31fae03118bae720b/syntax/php.vim#L754). Here is how you can override PHP `@tags` and `$parameters` in comments to appear in a different group:
 
-A script `update_syntax.php` is provided to re-generate the syntax file.
-A single variable `$allowed_extensions` can be customised to
-[turn on/off][defaults] certain extensions.
+```vim
+" Put at the very end of your .vimrc file.
 
-When re-generating the syntax file, you must have allowed extensions installed.
+function! PhpSyntaxOverride()
+  hi! def link phpDocTags  phpDefine
+  hi! def link phpDocParam phpType
+endfunction
 
+augroup phpSyntaxOverride
+  autocmd!
+  autocmd FileType php call PhpSyntaxOverride()
+augroup END
+```
 
-  [defaults]: https://github.com/StanAngeloff/php.vim/blob/master/update_syntax.php#L29-L101
+<center>![Overriding Highlighting](http://i.imgur.com/eAlB1eb.png)</center>
 
-### Original README
+Updating
+--------
 
-> This is an updated version of the php.vim syntax file distributed with VIM.
-> The list of PHP constants, functions, and classes was updated to be current
-> with PHP 5.3. Many new classes were added in the 5.2 branch and the
-> distributed version only covers up to 5.1.4. In addition I simplified the
-> file, removing several sections that are not often used (at least by me) such
-> as automatic folding of all control structures and ASP tags support. I also
-> removed several switches designed for b/c with VIM 5.X and 6.X. As an
-> addition I have included the PHP file I used to generate the constant,
-> function, class list. It uses reflection to mine out these items from your
-> PHP installation and generate part of the php.vim script. Before running open
-> up the file and adjust the output file location and the list of extensions to
-> generate syntax for. Then run "php php_vimgen.php" from your shell.
+The project comes with a Dockerfile which can be used to rebuild the syntax file.
+
+```bash
+docker build -t stanangeloff/php.vim .
+docker run --rm -i -v "$PWD":/var/php -t stanangeloff/php.vim > /tmp/php.vim && cat /tmp/php.vim | sed 's/\x0D$//' > syntax/php.vim
+docker rmi stanangeloff/php.vim
+```

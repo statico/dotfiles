@@ -14,44 +14,39 @@ if exists('g:loaded_syntastic_javascript_jshint_checker')
 endif
 let g:loaded_syntastic_javascript_jshint_checker = 1
 
-if !exists('g:syntastic_jshint_exec')
-    let g:syntastic_jshint_exec = 'jshint'
-endif
-
-if !exists('g:syntastic_javascript_jshint_conf')
-    let g:syntastic_javascript_jshint_conf = ''
-endif
-
 let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_javascript_jshint_IsAvailable() dict
-    return executable(expand(g:syntastic_jshint_exec))
+    call syntastic#log#deprecationWarn('jshint_exec', 'javascript_jshint_exec')
+    if !executable(self.getExec())
+        return 0
+    endif
+    let s:jshint_version = syntastic#util#getVersion(self.getExecEscaped() . ' --version')
+    return syntastic#util#versionIsAtLeast(s:jshint_version, [1])
 endfunction
 
 function! SyntaxCheckers_javascript_jshint_GetLocList() dict
-    let jshint_new = s:JshintNew()
-    let makeprg = self.makeprgBuild({
-        \ 'exe': expand(g:syntastic_jshint_exec),
-        \ 'post_args': (jshint_new ? ' --verbose ' : '') . s:Args() })
+    call syntastic#log#deprecationWarn('javascript_jshint_conf', 'javascript_jshint_args',
+        \ "'--config ' . syntastic#util#shexpand(OLD_VAR)")
 
-    let errorformat = jshint_new ?
+    if !exists('s:jshint_new')
+        let s:jshint_new = syntastic#util#versionIsAtLeast(s:jshint_version, [1, 1])
+    endif
+
+    let makeprg = self.makeprgBuild({ 'args_after': (s:jshint_new ? '--verbose ' : '') })
+
+    let errorformat = s:jshint_new ?
         \ '%A%f: line %l\, col %v\, %m \(%t%*\d\)' :
         \ '%E%f: line %l\, col %v\, %m'
+
+    call self.setWantSort(1)
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'bufnr': bufnr('')} })
-endfunction
-
-function! s:JshintNew()
-    return syntastic#util#versionIsAtLeast(syntastic#util#getVersion(expand(g:syntastic_jshint_exec) . ' --version'), [1, 1])
-endfunction
-
-function! s:Args()
-    " node-jshint uses .jshintrc as config unless --config arg is present
-    return !empty(g:syntastic_javascript_jshint_conf) ? ' --config ' . g:syntastic_javascript_jshint_conf : ''
+        \ 'defaults': {'bufnr': bufnr('')},
+        \ 'returns': [0, 2] })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

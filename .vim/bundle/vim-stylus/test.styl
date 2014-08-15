@@ -1,4 +1,5 @@
 @import "nib"
+@require "../../lib/*"
 
 // comment test
 
@@ -15,6 +16,7 @@ border-radius()
   -webkit-border-radius arguments // comment test
   -moz-border-radius arguments //comment test
   border-radius arguments
+  pointer-events arguments
 
 #myid {
   -moz-transform: scale(1.2);
@@ -38,6 +40,7 @@ body a:hover
   background rgba(255,255,255,0.5)
 
 #container
+  user-select none
   border-radius 5px
   color #000
   float left

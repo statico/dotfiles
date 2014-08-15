@@ -1,4 +1,4 @@
-" Maintainer:	Lars H. Nielsen (dengmao@gmail.com)
+" Maintainer:	Lars Nielsen (dengmao@gmail.com)
 " Last Change:	January 22 2007
 
 set background=dark

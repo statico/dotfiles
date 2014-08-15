@@ -7,15 +7,22 @@
   <body>
     <div id="common">
       <h1>Mustache/Handlebars Showdown</h1>
+      <script id="template_name" type="text/x-handlebars-template">
+        {{> vim-handlebars }} supports {{hello}}, and {{{ unescaped }}}
+        Helpers
+        {{#with story}}<p>{{{body}}}</p>{{/with}}
+        {{#each comments}}<p>{{{body}}}</p>{{/each}}
+        {{! TODO }}
+      </script>
 
       Basic mustache {{hello}}
       {{ hello}}, {{hello }} and {{ hello }} are OK
 
       <de>{{d d d}}
 
-      {{Everything will be hilighted here}}
+      {{Everything will be highlighted here}}
 
-      Mustaches hilighted in
+      Mustaches not yet highlighted in
       <span class="color:{{awesome_color}};font-size:1.2em">attribute value</span>
 
       {{#repo}}

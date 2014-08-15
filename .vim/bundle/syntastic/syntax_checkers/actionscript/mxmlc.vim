@@ -14,10 +14,6 @@ if exists('g:loaded_syntastic_actionscript_mxmlc_checker')
 endif
 let g:loaded_syntastic_actionscript_mxmlc_checker = 1
 
-if !exists('g:syntastic_actionscript_mxmlc_conf')
-    let g:syntastic_actionscript_mxmlc_conf = ''
-endif
-
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -41,14 +37,14 @@ function! SyntaxCheckers_actionscript_mxmlc_GetHighlightRegex(item)
 
     endif
 
-    return strlen(term) ? '\V\<' . term . '\>' : ''
+    return term != '' ? '\V\<' . escape(term, '\') . '\>' : ''
 endfunction
 
 function! SyntaxCheckers_actionscript_mxmlc_GetLocList() dict
-    let makeprg = self.makeprgBuild({
-        \ 'args': '-output=' . syntastic#util#DevNull() .
-        \   (!empty(g:syntastic_actionscript_mxmlc_conf) ?
-        \   ' -load-config+=' . g:syntastic_actionscript_mxmlc_conf : '') })
+    call syntastic#log#deprecationWarn('actionscript_mxmlc_conf', 'actionscript_mxmlc_args',
+        \ "'-load-config+=' . syntastic#util#shexpand(OLD_VAR)")
+
+    let makeprg = self.makeprgBuild({ 'args_after': '-output=' . syntastic#util#DevNull() })
 
     let errorformat =
         \ '%f(%l): col: %c %trror: %m,' .

@@ -18,7 +18,7 @@ git clone https://github.com/ggreer/the_silver_searcher ag && cd ag && ./build.s
 * Then, if you're using [pathogen](https://github.com/tpope/vim-pathogen):
 
 ```sh
-cd ~/.vim/bundle && git clone https://github.com/rking/ag.vim ag && vim +HelpTags
+cd ~/.vim/bundle && git clone https://github.com/rking/ag.vim ag && vim +Helptags
 ```
 
 * Or, if you're using [Vundle](https://github.com/gmarik/vundle):
@@ -27,7 +27,7 @@ cd ~/.vim/bundle && git clone https://github.com/rking/ag.vim ag && vim +HelpTag
 echo "Bundle 'rking/ag.vim'" >> ~/.vimrc && vim +BundleInstall
 ```
 
-### Configuation
+### Configuration
 
 You can specify a custom ag name and path in your .vimrc like so:
 
@@ -49,12 +49,13 @@ Just like where you use :grep, :grepadd, :lgrep, and :lgrepadd, you can use `:Ag
 
 Some characters have special meaning, and need to be escaped your search pattern. For instance, '#'. You have to escape it like this `:Ag '\\\#define foo'` to search for `#define foo`. (From [blueyed in issue #5](https://github.com/mileszs/ack.vim/issues/5).)
 
-Sometimes `git grep` is even faster, though in my experience it's not noticably so.
+Sometimes `git grep` is even faster, though in my experience it's not noticeably so.
 
 ### Keyboard Shortcuts ###
 
 In the quickfix window, you can use:
 
+    e    to open file and close the quickfix window
     o    to open (same as enter)
     go   to preview file (open but maintain focus on ag.vim results)
     t    to open in new tab

@@ -14,17 +14,15 @@ if exists("g:loaded_syntastic_javascript_jsl_checker")
 endif
 let g:loaded_syntastic_javascript_jsl_checker = 1
 
-if !exists("g:syntastic_javascript_jsl_conf")
-    let g:syntastic_javascript_jsl_conf = ""
-endif
-
 let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_javascript_jsl_GetLocList() dict
+    call syntastic#log#deprecationWarn('javascript_jsl_conf', 'javascript_jsl_args',
+        \ "'-conf ' . syntastic#util#shexpand(OLD_VAR)")
+
     let makeprg = self.makeprgBuild({
-        \ 'args': (!empty(g:syntastic_javascript_jsl_conf) ? "-conf " . g:syntastic_javascript_jsl_conf : "") .
-        \       " -nologo -nofilelisting -nosummary -nocontext -process" })
+        \ 'args_after': '-nologo -nofilelisting -nosummary -nocontext -process' })
 
     let errorformat =
         \ '%W%f(%l): lint warning: %m,'.

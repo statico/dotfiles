@@ -7,3 +7,4 @@
 *.fuse_hidden*
 *.pxm
 *.DS_Store
+/video/*

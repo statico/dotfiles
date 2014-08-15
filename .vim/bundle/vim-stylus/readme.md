@@ -9,7 +9,11 @@ CSS3/HTML5 bundled in and adapted from [css3.vim](http://www.vim.org/scripts/scr
 Unzip into your `.vim` directory
 
 ### Pathogen install
-Clone this repo into your `.vim/bundle` directory
+
+Clone this repo into your `.vim/bundle` directory. For example:
+
+    cd ~/.vim/bundle
+    git clone git://github.com/wavded/vim-stylus.git
 
 ## Creds
 This is based on the excellent work from Tim Pope on sass.vim.

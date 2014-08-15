@@ -15,7 +15,7 @@ set cpo&vim
 function! SyntaxCheckers_typescript_tsc_GetLocList() dict
     let makeprg = self.makeprgBuild({
         \ 'args': '--module commonjs',
-        \ 'post_args': '--out ' . syntastic#util#DevNull() })
+        \ 'args_after': '--out ' . syntastic#util#DevNull() })
 
     let errorformat =
         \ '%E%f %#(%l\,%c): error %m,' .
@@ -23,11 +23,14 @@ function! SyntaxCheckers_typescript_tsc_GetLocList() dict
         \ '%Eerror %m,' .
         \ '%C%\s%\+%m'
 
-    return SyntasticMake({
+    let loclist = SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'bufnr': bufnr("")},
-        \ 'postprocess': ['sort'] })
+        \ 'defaults': {'bufnr': bufnr("")} })
+
+    call self.setWantSort(1)
+
+    return loclist
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({

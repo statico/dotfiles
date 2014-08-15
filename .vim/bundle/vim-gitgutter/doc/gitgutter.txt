@@ -67,6 +67,17 @@ Commands for turning Git Gutter on and off:
   :GitGutterAll                                                 *:GitGutterAll*
       Update signs across all buffers.
 
+Commands for turning signs on and off (defaults to on):
+
+  :GitGutterSignsEnable                                 *:GitGutterSignsEnable*
+      Explicitly turn line signs on.
+
+  :GitGutterSignsDisable                               *:GitGutterSignsDisable*
+      Explicitly turn line signs off.
+
+  :GitGutterSignsToggle                                 *:GitGutterSignsToggle*
+      Explicitly turn line signs on if it was off and vice versa.
+
 Commands for turning line highlighting on and off (defaults to off):
 
   :GitGutterLineHighlightsEnable               *:GitGutterLineHighlightsEnable*
@@ -86,6 +97,17 @@ Commands for jumping between marked hunks:
   :GitGutterPrevHunk                                       *:GitGutterPrevHunk*
       Jump to the previous marked hunk.  Takes a count.
 
+Commands for staging or reverting individual hunks:
+
+  :GitGutterStageHunk                                     *:GitGutterStageHunk*
+      Stage the hunk the cursor is in.
+
+  :GitGutterRevertHunk                                   *:GitGutterRevertHunk*
+      Revert the hunk the cursor is in.
+
+  :GitGutterPreviewHunk                                 *:GitGutterPreviewHunk*
+      Preview the hunk the cursor is in.
+
 ===============================================================================
 5. CUSTOMISATION                                       *GitGutterCustomisation*
 
@@ -95,6 +117,7 @@ You can customise:
 - The signs' colours and symbols
 - Line highlights
 - Extra arguments for git-diff
+- Key mappings
 - Whether or not to escape grep (defaults to no)
 - Whether or not vim-gitgutter is on initially (defaults to on)
 - Whether or not signs are shown (defaults to yes)
@@ -156,13 +179,6 @@ To customise the symbols, add the following to your |vimrc|:
   let g:gitgutter_sign_modified_removed = 'ww'
 <
 
-SIGNS
-
-To never show signs, use this:
->
-  let git:gitgutter_signs = 0
-<
-
 LINE HIGHLIGHTS
 
 Similarly to the signs' colours, set up the following highlight groups in your
@@ -181,6 +197,25 @@ To pass extra arguments to git-diff, add this to your |vimrc|:
   let g:gitgutter_diff_args = '-w'
 <
 
+KEY MAPPINGS
+
+To disable all key maps:
+>
+  let g:gitgutter_map_keys = 0
+<
+
+To change the hunk-jumping maps:
+>
+  nmap [h <Plug>GitGutterPrevHunk
+  nmap ]h <Plug>GitGutterNextHunk
+<
+
+To change the hunk-staging/reverting maps:
+>
+  nmap <Leader>hs <Plug>GitGutterStageHunk
+  nmap <Leader>hr <Plug>GitGutterRevertHunk
+<
+
 TO ESCAPE GREP
 
 To avoid any alias you have for grep, use this:
@@ -194,6 +229,16 @@ Add to your |vimrc|
 >
   let g:gitgutter_enabled = 0
 <
+
+TO TURN OFF SIGNS BY DEFAULT
+
+Add to your |vimrc|
+>
+  let g:gitgutter_signs = 0
+<
+
+Note that the sign column will still be present if you have line highlighting
+switched on.
 
 TO TURN ON LINE HIGHLIGHTING BY DEFAULT
 
@@ -225,12 +270,7 @@ a. Why are the colours in the sign column weird?
   Your colorscheme is configuring the |hl-SignColumn| highlight group weirdly.
   Please see |GitGutterCustomisation| on customising the sign column.
 
-b. Why is no sign shown if I delete the first line(s) in a file?
-
-  vim-gitgutter shows removed lines with a sign on the line above.  In this
-  case there isn't a line above so vim-gitgutter can't show the sign.
-
-c. What happens if I also use another plugin which uses signs (e.g. Syntastic)?
+b. What happens if I also use another plugin which uses signs (e.g. Syntastic)?
 
   Vim only allows one sign per line. Before adding a sign to a line,
   vim-gitgutter checks whether a sign has already been added by somebody else.
