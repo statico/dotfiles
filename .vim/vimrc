@@ -14,7 +14,7 @@
 nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
-nmap \c :CoffeeCompile watch<CR>
+nmap \c :CoffeeWatch<CR>
 nmap \d :%!perltidy<CR>
 nmap \e :NERDTreeToggle<CR>
 nmap \f mt:Goyo 100<CR>'tzz
@@ -372,6 +372,10 @@ let g:gitgutter_sign_added = '∙'
 let g:gitgutter_sign_modified = '∙'
 let g:gitgutter_sign_removed = '∙'
 let g:gitgutter_sign_modified_removed = '∙'
+
+" supertab
+let g:SuperTabLongestEnhanced=1
+let g:SuperTabLongestHighlight=1
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
