@@ -81,7 +81,7 @@ map <C-l> <C-W>l
 " Search for the word under the cursor in the current directory
 nmap <M-k> :Ag! "\b<cword>\b" <CR>
 nmap <Esc>k :Ag! "\b<cword>\b" <CR>
-nmap ˚! :Ag "\b<cword>\b" <CR>
+nmap ˚ :Ag! "\b<cword>\b" <CR>
 
 " Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
 nmap <Esc>n :cnext<CR>

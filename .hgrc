@@ -2,6 +2,8 @@
 username = Ian Langworth <ian@artillery.com>
 
 [extensions]
+hgext.bookmarks =
+hggit =
 color =
 pager =
 
