@@ -36,6 +36,7 @@ fi
 # don't work.
 repos=(
 
+  https://github.com/Lokaltog/vim-easymotion.git
   https://github.com/Lokaltog/vim-powerline.git
   https://github.com/StanAngeloff/php.vim.git
   https://github.com/airblade/vim-gitgutter.git
