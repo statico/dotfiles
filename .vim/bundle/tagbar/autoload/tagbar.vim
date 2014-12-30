@@ -3618,7 +3618,7 @@ function! s:ExecuteCtags(ctags_cmd) abort
     if has('unix')
         " Reset shell in case it is set to something incompatible like fish
         let shell_save = &shell
-        set shell=sh
+        "set shell=sh
     endif
 
     if exists('+shellslash')
