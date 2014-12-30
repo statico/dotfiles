@@ -1,0 +1,88 @@
+---
+- :name: Campfire
+  :level: 0
+  :kind: c
+- :source: "  constructor: (api_key, host) ->"
+  :parent: Campfire
+  :kind: f
+  :name: constructor
+  :line: 8
+  :level: 2
+- :source: '    @url = "https://#{host}.campfirenow.com/"'
+  :name: '@url'
+  :parent: 'Campfire.constructor'
+  :kind: o
+  :level: 4
+  :line: 9
+- :source: "  handlers: (callbacks) ->"
+  :parent: Campfire
+  :kind: f
+  :name: handlers
+  :line: 14
+  :level: 2
+- :name: resp
+  :level: 4
+  :source: "    resp ="
+  :line: 15
+  :kind: v
+- :source: "      onSuccess : (response) ->"
+  :parent: Campfire.handlers.resp
+  :kind: f
+  :name: onSuccess
+  :line: 16
+  :level: 6
+- :source: "      onFailure: (response) ->"
+  :parent: Campfire.handlers.resp
+  :kind: f
+  :name: onFailure
+  :line: 24
+  :level: 6
+- :source: "  rooms: (callbacks) ->"
+  :parent: Campfire
+  :kind: f
+  :name: rooms
+  :line: 29
+  :level: 2
+- :source: "  roomInfo: (id, callbacks) ->"
+  :parent: Campfire
+  :kind: f
+  :name: roomInfo
+  :line: 34
+  :level: 2
+- :source: "  recent: (id, since, callbacks) ->"
+  :parent: Campfire
+  :kind: f
+  :name: recent
+  :line: 40
+  :level: 2
+- :source: '    url = "room/#{id}/recent.json"'
+  :parent: Campfire.recent
+  :kind: o
+  :name: url
+  :line: 41
+  :level: 4
+
+- :name: App.Campfire
+  :level: 0
+  :source: "class App.Campfire"
+  :line: 1
+  :kind: c
+- :source: "  constructor: ->"
+  :parent: App.Campfire
+  :kind: f
+  :name: constructor
+  :line: 8
+  :level: 2
+
+
+- :name: Test
+  :level: 0
+  :source: "class Test"
+  :line: 45
+  :kind: c
+- :source: "  bump : ->"
+  :parent: Test
+  :kind: f
+  :name: bump
+  :line: 46
+  :level: 2

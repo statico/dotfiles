@@ -1,0 +1,2 @@
+class App.Campfire
+  constructor: ->

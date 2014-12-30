@@ -1,0 +1,9 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
+vendor
+testout/
+test.out
+tags
+coverage/

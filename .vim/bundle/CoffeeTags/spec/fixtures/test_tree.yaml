@@ -1,0 +1,72 @@
+---
+- :source: bump = (wat) ->
+  :parent: "window"
+  :kind: f
+  :name: bump
+  :line: 1
+  :level: 0
+- :source: "  v = 'test'"
+  :parent: 'bump'
+  :kind: o
+  :name: v
+  :line: 2
+  :level: 2
+- :name: Wat
+  :source: 'Wat ='
+  :parent: window
+  :kind: o
+  :level: 0
+  :line: 4
+- :source: "  ho : (x) ->"
+  :parent: Wat
+  :kind: f
+  :name: ho
+  :line: 5
+  :level: 2
+- :source: "    x = 'o'"
+  :level: 4
+  :kind: o
+  :line: 6
+  :name: x
+- :name: '@lolWat'
+  :level: 4
+  :line: 8
+  :source: '    @lolWat ='
+  :kind: o
+- :source: "      bump : ->"
+  :parent: 'Wat.ho.@lolWat'
+  :kind: f
+  :name: bump
+  :line: 9
+  :level: 6
+- :source: "      bump_up : ->"
+  :parent: 'Wat.ho.@lolWat'
+  :kind: f
+  :name: bump_up
+  :line: 11
+  :level: 6
+- :source: "    @BOOO__up = -> z()"
+  :parent: Wat.ho
+  :kind: f
+  :name: '@BOOO__up'
+  :line: 13
+  :level: 4
+- :source: 'Array::loop = (x) ->'
+  :line: 46
+  :kind: p
+  :parent: Array
+  :name: loop
+  :level: 0
+- :source: 'bound_func = (ok) => wat(ok)'
+  :line: 41
+  :level: 0
+  :kind: f
+  :name: 'bound_func'
+  :parent: window
+- :source: 'beam_magnum : -> deployed(true)'
+  :line: 44
+  :level: 0
+  :kind: f
+  :name: 'beam_magnum'
+  :parent: window
+

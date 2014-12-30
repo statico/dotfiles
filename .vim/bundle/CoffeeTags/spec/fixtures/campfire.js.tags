@@ -1,0 +1,14 @@
+!_TAG_FILE_FORMAT	2	/extended format/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Łukasz Korecki	/lukasz@coffeesounds.com/
+!_TAG_PROGRAM_NAME	CoffeeTags	//
+!_TAG_PROGRAM_URL	https://github.com/lukaszkorecki/CoffeeTags	/GitHub repository/
+!_TAG_PROGRAM_VERSION	0.5.0	//
+bump	spec/fixtures/campfire.coffee	/^  bump : ->$/;"	f	lineno:46	object:Test
+constructor	spec/fixtures/campfire.coffee	/^  constructor: (api_key, host) ->$/;"	f	lineno:8	object:Campfire
+handlers	spec/fixtures/campfire.coffee	/^  handlers: (callbacks) ->$/;"	f	lineno:14	object:Campfire
+onFailure	spec/fixtures/campfire.coffee	/^      onFailure: (response) ->$/;"	f	lineno:24	object:Campfire.handlers.resp
+onSuccess	spec/fixtures/campfire.coffee	/^      onSuccess : (response) ->$/;"	f	lineno:16	object:Campfire.handlers.resp
+recent	spec/fixtures/campfire.coffee	/^  recent: (id, since, callbacks) ->$/;"	f	lineno:40	object:Campfire
+roomInfo	spec/fixtures/campfire.coffee	/^  roomInfo: (id, callbacks) ->$/;"	f	lineno:34	object:Campfire
+rooms	spec/fixtures/campfire.coffee	/^  rooms: (callbacks) ->$/;"	f	lineno:29	object:Campfire

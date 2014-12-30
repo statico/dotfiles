@@ -1,0 +1,21 @@
+!_TAG_FILE_FORMAT	2	/extended format/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Łukasz Korecki	/lukasz@coffeesounds.com/
+!_TAG_PROGRAM_NAME	CoffeeTags	//
+!_TAG_PROGRAM_URL	https://github.com/lukaszkorecki/CoffeeTags	/GitHub repository/
+!_TAG_PROGRAM_VERSION	0.5.0	//
+@filter	spec/fixtures/test.coffee	/^    @filter = ->$/;"	f	line:14	language:coffee	object:Wat.ho
+@lolWat	spec/fixtures/test.coffee	/^    @lolWat =$/;"	v	line:9	language:coffee
+Wat	spec/fixtures/test.coffee	/^Wat =$/;"	v	line:4	language:coffee
+_loop	spec/fixtures/test.coffee	/^_loop = (x) ->$/;"	f	line:19	language:coffee	object:window
+beam_magnum	spec/fixtures/test.coffee	/^beam_magnum : -> deployed(true)$/;"	f	line:44	language:coffee	object:window
+bound_func	spec/fixtures/test.coffee	/^bound_func = (ok) => wat(ok)$/;"	f	line:41	language:coffee	object:window
+bump	spec/fixtures/test.coffee	/^      bump : ->$/;"	f	line:10	language:coffee	object:Wat.ho.@lolWat
+bump	spec/fixtures/test.coffee	/^bump = (wat) ->$/;"	f	line:1	language:coffee	object:window
+bump_up	spec/fixtures/test.coffee	/^      bump_up : ->$/;"	f	line:12	language:coffee	object:Wat.ho.@lolWat
+do	spec/fixtures/test.coffee	/^    do (element)$/;"	b	line:29	language:coffee
+do	spec/fixtures/test.coffee	/^  do (f) ->$/;"	b	line:36	language:coffee
+ho	spec/fixtures/test.coffee	/^  ho : (x) ->$/;"	f	line:5	language:coffee	object:Wat
+if	spec/fixtures/test.coffee	/^    if wat$/;"	b	line:24	language:coffee
+if	spec/fixtures/test.coffee	/^  if z.isSomethingRidic$/;"	b	line:21	language:coffee
+loop	spec/fixtures/test.coffee	/^Array::loop = (x) ->$/;"	p	line:46	language:coffee	object:Array

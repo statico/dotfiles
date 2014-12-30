@@ -1,0 +1,2 @@
+class @Campfire
+  constructor: ->
