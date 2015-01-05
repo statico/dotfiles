@@ -347,6 +347,9 @@ let spell_auto_type = ""
 let Tlist_Use_Right_Window = 1
 let Tlist_WinWidth = 30
 
+" tagbar
+let g:tagbar_iconchars = ['▸', '▾']
+
 " CoffeeTags
 let g:CoffeeAutoTagDisabled=1 " Disables autotaging on save (Default: 0 [false])
 
