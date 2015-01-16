@@ -485,6 +485,9 @@ if [[ "$EMACS" = "t" ]]; then
     unsetopt zle
 fi
 
+# Turn off slow git branch completion. http://stackoverflow.com/q/12175277/102704
+zstyle :completion::complete:git-checkout:argument-rest:headrefs command "git for-each-ref --format='%(refname)' refs/heads 2>/dev/null"
+
 # ZSH KEYBINDINGS {{{1
 
 # First, primarily use emacs key bindings
