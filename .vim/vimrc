@@ -254,6 +254,7 @@ set smartcase               " Lets you search for ALL CAPS
 set softtabstop=4           " Spaces 'feel' like tabs
 set suffixes+=.pyc          " Ignore these files when tab-completing
 set tabstop=4               " The One True Tab
+set thesaurus+=~/.vim/mthes10/mthesaur.txt
 set notitle                 " Don't set the title of the Vim window
 set wildmenu                " Show possible completions on command line
 set wildmode=list:longest,full " List all options and complete
