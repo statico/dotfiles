@@ -304,6 +304,14 @@ function! Rename(name, bang)
     endif
 endfunction
 
+" Tips for writing prose.
+" Adapted from http://www.drbunsen.org/writing-in-vim/
+function! WordProcessorMode()
+  set formatoptions=1an noet spell wrap linebreak tw=80
+  set complete+=s
+endfunction
+command! WP call WordProcessorMode()
+
 
 " Section: Python specifics {{{1
 "--------------------------------------------------------------------------
@@ -362,10 +370,12 @@ let g:ctrlp_map = '<Leader>t'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+let g:ctrlp_max_files=0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
 nmap ; :CtrlPBuffer<CR>
+nmap <Leader>r :CtrlPTag<CR>
 
 " Powerline
 "let g:Powerline_symbols = "unicode"
