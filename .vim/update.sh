@@ -41,6 +41,7 @@ repos=(
   https://github.com/airblade/vim-gitgutter.git
   https://github.com/altercation/vim-colors-solarized.git
   https://github.com/ap/vim-css-color.git
+  https://github.com/ctrlpvim/ctrlp.vim.git
   https://github.com/digitaltoad/vim-jade.git
   https://github.com/docunext/closetag.vim.git
   https://github.com/elzr/vim-json.git
@@ -48,7 +49,6 @@ repos=(
   https://github.com/groenewege/vim-less.git
   https://github.com/junegunn/goyo.vim.git
   https://github.com/kchmck/vim-coffee-script.git
-  https://github.com/kien/ctrlp.vim.git
   https://github.com/leafgarland/typescript-vim.git
   https://github.com/lukaszkorecki/CoffeeTags.git
   https://github.com/nono/vim-handlebars.git
