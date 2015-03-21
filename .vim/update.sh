@@ -51,7 +51,6 @@ repos=(
   https://github.com/kien/ctrlp.vim.git
   https://github.com/leafgarland/typescript-vim.git
   https://github.com/lukaszkorecki/CoffeeTags.git
-  https://github.com/majutsushi/tagbar.git
   https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
