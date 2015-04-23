@@ -497,7 +497,7 @@ bindkey -e
 bindkey -s '\eu' '^Ucd ..; ls^M'
 
 # Connect to my most recently used screen session
-bindkey -s '\ej' "^Ussh lemon -t tmux attach^M"
+bindkey -s '\ej' "^Ussh lemon^M"
 
 # Smart less-adder
 bindkey -s "\el" " 2>&1|less^M"
