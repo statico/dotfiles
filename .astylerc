@@ -1,0 +1,6 @@
+suffix=none
+style=google
+indent=spaces=2
+indent-modifiers
+pad-header
+max-code-length=100
