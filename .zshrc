@@ -221,6 +221,7 @@ alias gpgencrypt='gpg --default-recipient-self --armor --encrypt-files'
 alias gph='git push heroku'
 alias gpo='git push origin'
 alias gs='git show -p'
+alias gsm='git submodule'
 alias gu='git add --update'
 alias gup='git up'
 alias gus='git unstage'
@@ -504,6 +505,9 @@ bindkey -s "\el" " 2>&1|less^M"
 
 # This lets me use ^Z to toggle between open text editors.
 bindkey -s '^Z' '^Ufg^M'
+
+# Trying out Facebook PathPicker
+bindkey -s '\ex' ' |fpp^M'
 
 # More custom bindings
 bindkey "^O" copy-prev-shell-word
