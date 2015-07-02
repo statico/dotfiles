@@ -13,6 +13,8 @@
 [github]
 	user = statico
 [alias]
+	am = commit --amend --no-edit
+	ama = commit --amend --no-edit -a
 	b = branch
 	bnew = checkout -b
 	ci = commit
