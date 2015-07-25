@@ -487,6 +487,9 @@ highlight link markdownCode Delimiter
 highlight link markdownCodeBlock Delimiter
 highlight link markdownListMarker Todo
 
+" TagBar current function needs to be more visible
+highlight link TagbarHighlight MatchParen
+
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------
 
