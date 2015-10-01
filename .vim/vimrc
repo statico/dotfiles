@@ -494,4 +494,6 @@ highlight link TagbarHighlight MatchParen
 "--------------------------------------------------------------------------
 
 " now load specifics to this machine
-source ~/.vimlocal
+if filereadable(expand("~/.vimlocal"))
+    source ~/.vimlocal
+endif

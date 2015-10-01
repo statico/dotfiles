@@ -21,4 +21,6 @@ set nocursorline
 set nonumber
 
 " Now load specifics to this machine.
-source ~/.gvimlocal
+if filereadable(expand("~/.gvimlocal"))
+    source ~/.gvimlocal
+endif
