@@ -45,6 +45,7 @@ repos=(
   https://github.com/ctrlpvim/ctrlp.vim.git
   https://github.com/digitaltoad/vim-jade.git
   https://github.com/docunext/closetag.vim.git
+  https://github.com/ekalinin/Dockerfile.vim.git
   https://github.com/elzr/vim-json.git
   https://github.com/ervandew/supertab
   https://github.com/groenewege/vim-less.git
