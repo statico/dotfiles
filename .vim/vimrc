@@ -46,7 +46,7 @@ nmap <C-x>1 <C-w>o
 nmap <C-x>1 <C-w>s
 nmap <C-x>1 <C-w>v
 nmap <C-x>o <C-w><C-w>
-nmap <M-o> <C-w><C-w>
+nmap <M-o>  <C-w><C-w>
 
 " Emacs-like bindings in insert mode
 imap <C-e> <C-o>$
@@ -67,7 +67,7 @@ cnoremap <C-g>  <C-c>
 
 " Why not use the space or return keys to toggle folds?
 nnoremap <space> za
-nnoremap <CR> za
+nnoremap <CR>    za
 vnoremap <space> zf
 
 " Window movement shortcuts from Mark
@@ -77,21 +77,21 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <M-k> :Ag! "\b<cword>\b" <CR>
+nmap <M-k>  :Ag! "\b<cword>\b" <CR>
 nmap <Esc>k :Ag! "\b<cword>\b" <CR>
-nmap ˚ :Ag! "\b<cword>\b" <CR>
+nmap ˚      :Ag! "\b<cword>\b" <CR>
 
 " Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
 nmap <Esc>n :cnext<CR>
 nmap <Esc>p :cprevious<CR>
-nmap <D-~> :cnext<CR>
-nmap <D-π> :cprevious<CR>
-nmap <D-ç> :cclose<CR>
+nmap <D-~>  :cnext<CR>
+nmap <D-π>  :cprevious<CR>
+nmap <D-ç>  :cclose<CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window
 " (courtesy bufkill.vim)
 nmap <Esc>w :BD<CR>
-nmap ∑ :BD<CR>
+nmap ∑      :BD<CR>
 
 " Show line numbers in the quickfix window
 autocmd FileType qf set number
@@ -154,13 +154,12 @@ map k gk
 
 " having Ex mode start or showing me the command history
 " is a complete pain in the ass if i mistype
-map Q <silent>
+map Q  <silent>
 map q: <silent>
-map K <silent>
+map K  <silent>
 "map q <silent>
 
 " Make the cursor stay on the same line when window switching {{{2
-
 function! KeepCurrentLine(motion)
     let theLine = line('.')
     let theCol = col('.')
@@ -192,6 +191,15 @@ cno $s save <C-\>eSaveCurrentFileAtDir()<CR>
 function! SaveCurrentFileAtDir()
    return "saveas " . expand("%:p:h") . "/"
 endfunction
+
+" I never type these right
+abbr conosle console
+abbr comopnent component
+
+" Coffeescript helpers
+abbr xxx console.log 'XXX',
+abbr yyy console.log 'YYY',
+abbr zzz console.log 'ZZZ',
 
 " Section: Vim options {{{1
 "--------------------------------------------------------------------------
@@ -228,6 +236,7 @@ set incsearch               " Search as you type
 set infercase               " Completion recognizes capitalization
 set laststatus=2            " Always show the status bar
 set linebreak               " Break long lines by word, not char
+set list                    " Show whitespace as special chars - see listchars
 set listchars=tab:▸\ ,trail:◀,extends:»,precedes:« " Unicode characters for various things
 set matchtime=2             " Tenths of second to hilight matching paren
 set modelines=5             " How many lines of head & tail to look for ml's
@@ -241,15 +250,16 @@ set ruler                   " Show row/col and percentage
 set scroll=4                " Number of lines to scroll with ^U/^D
 set scrolloff=15            " Keep cursor away from this many chars top/bot
 set shiftround              " Shift to certain columns, not just n spaces
-set shiftwidth=4            " Number of spaces to shift for autoindent or >,<
+set shiftwidth=2            " Number of spaces to shift for autoindent or >,<
 set shortmess+=A            " Don't bother me when a swapfile exists
 set showbreak=              " Show for lines that have been wrapped, like Emacs
 set showmatch               " Hilight matching braces/parens/etc.
 set sidescrolloff=3         " Keep cursor away from this many chars left/right
 set smartcase               " Lets you search for ALL CAPS
-set softtabstop=4           " Spaces 'feel' like tabs
+set softtabstop=2           " Spaces 'feel' like tabs
 set suffixes+=.pyc          " Ignore these files when tab-completing
-set tabstop=4               " The One True Tab
+set tabstop=2               " The One True Tab
+set textwidth=100           " 100 is the new 80
 set thesaurus+=~/.vim/mthes10/mthesaur.txt
 set notitle                 " Don't set the title of the Vim window
 set wildmenu                " Show possible completions on command line
@@ -332,12 +342,6 @@ call pathogen#helptags()
 let mapleader = ","
 let maplocalleader = ","
 
-" perl.vim
-let perl_include_pod = 1
-
-" perldoc
-let g:perldoc_program='perldoc'
-
 " Explore.vim (comes with Vim 6)
 let explVertical = 1
 let explSplitRight = 1
@@ -362,9 +366,6 @@ let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
 nmap ; :CtrlPBuffer<CR>
 nmap <Leader>r :CtrlPTag<CR>
-
-" Powerline
-"let g:Powerline_symbols = "unicode"
 
 " Syntastic
 let g:syntastic_enable_signs=1
@@ -465,6 +466,26 @@ highlight link markdownItalic Statement
 highlight link markdownCode Delimiter
 highlight link markdownCodeBlock Delimiter
 highlight link markdownListMarker Todo
+
+" Section: File types {{{1
+"--------------------------------------------------------------------------
+
+" Remove ALL autocommands for the current group.
+augroup vimrc
+autocmd!
+
+" File types that get huge and slow
+au BufNewFile,BufRead *.coffee syn sync fromstart
+
+au BufNewFile,BufRead *.md,*.markdown setlocal foldlevel=999 tw=0 nocin
+au BufNewFile,BufRead *.json set ft=json
+au BufNewFile,BufRead *.vert,*.frag set ft=glsl
+au BufNewFile,BufRead *.gyp set ft=python
+au BufNewFile,BufRead *.cson set ft=coffee
+
+au FileType json setlocal conceallevel=0 foldmethod=syntax foldlevel=999
+
+augroup END
 
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------
