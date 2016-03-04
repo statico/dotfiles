@@ -88,8 +88,8 @@ case "$1" in
       fi
       dest="$bundledir/$(basename $url | sed -e 's/\.git$//')"
       rm -rf $dest
-      echo "Cloning $url into $dest"
-      git clone -q $url $dest
+      echo "Cloning $url"
+      git clone --depth=1 -q $url $dest
       rm -rf $dest/.git
     done
     ;;
