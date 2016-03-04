@@ -2,7 +2,7 @@
 " Summary: Functions and mappings to close open HTML/XML tags
 " Uses: <C-_> -- close matching open tag
 " Author: Steven Mueller <diffusor@ugcs.caltech.edu>
-" Last Modified: Tue May 24 13:29:48 PDT 2005 
+" Last Modified: Tue May 24 13:29:48 PDT 2005
 " Version: 0.9.1
 " XXX - breaks if close attempted while XIM is in preedit mode
 " TODO - allow usability as a global plugin -
@@ -53,7 +53,7 @@
 " out of sync, or really slow if syn sync minlines is large.
 " Set the b:closetag_disable_synID variable to disable this feature if you
 " have really big chunks of comment in your code and closing tags is too slow.
-" 
+"
 " If syntax highlighting is not enabled, comments will not be handled very
 " well.  Commenting out HTML in certain ways may cause a "tag mismatch"
 " message and no completion.  For example, '<!--a href="blah">link!</a-->'
@@ -111,7 +111,7 @@
 "       - When tag closing fails or finds no match, no longer adds to the undo
 "         buffer for recent vim 6.0 development versions.
 "       - However, clears the last message when closing tags in normal mode
-"   
+"
 "   * Changed the closetag_html_style variable to be buffer-local rather than
 "     global.
 "
@@ -184,7 +184,7 @@ function! GetLastOpenTag(unaryTagsStack)
 	    if mpos > -1
 		let b:TagCol=b:TagCol+mpos
 		let tag=matchstr(line,tagpat)
-		
+
 		if exists("b:closetag_disable_synID") || startInComment==s:InCommentAt(linenum, b:TagCol)
 		  let b:TagLine=linenum
 		  call s:Push(matchstr(tag,'[^<>]\+'),"b:lineTagStack")
@@ -257,7 +257,7 @@ endfunction
 "------------------------------------------------------------------------------
 " These are strings of whitespace-separated elements, matched using the \< and
 " \> patterns after setting the iskeyword option.
-" 
+"
 " The sname argument should contain a symbolic reference to the stack variable
 " on which method should operate on (i.e., sname should be a string containing
 " a fully qualified (ie: g:, b:, etc) variable name.)
@@ -332,3 +332,36 @@ endfunction
 function! s:Clearstack(sname)
     exe "let ".a:sname."=''"
 endfunction
+
+    """""""""""""""     add by kenshin      """"""""""""""""
+    "to store cursor Position
+    let s:cursorPos = 0
+    "support </ close tag
+    function! EasyCloseTag()
+        let line = getline(".")
+        let length = strlen(line)
+        let lastChar = strpart(line,length - 1)
+        if lastChar == "<"
+            let tag = GetLastOpenTag("b:unaryTagsStack")
+            if tag == ""
+                return ""
+            else
+                let s:cursorPos = col(".") - 1
+                return "/".tag.">"
+            endif
+        else
+            return "/"
+    endfunction
+
+    "set cursor to <tag>#cursor#</tag>
+    function! SetCursor()
+        if s:cursorPos != 0
+            let lineNum = line(".")
+            call cursor(lineNum, s:cursorPos)
+            let s:cursorPos = 0
+        endif
+        return ""
+    endfunction
+
+    "set up key '/' to trigger closeTag and setCursor function
+    inoremap <C+/> <C-R>=EasyCloseTag()<CR><C-R>=SetCursor()<CR>

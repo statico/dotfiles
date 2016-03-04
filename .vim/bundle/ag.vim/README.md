@@ -7,31 +7,32 @@ you to run ag from vim, and shows the results in a split window.
 
 ## Installation ##
 
-### The Silver Searcher
+See [the_silver_searcher's README](https://github.com/ggreer/the_silver_searcher#installing) for its installation instructions (if you haven't installed it already).
 
 You have to first install [ag](https://github.com/ggreer/the_silver_searcher), itself. On Mac+Homebrew, Gentoo Linux, several others, there's package named `the_silver_searcher`, but if your OS/distro don't have one, the GitHub repo installs fine:
 
-```sh
-git clone https://github.com/ggreer/the_silver_searcher ag && cd ag && ./build.sh && sudo make install
-```
+Vim has various ways of installing plugins, the standard way is in [the documentation](http://vimdoc.sourceforge.net/htmldoc/usr_05.html#plugin), but most people use a plugin to manage their plugins. If you don't already have a preferred plugin manager plugin, why not try one of the following?
+- [vim-plug](https://github.com/junegunn/vim-plug#readme)
+- [vim-pathogen](https://github.com/tpope/vim-pathogen#readme)
+- [Vundle.vim](https://github.com/gmarik/Vundle.vim#readme)
+- Or, if you don't use any sort of Vim plugin management:
 
-* Then, if you're using [pathogen](https://github.com/tpope/vim-pathogen):
+  ```sh
+  cd ~/.vim/bundle && git clone https://github.com/rking/ag.vim ag && echo "set runtimepath^=~/.vim/bundle/ag" >> ~/.vimrc
+  ```
 
-```sh
-cd ~/.vim/bundle && git clone https://github.com/rking/ag.vim ag && vim +Helptags
-```
+  Then open vim and run `:helptags ~/.vim/bundle/ag/doc`.
 
-* Or, if you're using [Vundle](https://github.com/gmarik/vundle):
-
-```sh
-echo "Bundle 'rking/ag.vim'" >> ~/.vimrc && vim +BundleInstall
-```
-
-### Configuration
+### Configuration ###
 
 You can specify a custom ag name and path in your .vimrc like so:
 
-    let g:agprg="<custom-ag-path-goes-here> --column"
+    let g:ag_prg="<custom-ag-path-goes-here> --vimgrep"
+
+You can configure ag.vim to always start searching from your project root
+instead of the cwd
+
+    let g:ag_working_path_mode="r"
 
 ## Usage ##
 
@@ -66,7 +67,10 @@ In the quickfix window, you can use:
     gv   to open in vertical split silently
     q    to close the quickfix window
 
-### Acknowledgements
+### Related Plugin ###
+[vim-ag-anything](https://github.com/Chun-Yang/vim-ag-anything) adds an 'ga' action to search any text object.
+
+### Acknowledgements ###
 
 This Vim plugin is derived (and by derived, I mean copied, almost entirely)
 from [milesz's ack.vim](https://github.com/mileszs/ack.vim), which I also

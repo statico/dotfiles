@@ -5,18 +5,23 @@ A Vim plugin which shows a git diff in the 'gutter' (sign column).  It shows whe
 Features:
 
 * Shows signs for added, modified, and removed lines.
+* Neovim: runs the diffs asynchronously.
 * Ensures signs are always as up to date as possible (but without running more than necessary).
 * Quick jumping between blocks of changed lines ("hunks").
 * Stage/revert/preview individual hunks.
+* Handles line endings correctly, even with repos that do CRLF conversion.
 * Optional line highlighting.
 * Fully customisable (signs, sign column, line highlights, mappings, extra git-diff arguments, etc).
 * Can be toggled on/off.
 * Preserves signs from other plugins.
 * Easy to integrate diff stats into status line; built-in integration with [vim-airline](https://github.com/bling/vim-airline/).
+* Works with fish shell (in addition to the usual shells).
 
 Constraints:
 
 * Supports git only.
+
+If you work with other version control systems, I recommend [vim-signify](https://github.com/mhinz/vim-signify).
 
 
 ### Screenshot
@@ -51,9 +56,13 @@ Add `Plugin 'airblade/vim-gitgutter'` to your `~/.vimrc` and then:
 If you are on Windows you may find the command prompt pops up briefly every time vim-gitgutter runs.  You can avoid this by installing both [vim-misc](https://github.com/xolox/vim-misc) and [vim-shell](https://github.com/xolox/vim-shell).  If you have those two plugins but don't want vim-gitgutter to use them, you can opt out with `let g:gitgutter_avoid_cmd_prompt_on_windows = 0` in your `~/.vimrc`.
 
 
-### Usage
+### Getting started
 
-You don't have to do anything: it just works.
+When you make a change to a file tracked by git, the diff markers should appear automatically.  The delay is governed by vim's `updatetime` option; the default value is 4 seconds but I suggest reducing it to around 250ms (add `set updatetime=250` to your vimrc).
+
+You can jump between hunks with `[c` and `]c`.  You can preview, stage, and revert hunks with `<leader>hp`, `<leader>hs`, and `<leader>hr` respectively.
+
+You cannot currently unstage a staged hunk.
 
 
 #### Activation
@@ -107,6 +116,10 @@ You can stage or revert an individual hunk when your cursor is in it:
 * stage the hunk with `<Leader>hs` or
 * revert it with `<Leader>hr`.
 
+See the FAQ if you want to unstage staged changes.
+
+The `.` command will work with both these if you install [repeat.vim](https://github.com/tpope/vim-repeat).
+
 To set your own mappings for these, for example if you prefer the mnemonics hunk-add and hunk-undo:
 
 ```viml
@@ -145,7 +158,7 @@ By default the signs are updated as follows:
 | Save a buffer             | So non-realtime signs are up to date | [always]               |
 | Change a file outside Vim | To notice `git stash`                | [always]               |
 
-The length of time Vim waits after you stop typing before it triggers the plugin is governed by the setting `updatetime`.  This defaults to `4000` milliseconds which is rather too long.  I recommend around `750` milliseconds but it depends on your system and your preferences.  Note that in terminal Vim an `updatetime` of less than approximately `1000` milliseconds can lead to random highlighting glitches; the lower the `updatetime`, the more glitches.  This is due to a bug in Vim.
+The length of time Vim waits after you stop typing before it triggers the plugin is governed by the setting `updatetime`.  This defaults to `4000` milliseconds which is rather too long.  I recommend around `250` milliseconds but it depends on your system and your preferences.  Note that in terminal Vim pre-7.4.427 an `updatetime` of less than approximately `1000` milliseconds can lead to random highlighting glitches; the lower the `updatetime`, the more glitches.
 
 If you experience a lag, you can trade speed for accuracy:
 
@@ -167,7 +180,6 @@ You can customise:
 * Line highlights
 * Extra arguments for `git diff`
 * Key mappings
-* Whether or not to escape `grep` (default to no)
 * Whether or not vim-gitgutter is on initially (defaults to on)
 * Whether or not signs are shown (defaults to yes)
 * Whether or not line highlighting is on initially (defaults to off)
@@ -179,17 +191,20 @@ Please note that vim-gitgutter won't override any colours or highlights you've s
 
 #### Sign column
 
-The background colour of the sign column is controlled by the `SignColumn` highlight group.  This will be either set in your colorscheme or Vim's default.
+By default vim-gitgutter will make the sign column look like the line number column.
 
-To find out where it's set, and to what it's set, use `:verbose highlight SignColumn`.
+To customise your sign column's background color, first tell vim-gitgutter to leave it alone:
 
-If your `SignColumn` is not set (`:highlight SignColumn` gives you `SignColumn xxx cleared`), vim-gitgutter will set it to the same as your line number column (i.e. the `LineNr` highlight group).
+```viml
+let g:gitgutter_override_sign_column_highlight = 0
+```
 
-To change your sign column's appearance, update your colorscheme or `~/.vimrc` like this:
+And then either update your colorscheme's `SignColumn` highlight group or set it in your vimrc:
 
-* For the same appearance as your line number column: `highlight clear SignColumn`
-* For a specific appearance on terminal Vim: `highlight SignColumn ctermbg=whatever`
-* For a specific appearance on gVim/MacVim: `highlight SignColumn guibg=whatever`
+```viml
+highlight SignColumn ctermbg=whatever    " terminal Vim
+highlight SignColumn guibg=whatever      " gVim/MacVim
+```
 
 By default the sign column will appear when there are signs to show and disappear when there aren't.  If you would always like the sign column to be there, add `let g:gitgutter_sign_column_always = 1` to your `~/.vimrc`.
 
@@ -248,12 +263,13 @@ let g:gitgutter_map_keys = 0
 See above for configuring maps for hunk-jumping and staging/reverting.
 
 
-#### Whether or not to escape `grep`
+#### Use a custom `grep` command
 
-If you have `grep` aliased to something which changes its output, for example `grep --color=auto -H`, you will need to tell vim-gitgutter to use raw grep:
+If you use an alternative to grep, or your grep does not support the `color` flag, you can tell vim-gitgutter to use it here. It only needs to support extended POSIX regex.
 
 ```viml
-let g:gitgutter_escape_grep = 1
+" Default:
+let g:gitgutter_grep_command = 'grep --color=never -e'
 ```
 
 #### To turn off vim-gitgutter by default
@@ -273,13 +289,33 @@ Add `let g:gitgutter_highlight_lines = 1` to your `~/.vimrc`.
 
 ### FAQ
 
+> Why can't I unstage staged changes?
+
+Unstaging staged hunks is feasible but not quite as easy as it sounds.  There are three relevant versions of a file at any one time:
+
+1. The version at HEAD in the repo.
+2. The version staged in the index.
+3. The version in the working tree, in your vim buffer.
+
+`git-diff` without arguments shows you how 3 and 2 differ; this is what vim-gitgutter shows too.
+
+`git-diff --staged` shows you how 2 and 1 differ.
+
+Let's say your are looking at a file in vim which has some unstaged changes.  Now you stage a hunk, either via vim-gitgutter or another means.  The hunk is no longer marked in vim-gitgutter because it is the same in 3 and 2.
+
+Now you want to unstage that hunk.  To see it, you need the difference between 2 and 1.  For vim-gitgutter to shows those differences, it would need to show you 2 instead of 3 in your vim buffer.  But 2 is virtual so vim-gitgutter would need to handle it without touching 3.
+
+I intend to implement this but I can't commit to any deadline.
+
 > Why are the colours in the sign column weird?
 
 Your colorscheme is configuring the `SignColumn` highlight group weirdly.  Please see the section above on customising the sign column.
 
 > There's a noticeable lag when vim-gitter runs; how can I avoid it?
 
-By default vim-gitgutter runs often so the signs are as accurate as possible.  However on some systems this causes a noticeable lag.  If you would like to trade a little accuracy for speed, add this to your `~/.vimrc`:
+By default vim-gitgutter runs often so the signs are as accurate as possible.  The delay is governed by `updatetime`; see [above](#when-are-the-signs-updated) for more information.
+
+If you don't want realtime updates and would like to trade a little accuracy for speed, add this to your `~/.vimrc`:
 
 ```viml
 let g:gitgutter_realtime = 0
@@ -297,7 +333,8 @@ Here are some things you can check:
 * Your git config is compatible with the version of git which your Vim is calling (`:echo system('git --version')`).
 * Your Vim supports signs (`:echo has('signs')` should give `1`).
 * Your file is being tracked by git and has unstaged, saved changes.
-* If you use the Fish shell, add `set shell=/bin/bash` to your `~/.vimrc`.
+* If you use a non-POSIX shell, add `set shell=/bin/bash` to your `~/.vimrc`.
+* If your grep does not support the `color` flag, add `let g:gitgutter_grep_command = 'grep -e'` to your `~/.vimrc`.
 
 
 ### Shameless Plug

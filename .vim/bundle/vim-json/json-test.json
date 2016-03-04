@@ -7,13 +7,18 @@
 	"semicolonAtEndOfThisObject":"trailingComma",
 };
 
+
+//even with concealment, strings and numbers & booleans are distinct
 {
-  "object1": "missingComma"
-  "object2": "value"
+    "string": "this is a string, with a escaped \" inside",
+    "string": "500",
+    "NOT a string": 500,
+    "string": "true",
+    "NOT a string": true
 }
 
-// normative JSON examples from http://json.org/example.html
 
+// normative JSON examples from http://json.org/example.html
 {"menu": {
   "id": "file",
   "value": "File",
@@ -49,6 +54,7 @@
     }
 }
 
+
 {"widget": {
     "debug": "on",
     "window": {
@@ -75,3 +81,27 @@
         "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
     }
 }}    
+
+//missing comma errors
+{
+  "object1": "missingComma"
+  "object2": "value"
+}
+[
+  { "object1": 1 }
+  { "object2": 2 }
+]
+{
+  "object1": []
+  "object2": []
+}
+{
+  "object1": {}
+  "object2": []
+}
+{
+  "object1": true
+  "object2": 2
+}
+
+//this file is deliberately mis-indented, try gg=G to indent it properly

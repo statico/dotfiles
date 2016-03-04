@@ -1,23 +1,26 @@
+
+
 Better JSON for VIM
 ===================
 
 *Distinct highlighting of keywords vs values, JSON-specific (non-JS) warnings, quote concealing.*  
-![JSON syntax coloring](http://farm8.staticflickr.com/7234/7185560283_102f6b753d.jpg)  
+![JSON syntax coloring](https://cloud.githubusercontent.com/assets/183877/7018898/98e428e0-dccf-11e4-9ab8-c554b3556155.jpg)
 Customization of Jeroen Ruigrok van der Werven's [vim-json highlighting script](http://www.vim.org/scripts/script.php?script_id=1945) with Rogerz Zhang's [indent script](https://github.com/vim-scripts/vim-json-bundle).  
-[Pathogen-friendly.](https://github.com/tpope/vim-pathogen) [Vundle-friendly too](https://github.com/elzr/vim-json/issues/25).
+[Pathogen-friendly.](https://github.com/tpope/vim-pathogen) [Vundle-friendly too.](https://github.com/elzr/vim-json/issues/25) ([Or install it manually.](https://github.com/elzr/vim-json/issues/52)) 
 
 Specific customizations
 -----------------------
 
 * Added distinct **highlighting** for keywords vs values! (This is what made me start this plugin.)
 * Added **concealing** of double quotes, for a minimalist [CoffeeScript](http://coffeescript.org/)-inspired look ([CSON](https://github.com/bevry/cson)!). 
+	* ![image](https://cloud.githubusercontent.com/assets/183877/6786803/18143984-d154-11e4-841c-134241f951ae.png)<br> [Strings are colored differently than numbers & booleans.](https://github.com/elzr/vim-json/issues/37) The disambiguating purpose of double quotes is thus achieved with colors for a cleaner look.
 	* *This requires Vim 7.3+.* To disable it add `let g:vim_json_syntax_conceal = 0` to your `.vimrc`.
 * Added **folding** of `{...}` and `[...]` blocks. To enable it `:setlocal foldmethod=syntax` (do it permanently on the `ftplugin/json.vim` file).
 * **JSON-specific warnings** (red highlights):
 	* Warn about *no-quotes* in keywords and *single-quotes* in keywords and values.
 	* Warn about *decimals* smaller than 1 that don't start with a 0 (`.1` gives a warning, it should be `0.1`).
 	* Warn about *comments* `//` and *trailing semicolons* `;`.
-	* Warn about *[missing commas](https://github.com/elzr/vim-json/issues/18)* between elements of an object.
+	* Warn about *[missing commas](https://github.com/elzr/vim-json/issues/18)* between elements of an object [and elsewhere](https://github.com/elzr/vim-json/issues/34).
 	* Warn about *trailing commas* after the last element in arrays or objects.
 	* (All warnings can be turned off with a `let g:vim_json_warnings=0` in your `vimrc`.) 
 * Recognize `.jsonp` file type. In [JSONP](http://stackoverflow.com/questions/2067472/what-is-jsonp-all-about), the wrapping function call at the beginning and the closing semicolon are recognized.
@@ -25,11 +28,11 @@ Specific customizations
 Screenshots
 -----------
 
-**No syntax coloring**: wall of text.<br>![No syntax coloring](http://farm8.staticflickr.com/7085/7370791592_fe85355c89.jpg)
+**No syntax coloring**: wall of text.<br>![No syntax coloring](https://cloud.githubusercontent.com/assets/183877/7018892/8c9965a0-dccf-11e4-9790-0e815605e3a9.jpg)
 
-**Javascript (or for that matter, the standard json.vim) syntax coloring**: Barely an improvement from no syntax coloring.<br>![Javascript syntax coloring](http://farm8.staticflickr.com/7076/7370791528_664eb2da6d.jpg)
+**Javascript (or for that matter, the standard json.vim) syntax coloring**: Barely an improvement from no syntax coloring.<br>![Javascript syntax coloring](https://cloud.githubusercontent.com/assets/183877/7018893/906e67c0-dccf-11e4-89b1-11c3cfe9e2ef.jpg)
 
-**Better JSON syntax coloring**: a more meaningful, distinct and elegant presentation.<br>![JSON syntax coloring](http://farm8.staticflickr.com/7234/7185560283_102f6b753d.jpg)
+**Better JSON syntax coloring**: a more meaningful, distinct and elegant presentation.<br>![JSON syntax coloring](https://cloud.githubusercontent.com/assets/183877/7018894/95fd2c1c-dccf-11e4-8cbc-0f6588f9d060.jpg)
 
 Why use separate JSON highlighting instead of just Javascript?
 --------------------------------------------------------------
@@ -54,4 +57,5 @@ It's a good idea to test drive with the files `json-test.json` and `jsonp-test.j
 
 Other recommended software
 --------------------------
-[JSON Formatter](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa): Chrome extension for printing JSON and JSONP nicely when you visit it 'directly' in a browser tab.
+* [JSON Formatter](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa): Chrome extension for printing JSON and JSONP nicely when you visit it 'directly' in a browser tab.
+* [Convert JSON to YAML](http://www.json2yaml.com/): side by side, real-time conversion of the "fat and rigid" JSON to the "skinny and flexible" YAML.

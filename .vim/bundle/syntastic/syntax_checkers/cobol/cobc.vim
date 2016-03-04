@@ -27,7 +27,8 @@ function! SyntaxCheckers_cobol_cobc_IsAvailable() dict
     if !exists('g:syntastic_cobol_compiler')
         let g:syntastic_cobol_compiler = self.getExec()
     endif
-    return executable(expand(g:syntastic_cobol_compiler))
+    call self.log('g:syntastic_cobol_compiler =', g:syntastic_cobol_compiler)
+    return executable(expand(g:syntastic_cobol_compiler, 1))
 endfunction
 
 function! SyntaxCheckers_cobol_cobc_GetLocList() dict
@@ -43,4 +44,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

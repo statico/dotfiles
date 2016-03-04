@@ -8,3 +8,4 @@
 *.pxm
 *.DS_Store
 /video/*
+/screenshots/*

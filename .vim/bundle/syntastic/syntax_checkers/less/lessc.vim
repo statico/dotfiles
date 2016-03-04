@@ -10,32 +10,26 @@
 "
 "============================================================================
 
-" To send additional options to less use the variable g:syntastic_less_options.
-" The default is
-"   let g:syntastic_less_options = "--no-color"
-"
-" To use less-lint instead of less set the variable
-" g:syntastic_less_use_less_lint.
-
-if exists("g:loaded_syntastic_less_lessc_checker")
+if exists('g:loaded_syntastic_less_lessc_checker')
     finish
 endif
 let g:loaded_syntastic_less_lessc_checker = 1
 
-if !exists("g:syntastic_less_options")
-    let g:syntastic_less_options = ""
+if !exists('g:syntastic_less_options')
+    let g:syntastic_less_options = ''
 endif
 
-if !exists("g:syntastic_less_use_less_lint")
+if !exists('g:syntastic_less_use_less_lint')
     let g:syntastic_less_use_less_lint = 0
 endif
 
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:node_file = 'node ' . syntastic#util#shescape(expand('<sfile>:p:h') . syntastic#util#Slash() . 'less-lint.js')
+let s:node_file = 'node ' . syntastic#util#shescape(expand('<sfile>:p:h', 1) . syntastic#util#Slash() . 'less-lint.js')
 
 function! SyntaxCheckers_less_lessc_IsAvailable() dict
+    call self.log('g:syntastic_less_use_less_lint =', g:syntastic_less_use_less_lint)
     return g:syntastic_less_use_less_lint ? executable('node') : executable(self.getExec())
 endfunction
 
@@ -58,7 +52,8 @@ function! SyntaxCheckers_less_lessc_GetLocList() dict
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'defaults': {'bufnr': bufnr(""), 'text': "Syntax error"} })
+        \ 'postprocess': ['guards'],
+        \ 'defaults': {'bufnr': bufnr(''), 'text': 'Syntax error'} })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
@@ -68,4 +63,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

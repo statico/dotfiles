@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_eruby_ruby_checker")
+if exists('g:loaded_syntastic_eruby_ruby_checker')
     finish
 endif
 let g:loaded_syntastic_eruby_ruby_checker = 1
@@ -21,16 +21,21 @@ set cpo&vim
 function! SyntaxCheckers_eruby_ruby_IsAvailable() dict
     if !exists('g:syntastic_eruby_ruby_exec') && exists('g:syntastic_ruby_exec')
         let g:syntastic_eruby_ruby_exec = g:syntastic_ruby_exec
+        call self.log('g:syntastic_eruby_ruby_exec =', g:syntastic_eruby_ruby_exec)
     endif
     return executable(self.getExec())
 endfunction
 
 function! SyntaxCheckers_eruby_ruby_GetLocList() dict
-    let fname = "'" . escape(expand('%'), "\\'") . "'"
+    if !exists('s:ruby_new')
+        let s:ruby_new = syntastic#util#versionIsAtLeast(self.getVersion(), [1, 9])
+    endif
+
+    let fname = "'" . escape(expand('%', 1), "\\'") . "'"
 
     " TODO: encodings became useful in ruby 1.9 :)
-    if syntastic#util#versionIsAtLeast(syntastic#util#getVersion(self.getExecEscaped(). ' --version'), [1, 9])
-        let enc = &fileencoding != '' ? &fileencoding : &encoding
+    if s:ruby_new
+        let enc = &fileencoding !=# '' ? &fileencoding : &encoding
         let encoding_spec = ', :encoding => "' . (enc ==? 'utf-8' ? 'UTF-8' : 'BINARY') . '"'
     else
         let encoding_spec = ''
@@ -42,9 +47,16 @@ function! SyntaxCheckers_eruby_ruby_GetLocList() dict
         \ syntastic#util#shescape('puts ERB.new(File.read(' .
         \     fname . encoding_spec .
         \     ').gsub(''<%='',''<%''), nil, ''-'').src') .
-        \ ' | ' . self.getExecEscaped() . ' -c'
+        \ ' | ' . self.getExecEscaped() . ' -w -c'
 
-    let errorformat =
+    let errorformat = '%-G%\m%.%#warning: %\%%(possibly %\)%\?useless use of a literal in void context,'
+
+    " filter out lines starting with ...
+    " long lines are truncated and wrapped in ... %p then returns the wrong
+    " column offset
+    let errorformat .= '%-G%\%.%\%.%\%.%.%#,'
+
+    let errorformat .=
         \ '%-GSyntax OK,'.
         \ '%E-:%l: syntax error\, %m,%Z%p^,'.
         \ '%W-:%l: warning: %m,'.
@@ -57,7 +69,7 @@ function! SyntaxCheckers_eruby_ruby_GetLocList() dict
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
         \ 'env': env,
-        \ 'defaults': { 'bufnr': bufnr(""), 'vcol': 1 } })
+        \ 'defaults': { 'bufnr': bufnr(''), 'vcol': 1 } })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
@@ -67,4 +79,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

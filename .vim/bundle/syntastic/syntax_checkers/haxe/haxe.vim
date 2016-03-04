@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_haxe_haxe_checker")
+if exists('g:loaded_syntastic_haxe_haxe_checker')
     finish
 endif
 let g:loaded_syntastic_haxe_haxe_checker = 1
@@ -24,11 +24,13 @@ function! SyntaxCheckers_haxe_haxe_GetLocList() dict
     elseif exists('g:vaxe_hxml')
         let hxml = g:vaxe_hxml
     else
-        let hxml = syntastic#util#findInParent('*.hxml', expand('%:p:h'))
+        let hxml = syntastic#util#findGlobInParent('*.hxml', expand('%:p:h', 1))
     endif
     let hxml = fnamemodify(hxml, ':p')
 
-    if hxml != ''
+    call self.log('hxml =', hxml)
+
+    if hxml !=# ''
         let makeprg = self.makeprgBuild({
             \ 'fname': syntastic#util#shescape(fnamemodify(hxml, ':t')) })
 
@@ -58,4 +60,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

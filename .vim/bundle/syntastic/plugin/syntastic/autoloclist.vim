@@ -1,4 +1,4 @@
-if exists("g:loaded_syntastic_notifier_autoloclist") || !exists("g:loaded_syntastic_plugin")
+if exists('g:loaded_syntastic_notifier_autoloclist') || !exists('g:loaded_syntastic_plugin')
     finish
 endif
 let g:loaded_syntastic_notifier_autoloclist = 1
@@ -7,25 +7,25 @@ let g:SyntasticAutoloclistNotifier = {}
 
 " Public methods {{{1
 "
-function! g:SyntasticAutoloclistNotifier.New() " {{{2
+function! g:SyntasticAutoloclistNotifier.New() abort " {{{2
     let newObj = copy(self)
     return newObj
 endfunction " }}}2
 
-function! g:SyntasticAutoloclistNotifier.refresh(loclist) " {{{2
-    call syntastic#log#debug(g:SyntasticDebugNotifications, 'autoloclist: refresh')
+function! g:SyntasticAutoloclistNotifier.refresh(loclist) abort " {{{2
+    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'autoloclist: refresh')
     call g:SyntasticAutoloclistNotifier.AutoToggle(a:loclist)
 endfunction " }}}2
 
-function! g:SyntasticAutoloclistNotifier.AutoToggle(loclist) " {{{2
-    call syntastic#log#debug(g:SyntasticDebugNotifications, 'autoloclist: toggle')
+function! g:SyntasticAutoloclistNotifier.AutoToggle(loclist) abort " {{{2
+    call syntastic#log#debug(g:_SYNTASTIC_DEBUG_NOTIFICATIONS, 'autoloclist: toggle')
+    let auto_loc_list = syntastic#util#var('auto_loc_list')
     if !a:loclist.isEmpty()
-        if syntastic#util#var('auto_loc_list') == 1
+        if auto_loc_list == 1 || auto_loc_list == 3
             call a:loclist.show()
         endif
     else
-        if syntastic#util#var('auto_loc_list') > 0
-
+        if auto_loc_list == 1 || auto_loc_list == 2
             "TODO: this will close the loc list window if one was opened by
             "something other than syntastic
             lclose

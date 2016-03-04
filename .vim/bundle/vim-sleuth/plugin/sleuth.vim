@@ -14,6 +14,7 @@ function! s:guess(lines) abort
   let ccomment = 0
   let podcomment = 0
   let triplequote = 0
+  let backtick = 0
 
   for line in a:lines
 
@@ -41,16 +42,6 @@ function! s:guess(lines) abort
       continue
     endif
 
-    if line =~# '^=\w'
-      let podcomment = 1
-    endif
-    if podcomment
-      if line =~# '^=\%(end\|cut\)\>'
-        let podcomment = 0
-      endif
-      continue
-    endif
-
     if triplequote
       if line =~# '^[^"]*"""[^"]*$'
         let triplequote = 0
@@ -58,6 +49,15 @@ function! s:guess(lines) abort
       continue
     elseif line =~# '^[^"]*"""[^"]*$'
       let triplequote = 1
+    endif
+
+    if backtick
+      if line =~# '^[^`]*`[^`]*$'
+        let backtick = 0
+      endif
+      continue
+    elseif line =~# '^[^`]*`[^`]*$'
+      let backtick = 1
     endif
 
     let softtab = repeat(' ', 8)
@@ -127,6 +127,10 @@ function! s:apply_if_ready(options) abort
 endfunction
 
 function! s:detect() abort
+  if &modifiable == 0
+    return
+  endif
+
   let options = s:guess(getline(1, 1024))
   if s:apply_if_ready(options)
     return

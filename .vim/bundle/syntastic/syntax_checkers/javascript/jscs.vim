@@ -9,29 +9,38 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "============================================================================
 
-if exists("g:loaded_syntastic_javascript_jscs_checker")
+if exists('g:loaded_syntastic_javascript_jscs_checker')
     finish
 endif
 let g:loaded_syntastic_javascript_jscs_checker = 1
 
+if !exists('g:syntastic_javascript_jscs_sort')
+    let g:syntastic_javascript_jscs_sort = 1
+endif
+
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! SyntaxCheckers_javascript_jscs_IsAvailable() dict
+    if !executable(self.getExec())
+        return 0
+    endif
+    return syntastic#util#versionIsAtLeast(self.getVersion(), [2, 1])
+endfunction
+
 function! SyntaxCheckers_javascript_jscs_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'args_after': '--no-colors --reporter checkstyle' })
+    let makeprg = self.makeprgBuild({
+        \ 'args_after': '--no-colors --max-errors -1 --reporter json' })
 
-    let errorformat = '%f:%t:%l:%c:%m'
+    let errorformat = '%f:%l:%c:%m'
 
-    let loclist = SyntasticMake({
+    return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
         \ 'subtype': 'Style',
-        \ 'preprocess': 'checkstyle',
+        \ 'preprocess': 'jscs',
+        \ 'defaults': {'type': 'E'},
         \ 'returns': [0, 2] })
-
-    call self.setWantSort(1)
-
-    return loclist
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
@@ -41,4 +50,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

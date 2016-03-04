@@ -89,8 +89,11 @@ let [s:pref, s:bpref, s:opts, s:new_opts, s:lc_opts] =
 	\ 'user_command':          ['s:usrcmd', ''],
 	\ 'validate':              ['s:validate', ''],
 	\ 'working_path_mode':     ['s:pathmode', 'ra'],
-	\ 'line_prefix':					 ['s:lineprefix', '> '],
+	\ 'line_prefix':           ['s:lineprefix', '> '],
 	\ 'open_single_match':     ['s:opensingle', []],
+	\ 'brief_prompt':          ['s:brfprt', 0],
+	\ 'match_current_file':    ['s:matchcrfile', 0],
+	\ 'compare_lim':           ['s:compare_lim', 3000],
 	\ }, {
 	\ 'open_multiple_files':   's:opmul',
 	\ 'regexp':                's:regexp',
@@ -149,8 +152,6 @@ let [s:lcmap, s:prtmaps] = ['nn <buffer> <silent>', {
 if !has('gui_running')
 	cal add(s:prtmaps['PrtBS()'], remove(s:prtmaps['PrtCurLeft()'], 0))
 en
-
-let s:compare_lim = 3000
 
 let s:ficounts = {}
 
@@ -357,7 +358,7 @@ fu! ctrlp#files()
 			if !ctrlp#igncwd(s:dyncwd)
 				cal s:InitCustomFuncs()
 				cal s:GlobPath(s:fnesc(s:dyncwd, 'g', ','), 0)
-        cal s:CloseCustomFuncs()
+				cal s:CloseCustomFuncs()
 			en
 		el
 			sil! cal ctrlp#progress('Indexing...')
@@ -417,7 +418,11 @@ fu! s:UserCmd(lscmd)
 		let lscmd = substitute(lscmd, '\v(^|\&\&\s*)\zscd (/d)@!', 'cd /d ', '')
 	en
 	let path = exists('*shellescape') ? shellescape(path) : path
-	let g:ctrlp_allfiles = split(system(printf(lscmd, path)), "\n")
+	if has('patch-7.4-597') && !(has('win32') || has('win64'))
+		let g:ctrlp_allfiles = systemlist(printf(lscmd, path))
+	else
+		let g:ctrlp_allfiles = split(system(printf(lscmd, path)), "\n")
+	end
 	if exists('+ssl') && exists('ssl')
 		let &ssl = ssl
 		cal map(g:ctrlp_allfiles, 'tr(v:val, "\\", "/")')
@@ -466,8 +471,8 @@ fu! s:lsCmd()
 endf
 " - Buffers {{{1
 fu! ctrlp#buffers(...)
-	let ids = sort(filter(range(1, bufnr('$')), 'empty(getbufvar(v:val, "&bt"))'
-		\ .' && getbufvar(v:val, "&bl")'), 's:compmreb')
+	let ids = sort(filter(range(1, bufnr('$')), '(empty(getbufvar(v:val, "&bt"))'
+		\ .' || s:isneovimterminal(v:val)) && getbufvar(v:val, "&bl")'), 's:compmreb')
 	if a:0 && a:1 == 'id'
 		retu ids
 	el
@@ -489,9 +494,12 @@ fu! s:MatchIt(items, pat, limit, exc)
 		\ : s:martcs.a:pat
 	for item in a:items
 		let id += 1
-		try | if !( s:ispath && item == a:exc ) && call(s:mfunc, [item, pat]) >= 0
-			cal add(lines, item)
-		en | cat | brea | endt
+		try
+			if (s:matchcrfile || !( s:ispath && item == a:exc )) && 
+						\call(s:mfunc, [item, pat]) >= 0
+				cal add(lines, item)
+			en
+		cat | brea | endt
 		if a:limit > 0 && len(lines) >= a:limit | brea | en
 	endfo
 	let s:mdata = [s:dyncwd, s:itemtype, s:regexp, s:sublist(a:items, id, -1)]
@@ -556,6 +564,7 @@ fu! s:Render(lines, pat)
 	let height = min([max([s:mw_min, s:res_count]), s:winmaxh])
 	let pat = s:byfname() ? split(a:pat, '^[^;]\+\\\@<!\zs;', 1)[0] : a:pat
 	let cur_cmd = 'keepj norm! '.( s:mw_order == 'btt' ? 'G' : 'gg' ).'1|'
+
 	" Setup the match window
 	sil! exe '%d _ | res' height
 	" Print the new items
@@ -606,6 +615,7 @@ fu! s:Update(str)
 	let pat = s:matcher == {} ? s:SplitPattern(str) : str
 	let lines = s:nolim == 1 && empty(str) ? copy(g:ctrlp_lines)
 		\ : s:MatchedItems(g:ctrlp_lines, pat, s:mw_res)
+	if empty(str) | call clearmatches() | en
 	cal s:Render(lines, pat)
 	return lines
 endf
@@ -670,6 +680,10 @@ endf
 
 fu! s:PrtBS()
 	if !s:focus | retu | en
+	if empty(s:prompt[0]) && s:brfprt != 0
+		cal s:PrtExit()
+		retu
+	endif
 	unl! s:hstgot
 	let [s:prompt[0], s:matches] = [substitute(s:prompt[0], '.$', '', ''), 1]
 	cal s:BuildPrompt(1)
@@ -901,7 +915,7 @@ fu! s:MapSpecs()
 	if !( exists('s:smapped') && s:smapped == s:bufnr )
 		" Correct arrow keys in terminal
 		if ( has('termresponse') && v:termresponse =~ "\<ESC>" )
-			\ || &term =~? '\vxterm|<k?vt|gnome|screen|linux|ansi'
+			\ || &term =~? '\vxterm|<k?vt|gnome|screen|linux|ansi|tmux'
 			for each in ['\A <up>','\B <down>','\C <right>','\D <left>']
 				exe s:lcmap.' <esc>['.each
 			endfo
@@ -914,11 +928,11 @@ fu! s:MapSpecs()
 endf
 
 fu! s:KeyLoop()
-	let t_ve = &t_ve
+	let [t_ve, guicursor] = [&t_ve, &guicursor]
 	set t_ve=
+	set guicursor=a:NONE
 	try
 		wh exists('s:init') && s:keyloop
-			redr
 			let nr = getchar()
 			let chr = !type(nr) ? nr2char(nr) : nr
 			if nr >=# 0x20
@@ -930,6 +944,7 @@ fu! s:KeyLoop()
 		endw
 	fina
 		let &t_ve = t_ve
+		let &guicursor = guicursor
 	endt
 endf
 " * Toggling {{{1
@@ -1631,8 +1646,8 @@ fu! ctrlp#setpathmode(pmode, ...)
 		let spath = a:0 ? a:1 : s:crfpath
 		let markers = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 		if type(s:rmarkers) == 3 && !empty(s:rmarkers)
-			if s:findroot(spath, s:rmarkers, 0, 0) != [] | retu 1 | en
 			cal filter(markers, 'index(s:rmarkers, v:val) < 0')
+			let markers = s:rmarkers + markers
 		en
 		if s:findroot(spath, markers, 0, 0) != [] | retu 1 | en
 	en
@@ -1839,7 +1854,7 @@ endf
 fu! ctrlp#normcmd(cmd, ...)
 	if a:0 < 2 && s:nosplit() | retu a:cmd | en
 	let norwins = filter(range(1, winnr('$')),
-		\ 'empty(getbufvar(winbufnr(v:val), "&bt"))')
+		\ 'empty(getbufvar(winbufnr(v:val), "&bt")) || s:isneovimterminal(winbufnr(v:val))')
 	for each in norwins
 		let bufnr = winbufnr(each)
 		if empty(bufname(bufnr)) && empty(getbufvar(bufnr, '&ft'))
@@ -2084,6 +2099,10 @@ fu! s:delent(rfunc)
 	let g:ctrlp_lines = call(a:rfunc, [tbrem])
 	cal s:BuildPrompt(1)
 	unl s:force
+endf
+
+fu! s:isneovimterminal(buf)
+	retu has('nvim') && getbufvar(a:buf, "&bt") == "terminal"
 endf
 " Entering & Exiting {{{2
 fu! s:getenv()

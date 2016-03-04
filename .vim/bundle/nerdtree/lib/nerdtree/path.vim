@@ -1,6 +1,12 @@
 "we need to use this number many times for sorting... so we calculate it only
 "once here
 let s:NERDTreeSortStarIndex = index(g:NERDTreeSortOrder, '*')
+" used in formating sortKey, e.g. '%04d'
+if exists("log10")
+    let s:sortKeyFormat = "%0" . float2nr(ceil(log10(len(g:NERDTreeSortOrder)))) . "d"
+else
+    let s:sortKeyFormat = "%04d"
+endif
 
 "CLASS: Path
 "============================================================
@@ -34,9 +40,7 @@ endfunction
 
 "FUNCTION: Path.cacheDisplayString() {{{1
 function! s:Path.cacheDisplayString() abort
-    let self.cachedDisplayString = self.flagSet.renderToString()
-
-    let self.cachedDisplayString .= self.getLastPathComponent(1)
+    let self.cachedDisplayString = self.getLastPathComponent(1)
 
     if self.isExecutable
         let self.cachedDisplayString = self.cachedDisplayString . '*'
@@ -361,6 +365,24 @@ function! s:Path.getSortOrderIndex()
     return s:NERDTreeSortStarIndex
 endfunction
 
+"FUNCTION: Path.getSortKey() {{{1
+"returns a string used in compare function for sorting
+function! s:Path.getSortKey()
+    if !exists("self._sortKey")
+        let path = self.getLastPathComponent(1)
+        if !g:NERDTreeSortHiddenFirst
+            let path = substitute(path, '^[._]', '', '')
+        endif
+        if !g:NERDTreeCaseSensitiveSort
+            let path = tolower(path)
+        endif
+        let self._sortKey = printf(s:sortKeyFormat, self.getSortOrderIndex()) . path
+    endif
+
+    return self._sortKey
+endfunction
+
+
 "FUNCTION: Path.isUnixHiddenFile() {{{1
 "check for unix hidden files
 function! s:Path.isUnixHiddenFile()
@@ -382,28 +404,30 @@ function! s:Path.isUnixHiddenPath()
     endif
 endfunction
 
-"FUNCTION: Path.ignore() {{{1
+"FUNCTION: Path.ignore(nerdtree) {{{1
 "returns true if this path should be ignored
-function! s:Path.ignore()
+function! s:Path.ignore(nerdtree)
     "filter out the user specified paths to ignore
-    if b:NERDTreeIgnoreEnabled
+    if a:nerdtree.ui.isIgnoreFilterEnabled()
         for i in g:NERDTreeIgnore
             if self._ignorePatternMatches(i)
+                return 1
+            endif
+        endfor
+
+        for callback in g:NERDTree.PathFilters()
+            if {callback}({'path': self, 'nerdtree': a:nerdtree})
                 return 1
             endif
         endfor
     endif
 
     "dont show hidden files unless instructed to
-    if b:NERDTreeShowHidden ==# 0 && self.isUnixHiddenFile()
+    if !a:nerdtree.ui.getShowHidden() && self.isUnixHiddenFile()
         return 1
     endif
 
-    if b:NERDTreeShowFiles ==# 0 && self.isDirectory ==# 0
-        return 1
-    endif
-
-    if exists("*NERDTreeCustomIgnoreFilter") && NERDTreeCustomIgnoreFilter(self)
+    if a:nerdtree.ui.getShowFiles() ==# 0 && self.isDirectory ==# 0
         return 1
     endif
 
@@ -429,10 +453,22 @@ function! s:Path._ignorePatternMatches(pattern)
     return self.getLastPathComponent(0) =~# pat
 endfunction
 
-"FUNCTION: Path.isUnder(path) {{{1
-"return 1 if this path is somewhere under the given path in the filesystem.
+"FUNCTION: Path.isAncestor(path) {{{1
+"return 1 if this path is somewhere above the given path in the filesystem.
 "
 "a:path should be a dir
+function! s:Path.isAncestor(path)
+    if !self.isDirectory
+        return 0
+    endif
+
+    let this = self.str()
+    let that = a:path.str()
+    return stridx(that, this) == 0
+endfunction
+
+"FUNCTION: Path.isUnder(path) {{{1
+"return 1 if this path is somewhere under the given path in the filesystem.
 function! s:Path.isUnder(path)
     if a:path.isDirectory == 0
         return 0
@@ -546,16 +582,16 @@ function! s:Path.readInfoFromDisk(fullpath)
     endif
 endfunction
 
-"FUNCTION: Path.refresh() {{{1
-function! s:Path.refresh()
+"FUNCTION: Path.refresh(nerdtree) {{{1
+function! s:Path.refresh(nerdtree)
     call self.readInfoFromDisk(self.str())
-    call g:NERDTreePathNotifier.NotifyListeners('refresh', self, {})
+    call g:NERDTreePathNotifier.NotifyListeners('refresh', self, a:nerdtree, {})
     call self.cacheDisplayString()
 endfunction
 
-"FUNCTION: Path.refreshFlags() {{{1
-function! s:Path.refreshFlags()
-    call g:NERDTreePathNotifier.NotifyListeners('refreshFlags', self, {})
+"FUNCTION: Path.refreshFlags(nerdtree) {{{1
+function! s:Path.refreshFlags(nerdtree)
+    call g:NERDTreePathNotifier.NotifyListeners('refreshFlags', self, a:nerdtree, {})
     call self.cacheDisplayString()
 endfunction
 
@@ -611,7 +647,7 @@ function! s:Path.str(...)
         if has_key(self, '_strFor' . format)
             exec 'let toReturn = self._strFor' . format . '()'
         else
-            raise 'NERDTree.UnknownFormatError: unknown format "'. format .'"'
+            throw 'NERDTree.UnknownFormatError: unknown format "'. format .'"'
         endif
     else
         let toReturn = self._str()
@@ -623,8 +659,13 @@ function! s:Path.str(...)
 
     if has_key(options, 'truncateTo')
         let limit = options['truncateTo']
-        if len(toReturn) > limit
-            let toReturn = "<" . strpart(toReturn, len(toReturn) - limit + 1)
+        if len(toReturn) > limit-1
+            let toReturn = toReturn[(len(toReturn)-limit+1):]
+            if len(split(toReturn, '/')) > 1
+                let toReturn = '</' . join(split(toReturn, '/')[1:], '/') . '/'
+            else
+                let toReturn = '<' . toReturn
+            endif
         endif
     endif
 
@@ -652,25 +693,15 @@ endfunction
 "Return: the string for this path that is suitable to be used with the :edit
 "command
 function! s:Path._strForEdit()
-    let p = escape(self.str({'format': 'UI'}), self._escChars())
-    let cwd = getcwd() . s:Path.Slash()
+    let p = escape(self.str(), self._escChars())
 
-    "return a relative path if we can
-    let isRelative = 0
-    if nerdtree#runningWindows()
-        let isRelative = stridx(tolower(p), tolower(cwd)) == 0
-    else
-        let isRelative = stridx(p, cwd) == 0
-    endif
+    "make it relative
+    let p = fnamemodify(p, ':.')
 
-    if isRelative
-        let p = strpart(p, strlen(cwd))
-
-        "handle the edge case where the file begins with a + (vim interprets
-        "the +foo in `:e +foo` as an option to :edit)
-        if p[0] == "+"
-            let p = '\' . p
-        endif
+    "handle the edge case where the file begins with a + (vim interprets
+    "the +foo in `:e +foo` as an option to :edit)
+    if p[0] == "+"
+        let p = '\' . p
     endif
 
     if p ==# ''

@@ -12,6 +12,7 @@ function! gitgutter#debug#debug()
   call gitgutter#debug#git_version()
   call gitgutter#debug#separator()
 
+  call gitgutter#debug#option('updatetime')
   call gitgutter#debug#option('shell')
   call gitgutter#debug#option('shellcmdflag')
   call gitgutter#debug#option('shellpipe')
@@ -57,3 +58,9 @@ endfunction
 function! gitgutter#debug#output(text)
   call append(line('$'), a:text)
 endfunction
+
+function! gitgutter#debug#log(message)
+  let msg = type(a:message) == 1 ? split(a:message, '\n') : a:message
+  call writefile(msg, 'gitgutter.log', 'a')
+endfunction
+

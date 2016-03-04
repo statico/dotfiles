@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_elixir_elixir_checker")
+if exists('g:loaded_syntastic_elixir_elixir_checker')
     finish
 endif
 let g:loaded_syntastic_elixir_elixir_checker = 1
@@ -20,19 +20,16 @@ set cpo&vim
 
 " TODO: we should probably split this into separate checkers
 function! SyntaxCheckers_elixir_elixir_IsAvailable() dict
+    call self.log(
+        \ 'executable("elixir") = ' . executable('elixir') . ', ' .
+        \ 'executable("mix") = ' . executable('mix'))
     return executable('elixir') && executable('mix')
 endfunction
 
 function! SyntaxCheckers_elixir_elixir_GetLocList() dict
-    if !exists('g:syntastic_enable_elixir_checker') || !g:syntastic_enable_elixir_checker
-        call syntastic#log#error('checker elixir/elixir: checks disabled for security reasons; ' .
-            \ 'set g:syntastic_enable_elixir_checker to 1 to override')
-        return []
-    endif
-
     let make_options = {}
     let compile_command = 'elixir'
-    let mix_file = syntastic#util#findInParent('mix.exs', expand('%:p:h'))
+    let mix_file = syntastic#util#findFileInParent('mix.exs', expand('%:p:h', 1))
 
     if filereadable(mix_file)
         let compile_command = 'mix compile'
@@ -41,16 +38,19 @@ function! SyntaxCheckers_elixir_elixir_GetLocList() dict
 
     let make_options['makeprg'] = self.makeprgBuild({ 'exe': compile_command })
 
-    let make_options['errorformat'] = '** %*[^\ ] %f:%l: %m'
+    let make_options['errorformat'] =
+        \ '%E** %*[^\ ] %f:%l: %m,' .
+        \ '%W%f:%l: warning: %m'
 
     return SyntasticMake(make_options)
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'elixir',
-    \ 'name': 'elixir'})
+    \ 'name': 'elixir',
+    \ 'enable': 'enable_elixir_checker'})
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

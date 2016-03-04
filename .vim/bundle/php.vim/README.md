@@ -8,6 +8,16 @@ This project is a fork of [php.vim--Garvin][garvin] which in turn is an update o
   [garvin]:  https://github.com/vim-scripts/php.vim--Garvin
   [php-vim]: http://www.vim.org/scripts/script.php?script_id=2874
 
+Installation
+------------
+
+If you don't have a preferred installation method, [pathogen.vim](https://github.com/tpope/vim-pathogen) is quick and simple. With pathogen.vim installed, run the following commands:
+
+```bash
+cd ~/.vim/bundle
+git clone https://github.com/StanAngeloff/php.vim.git
+```
+
 Configuration
 -------------
 

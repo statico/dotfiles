@@ -4,7 +4,7 @@
 "Maintainer:  Kocha <kocha dot lsifrontend at gmail dot com>
 "============================================================================
 
-if exists("g:loaded_syntastic_verilog_verilator_checker")
+if exists('g:loaded_syntastic_verilog_verilator_checker')
     finish
 endif
 let g:loaded_syntastic_verilog_verilator_checker = 1
@@ -20,7 +20,8 @@ function! SyntaxCheckers_verilog_verilator_IsAvailable() dict
     if !exists('g:syntastic_verilog_compiler')
         let g:syntastic_verilog_compiler = self.getExec()
     endif
-    return executable(expand(g:syntastic_verilog_compiler))
+    call self.log('g:syntastic_verilog_compiler =', g:syntastic_verilog_compiler)
+    return executable(expand(g:syntastic_verilog_compiler, 1))
 endfunction
 
 function! SyntaxCheckers_verilog_verilator_GetLocList() dict
@@ -38,4 +39,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

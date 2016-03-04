@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_go_gotype_checker")
+if exists('g:loaded_syntastic_go_gotype_checker')
     finish
 endif
 let g:loaded_syntastic_go_gotype_checker = 1
@@ -19,7 +19,9 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_go_gotype_GetLocList() dict
-    let makeprg = self.getExecEscaped() . ' .'
+    let makeprg = self.makeprgBuild({
+        \ 'args': (expand('%', 1) =~# '\m_test\.go$' ? '-a' : ''),
+        \ 'fname': '.' })
 
     let errorformat =
         \ '%f:%l:%c: %m,' .
@@ -29,13 +31,11 @@ function! SyntaxCheckers_go_gotype_GetLocList() dict
     " the package for the same reasons specified in go.vim ("figuring out
     " the import path is fickle").
 
-    let errors = SyntasticMake({
+    return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat,
-        \ 'cwd': expand('%:p:h'),
+        \ 'cwd': expand('%:p:h', 1),
         \ 'defaults': {'type': 'e'} })
-
-    return errors
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
@@ -45,4 +45,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

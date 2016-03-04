@@ -9,10 +9,8 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
-"
-" For details about pep8 see: https://github.com/jcrocholl/pep8
 
-if exists("g:loaded_syntastic_python_pep8_checker")
+if exists('g:loaded_syntastic_python_pep8_checker')
     finish
 endif
 let g:loaded_syntastic_python_pep8_checker = 1
@@ -47,4 +45,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

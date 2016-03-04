@@ -26,16 +26,6 @@
 " References:
 "
 " - http://perldoc.perl.org/perlrun.html#*-c*
-"
-" Checker options:
-"
-" - g:syntastic_perl_interpreter (string; default: 'perl')
-"   The perl interpreter to use.
-"
-" - g:syntastic_perl_lib_path (list; default: [])
-"   List of include directories to be added to the perl command line. Example:
-"
-"       let g:syntastic_perl_lib_path = [ './lib', './lib/auto' ]
 
 if exists('g:loaded_syntastic_perl_perl_checker')
     finish
@@ -56,17 +46,11 @@ function! SyntaxCheckers_perl_perl_IsAvailable() dict
 
     " don't call executable() here, to allow things like
     " let g:syntastic_perl_interpreter='/usr/bin/env perl'
-    silent! call system(self.getExecEscaped() . ' -e ' . syntastic#util#shescape('exit(0)'))
+    silent! call syntastic#util#system(self.getExecEscaped() . ' -e ' . syntastic#util#shescape('exit(0)'))
     return v:shell_error == 0
 endfunction
 
 function! SyntaxCheckers_perl_perl_GetLocList() dict
-    if !exists('g:syntastic_enable_perl_checker') || !g:syntastic_enable_perl_checker
-        call syntastic#log#error('checker perl/perl: checks disabled for security reasons; ' .
-            \ 'set g:syntastic_enable_perl_checker to 1 to override')
-        return []
-    endif
-
     if type(g:syntastic_perl_lib_path) == type('')
         call syntastic#log#oneTimeWarn('variable g:syntastic_perl_lib_path should be a list')
         let includes = split(g:syntastic_perl_lib_path, ',')
@@ -101,9 +85,10 @@ endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'perl',
-    \ 'name': 'perl'})
+    \ 'name': 'perl',
+    \ 'enable': 'enable_perl_checker'})
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

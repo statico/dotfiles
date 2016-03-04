@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_vim_vimlint_checker")
+if exists('g:loaded_syntastic_vim_vimlint_checker')
     finish
 endif
 let g:loaded_syntastic_vim_vimlint_checker = 1
@@ -18,9 +18,9 @@ let g:loaded_syntastic_vim_vimlint_checker = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! SyntaxCheckers_vim_vimlint_GetHighlightRegex(item)
+function! SyntaxCheckers_vim_vimlint_GetHighlightRegex(item) " {{{1
     let term = matchstr(a:item['text'], '\m `\zs[^`]\+\ze`')
-    if term != ''
+    if term !=# ''
         let col = get(a:item, 'col', 0)
 
         if col && term[0:1] ==# 'l:'
@@ -33,15 +33,17 @@ function! SyntaxCheckers_vim_vimlint_GetHighlightRegex(item)
     endif
 
     return ''
-endfunction
+endfunction " }}}1
 
-function! SyntaxCheckers_vim_vimlint_IsAvailable() dict
-    return
-        \ globpath(&runtimepath, 'autoload/vimlparser.vim') != '' &&
-        \ globpath(&runtimepath, 'autoload/vimlint.vim') != ''
-endfunction
+function! SyntaxCheckers_vim_vimlint_IsAvailable() dict " {{{1
+    let vimlparser = globpath(&runtimepath, 'autoload/vimlparser.vim', 1)
+    let vimlint    = globpath(&runtimepath, 'autoload/vimlint.vim', 1)
+    call self.log("globpath(&runtimepath, 'autoload/vimlparser.vim', 1) = " . string(vimlparser) . ', ' .
+                \ "globpath(&runtimepath, 'autoload/vimlint.vim', 1) = " .    string(vimlint))
+    return vimlparser !=# '' && vimlint !=# ''
+endfunction " }}}1
 
-function! SyntaxCheckers_vim_vimlint_GetLocList() dict
+function! SyntaxCheckers_vim_vimlint_GetLocList() dict " {{{1
     " EVL102: unused variable v
     " EVL103: unused argument v
     " EVL104: variable may not be initialized on some execution path: v
@@ -72,11 +74,15 @@ function! SyntaxCheckers_vim_vimlint_GetLocList() dict
         endif
     endif
 
-    return vimlint#vimlint(expand('%'), param)
-endfunction
+    call self.log('options =', param)
+
+    return vimlint#vimlint(expand('%', 1), param)
+endfunction " }}}1
+
+" Utilities {{{1
 
 " @vimlint(EVL103, 1, a:filename)
-function! s:vimlintOutput(filename, pos, ev, eid, mes, obj)
+function! s:vimlintOutput(filename, pos, ev, eid, mes, obj) " {{{2
     call add(a:obj.error, {
         \ 'bufnr': bufnr(''),
         \ 'lnum': a:pos.lnum,
@@ -85,15 +91,17 @@ function! s:vimlintOutput(filename, pos, ev, eid, mes, obj)
         \ 'type': a:ev[0],
         \ 'text': '[' . a:eid . '] ' . a:mes,
         \ 'valid': a:pos.lnum > 0 })
-endfunction
+endfunction " }}}2
 " @vimlint(EVL103, 0, a:filename)
+
+" }}}1
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'vim',
     \ 'name': 'vimlint',
-    \ 'exec': 'vim' })
+    \ 'exec': '' })
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

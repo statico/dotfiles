@@ -64,6 +64,10 @@ Overview:~
   |ctrlp_abbrev|................Input abbreviations.
   |ctrlp_key_loop|..............Use input looping for multi-byte input.
   |ctrlp_prompt_mappings|.......Change the mappings inside the prompt.
+  |ctrlp_line_prefix|...........Prefix for each line in ctrlp window.
+  |ctrlp_open_single_match|.....Automatically accept when only one candidate.
+  |ctrlp_brief_prompt|..........Exit CtrlP on empty prompt by <bs>.
+  |ctrlp_match_current_file|....Include current file in match entries.
 
   MRU mode:
   |ctrlp_mruf_max|..............Max MRU entries to remember.
@@ -74,7 +78,6 @@ Overview:~
   |ctrlp_mruf_default_order|....Disable sorting.
   |ctrlp_mruf_case_sensitive|...MRU files are case sensitive or not.
   |ctrlp_mruf_save_on_update|...Save to disk whenever a new entry is added.
-  |ctrlp_mruf_exclude_nomod|....Exclude nonmodifiable buffers from the MRU list.
 
   BufferTag mode: (to enable, see |ctrlp-extensions|)
   |g:ctrlp_buftag_ctags_bin|....The location of the ctags-compatible binary.
@@ -119,7 +122,7 @@ Set this to 1 to set regexp search as the default: >
 Can be toggled on/off by pressing <c-r> inside the prompt.
 
                                                        *'g:ctrlp_match_window'*
-Change the postion, the listing order of results, the minimum and the maximum
+Change the position, the listing order of results, the minimum and the maximum
 heights of the match window: >
   let g:ctrlp_match_window = ''
 <
@@ -336,7 +339,7 @@ Some examples: >
 
   " Single VCS, listing command lists untracked files (slower):
   let g:ctrlp_user_command =
-    \ ['.git', 'cd %s && git ls-files . -co --exclude-standard']
+    \ ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
   let g:ctrlp_user_command =
     \ ['.hg', 'hg --cwd %s status -numac -I . $(hg root)'] " MacOSX/Linux
@@ -443,6 +446,17 @@ Instead of 1 or 0, if the value of the option is a string, it'll be used as-is
 as the default input: >
   let g:ctrlp_default_input = 'anystring'
 <
+This option works well together with |g:ctrlp_open_single_match|
+
+
+                                                 *'g:ctrlp_match_current_file'*
+Includes the current file in the match entries:
+  let g:ctrlp_match_current_file = 1
+
+By default, the current file is excluded from the list.
+
+Note: does not apply when |g:ctrlp_match_func| is used. 
+
 
                                                              *'g:ctrlp_abbrev'*
 Define input abbreviations that can be expanded (either internally or visibly)
@@ -552,6 +566,34 @@ default <c-h> mapping: >
   let g:ctrlp_prompt_mappings = { 'PrtCurLeft()': ['<left>', '<c-^>'] }
 <
 
+                                                    *'g:ctrlp_line_prefix'*
+This prefix will be prepended to each line in ctrlp's item listing.
+default: >
+  let g:ctrlp_line_prefix = '> '
+<
+
+                                                    *'g:ctrlp_open_single_match'*
+List of CtrlP modes for which CtrlP should accept an entry directly, if only
+one candidate exists.
+Example: >
+  let g:ctrlp_open_single_match = ['buffer tags', 'buffer']
+<
+This is currently only really useful together with |g:ctrlp_default_input|
+set before launching, and cleared afterwards, with a function such as
+following: >
+  fu! <SID>tagsUnderCursor()
+    try
+      let default_input_save = get(g:, 'ctrlp_default_input', '')
+      let g:ctrlp_default_input = expand('<cword>')
+      CtrlPBufTagAll
+    finally
+      if exists('default_input_save')
+        let g:ctrlp_default_input = default_input_save
+      endif
+    endtry
+  endfu
+>
+<
 ----------------------------------------
 MRU mode options:~
 
@@ -607,12 +649,6 @@ MRU entries: >
 Set this to 0 to disable saving of the MRU list to hard drive whenever a new
 entry is added, saving will then only occur when exiting Vim: >
   let g:ctrlp_mruf_save_on_update = 1
-<
-
-                                                *'g:ctrlp_mruf_exclude_nomod'*
-Set this to 1 to disable adding nonmodifiable buffers, for example help files,
-to the MRU list: >
-  let g:ctrlp_mruf_exclude_nomod = 0
 <
 ----------------------------------------
 Advanced options:~
@@ -787,6 +823,9 @@ Example: >
     " }
   endfunction
 <
+                                                       *'g:ctrlp_brief_prompt'*
+When this is set to 1, the <bs> on empty prompt exit CtrlP.
+
                                                           *ctrlp-default-value*
 Otherwize, you can use below to change default value.
 Example: >
@@ -1048,7 +1087,7 @@ d)  Submit two dots '..' to go upward the directory tree by 1 level. To go up
 e)  Similarly, submit '/' or '\' to find and go to the project's root.
 
     If the project is large, using a VCS listing command to look for files
-    might help speeding up the intial scan (see |g:ctrlp_user_command| for more
+    might help speeding up the initial scan (see |g:ctrlp_user_command| for more
     details).
 
     Note: d) and e) only work in file, directory and mixed modes.
@@ -1172,12 +1211,13 @@ Available extensions:~
 
     The last command can be used to add all recently used work dirs to the
     CtrlPBookmarkDir list by an autocommand like
+
     >
     augroup CtrlPDirMRU
       autocmd!
       autocmd FileType * if &modifiable | execute 'silent CtrlPBookmarkDirAdd! %:p:h' | endif
     augroup END
-    <
+<
 
     - Mappings:
       + <cr> change the local working directory for CtrlP, keep it open and
@@ -1187,6 +1227,80 @@ Available extensions:~
       + <F7>
         - Wipe bookmark list.
         - Delete entries marked by <c-z>.
+
+                                                 *ctrlp-autoignore-extension*
+  * Autoignore mode:~
+    - Name: 'autoignore'
+
+    - This extension doesn't add new commands. It adds support for per-project
+      ignore patterns (as per |ctrlp_custom_ignore|) via a `.ctrlpignore` file
+      at the root of the project. It's basically like a `.gitignore` or
+      `.hgignore` for CtrlP.
+
+      Note: auto-ignore won't work when |g:ctrlp_user_command| is used.
+
+      Note: `.ctrlpignore` will be added to the root markers (see
+      |g:ctrlp_root_markers|).
+
+    - Ignore file syntax:
+      Empty lines, and lines starting with `#` (comments) are ignored.
+
+      Other lines are treated like regular expression patterns. See *string-match*
+      for how patterns are used. Anything that matches any of the patterns will be
+      ignored from CtrlP's search results.
+
+      Example:
+
+        \.tmp$
+        ^generated/
+        local\.cfg
+
+      Note: patterns should use forward slashes, even on Windows.
+
+      You can also switch to a glob-like syntax like this:
+
+        syntax:wildignore
+        *.tar.gz
+        *.tmp
+
+      This will temporarily add each pattern to |'wildignore'| for the
+      duration of the file scan, and remove them at the end.
+
+      You can switch back to the default regular-expression-based patterns by
+      writing:
+
+        syntax:regexp
+
+      You can also specify a match on only a given type of item:
+
+        dir:build
+        file:foo\.txt
+
+      This will only ignore directories with "build" in them, and files with
+      "foo.txt" in them. Not files with "build" in them or vice-versa.
+
+      Note: to ignore a root directory "build", and not _any_ directory with
+      "build" in it, you can root the regex: ^build$
+
+    - FAQ:
+      Q: Why can't CtrlP support `.gitignore` or `.hgignore` natively?
+
+      A: Those files look at first like they may contain all the patterns
+      you'd want to exclude from CtrlP already. However, more often than not,
+      there are some differences. Those files list patterns that should not be
+      included in source-control. This includes things you want to ignore, but
+      also things you may not want to: local settings, external packages and
+      dependencies, etc. The author felt the trouble of supporting various
+      syntaxes was too much compared to just copy/pasting a few lines. Feel
+      free to contribute a patch if you disagree :)
+
+      Q: I enabled |ctrlp-autoignore-extension|, or edited `.ctrlpignore`, but
+      none of the new patterns are working. What did I do wrong?
+
+      A: Probably nothing! CtrlP can cache search results for faster response
+      times. You can hit <F5> to force it to refresh. This will use the newer
+      ignore patterns if the `.ctrlpignore` file has changed, too.
+
 
 ----------------------------------------
 Buffer Tag mode options:~
@@ -1298,11 +1412,12 @@ MISCELLANEOUS CONFIGS                             *ctrlp-miscellaneous-configs*
 ===============================================================================
 CREDITS                                                         *ctrlp-credits*
 
-Developed by Kien Nguyen <github.com/kien>. Distributed under Vim's |license|.
+Originally developed by Kien Nguyen <github.com/kien>.  Now maintained by the
+members of the ctrlpvim Github organisation
+(https://github.com/orgs/ctrlpvim/people).  Distributed under Vim's |license|.
 
-Project's homepage:   http://kien.github.com/ctrlp.vim
-Git repository:       https://github.com/kien/ctrlp.vim
-Mercurial repository: https://bitbucket.org/kien/ctrlp.vim
+Project's homepage:   http://ctrlpvim.github.com/ctrlp.vim
+Git repository:       https://github.com/ctrlpvim/ctrlp.vim
 
 -------------------------------------------------------------------------------
 Thanks to everyone that has submitted ideas, bug reports or helped debugging on

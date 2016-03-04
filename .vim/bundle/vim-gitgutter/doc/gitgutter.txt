@@ -14,7 +14,8 @@ CONTENTS                                                    *GitGutterContents*
   2.  Installation ................. |GitGutterInstallation|
   3.  Usage ........................ |GitGutterUsage|
   4.  Commands ..................... |GitGutterCommands|
-  5.  FAQ .......................... |GitGutterFAQ|
+  5.  CUSTOMISATION................. |GitGutterCustomisation|
+  6.  FAQ .......................... |GitGutterFAQ|
 
 ===============================================================================
 1. INTRODUCTION                                         *GitGutterIntroduction*
@@ -118,7 +119,7 @@ You can customise:
 - Line highlights
 - Extra arguments for git-diff
 - Key mappings
-- Whether or not to escape grep (defaults to no)
+- The grep executable used
 - Whether or not vim-gitgutter is on initially (defaults to on)
 - Whether or not signs are shown (defaults to yes)
 - Whether or not line highlighting is on initially (defaults to off)
@@ -130,23 +131,17 @@ set in your colorscheme.
 
 SIGN COLUMN
 
-The background colour of the sign column is controlled by the |hlSignColumn|
-highlight group.  This will be either set in your colorscheme or Vim's default.
+By default vim-gitgutter will make the sign column look like the line number
+column (i.e. the |hl-LineNr| highlight group).
 
-To find out where it's set, and to what it's set, use:
+To customise your sign column's background color, first tell vim-gitgutter to
+leave it alone:
 >
-  :verbose highlight SignColumn
+  let g:gitgutter_override_sign_column_highlight = 0
 <
 
-If your `SignColumn` is not set, i.e if
->
-  :highlight SignColumn  " gives you `SignColumn xxx cleared`
-<
-vim-gitgutter will set it to the same as your line number column (i.e. the
-|hl-LineNr| highlight group).
-
-To change your sign column's appearance, update your colorscheme or |vimrc|
-like this:
+And then either update your colorscheme's |hlSignColumn| highlight group or set
+it in your |vimrc|:
 
   Desired appearance                  Command ~
   Same as line number column          highlight clear SignColumn
@@ -204,23 +199,24 @@ To disable all key maps:
   let g:gitgutter_map_keys = 0
 <
 
-To change the hunk-jumping maps:
+To change the hunk-jumping maps (defaults shown):
 >
-  nmap [h <Plug>GitGutterPrevHunk
-  nmap ]h <Plug>GitGutterNextHunk
+  nmap [c <Plug>GitGutterPrevHunk
+  nmap ]c <Plug>GitGutterNextHunk
 <
 
-To change the hunk-staging/reverting maps:
+To change the hunk-staging/reverting/previewing maps (defaults shown):
 >
   nmap <Leader>hs <Plug>GitGutterStageHunk
   nmap <Leader>hr <Plug>GitGutterRevertHunk
+  nmap <Leader>hp <Plug>GitGutterPreviewHunk
 <
 
-TO ESCAPE GREP
+TO USE A CUSTOM GREP COMMAND
 
-To avoid any alias you have for grep, use this:
+To use a custom invocation for grep, use this:
 >
-  let g:gitgutter_escape_grep = 1
+  let g:gitgutter_grep_command = 'grep --color=never -e'
 <
 
 TO TURN OFF VIM-GITGUTTER BY DEFAULT

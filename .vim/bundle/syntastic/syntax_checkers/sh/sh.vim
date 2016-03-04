@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_sh_sh_checker")
+if exists('g:loaded_syntastic_sh_sh_checker')
     finish
 endif
 let g:loaded_syntastic_sh_sh_checker = 1
@@ -18,11 +18,12 @@ let g:loaded_syntastic_sh_sh_checker = 1
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! SyntaxCheckers_sh_sh_IsAvailable() dict
+function! SyntaxCheckers_sh_sh_IsAvailable() dict " {{{1
+    call self.log('shell =', s:GetShell())
     return s:IsShellValid()
-endfunction
+endfunction " }}}1
 
-function! SyntaxCheckers_sh_sh_GetLocList() dict
+function! SyntaxCheckers_sh_sh_GetLocList() dict " {{{1
     if s:GetShell() ==# 'zsh'
         return s:ForwardToZshChecker()
     endif
@@ -40,13 +41,15 @@ function! SyntaxCheckers_sh_sh_GetLocList() dict
     return SyntasticMake({
         \ 'makeprg': makeprg,
         \ 'errorformat': errorformat })
-endfunction
+endfunction " }}}1
 
-function! s:GetShell()
-    if !exists('b:shell') || b:shell == ''
+" Utilities {{{1
+
+function! s:GetShell() " {{{2
+    if !exists('b:shell') || b:shell ==# ''
         let b:shell = ''
         let shebang = syntastic#util#parseShebang()['exe']
-        if shebang != ''
+        if shebang !=# ''
             if shebang[-strlen('bash'):-1] ==# 'bash'
                 let b:shell = 'bash'
             elseif shebang[-strlen('zsh'):-1] ==# 'zsh'
@@ -56,19 +59,19 @@ function! s:GetShell()
             endif
         endif
         " try to use env variable in case no shebang could be found
-        if b:shell == ''
-            let b:shell = fnamemodify(expand('$SHELL'), ':t')
+        if b:shell ==# ''
+            let b:shell = fnamemodify($SHELL, ':t')
         endif
     endif
     return b:shell
-endfunction
+endfunction " }}}2
 
-function! s:IsShellValid()
+function! s:IsShellValid() " {{{2
     let shell = s:GetShell()
-    return shell != '' && executable(shell)
-endfunction
+    return shell !=# '' && executable(shell)
+endfunction " }}}2
 
-function! s:ForwardToZshChecker()
+function! s:ForwardToZshChecker() " {{{2
     let registry = g:SyntasticRegistry.Instance()
     let zsh_checkers = registry.getCheckersAvailable('zsh', ['zsh'])
     if !empty(zsh_checkers)
@@ -76,7 +79,9 @@ function! s:ForwardToZshChecker()
     else
         return []
     endif
-endfunction
+endfunction " }}}2
+
+" }}}1
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'sh',
@@ -85,4 +90,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:
