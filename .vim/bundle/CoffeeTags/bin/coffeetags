@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-require 'CoffeeTags'
-
-options = Coffeetags::Utils.option_parser ARGV
-if options
-  Coffeetags::Utils.run options
-end

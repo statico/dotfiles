@@ -39,7 +39,6 @@ repos=(
   https://github.com/Lokaltog/vim-powerline.git
   https://github.com/StanAngeloff/php.vim.git
   https://github.com/airblade/vim-gitgutter.git
-  https://github.com/altercation/vim-colors-solarized.git
   https://github.com/alunny/pegjs-vim.git
   https://github.com/ap/vim-css-color.git
   https://github.com/ctrlpvim/ctrlp.vim.git
@@ -51,11 +50,7 @@ repos=(
   https://github.com/groenewege/vim-less.git
   https://github.com/junegunn/goyo.vim.git
   https://github.com/kchmck/vim-coffee-script.git
-  https://github.com/leafgarland/typescript-vim.git
-  https://github.com/lukaszkorecki/CoffeeTags.git
-  https://github.com/majutsushi/tagbar.git
   https://github.com/mtscout6/vim-cjsx.git
-  https://github.com/nono/vim-handlebars.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
   https://github.com/scrooloose/nerdcommenter.git
@@ -63,16 +58,12 @@ repos=(
   https://github.com/scrooloose/syntastic.git
   https://github.com/tomasr/molokai.git
   https://github.com/tpope/vim-fugitive.git
-  https://github.com/tpope/vim-haml.git
   https://github.com/tpope/vim-liquid.git
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-sleuth.git
   https://github.com/tpope/vim-surround.git
-  https://github.com/vim-scripts/Railscasts-Theme-GUIand256color.git
   https://github.com/vim-scripts/bufkill.vim.git
-  https://github.com/vim-scripts/keepcase.vim.git
-  https://github.com/vim-scripts/lighttpd-syntax.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
 
@@ -81,8 +72,6 @@ repos=(
 # Here's a list of everything else to download in the format
 # <destination>;<url>[;<filename>]
 other=(
-  'zenburn/colors;http://slinky.imukuppi.org/zenburn/zenburn.vim'
-  'wombat/colors;http://files.werx.dk/wombat.vim'
   'glsl/syntax;http://www.vim.org/scripts/download_script.php?src_id=3194;glsl.vim'
   )
 

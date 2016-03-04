@@ -15,25 +15,22 @@ nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :CoffeeWatch<CR>
-nmap \d :%!perltidy<CR>
 nmap \e :NERDTreeToggle<CR>
 nmap \f mt:Goyo 100<CR>'tzz
 nmap \F mt:Goyo<CR>'tzz
 nmap \g :Gstatus<CR>
+nmap \h :call ToggleHex()<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
 nmap \q :nohlsearch<CR>
-nmap \r :TagbarToggle<CR>
 nmap \s :setlocal invspell<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \u :setlocal list!<CR>:setlocal list?<CR>
 nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nmap \x :cclose<CR>
-nmap \Y :vertical resize 40<CR>:wincmd l<CR>
-nmap \y :exec "vertical resize " . (80 + (&number * &numberwidth))<CR>:wincmd l<CR>
 nmap \z :w<CR>:!open %<CR><CR>
 
 " You don't know what you're missing if you don't use this.
@@ -351,16 +348,6 @@ let explDirsFirst = -1
 " vimspell.vim
 let spell_auto_type = ""
 
-" taglist.vim
-let Tlist_Use_Right_Window = 1
-let Tlist_WinWidth = 30
-
-" tagbar
-let g:tagbar_iconchars = ['▸', '▾']
-
-" CoffeeTags
-let g:CoffeeAutoTagDisabled=1 " Disables autotaging on save (Default: 0 [false])
-
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
 
@@ -400,20 +387,12 @@ filetype plugin indent on
 " Section: Color and syntax {{{1
 "--------------------------------------------------------------------------
 
-" Helper to initialize Zenburn colors in 256-color mode.
-function! ColorTermZenburn()
-  colorscheme zenburn
-  highlight Normal ctermbg=234
-  highlight CursorLine ctermbg=236
-  let g:zenburn_high_Contrast = 1
-endfunction
-
 " Make sure colored syntax mode is on, and make it Just Work with newer 256
 " color terminals like iTerm2.
 if !has('gui_running')
   if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
     set t_Co=256
-    call ColorTermZenburn()
+    colorscheme molokai
   elseif has("terminfo")
     colorscheme default
     set t_Co=8
@@ -486,9 +465,6 @@ highlight link markdownItalic Statement
 highlight link markdownCode Delimiter
 highlight link markdownCodeBlock Delimiter
 highlight link markdownListMarker Todo
-
-" TagBar current function needs to be more visible
-highlight link TagbarHighlight MatchParen
 
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------

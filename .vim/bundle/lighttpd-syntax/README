@@ -1,7 +1,0 @@
-This is a mirror of http://www.vim.org/scripts/script.php?script_id=2597
-
-syntax highlighting for lighttpd config files.
-
-lighttpd (lighty) is lightweight open-source web server: http://www.lighttpd.net/
-
-always recent version can be grabbed from: http://cvs.pld-linux.org/cgi-bin/cvsweb.cgi/packages/vim-syntax-lighttpd/lighttpd.vim
