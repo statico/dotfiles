@@ -382,6 +382,9 @@ let g:gitgutter_sign_modified_removed = '∙'
 let g:SuperTabLongestEnhanced=1
 let g:SuperTabLongestHighlight=1
 
+" Zenburn
+let g:zenburn_high_Contrast = 1
+
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
 
@@ -397,7 +400,6 @@ if !has('gui_running')
     highlight Normal ctermbg=234
     highlight CursorLine ctermbg=236
     highlight Visual ctermbg=238
-    let g:zenburn_high_Contrast = 1
   elseif has("terminfo")
     colorscheme default
     set t_Co=8
