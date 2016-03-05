@@ -393,7 +393,11 @@ filetype plugin indent on
 if !has('gui_running')
   if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
     set t_Co=256
-    colorscheme molokai
+    colorscheme zenburn
+    highlight Normal ctermbg=234
+    highlight CursorLine ctermbg=236
+    highlight Visual ctermbg=238
+    let g:zenburn_high_Contrast = 1
   elseif has("terminfo")
     colorscheme default
     set t_Co=8
