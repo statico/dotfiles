@@ -17,3 +17,4 @@
 --type-set=py=.py
 --type-set=sass=.sass
 --type-set=coffee=.coffee
+--type-set=cjsx=.cjsx
