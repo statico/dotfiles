@@ -1,6 +1,3 @@
-set background=dark
-colors molokai
-
 " Gutter color default is annoying. Make it blend in.
 hi SignColumn guibg=NONE
 
