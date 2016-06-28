@@ -179,6 +179,7 @@ alias ZshInstall='~/.dotfiles/install.sh ; ZR'
 alias ZshRehash='. ~/.zshrc'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
+alias co='git checkout'
 alias df='df -H'
 alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
@@ -192,6 +193,7 @@ alias f2k='f2 | xargs -t kill'
 alias g='git'
 alias gA='git add --all :/'
 alias ga='git add'
+alias gaa='gA ; st'
 alias gac='git add `git status -uall | egrep "#\tboth modified:" | cut -d: -f2`'
 alias gap='clear; git add --all --patch'
 alias gca='git commit --amend'
@@ -209,6 +211,7 @@ alias gfmom='git fetch origin && git merge origin/master'
 alias gfrb='git fetch origin && git rebase origin/master'
 alias gfrbi='gfrb --interactive'
 alias gfa='git fetch --all'
+alias gg='git grep'
 alias gh='git stash'
 alias ghl='git stash list'
 alias ghp='git stash pop'
@@ -234,6 +237,7 @@ alias gu='git add --update'
 alias gup='git up'
 alias gus='git unstage'
 alias gvc='vim `git diff --name-only --diff-filter=U`'
+alias gvm='vim `git diff --name-only --diff-filter=M`'
 alias i4='sed "s/^/    /"'
 alias icat='lsbom -f -l -s -pf'
 alias iinstall='sudo installer -target / -pkg'
@@ -309,6 +313,11 @@ fi
 # containing that code. Changing `ack' to `vack' does this for me.
 function vack () {
   vim `ack -l $@`
+}
+
+# ..same thing with gg.
+function vgg () {
+  vim `gg -l $@`
 }
 
 # Quick commands to sync CWD between terminals.

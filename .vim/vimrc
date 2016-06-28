@@ -77,13 +77,19 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <M-k>  :Ag! "\b<cword>\b" <CR>
-nmap <Esc>k :Ag! "\b<cword>\b" <CR>
-nmap ˚      :Ag! "\b<cword>\b" <CR>
+"nmap <M-k>  :Ag! "\b<cword>\b" <CR>
+"nmap <Esc>k :Ag! "\b<cword>\b" <CR>
+"nmap ˚      :Ag! "\b<cword>\b" <CR>
+nmap <M-k>  :Ggrep! "\b<cword>\b" <CR>
+nmap <Esc>k :Ggrep! "\b<cword>\b" <CR>
+nmap ˚      :Ggrep! "\b<cword>\b" <CR>
 
 " Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
+nmap <Esc>o :cc<CR>
 nmap <Esc>n :cnext<CR>
 nmap <Esc>p :cprevious<CR>
+nmap <Esc>c :cclose<CR>
+nmap <D-ø>  :cc<CR>
 nmap <D-~>  :cnext<CR>
 nmap <D-π>  :cprevious<CR>
 nmap <D-ç>  :cclose<CR>
@@ -371,6 +377,9 @@ nmap <Leader>r :CtrlPTag<CR>
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=0
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+
+" fugitive
+autocmd QuickFixCmdPost *grep* cwindow
 
 " GitGutter
 let g:gitgutter_sign_added = '∙'
