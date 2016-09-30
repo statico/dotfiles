@@ -54,6 +54,7 @@ repos=(
   https://github.com/mtscout6/vim-cjsx.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
+  https://github.com/rust-lang/rust.vim.git
   https://github.com/scrooloose/nerdcommenter.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
