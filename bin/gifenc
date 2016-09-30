@@ -1,11 +1,21 @@
 #!/bin/sh
 # From http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html
 
+in="$1"
+out="$2"
+
+if [ -z "$out" ]; then
+  out="$(echo $in | cut -f 1 -d '.' ).gif"
+fi
+
 palette="/tmp/palette.png"
 
-filters="fps=30,scale=500:-1:flags=lanczos"
+fps=${FPS:-30}
 
-ffmpeg -v warning -i $1 -vf "$filters,palettegen" -y $palette
-ffmpeg -v warning -i $1 -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $2
+filters="fps=$fps,scale=500:-1:flags=lanczos"
 
-ls -lh $2
+ffmpeg -v warning -i $in -vf "$filters,palettegen" -y $palette
+ffmpeg -v warning -i $in -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $out
+
+echo
+ls -lh $out
