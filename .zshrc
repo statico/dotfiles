@@ -116,7 +116,6 @@ fi
 
 # GNU grep
 if _color; then
-    export GREP_OPTIONS='--color=auto'
     export GREP_COLOR='1;32'
 fi
 
