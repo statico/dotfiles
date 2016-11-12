@@ -203,9 +203,12 @@ abbr conosle console
 abbr comopnent component
 
 " Coffeescript helpers
-abbr xxx console.log 'XXX',
-abbr yyy console.log 'YYY',
-abbr zzz console.log 'ZZZ',
+autocmd Filetype coffee iabbr xxx console.log 'XXX',
+autocmd Filetype coffee iabbr yyy console.log 'YYY',
+autocmd Filetype coffee iabbr zzz console.log 'ZZZ',
+autocmd Filetype javascript iabbr xxx console.log('XXX',
+autocmd Filetype javascript iabbr yyy console.log('YYY',
+autocmd Filetype javascript iabbr zzz console.log('ZZZ',
 
 " Section: Vim options {{{1
 "--------------------------------------------------------------------------
