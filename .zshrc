@@ -179,6 +179,7 @@ alias ZshRehash='. ~/.zshrc'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias co='git checkout'
+alias d='docker'
 alias df='df -H'
 alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
