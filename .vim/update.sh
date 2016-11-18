@@ -68,6 +68,7 @@ repos=(
   https://github.com/vim-scripts/bufkill.vim.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
+  https://github.com/wizicer/vim-jison
 
   )
 
