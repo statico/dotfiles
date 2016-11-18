@@ -13,9 +13,9 @@ endif
 
 " Keywords
 syn keyword dockerfileKeywords FROM MAINTAINER RUN CMD COPY
-syn keyword dockerfileKeywords EXPOSE ENV ADD ENTRYPOINT
+syn keyword dockerfileKeywords EXPOSE ADD ENTRYPOINT
 syn keyword dockerfileKeywords VOLUME USER WORKDIR ONBUILD
-syn keyword dockerfileKeywords LABEL ARG
+syn keyword dockerfileKeywords LABEL ARG HEALTHCHECK SHELL
 
 " Bash statements
 setlocal iskeyword+=-
@@ -42,9 +42,12 @@ syn keyword dockerfileTodo contained TODO FIXME XXX
 
 " Comments
 syn region dockerfileComment start="#" end="\n" contains=dockerfileTodo
+syn region dockerfileEnvWithComment start="^\s*ENV\>" end="\n" contains=dockerfileEnv
+syn match dockerfileEnv contained /\<ENV\>/
 
 " Highlighting
 hi link dockerfileKeywords  Keyword
+hi link dockerfileEnv       Keyword
 hi link dockerfileString    String
 hi link dockerfileString1   String
 hi link dockerfileComment   Comment

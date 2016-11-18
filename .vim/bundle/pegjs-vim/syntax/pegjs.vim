@@ -26,7 +26,7 @@ syn region innerLiteral start="\"" end="\"" contained
 syn region comment start="/[*]" end="[*]/"
 syn region comment start="//" end="\n"
 
-syn region jsBlock start="{" end="}" keepend contains=@js
+syn region jsBlock start=/{/ms=s+1 end=/}/me=e-1 contains=@js
 
 hi def link ruleDef         PreProc
 hi def link rule            Type

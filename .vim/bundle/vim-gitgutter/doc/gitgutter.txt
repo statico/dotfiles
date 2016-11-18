@@ -14,8 +14,9 @@ CONTENTS                                                    *GitGutterContents*
   2.  Installation ................. |GitGutterInstallation|
   3.  Usage ........................ |GitGutterUsage|
   4.  Commands ..................... |GitGutterCommands|
-  5.  CUSTOMISATION................. |GitGutterCustomisation|
-  6.  FAQ .......................... |GitGutterFAQ|
+  5.  Autocommand .................. |GitGutterAutocmd|
+  6.  CUSTOMISATION................. |GitGutterCustomisation|
+  7.  FAQ .......................... |GitGutterFAQ|
 
 ===============================================================================
 1. INTRODUCTION                                         *GitGutterIntroduction*
@@ -30,18 +31,47 @@ This is a port of the Git Gutter plugin for Sublime Text 2.
 ===============================================================================
 2. INSTALLATION                                         *GitGutterInstallation*
 
-If you don't have a preferred installation method, I recommend installing
-pathogen.vim, and then simply copy and paste:
+* Pathogen:
 >
   cd ~/.vim/bundle
   git clone git://github.com/airblade/vim-gitgutter.git
 <
-Or for Vundle users:
+* Voom:
 
-Add Bundle 'airblade/vim-gitgutter' to your |vimrc| and then:
+Edit your plugin manifest (`voom edit`) and add:
+>
+  airblade/vim-gitgutter
+<
+* VimPlug:
 
-  - either within Vim: :BundleInstall
-  - or in your shell: vim +BundleInstall +qall
+Place this in your .vimrc:
+>
+    Plug 'airblade/vim-gitgutter'
+<
+Then run the following in Vim:
+>
+  :source %
+  :PlugInstall
+<
+* NeoBundle:
+
+Place this in your .vimrc:
+>
+  NeoBundle 'airblade/vim-gitgutter'
+<
+Then run the following in Vim:
+>
+  :source %
+  :NeoBundleInstall
+<
+* No plugin manager:
+
+Copy vim-gitgutter's subdirectories into your vim configuration directory:
+>
+  cd tmp && git clone git://github.com/airblade/vim-gitgutter.git
+  cp vim-gitgutter/* ~/.vim/
+<
+See |add-global-plugin|.
 
 ===============================================================================
 3. USAGE                                                       *GitGutterUsage*
@@ -98,25 +128,35 @@ Commands for jumping between marked hunks:
   :GitGutterPrevHunk                                       *:GitGutterPrevHunk*
       Jump to the previous marked hunk.  Takes a count.
 
-Commands for staging or reverting individual hunks:
+Commands for staging or undoing individual hunks:
 
   :GitGutterStageHunk                                     *:GitGutterStageHunk*
       Stage the hunk the cursor is in.
 
-  :GitGutterRevertHunk                                   *:GitGutterRevertHunk*
-      Revert the hunk the cursor is in.
+  :GitGutterUndoHunk                                       *:GitGutterUndoHunk*
+      Undo the hunk the cursor is in.
 
   :GitGutterPreviewHunk                                 *:GitGutterPreviewHunk*
       Preview the hunk the cursor is in.
 
 ===============================================================================
-5. CUSTOMISATION                                       *GitGutterCustomisation*
+5. AUTOCOMMAND                                               *GitGutterAutocmd*
+
+After updating a buffer's signs vim-gitgutter fires a |User| |autocmd| with the
+event GitGutter.  You can listen for this event, for example:
+>
+  autocmd User GitGutter call updateMyStatusLine()
+<
+
+===============================================================================
+6. CUSTOMISATION                                       *GitGutterCustomisation*
 
 You can customise:
 
 - The sign column's colours
 - The signs' colours and symbols
 - Line highlights
+- The base of the diff
 - Extra arguments for git-diff
 - Key mappings
 - The grep executable used
@@ -125,6 +165,7 @@ You can customise:
 - Whether or not line highlighting is on initially (defaults to off)
 - Whether or not vim-gitgutter runs in realtime (defaults to yes)
 - Whether or not vim-gitgutter runs eagerly (defaults to yes)
+- Whether or not vim-gitgutter runs asynchronously (defaults to yes)
 
 Please note that vim-gitgutter won't override any colours or highlights you've
 set in your colorscheme.
@@ -185,6 +226,14 @@ colorscheme or |vimrc|:
   GitGutterChangeDeleteLine " default: links to GitGutterChangeLineDefault
 <
 
+THE BASE OF THE DIFF
+
+By default buffers are diffed against the index.  To diff against a commit
+instead:
+>
+  let g:gitgutter_diff_base = '<commit SHA>'
+<
+
 EXTRA ARGUMENTS FOR GIT-DIFF
 
 To pass extra arguments to git-diff, add this to your |vimrc|:
@@ -205,11 +254,19 @@ To change the hunk-jumping maps (defaults shown):
   nmap ]c <Plug>GitGutterNextHunk
 <
 
-To change the hunk-staging/reverting/previewing maps (defaults shown):
+To change the hunk-staging/undoing/previewing maps (defaults shown):
 >
   nmap <Leader>hs <Plug>GitGutterStageHunk
-  nmap <Leader>hr <Plug>GitGutterRevertHunk
+  nmap <Leader>hu <Plug>GitGutterUndoHunk
   nmap <Leader>hp <Plug>GitGutterPreviewHunk
+<
+
+To change the hunk text object maps (defaults shown):
+>
+  omap ic <Plug>GitGutterTextObjectInnerPending
+  omap ac <Plug>GitGutterTextObjectOuterPending
+  xmap ic <Plug>GitGutterTextObjectInnerVisual
+  xmap ac <Plug>GitGutterTextObjectOuterVisual
 <
 
 TO USE A CUSTOM GREP COMMAND
@@ -257,9 +314,18 @@ Add to your |vimrc|
   let g:gitgutter_eager = 0
 <
 
+TO TURN OFF ASYNCHRONOUS UPDATES
+
+By default diffs are run asynchronously.  To run diffs synchronously
+instead:
+
+Add to your |vimrc|
+>
+let g:gitgutter_async = 0
+<
 
 ===============================================================================
-6. FAQ                                                           *GitGutterFAQ*
+7. FAQ                                                           *GitGutterFAQ*
 
 a. Why are the colours in the sign column weird?
 

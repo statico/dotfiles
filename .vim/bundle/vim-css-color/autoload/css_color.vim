@@ -3,7 +3,7 @@
 " Commit:       $Format:%H$
 " Licence:      The MIT License (MIT)
 
-if v:version < 700 || !( has('gui_running') || has('nvim') || &t_Co==256 )
+if v:version < 700 || !( has('syntax') || has('gui_running') || has('nvim') || &t_Co==256 )
 	function! css_color#init(type, keywords, groups)
 	endfunction
 	function! css_color#extend(groups)
@@ -67,32 +67,7 @@ else
 		\ [ 0x00, 0xFF, 0xFF, 14 ],
 		\ [ 0xFF, 0xFF, 0xFF, 15 ]]
 	" grayscale ramp
-	" (value is 8+10*lum for lum in 0..23)
-	let s:xtermcolor += [
-		\ [ 0x08, 0x08, 0x08, 232 ],
-		\ [ 0x12, 0x12, 0x12, 233 ],
-		\ [ 0x1C, 0x1C, 0x1C, 234 ],
-		\ [ 0x26, 0x26, 0x26, 235 ],
-		\ [ 0x30, 0x30, 0x30, 236 ],
-		\ [ 0x3A, 0x3A, 0x3A, 237 ],
-		\ [ 0x44, 0x44, 0x44, 238 ],
-		\ [ 0x4E, 0x4E, 0x4E, 239 ],
-		\ [ 0x58, 0x58, 0x58, 240 ],
-		\ [ 0x62, 0x62, 0x62, 241 ],
-		\ [ 0x6C, 0x6C, 0x6C, 242 ],
-		\ [ 0x76, 0x76, 0x76, 243 ],
-		\ [ 0x80, 0x80, 0x80, 244 ],
-		\ [ 0x8A, 0x8A, 0x8A, 245 ],
-		\ [ 0x94, 0x94, 0x94, 246 ],
-		\ [ 0x9E, 0x9E, 0x9E, 247 ],
-		\ [ 0xA8, 0xA8, 0xA8, 248 ],
-		\ [ 0xB2, 0xB2, 0xB2, 249 ],
-		\ [ 0xBC, 0xBC, 0xBC, 250 ],
-		\ [ 0xC6, 0xC6, 0xC6, 251 ],
-		\ [ 0xD0, 0xD0, 0xD0, 252 ],
-		\ [ 0xDA, 0xDA, 0xDA, 253 ],
-		\ [ 0xE4, 0xE4, 0xE4, 254 ],
-		\ [ 0xEE, 0xEE, 0xEE, 255 ]]
+	let s:xtermcolor += map(range(24),'repeat([10*v:val+8],3) + [v:val+232]')
 
 	" the 6 values used in the xterm color cube
 	"                    0    95   135   175   215   255
@@ -157,8 +132,8 @@ function! s:create_syn_match()
 
 	let pattern = submatch(0)
 
-	if has_key( b:has_pattern_syn, pattern ) | return | endif
-	let b:has_pattern_syn[pattern] = 1
+	if has_key( b:css_color_syn, pattern ) | return | endif
+	let b:css_color_syn[pattern] = 1
 
 	let rgb_color = get( s:pattern_color, pattern, '' )
 
@@ -181,7 +156,7 @@ function! s:create_syn_match()
 		let s:pattern_color[pattern] = rgb_color
 	endif
 
-	if ! has_key( b:has_color_hi, rgb_color )
+	if ! has_key( b:css_color_hi, rgb_color )
 		let is_bright = get( s:color_bright, rgb_color, -1 )
 		if is_bright == -1
 			let r = s:hex[rgb_color[0:1]]
@@ -192,7 +167,7 @@ function! s:create_syn_match()
 		endif
 
 		call s:create_highlight( rgb_color, is_bright )
-		let b:has_color_hi[rgb_color] = 1
+		let b:css_color_hi[rgb_color] = is_bright
 	endif
 
 	" iff pattern ends on word character, require word break to match
@@ -238,41 +213,68 @@ let s:_listsep    = s:_ws_ . ','
 let s:_otherargs_ = '\%(,[^)]*\)\?'
 let s:_funcexpr   = s:_funcname . '[(]' . s:_numval . s:_listsep . s:_numval . s:_listsep . s:_numval . s:_ws_ . s:_otherargs_ . '[)]'
 let s:_csscolor   = s:_hexcolor . '\|' . s:_funcexpr
+" N.B. sloppy heuristic constants for performance reasons:
+"      a) start somewhere left of screen in case of partially visible colorref
+"      b) take some multiple of &columns to handle multibyte chars etc
 " N.B. these substitute() calls are here just for the side effect
 "      of invoking s:create_syn_match during substitution -- because
 "      match() and friends do not allow finding all matches in a single
 "      scan without examining the start of the string over and over
-function! s:parse_css_screen()
-	call substitute( join( getline('w0','w$'), "\n" ), s:_csscolor, '\=s:create_syn_match()', 'g' )
+function! s:parse_screen()
 	call s:clear_matches()
-	call s:create_matches()
-endfunction
-function! s:parse_hex_screen()
-	call substitute( join( getline('w0','w$'), "\n" ), s:_hexcolor, '\=s:create_syn_match()', 'g' )
-	call s:clear_matches()
+	let leftcol = winsaveview().leftcol
+	let left = max([ leftcol - 15, 0 ])
+	let width = &columns * 4
+	call filter( range( line('w0'), line('w$') ), 'substitute( strpart( getline(v:val), col([v:val, left]), width ), b:css_color_pat, ''\=s:create_syn_match()'', ''g'' )' )
 	call s:create_matches()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! css_color#extend(groups) " if already initialized (by other filetype)
-	exe 'syn cluster colorableGroup add=' . a:groups
+function! css_color#reinit()
+	call filter( keys( b:css_color_hi ), 's:create_highlight( v:val, s:color_bright[v:val] )' )
 endfunction
 
-function! css_color#init(type, keywords, groups)
-	exe 'syn cluster colorableGroup contains=' . a:groups
+function! css_color#enable()
+	if len( b:css_color_grp ) | exe 'syn cluster colorableGroup add=' . join( b:css_color_grp, ',' ) | endif
+	autocmd CSSColor CursorMoved,CursorMovedI <buffer> call s:parse_screen()
+	let b:css_color_off = 0
+	call s:parse_screen()
+endfunction
 
-	let b:has_color_hi    = {}
-	let b:has_pattern_syn = {}
+function! css_color#disable()
+	if len( b:css_color_grp ) | exe 'syn cluster colorableGroup remove=' . join( b:css_color_grp, ',' ) | endif
+	autocmd! CSSColor CursorMoved,CursorMovedI <buffer>
+	let b:css_color_off = 1
+endfunction
+
+function! css_color#toggle()
+	if ! exists('b:css_color_off') | return | endif
+	if b:css_color_off | call css_color#enable()
+	else               | call css_color#disable()
+	endif
+endfunction
+
+let s:type         = [ 'none', 'hex', 'css', 'none' ] " with wraparound for index() == -1
+let s:pat_for_type = [ '^$', s:_hexcolor, s:_csscolor, '^$' ]
+
+function! css_color#init(type, keywords, groups)
+	let new_type = index( s:type, a:type )
+	let old_type = index( s:pat_for_type, get( b:, 'css_color_pat', '$^' ) )
+
+	let b:css_color_pat = s:pat_for_type[ max( [ old_type, new_type ] ) ]
+	let b:css_color_grp = extend( get( b:, 'css_color_grp', [] ), split( a:groups, ',' ), 0 )
+	let b:css_color_hi  = {}
+	let b:css_color_syn = {}
 
 	augroup CSSColor
 		autocmd! * <buffer>
-		exe 'autocmd CursorMoved,CursorMovedI <buffer> call s:parse_'.a:type.'_screen()'
+		autocmd ColorScheme <buffer> call css_color#reinit()
 		autocmd BufWinEnter <buffer> call s:create_matches()
 		autocmd BufWinLeave <buffer> call s:clear_matches()
 	augroup END
 
-	exe 'call s:parse_'.a:type.'_screen()'
+	call css_color#enable()
 
 	if a:keywords == 'none' | return | endif
 
@@ -297,6 +299,11 @@ function! css_color#init(type, keywords, groups)
 	hi BG008080 guibg=#008080 guifg=#FFFFFF ctermbg=30  ctermfg=231
 	hi BG00ffff guibg=#00FFFF guifg=#000000 ctermbg=51  ctermfg=16
 
+	call extend( b:css_color_hi,
+		\{'000000':0,'c0c0c0':1,'808080':1,'ffffff':1,'800000':0,'ff0000':0
+		\,'800080':0,'ff00ff':0,'008000':0,'00ff00':1,'808000':0,'ffff00':1
+		\,'000080':0,'0000ff':0,'008080':0,'00ffff':1} )
+
 	syn keyword BG000000 black   contained containedin=@colorableGroup
 	syn keyword BGc0c0c0 silver  contained containedin=@colorableGroup
 	syn keyword BG808080 gray    contained containedin=@colorableGroup
@@ -314,7 +321,7 @@ function! css_color#init(type, keywords, groups)
 	syn keyword BG008080 teal    contained containedin=@colorableGroup
 	syn keyword BG00ffff aqua    contained containedin=@colorableGroup
 
-	if a:keywords == 'basic' | return | endif
+	if a:keywords == 'basic' | call extend( s:color_bright, b:css_color_hi ) | return | endif
 
 	" W3C extended colors
 
@@ -440,6 +447,29 @@ function! css_color#init(type, keywords, groups)
 	hi BGfffafa guibg=#FFFAFA guifg=#000000 ctermbg=15  ctermfg=16
 	hi BGffffe0 guibg=#FFFFE0 guifg=#000000 ctermbg=230 ctermfg=16
 	hi BGfffff0 guibg=#FFFFF0 guifg=#000000 ctermbg=15  ctermfg=16
+
+	call extend( b:css_color_hi,
+		\{'00008b':0,'0000cd':0,'006400':0,'008b8b':0,'00bfff':1,'00ced1':1
+		\,'00fa9a':1,'00ff7f':1,'191970':0,'1e90ff':1,'20b2aa':1,'228b22':0
+		\,'2e8b57':0,'2f4f4f':0,'32cd32':1,'3cb371':1,'40e0d0':1,'4169e1':0
+		\,'4682b4':0,'483d8b':0,'48d1cc':1,'4b0082':0,'556b2f':0,'5f9ea0':1
+		\,'6495ed':1,'66cdaa':1,'696969':0,'6a5acd':0,'6b8e23':0,'708090':1
+		\,'778899':1,'7b68ee':1,'7cfc00':1,'7fff00':1,'7fffd4':1,'87ceeb':1
+		\,'87cefa':1,'8a2be2':0,'8b0000':0,'8b008b':0,'8b4513':0,'8fbc8f':1
+		\,'90ee90':1,'9370d8':1,'9400d3':0,'98fb98':1,'9932cc':0,'9acd32':1
+		\,'a0522d':0,'a52a2a':0,'a9a9a9':1,'add8e6':1,'adff2f':1,'afeeee':1
+		\,'b0c4de':1,'b0e0e6':1,'b22222':0,'b8860b':1,'ba55d3':1,'bc8f8f':1
+		\,'bdb76b':1,'c71585':0,'cd5c5c':1,'cd853f':1,'d2691e':1,'d2b48c':1
+		\,'d3d3d3':1,'d87093':1,'d8bfd8':1,'da70d6':1,'daa520':1,'dc143c':0
+		\,'dcdcdc':1,'dda0dd':1,'deb887':1,'e0ffff':1,'e6e6fa':1,'e9967a':1
+		\,'ee82ee':1,'eee8aa':1,'f08080':1,'f0e68c':1,'f0f8ff':1,'f0fff0':1
+		\,'f0ffff':1,'f4a460':1,'f5deb3':1,'f5f5dc':1,'f5f5f5':1,'f5fffa':1
+		\,'f8f8ff':1,'fa8072':1,'faebd7':1,'faf0e6':1,'fafad2':1,'fdf5e6':1
+		\,'ff1493':0,'ff4500':0,'ff6347':1,'ff69b4':1,'ff7f50':1,'ff8c00':1
+		\,'ffa07a':1,'ffa500':1,'ffb6c1':1,'ffc0cb':1,'ffd700':1,'ffdab9':1
+		\,'ffdead':1,'ffe4b5':1,'ffe4c4':1,'ffe4e1':1,'ffebcd':1,'ffefd5':1
+		\,'fff0f5':1,'fff5ee':1,'fff8dc':1,'fffacd':1,'fffaf0':1,'fffafa':1
+		\,'ffffe0':1,'fffff0':1} )
 
 	syn keyword BGf0f8ff AliceBlue            contained containedin=@colorableGroup
 	syn keyword BGfaebd7 AntiqueWhite         contained containedin=@colorableGroup
@@ -572,4 +602,6 @@ function! css_color#init(type, keywords, groups)
 	syn keyword BGf5deb3 Wheat                contained containedin=@colorableGroup
 	syn keyword BGf5f5f5 WhiteSmoke           contained containedin=@colorableGroup
 	syn keyword BG9acd32 YellowGreen          contained containedin=@colorableGroup
+
+	call extend( s:color_bright, b:css_color_hi )
 endfunction

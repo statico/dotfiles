@@ -1,6 +1,6 @@
 let s:tree_up_dir_line = '.. (up a dir)'
 syn match NERDTreeIgnore #\~#
-syn match NERDTreeIgnore #\[RO\]#
+exec 'syn match NERDTreeIgnore #\['.g:NERDTreeGlyphReadOnly.'\]#'
 
 "highlighting for the .. (up dir) line at the top of the tree
 execute "syn match NERDTreeUp #\\V". s:tree_up_dir_line ."#"
@@ -25,13 +25,13 @@ syn match NERDTreeDirSlash #/# containedin=NERDTreeDir
 exec 'syn match NERDTreeClosable #'.escape(g:NERDTreeDirArrowCollapsible, '~').'# containedin=NERDTreeDir,NERDTreeFile'
 exec 'syn match NERDTreeOpenable #'.escape(g:NERDTreeDirArrowExpandable, '~').'# containedin=NERDTreeDir,NERDTreeFile'
 
-let s:dirArrows = escape(g:NERDTreeDirArrowCollapsible, '~').escape(g:NERDTreeDirArrowExpandable, '~')
+let s:dirArrows = escape(g:NERDTreeDirArrowCollapsible, '~]\-').escape(g:NERDTreeDirArrowExpandable, '~]\-')
 exec 'syn match NERDTreeDir #[^'.s:dirArrows.' ].*/#'
 syn match NERDTreeExecFile  #^ .*\*\($\| \)# contains=NERDTreeRO,NERDTreeBookmark
 exec 'syn match NERDTreeFile  #^[^"\.'.s:dirArrows.'] *[^'.s:dirArrows.']*# contains=NERDTreeLink,NERDTreeRO,NERDTreeBookmark,NERDTreeExecFile'
 
 "highlighting for readonly files
-syn match NERDTreeRO # *\zs.*\ze \[RO\]# contains=NERDTreeIgnore,NERDTreeBookmark,NERDTreeFile
+exec 'syn match NERDTreeRO # *\zs.*\ze \['.g:NERDTreeGlyphReadOnly.'\]# contains=NERDTreeIgnore,NERDTreeBookmark,NERDTreeFile'
 
 syn match NERDTreeFlags #^ *\zs\[.\]# containedin=NERDTreeFile,NERDTreeExecFile
 syn match NERDTreeFlags #\[.\]# containedin=NERDTreeDir
@@ -72,8 +72,8 @@ hi def link NERDTreeDir Directory
 hi def link NERDTreeUp Directory
 hi def link NERDTreeFile Normal
 hi def link NERDTreeCWD Statement
-hi def link NERDTreeOpenable Title
-hi def link NERDTreeClosable Title
+hi def link NERDTreeOpenable Directory
+hi def link NERDTreeClosable Directory
 hi def link NERDTreeIgnore ignore
 hi def link NERDTreeRO WarningMsg
 hi def link NERDTreeBookmark Statement

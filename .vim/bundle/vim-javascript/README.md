@@ -1,24 +1,8 @@
-# vim-javascript v0.10.0
+# vim-javascript
 
-JavaScript bundle for vim, this bundle provides syntax and indent plugins.
+JavaScript bundle for vim, this bundle provides syntax highlighting and
+improved indentation.
 
-## A Quick Note on Regexes
-
-Vim 7.4 was released recently, and unfortunately broke how this plugin
-handles regexes. There was no real easy way for us to fix this unless we
-completely rewrote how regexes work.
-
-Good News: There was a recent update to Vim 7.4 that fixes this issue.
-
-Make sure you are at least using Vim 7.4, with patches 1-7.
-
-If you are stuck on an older version of Vim 7.4 with no way to update,
-then simply perform the following commands to fix your current buffer:
-
-```
-:set regexpengine=1
-:syntax enable
-```
 
 ## Installation
 
@@ -33,59 +17,105 @@ And install it:
     :so ~/.vimrc
     :PluginInstall
 
+### Install with [vim-plug](https://github.com/junegunn/vim-plug)
+
+Add to vimrc:
+
+    Plug 'pangloss/vim-javascript'
+
+And install it:
+
+    :so ~/.vimrc
+    :PlugInstall
+
 ### Install with [pathogen](https://github.com/tpope/vim-pathogen)
 
       git clone https://github.com/pangloss/vim-javascript.git ~/.vim/bundle/vim-javascript
 
-## Configuration
 
-The following variables control certain syntax highlighting features. You can
-add them to your `.vimrc` to enable/disable their features.
+## Configuration Variables
 
-#### javascript_enable_domhtmlcss
+The following variables control certain syntax highlighting plugins. You can
+add them to your `.vimrc` to enable their features.
 
-Enables HTML/CSS syntax highlighting in your JavaScript file.
+-----------------
 
-Default Value: 0
+```
+let g:javascript_plugin_jsdoc = 1
+```
 
-#### b:javascript_fold
-
-Enables JavaScript code folding.
-
-Default Value: 1
-
-
-#### javascript_ignore_javaScriptdoc
-
-Disables JSDoc syntax highlighting
+Enables syntax highlighting for [JSDocs](http://usejsdoc.org/).
 
 Default Value: 0
 
-#### Concealing Characters
+-----------------
+
+```
+let g:javascript_plugin_ngdoc = 1
+```
+
+Enables some additional syntax highlighting for NGDocs. Requires JSDoc plugin
+to be enabled as well.
+
+Default Value: 0
+
+-----------------
+
+```
+let g:javascript_plugin_flow = 1
+```
+
+Enables syntax highlighting for [Flow](https://flowtype.org/).
+
+Default Value: 0
+
+-----------------
+
+```
+set foldmethod=syntax
+```
+
+Enables code folding based on our syntax file.
+
+Please note this can have a dramatic effect on performance and because it is a
+global vim option, we do not set it ourselves.
+
+
+## Concealing Characters
 
 You can customize concealing characters by defining one or more of the following
 variables:
 
-    let g:javascript_conceal_function   = "ƒ"
-    let g:javascript_conceal_null       = "ø"
-    let g:javascript_conceal_this       = "@"
-    let g:javascript_conceal_return     = "⇚"
-    let g:javascript_conceal_undefined  = "¿"
-    let g:javascript_conceal_NaN        = "ℕ"
-    let g:javascript_conceal_prototype  = "¶"
-    let g:javascript_conceal_static     = "•"
-    let g:javascript_conceal_super      = "Ω"
+    let g:javascript_conceal_function       = "ƒ"
+    let g:javascript_conceal_null           = "ø"
+    let g:javascript_conceal_this           = "@"
+    let g:javascript_conceal_return         = "⇚"
+    let g:javascript_conceal_undefined      = "¿"
+    let g:javascript_conceal_NaN            = "ℕ"
+    let g:javascript_conceal_prototype      = "¶"
+    let g:javascript_conceal_static         = "•"
+    let g:javascript_conceal_super          = "Ω"
+    let g:javascript_conceal_arrow_function = "⇒"
+
+## Indentation Specific
+
+* `:h cino-:`
 
 ## Contributing
 
-This project uses the [git
-flow](http://nvie.com/posts/a-successful-git-branching-model/) model for
-development. There's [a handy git module for git
-flow](//github.com/nvie/gitflow). If you'd like to be added as a contributor,
-the price of admission is 1 pull request. Please follow the general code style
+Please follow the general code style
 guides (read the code) and in your pull request explain the reason for the
-proposed change and how it is valuable.
+proposed change and how it is valuable. All p.r.'s will be reviewed by a
+maintainer(s) then, hopefully, merged.
 
-## Bug report
+Thank you!
+
+
+## Bug Reports
 
 Report a bug on [GitHub Issues](https://github.com/pangloss/vim-javascript/issues).
+
+
+## License
+
+Distributed under the same terms as Vim itself. See `:help license`.

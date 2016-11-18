@@ -4,6 +4,8 @@ Syntax highlighting and indenting for CJSX. CJSX is the [JSX](http://facebook.gi
 
 This bundle requires [kchmck/vim-coffee-script](https://github.com/kchmck/vim-coffee-script)
 
+This plugin contributes to [vim-polyglot](https://github.com/sheerun/vim-polyglot) language pack.
+
 ## Installation
 
 ### Pathogen

@@ -112,11 +112,6 @@ function! s:define_commands() abort
   endfor
 endfunction
 
-augroup fugitive_utility
-  autocmd!
-  autocmd User Fugitive call s:define_commands()
-augroup END
-
 let s:abstract_prototype = {}
 
 " Section: Initialization
@@ -213,6 +208,7 @@ function! fugitive#detect(path) abort
     endif
     try
       let [save_mls, &modelines] = [&mls, 0]
+      call s:define_commands()
       doautocmd User Fugitive
     finally
       let &mls = save_mls
@@ -347,7 +343,7 @@ function! s:repo_translate(spec) dict abort
   elseif filereadable(refs.'remotes/'.a:spec)
     return refs.'remotes/'.a:spec
   elseif filereadable(refs.'remotes/'.a:spec.'/HEAD')
-    return refs.'remotes/'.a:spec,'/HEAD'
+    return refs.'remotes/'.a:spec.'/HEAD'
   else
     try
       let ref = self.rev_parse(matchstr(a:spec,'[^:]*'))
@@ -472,8 +468,8 @@ endfun
 function! s:repo_aliases() dict abort
   if !has_key(self,'_aliases')
     let self._aliases = {}
-    for line in split(self.git_chomp('config','--get-regexp','^alias[.]'),"\n")
-      let self._aliases[matchstr(line,'\.\zs\S\+')] = matchstr(line,' \zs.*')
+    for line in split(self.git_chomp('config','-z','--get-regexp','^alias[.]'),"\1")
+      let self._aliases[matchstr(line, '\.\zs.\{-}\ze\n')] = matchstr(line, '\n\zs.*')
     endfor
   endif
   return self._aliases
@@ -704,7 +700,7 @@ function! s:Git(bang, args) abort
   let args = matchstr(a:args,'\v\C.{-}%($|\\@<!%(\\\\)*\|)@=')
   if exists(':terminal')
     let dir = s:repo().tree()
-    tabedit %
+    -tabedit %
     execute 'lcd' fnameescape(dir)
     execute 'terminal' git args
   else
@@ -863,7 +859,9 @@ function! s:StageUndo() abort
   let hash = repo.git_chomp('hash-object', '-w', filename)
   if !empty(hash)
     if section ==# 'untracked'
-      call delete(s:repo().tree(filename))
+      call repo.git_chomp_in_tree('clean', '-f', '--', filename)
+    elseif section ==# 'unmerged'
+      call repo.git_chomp_in_tree('rm', '--', filename)
     elseif section ==# 'unstaged'
       call repo.git_chomp_in_tree('checkout', '--', filename)
     else
@@ -1087,7 +1085,7 @@ function! s:Commit(args, ...) abort
         if bufname('%') == '' && line('$') == 1 && getline(1) == '' && !&mod
           execute 'keepalt edit '.s:fnameescape(msgfile)
         elseif a:args =~# '\%(^\| \)-\%(-verbose\|\w*v\)\>'
-          execute 'keepalt '.(tabpagenr()-1).'tabedit '.s:fnameescape(msgfile)
+          execute 'keepalt -tabedit '.s:fnameescape(msgfile)
         elseif s:buffer().type() ==# 'index'
           execute 'keepalt edit '.s:fnameescape(msgfile)
           execute (search('^#','n')+1).'wincmd+'
@@ -1118,7 +1116,7 @@ endfunction
 
 function! s:CommitComplete(A,L,P) abort
   if a:A =~ '^-' || type(a:A) == type(0) " a:A is 0 on :Gcommit -<Tab>
-    let args = ['-C', '-F', '-a', '-c', '-e', '-i', '-m', '-n', '-o', '-q', '-s', '-t', '-u', '-v', '--all', '--allow-empty', '--amend', '--author=', '--cleanup=', '--dry-run', '--edit', '--file=', '--include', '--interactive', '--message=', '--no-verify', '--only', '--quiet', '--reedit-message=', '--reuse-message=', '--signoff', '--template=', '--untracked-files', '--verbose']
+    let args = ['-C', '-F', '-a', '-c', '-e', '-i', '-m', '-n', '-o', '-q', '-s', '-t', '-u', '-v', '--all', '--allow-empty', '--amend', '--author=', '--cleanup=', '--dry-run', '--edit', '--file=', '--fixup=', '--include', '--interactive', '--message=', '--no-verify', '--only', '--quiet', '--reedit-message=', '--reuse-message=', '--signoff', '--squash=', '--template=', '--untracked-files', '--verbose']
     return filter(args,'v:val[0 : strlen(a:A)-1] ==# a:A')
   else
     return s:repo().superglob(a:A)
@@ -1566,6 +1564,7 @@ function! s:Write(force,...) abort
 
   unlet! restorewinnr
   let zero = s:repo().translate(':0:'.path)
+  silent execute 'doautocmd BufWritePost' s:fnameescape(zero)
   for tab in range(1,tabpagenr('$'))
     for winnr in range(1,tabpagewinnr(tab,'$'))
       let bufnr = tabpagebuflist(tab)[winnr-1]
@@ -1777,13 +1776,17 @@ function! s:Diff(vert,keepfocus,...) abort
     let nr = bufnr('')
     execute 'leftabove '.vert.'split `=fugitive#buffer().repo().translate(s:buffer().expand('':2''))`'
     execute 'nnoremap <buffer> <silent> dp :diffput '.nr.'<Bar>diffupdate<CR>'
+    let nr2 = bufnr('')
     call s:diffthis()
     wincmd p
     execute 'rightbelow '.vert.'split `=fugitive#buffer().repo().translate(s:buffer().expand('':3''))`'
     execute 'nnoremap <buffer> <silent> dp :diffput '.nr.'<Bar>diffupdate<CR>'
+    let nr3 = bufnr('')
     call s:diffthis()
     wincmd p
     call s:diffthis()
+    execute 'nnoremap <buffer> <silent> d2o :diffget '.nr2.'<Bar>diffupdate<CR>'
+    execute 'nnoremap <buffer> <silent> d3o :diffget '.nr3.'<Bar>diffupdate<CR>'
     return post
   elseif len(args)
     let arg = join(args, ' ')
@@ -2318,13 +2321,13 @@ function! s:Browse(bang,line1,count,...) abort
     if empty(url) && raw ==# '.'
       call s:throw("Instaweb failed to start")
     elseif empty(url)
-      call s:throw('"'.remote."' is not a supported remote")
+      call s:throw("'".remote."' is not a supported remote")
     endif
 
     let url = s:gsub(url, '[ <>]', '\="%".printf("%02X",char2nr(submatch(0)))')
     if a:bang
       if has('clipboard')
-        let @* = url
+        let @+ = url
       endif
       return 'echomsg '.string(url)
     elseif exists(':Browse') == 2
@@ -2689,7 +2692,7 @@ function! s:BufReadObject() abort
         if b:fugitive_display_format
           call s:ReplaceCmd(s:repo().git_command('cat-file',b:fugitive_type,hash))
         else
-          call s:ReplaceCmd(s:repo().git_command('show','--no-color','--pretty=format:tree %T%nparent %P%nauthor %an <%ae> %ad%ncommitter %cn <%ce> %cd%nencoding %e%n%n%s%n%n%b',hash))
+          call s:ReplaceCmd(s:repo().git_command('show','--no-color','--pretty=format:tree%x20%T%nparent%x20%P%nauthor%x20%an%x20<%ae>%x20%ad%ncommitter%x20%cn%x20<%ce>%x20%cd%nencoding%x20%e%n%n%s%n%n%b',hash))
           keepjumps call search('^parent ')
           if getline('.') ==# 'parent '
             silent keepjumps delete_
@@ -2841,7 +2844,7 @@ function! s:cfile() abort
       elseif getline('.') =~# '^#\trenamed:.* -> '
         let file = '/'.matchstr(getline('.'),' -> \zs.*')
         return [file]
-      elseif getline('.') =~# '^#\t[[:alpha:] ]\+: *.'
+      elseif getline('.') =~# '^#\t\(\k\| \)\+\p\?: *.'
         let file = '/'.matchstr(getline('.'),': *\zs.\{-\}\ze\%( ([^()[:digit:]]\+)\)\=$')
         return [file]
       elseif getline('.') =~# '^#\t.'

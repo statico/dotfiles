@@ -3,8 +3,6 @@ php.vim
 
 This project is a fork of [php.vim--Garvin][garvin] which in turn is an update of the [php.vim][php-vim] script which in turn is an updated version of the php.vim syntax file distributed with Vim. Whew!
 
-:point_right: Accepting [pull requests](https://github.com/StanAngeloff/php.vim/issues/15) for [PHP 5.6 new features](http://docs.php.net/manual/en/migration56.new-features.php). :point_left:
-
   [garvin]:  https://github.com/vim-scripts/php.vim--Garvin
   [php-vim]: http://www.vim.org/scripts/script.php?script_id=2874
 

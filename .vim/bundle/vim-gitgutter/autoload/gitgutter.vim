@@ -1,7 +1,9 @@
+let s:nomodeline = (v:version > 703 || (v:version == 703 && has('patch442'))) ? '<nomodeline>' : ''
+
 " Primary functions {{{
 
-function! gitgutter#all()
-  for buffer_id in tabpagebuflist()
+function! gitgutter#all() abort
+  for buffer_id in gitgutter#utility#dedup(tabpagebuflist())
     let file = expand('#' . buffer_id . ':p')
     if !empty(file)
       call gitgutter#process_buffer(buffer_id, 0)
@@ -11,7 +13,9 @@ endfunction
 
 " bufnr: (integer) the buffer to process.
 " realtime: (boolean) when truthy, do a realtime diff; otherwise do a disk-based diff.
-function! gitgutter#process_buffer(bufnr, realtime)
+function! gitgutter#process_buffer(bufnr, realtime) abort
+  call gitgutter#utility#use_known_shell()
+
   call gitgutter#utility#set_buffer(a:bufnr)
   if gitgutter#utility#is_active()
     if g:gitgutter_sign_column_always
@@ -25,37 +29,23 @@ function! gitgutter#process_buffer(bufnr, realtime)
         endif
       endif
     catch /diff failed/
+      call gitgutter#debug#log('diff failed')
       call gitgutter#hunk#reset()
     endtry
+    execute "silent doautocmd" s:nomodeline "User GitGutter"
   else
     call gitgutter#hunk#reset()
   endif
+
+  call gitgutter#utility#restore_shell()
 endfunction
 
 
-function! gitgutter#handle_diff_job(job_id, data, event)
-  if a:event == 'stdout'
-    " a:data is a list
-    call gitgutter#utility#job_output_received(a:job_id, 'stdout')
-    call gitgutter#handle_diff(join(a:data,"\n")."\n")
+function! gitgutter#handle_diff(diff) abort
+  call gitgutter#debug#log(a:diff)
 
-  elseif a:event == 'exit'
-    " If the exit event is triggered without a preceding stdout event,
-    " the diff was empty.
-    if gitgutter#utility#is_pending_job(a:job_id)
-      call gitgutter#handle_diff("")
-      call gitgutter#utility#job_output_received(a:job_id, 'exit')
-    endif
+  call setbufvar(gitgutter#utility#bufnr(), 'gitgutter_tracked', 1)
 
-  else
-    call gitgutter#hunk#reset()
-    call gitgutter#utility#job_output_received(a:job_id, 'stderr')
-
-  endif
-endfunction
-
-
-function! gitgutter#handle_diff(diff)
   call gitgutter#hunk#set_hunks(gitgutter#diff#parse_diff(a:diff))
   let modified_lines = gitgutter#diff#process_hunks(gitgutter#hunk#hunks())
 
@@ -72,14 +62,14 @@ function! gitgutter#handle_diff(diff)
   call gitgutter#utility#save_last_seen_change()
 endfunction
 
-function! gitgutter#disable()
+function! gitgutter#disable() abort
   " get list of all buffers (across all tabs)
   let buflist = []
   for i in range(tabpagenr('$'))
     call extend(buflist, tabpagebuflist(i + 1))
   endfor
 
-  for buffer_id in buflist
+  for buffer_id in gitgutter#utility#dedup(buflist)
     let file = expand('#' . buffer_id . ':p')
     if !empty(file)
       call gitgutter#utility#set_buffer(buffer_id)
@@ -92,12 +82,12 @@ function! gitgutter#disable()
   let g:gitgutter_enabled = 0
 endfunction
 
-function! gitgutter#enable()
+function! gitgutter#enable() abort
   let g:gitgutter_enabled = 1
   call gitgutter#all()
 endfunction
 
-function! gitgutter#toggle()
+function! gitgutter#toggle() abort
   if g:gitgutter_enabled
     call gitgutter#disable()
   else
@@ -109,7 +99,7 @@ endfunction
 
 " Line highlights {{{
 
-function! gitgutter#line_highlights_disable()
+function! gitgutter#line_highlights_disable() abort
   let g:gitgutter_highlight_lines = 0
   call gitgutter#highlight#define_sign_line_highlights()
 
@@ -121,7 +111,7 @@ function! gitgutter#line_highlights_disable()
   redraw!
 endfunction
 
-function! gitgutter#line_highlights_enable()
+function! gitgutter#line_highlights_enable() abort
   let old_highlight_lines = g:gitgutter_highlight_lines
 
   let g:gitgutter_highlight_lines = 1
@@ -134,7 +124,7 @@ function! gitgutter#line_highlights_enable()
   redraw!
 endfunction
 
-function! gitgutter#line_highlights_toggle()
+function! gitgutter#line_highlights_toggle() abort
   if g:gitgutter_highlight_lines
     call gitgutter#line_highlights_disable()
   else
@@ -146,7 +136,7 @@ endfunction
 
 " Signs {{{
 
-function! gitgutter#signs_enable()
+function! gitgutter#signs_enable() abort
   let old_signs = g:gitgutter_signs
 
   let g:gitgutter_signs = 1
@@ -157,7 +147,7 @@ function! gitgutter#signs_enable()
   endif
 endfunction
 
-function! gitgutter#signs_disable()
+function! gitgutter#signs_disable() abort
   let g:gitgutter_signs = 0
   call gitgutter#highlight#define_sign_text_highlights()
 
@@ -167,7 +157,7 @@ function! gitgutter#signs_disable()
   endif
 endfunction
 
-function! gitgutter#signs_toggle()
+function! gitgutter#signs_toggle() abort
   if g:gitgutter_signs
     call gitgutter#signs_disable()
   else
@@ -179,7 +169,8 @@ endfunction
 
 " Hunks {{{
 
-function! gitgutter#stage_hunk()
+function! gitgutter#stage_hunk() abort
+  call gitgutter#utility#use_known_shell()
   if gitgutter#utility#is_active()
     " Ensure the working copy of the file is up to date.
     " It doesn't make sense to stage a hunk otherwise.
@@ -191,7 +182,7 @@ function! gitgutter#stage_hunk()
       call gitgutter#utility#warn('cursor is not in a hunk')
     else
       let diff_for_hunk = gitgutter#diff#generate_diff_for_hunk(diff, 'stage')
-      call gitgutter#utility#system(gitgutter#utility#command_in_directory_of_file('git apply --cached --unidiff-zero - '), diff_for_hunk)
+      call gitgutter#utility#system(gitgutter#utility#command_in_directory_of_file(g:gitgutter_git_executable.' apply --cached --unidiff-zero - '), diff_for_hunk)
 
       " refresh gitgutter's view of buffer
       silent execute "GitGutter"
@@ -199,9 +190,11 @@ function! gitgutter#stage_hunk()
 
     silent! call repeat#set("\<Plug>GitGutterStageHunk", -1)<CR>
   endif
+  call gitgutter#utility#restore_shell()
 endfunction
 
-function! gitgutter#revert_hunk()
+function! gitgutter#undo_hunk() abort
+  call gitgutter#utility#use_known_shell()
   if gitgutter#utility#is_active()
     " Ensure the working copy of the file is up to date.
     " It doesn't make sense to stage a hunk otherwise.
@@ -212,18 +205,23 @@ function! gitgutter#revert_hunk()
     if empty(gitgutter#hunk#current_hunk())
       call gitgutter#utility#warn('cursor is not in a hunk')
     else
-      let diff_for_hunk = gitgutter#diff#generate_diff_for_hunk(diff, 'revert')
-      call gitgutter#utility#system(gitgutter#utility#command_in_directory_of_file('git apply --reverse --unidiff-zero - '), diff_for_hunk)
+      let diff_for_hunk = gitgutter#diff#generate_diff_for_hunk(diff, 'undo')
+      call gitgutter#utility#system(gitgutter#utility#command_in_directory_of_file(g:gitgutter_git_executable.' apply --reverse --unidiff-zero - '), diff_for_hunk)
 
-      " reload file
+      " reload file preserving screen line position
+      let wl = winline()
       silent edit
+      let offset = wl - winline()
+      execute "normal! ".offset."\<C-Y>"
     endif
 
-    silent! call repeat#set("\<Plug>GitGutterRevertHunk", -1)<CR>
+    silent! call repeat#set("\<Plug>GitGutterUndoHunk", -1)<CR>
   endif
+  call gitgutter#utility#restore_shell()
 endfunction
 
-function! gitgutter#preview_hunk()
+function! gitgutter#preview_hunk() abort
+  call gitgutter#utility#use_known_shell()
   if gitgutter#utility#is_active()
     " Ensure the working copy of the file is up to date.
     " It doesn't make sense to stage a hunk otherwise.
@@ -238,7 +236,7 @@ function! gitgutter#preview_hunk()
 
       silent! wincmd P
       if !&previewwindow
-        execute 'bo ' . &previewheight . ' new'
+        noautocmd execute 'bo' &previewheight 'new'
         set previewwindow
       endif
 
@@ -246,9 +244,10 @@ function! gitgutter#preview_hunk()
       execute "%delete_"
       call append(0, split(diff_for_hunk, "\n"))
 
-      wincmd p
+      noautocmd wincmd p
     endif
   endif
+  call gitgutter#utility#restore_shell()
 endfunction
 
 " }}}

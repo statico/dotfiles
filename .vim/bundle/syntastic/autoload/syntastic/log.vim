@@ -21,7 +21,7 @@ function! syntastic#log#warn(msg) abort " {{{2
 endfunction " }}}2
 
 function! syntastic#log#error(msg) abort " {{{2
-    execute "normal \<Esc>"
+    execute 'normal! \<Esc>'
     echohl ErrorMsg
     echomsg 'syntastic: error: ' . a:msg
     echohl None
@@ -68,7 +68,7 @@ function! syntastic#log#debug(level, msg, ...) abort " {{{2
     let leader = s:_log_timestamp()
     call s:_logRedirect(1)
 
-    if a:0 > 0
+    if a:0
         " filter out dictionary functions
         echomsg leader . a:msg . ' ' .
             \ strtrans(string(type(a:1) == type({}) || type(a:1) == type([]) ?
@@ -89,8 +89,12 @@ function! syntastic#log#debugShowOptions(level, names) abort " {{{2
     call s:_logRedirect(1)
 
     let vlist = copy(type(a:names) == type('') ? [a:names] : a:names)
+    let add_shell = index(vlist, 'shell') >= 0 && &shell !=# syntastic#util#var('shell')
     if !empty(vlist)
         call map(vlist, "'&' . v:val . ' = ' . strtrans(string(eval('&' . v:val))) . (s:_is_modified(v:val) ? ' (!)' : '')")
+        if add_shell
+            call add(vlist, 'u:shell = ' . strtrans(string(syntastic#util#var('shell'))) . ' (!)')
+        endif
         echomsg leader . join(vlist, ', ')
     endif
     call s:_logRedirect(0)

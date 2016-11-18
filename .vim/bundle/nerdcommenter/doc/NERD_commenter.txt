@@ -28,8 +28,9 @@ CONTENTS                                               *NERDCommenterContents*
             3.2.11 Use alternate delims map...|NERDComAltDelim|
             3.2.12 Comment aligned maps.......|NERDComAlignedComment|
             3.2.13 Uncomment line map.........|NERDComUncommentLine|
-        3.4 Sexy Comments.....................|NERDComSexyComments|
-        3.5 The NERDComment function..........|NERDComNERDComment|
+        3.3 Sexy Comments.....................|NERDComSexyComments|
+        3.4 The NERDComment function..........|NERDComNERDComment|
+        3.5 The Hooks.........................|NERDComHooks|
     4.Options.................................|NERDComOptions|
         4.1 Options summary...................|NERDComOptionsSummary|
         4.2 Options details...................|NERDComOptionsDetails|
@@ -229,7 +230,7 @@ Default mapping: |<Leader>|ci
 Mapped to: <plug>NERDCommenterInvert
 Applicable modes: normal visual-line.
 
-Inverts the commented state of each selected line. If the a selected line is
+Inverts the commented state of each selected line. If the selected line is
 commented then it is uncommented and vice versa. Each line is examined and
 commented/uncommented individually.
 
@@ -246,7 +247,7 @@ Default mapping: [count]|<Leader>|cs
 Mapped to: <plug>NERDCommenterSexy
 Applicable modes: normal, visual-line.
 
-Comments the selected line(s) ``sexily''... see |NERDComSexyComments| for
+Comments the selected line(s) ``sexily''. See |NERDComSexyComments| for
 a description of what sexy comments are. Can only be done on filetypes for
 which there is at least one set of multipart comment delimiters specified.
 
@@ -298,7 +299,7 @@ Applicable modes: insert.
 Adds comment delimiters at the current cursor position and inserts
 between them.
 
-NOTE: prior to version 2.1.17 this was mapped to ctrl-c. To restore this
+NOTE: prior to version 2.1.17 this was mapped to <C-c>. To restore this
 mapping add >
     imap <C-c> <plug>NERDCommenterInsert
 <
@@ -343,9 +344,9 @@ Uncomments the current line. If multiple lines are selected in
 visual mode then they are all uncommented.
 
 When uncommenting, if the line contains multiple sets of delimiters then the
-``outtermost'' pair of delimiters will be removed.
+``outermost'' pair of delimiters will be removed.
 
-The script uses a set of heurisics to distinguish ``real'' delimiters from
+The script uses a set of heuristics to distinguish ``real'' delimiters from
 ``fake'' ones when uncommenting. See |NERDComIssues| for details.
 
 If a [count] is given in normal mode, the mapping works as though that many
@@ -391,6 +392,35 @@ For example, if you typed >
 <
 then the script would do a sexy comment on the last visual selection.
 
+------------------------------------------------------------------------------
+3.5 The hooks                                                   *NERDComHooks*
+|fu! NERDCommenter_before()|  Before NERDComment/SwitchToAlternativeDelimiters
+|fu! NERDCommenter_after()|    After NERDComment/SwitchToAlternativeDelimiters
+
+For example, in order to handle different language blocks embedded in the same
+file such as |vim-vue|, you can change the filetype, comment something and
+change the filetype back: >
+    let g:ft = ''
+    fu! NERDCommenter_before()
+        if &ft == 'vue'
+            let g:ft = 'vue'
+            let stack = synstack(line('.'), col('.'))
+            if len(stack) > 0
+                let syn = synIDattr((stack)[0], 'name')
+                if len(syn) > 0
+                    let syn = tolower(syn)
+                    exe 'setf '.syn
+                endif
+            endif
+        endif
+    endfu
+    fu! NERDCommenter_after()
+        if g:ft == 'vue'
+            setf vue
+            let g:ft = ''
+        endif
+    endfu
+<
 
 ==============================================================================
 4. Options                                                    *NERDComOptions*
@@ -399,40 +429,64 @@ then the script would do a sexy comment on the last visual selection.
 4.1 Options summary                                    *NERDComOptionsSummary*
 
 |'loaded_nerd_comments'|              Turns off the script.
-|'NERDAllowAnyVisualDelims'|          Allows multipart alternative delims to
-                                      be used when commenting in
+
+|'NERDAllowAnyVisualDelims'|          Allows multipart alternative delimiters
+                                      to be used when commenting in
                                       visual/visual-block mode.
-|'NERDBlockComIgnoreEmpty'|           Forces right delims to be placed when
-                                      doing visual-block comments.
+
+|'NERDBlockComIgnoreEmpty'|           Forces right delimiters to be placed
+                                      when doing visual-block comments.
+
+|'NERDCommentEmptyLines'|             Specifies if empty lines should be
+                                      commented (useful with regions).
+
 |'NERDCommentWholeLinesInVMode'|      Changes behaviour of visual comments.
+
 |'NERDCreateDefaultMappings'|         Turn the default mappings on/off.
+
 |'NERDCustomDelimiters'|              Add or override delimiters for any
                                       filetypes.
+                                      
 |'NERDDefaultNesting'|                Tells the script to use nested comments
                                       by default.
+                                      
 |'NERDMenuMode'|                      Specifies how the NERD commenter menu
                                       will appear (if at all).
+                                      
 |'NERDLPlace'|                        Specifies what to use as the left
                                       delimiter placeholder when nesting
                                       comments.
+                                      
 |'NERDUsePlaceHolders'|               Specifies which filetypes may use
                                       placeholders when nesting comments.
+                                      
 |'NERDRemoveAltComs'|                 Tells the script whether to remove
                                       alternative comment delimiters when
                                       uncommenting.
+                                      
 |'NERDRemoveExtraSpaces'|             Tells the script to always remove the
                                       extra spaces when uncommenting
                                       (regardless of whether NERDSpaceDelims
-                                      is set)
+                                      is set).
+                                      
 |'NERDRPlace'|                        Specifies what to use as the right
                                       delimiter placeholder when nesting
                                       comments.
+                                      
 |'NERDSpaceDelims'|                   Specifies whether to add extra spaces
                                       around delimiters when commenting, and
                                       whether to remove them when
                                       uncommenting.
+                                      
+|'NERDTrimTrailingWhitespace'|        Specifies if trailing whitespace
+                                      should be deleted when uncommenting.
+
 |'NERDCompactSexyComs'|               Specifies whether to use the compact
                                       style sexy comments.
+
+|'NERDDefaultAlign'|                  Specifies the default alignment to use,
+                                      one of 'none', 'left', 'start', or
+                                      'both'.
 
 ------------------------------------------------------------------------------
 4.3 Options details                                    *NERDComOptionsDetails*
@@ -461,8 +515,8 @@ example if we are editing the following java code: >
 <
 If we are using // comments and select the "foo" and "bar" in visual-block
 mode, as shown left below (where '|'s are used to represent the visual-block
-boundary), and comment it then the script will use the alternative delims as
-shown on the right: >
+boundary), and comment it then the script will use the alternative delimiters
+as shown on the right: >
 
     float |foo| = 1221;                   float /*foo*/ = 1221;
     float |bar| = 324;                    float /*bar*/ = 324;
@@ -512,6 +566,15 @@ Otherwise, the code block would become: >
     /*}  */
 <
 ------------------------------------------------------------------------------
+                                                     *'NERDCommentEmptyLines'*
+Values: 0 or 1.
+Default: 0.
+
+This option affects commenting of empty lines. If this option is turned on,
+then empty lines will be commented as well. Useful when commenting regions of
+code.
+
+------------------------------------------------------------------------------
                                                 *'NERDCommentWholeLinesInVMode'*
 Values: 0, 1 or 2.
 Default: 0.
@@ -538,7 +601,7 @@ If you prefer the second option then stick this line in your vimrc: >
 <
 
 If the filetype you are editing only has no multipart delimiters (for example
-a shell script) and you hadnt set this option then the above would become >
+a shell script) and you hadn't set this option then the above would become >
     in#t foo = 3;
     #int bar = 9;
 <
@@ -623,6 +686,14 @@ Otherwise they would become: >
     int baz = foo + bar
 <
 
+Note: When using 'start' as the default alignment, the enabling of
+NERDRemoveExtraSpaces will still result in the removal of a space after the
+delimiter.  This can be undesirable since aligning the delimiters at the very
+start of the line (index 0) will usually result in spaces between the comment
+delimiters and the text which probably shouldn't be removed.  So when using
+'start' as the default alignment, take care to also disable
+NERDRemoveExtraSpaces.
+
 ------------------------------------------------------------------------------
                                                                   *'NERDLPlace'*
                                                                   *'NERDRPlace'*
@@ -682,6 +753,26 @@ If you want spaces to be added then set NERDSpaceDelims to 1 in your vimrc.
 See also |'NERDRemoveExtraSpaces'|.
 
 ------------------------------------------------------------------------------
+                                                  *'NERDTrimTrailingWhitespace'*
+Values: 0 or 1.
+Default 0.
+
+When uncommenting an empty line some whitespace may be left as a result of
+alignment padding. With this option enabled any trailing whitespace will be
+deleted when uncommenting a line.
+
+------------------------------------------------------------------------------
+                                                             *'NERDDefaultAlign'*
+Values: 'none', 'left', 'start', 'both'
+Default 'none'.
+
+Specifies the default alignment to use when inserting comments.
+
+Note: When using 'start' as the default alignment be sure to disable
+NERDRemoveExtraSpaces.  See the note at the bottom of |NERDRemoveExtraSpaces|
+for more details.
+
+------------------------------------------------------------------------------
                                                          *'NERDCompactSexyComs'*
 Values: 0 or 1.
 Default 0.
@@ -714,11 +805,11 @@ again.
 
 If you want the NERD commenter to use the alternative delimiters for a
 specific filetype by default then put a line of this form into your vimrc: >
-    let NERD_<filetype>_alt_style=1
+    let g:NERDAltDelims_<filetype> = 1
 <
 Example: java uses // style comments by default, but you want it to default to
 /* */ style comments instead. You would put this line in your vimrc: >
-    let NERD_java_alt_style=1
+    let g:NERDAltDelims_java = 1
 <
 
 See |NERDComAltDelim| for switching commenting styles at runtime.
@@ -749,7 +840,7 @@ Heuristics are used to distinguish the real comment delimiters
 
 Because we have comment mappings that place delimiters in the middle of lines,
 removing comment delimiters is a bit tricky. This is because if comment
-delimiters appear in a line doesnt mean they really ARE delimiters. For
+delimiters appear in a line doesn't mean they really ARE delimiters. For
 example, Java uses // comments but the line >
     System.out.println("//");
 <
@@ -769,11 +860,11 @@ If we have some line of code like this: >
     /*int foo */ = /*5 + 9;*/
 <
 This will not be uncommented legally. The NERD commenter will remove the
-"outter most" delimiters so the line will become: >
+"outer most" delimiters so the line will become: >
     int foo */ = /*5 + 9;
 <
 which almost certainly will not be what you want. Nested sets of comments will
-uncomment fine though. Eg: >
+uncomment fine though. E.g.: >
     /*int/* foo =*/ 5 + 9;*/
 <
 will become: >
@@ -787,10 +878,10 @@ for simplicity)
 
 The author of the NERD commenter is Martyzillatron --- the half robot, half
 dinosaur bastard son of Megatron and Godzilla. He enjoys destroying
-metropolises and eating tourist busses.
+metropolises and eating tourist buses.
 
 Drop him a line at martin_grenfell at msn.com. He would love to hear from you.
-its a lonely life being the worlds premier terror machine. How would you feel
+It's a lonely life being the worlds premier terror machine. How would you feel
 if your face looked like a toaster and a t-rex put together? :(
 
 The latest stable versions can be found at
@@ -806,7 +897,7 @@ The latest dev versions are on github
     - remove all filetypes which have a &commentstring in the standard vim
       runtime for vim > 7.0 unless the script stores an alternate set of
       delimiters
-    - make the script complain if the user doesnt have filetype plugins enabled
+    - make the script complain if the user doesn't have filetype plugins enabled
     - use |<Leader>| instead of comma to start the default mappings
     - fix a couple of bugs with sexy comments - thanks to Tim Smart
     - lots of refactoring
