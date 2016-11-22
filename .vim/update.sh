@@ -51,6 +51,7 @@ repos=(
   https://github.com/jnurmine/Zenburn.git
   https://github.com/junegunn/goyo.vim.git
   https://github.com/kchmck/vim-coffee-script.git
+  https://github.com/majutsushi/tagbar.git
   https://github.com/mtscout6/vim-cjsx.git
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
