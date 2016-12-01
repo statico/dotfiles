@@ -59,6 +59,7 @@ repos=(
   https://github.com/scrooloose/nerdcommenter.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
+  https://github.com/slim-template/vim-slim.git
   https://github.com/tomasr/molokai.git
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-liquid.git
