@@ -203,13 +203,16 @@ endfunction
 abbr conosle console
 abbr comopnent component
 
-" Coffeescript helpers
+" Temporary debugging helpers
 autocmd Filetype coffee iabbr xxx console.log 'XXX',
 autocmd Filetype coffee iabbr yyy console.log 'YYY',
 autocmd Filetype coffee iabbr zzz console.log 'ZZZ',
 autocmd Filetype javascript iabbr xxx console.log('XXX',
 autocmd Filetype javascript iabbr yyy console.log('YYY',
 autocmd Filetype javascript iabbr zzz console.log('ZZZ',
+autocmd Filetype ruby iabbr xxx puts "XXX #{
+autocmd Filetype ruby iabbr yyy puts "YYY #{
+autocmd Filetype ruby iabbr zzz puts "ZZZ #{
 
 " Section: Vim options {{{1
 "--------------------------------------------------------------------------
