@@ -401,6 +401,10 @@ let g:SuperTabLongestHighlight=1
 " Zenburn
 let g:zenburn_high_Contrast = 1
 
+" Airline
+let g:airline_theme = 'distinguished'
+let g:airline_powerline_fonts = 1
+
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
 

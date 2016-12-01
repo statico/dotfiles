@@ -6,8 +6,6 @@ hi SignColumn guibg=NONE
 
 hi Search term=NONE ctermfg=0 ctermbg=14 guifg=#ffffff guibg=#444444
 
-let g:Powerline_symbols = "fancy"
-
 " Command-Shift-F is fullscreen.
 nmap <D-F> :set fullscreen!<CR>
 
@@ -15,7 +13,7 @@ set columns=80 lines=50
 set errorbells
 set fuoptions=maxhorz,maxvert
 set guicursor+=a:blinkon0
-set guifont=PragmataPro:h12
+set guifont=PragmataPro\ for\ Powerline:h12
 set guioptions=aigm
 set mousemodel=popup
 set nocursorline

@@ -12,7 +12,7 @@
 #
 # Update just one plugin from the list of Git repos:
 #
-#   ./update.sh repos powerline
+#   ./update.sh repos supertab
 #
 
 cd ~/.dotfiles
@@ -36,7 +36,6 @@ fi
 # don't work.
 repos=(
 
-  https://github.com/Lokaltog/vim-powerline.git
   https://github.com/StanAngeloff/php.vim.git
   https://github.com/airblade/vim-gitgutter.git
   https://github.com/alunny/pegjs-vim.git
@@ -67,6 +66,8 @@ repos=(
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-sleuth.git
   https://github.com/tpope/vim-surround.git
+  https://github.com/vim-airline/vim-airline
+  https://github.com/vim-airline/vim-airline-themes
   https://github.com/vim-scripts/bufkill.vim.git
   https://github.com/vim-scripts/oceandeep.git
   https://github.com/wavded/vim-stylus.git
