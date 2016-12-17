@@ -406,6 +406,8 @@ let g:zenburn_high_Contrast = 1
 " Airline
 let g:airline_theme = 'distinguished'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline#extensions#hunks#enabled = 1
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
@@ -511,6 +513,9 @@ au BufNewFile,BufRead *.gyp set ft=python
 au BufNewFile,BufRead *.cson set ft=coffee
 
 au FileType json setlocal conceallevel=0 foldmethod=syntax foldlevel=999
+
+au BufNewFile,BufRead *.i7x setf inform7
+au FileType inform7 setlocal nolist tw=0 ts=4 sw=4 noet foldlevel=999
 
 augroup END
 
