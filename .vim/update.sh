@@ -38,6 +38,7 @@ repos=(
 
   https://github.com/StanAngeloff/php.vim.git
   https://github.com/airblade/vim-gitgutter.git
+  https://github.com/altercation/vim-colors-solarized.git
   https://github.com/alunny/pegjs-vim.git
   https://github.com/ap/vim-css-color.git
   https://github.com/ctrlpvim/ctrlp.vim.git
