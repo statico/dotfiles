@@ -313,9 +313,15 @@ fi
 
 # ack is really useful. I usually look for code and then edit all of the files
 # containing that code. Changing `ack' to `vack' does this for me.
-function vack () {
-  vim `ack -l $@`
-}
+if _has ag; then
+    function vack () {
+        vim `ag --nocolor -l $@`
+    }
+else
+    function vack () {
+        vim `ack -l $@`
+    }
+fi
 
 # ..same thing with gg.
 function vgg () {
