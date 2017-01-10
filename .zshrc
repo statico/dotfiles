@@ -309,6 +309,10 @@ if _is Linux; then
     fi
 fi
 
+if _is Darwin; then
+    alias strace='sudo dtruss -f sudo -u $USER'
+fi
+
 # FUNCTIONS {{{1
 
 # ack is really useful. I usually look for code and then edit all of the files
