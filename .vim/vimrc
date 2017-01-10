@@ -16,14 +16,14 @@ nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :CoffeeWatch<CR>
 nmap \e :NERDTreeToggle<CR>
-nmap \f mt:Goyo 100<CR>'tzz
-nmap \F mt:Goyo<CR>'tzz
+nmap \f mt:Goyo<CR>'tzz
 nmap \g :Gstatus<CR>
 nmap \h :call ToggleHex()<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
+nmap \p :ProseMode<CR>
 nmap \q :nohlsearch<CR>
 nmap \r :TagbarToggle<CR>
 nmap \s :setlocal invspell<CR>
@@ -407,6 +407,7 @@ let g:zenburn_high_Contrast = 1
 let g:airline_theme = 'distinguished'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#wordcount#enabled = 1
+let g:airline#extensions#wordcount#filetypes = '\vhelp|markdown|rst|org|text|asciidoc|tex|mail|liquid'
 let g:airline#extensions#hunks#enabled = 1
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
@@ -495,6 +496,16 @@ highlight link markdownItalic Statement
 highlight link markdownCode Delimiter
 highlight link markdownCodeBlock Delimiter
 highlight link markdownListMarker Todo
+
+" prose mode
+function! ProseMode()
+  set bg=light
+  set noci nosi noai
+  set complete+=s
+  colors solarized
+  AirlineTheme solarized
+endfunction
+command! ProseMode call ProseMode()
 
 " Section: File types {{{1
 "--------------------------------------------------------------------------
