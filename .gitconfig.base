@@ -2,8 +2,9 @@
 # NOTE: This file is renamed to .gitconfig by my install script.
 # 
 [user]
-	name = Ian Langworth
+	name = Ian Langworth ☠>
 	email = ian@langworth.com
+	signingkey = 0x6704627BC76DBFA8
 [core]
 	editor = vim
 	pager = less -FRX
@@ -80,7 +81,7 @@
 [log]
 	decorate = short
 [push]
-	default = simple
+	default = current
 [difftool "Kaleidoscope"]
 	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [mergetool "Kaleidoscope"]
