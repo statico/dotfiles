@@ -1,2 +1,3 @@
 source ~/.vimrc
 set surround
+set scrolloff=3
