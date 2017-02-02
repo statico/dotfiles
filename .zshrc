@@ -743,22 +743,11 @@ function {
 
 # Set terminal colors based on SSH host.
 #
-# Create a .ssh/colors file with lines like "<hostname> <r> <g> <b>" and the color will be set
-# automatically. Inspired by https://gist.github.com/thomd/956095
+# Create a .ssh/colors file with lines like "<hostname> #cc33ff" and the color will be set
+# automatically.
 if [ -n "$ITERM_SESSION_ID" ]; then
     function set_term_bgcolor() {
-        local R=$1
-        local G=$2
-        local B=$3
-        osascript <<EOF
-            tell application "iTerm"
-                tell the current window
-                    tell the current session
-                    set background color to {$(($R*65535/255)), $(($G*65535/255)), $(($B*65535/255))}
-                    end tell
-                end tell
-            end tell
-EOF
+        echo -ne "\033]Ph${1}\033\\"
     }
 fi
 
@@ -771,7 +760,7 @@ if whence -w set_term_bgcolor > /dev/null 2>&1 && [ -e ~/.ssh/colors ]; then
             args="$(cut -d\  -f2- <<<$line)"
             eval set_term_bgcolor $args
             eval realssh $@
-            eval set_term_bgcolor 0 0 0
+            eval set_term_bgcolor 000000
         else
             eval realssh $@
         fi
