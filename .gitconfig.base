@@ -99,4 +99,4 @@
 [pull]
 	default = simple
 [rerere]
-	enabled = 1
+	enabled = true
