@@ -7,7 +7,7 @@
 my $w = `tput cols`;
 my $color = '30;1';
 my $char = '━';
-my $title = join(' ', @ARGV);
+my $title = uc join(' ', @ARGV);
 
 print "\e[${color}m";
 if (length $title) {

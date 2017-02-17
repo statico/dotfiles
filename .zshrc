@@ -414,13 +414,13 @@ function sci () {
         return 1
     fi
     git add -A
-    hr STAGING
+    hr staging
     git status
-    hr COMMITTING
+    hr committing
     git cim "$*"
-    hr RESULTS
+    hr results
     git quicklog
-    hr DONE
+    hr done
 }
 
 # Don't page inside of emacs
