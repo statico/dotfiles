@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+#
+# Usage: hr [message]
+#
+# Displays a big horizontal rule in the terminal with an optional header.
+
+my $w = `tput cols`;
+my $color = '30;1';
+my $char = '━';
+my $title = join(' ', @ARGV);
+
+print "\e[${color}m";
+if (length $title) {
+  my $t = " $title ";
+  $w = ($w - length $t) / 2;
+  print $char x $w;
+  print $t;
+  print $char x $w;
+} else {
+  print $char x $w;
+}
+print "\e[0m\n";
