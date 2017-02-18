@@ -54,6 +54,7 @@ repos=(
   https://github.com/lesliev/vim-inform7.git
   https://github.com/majutsushi/tagbar.git
   https://github.com/mtscout6/vim-cjsx.git
+  https://github.com/mxw/vim-jsx
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
   https://github.com/rust-lang/rust.vim.git
