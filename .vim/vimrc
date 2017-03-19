@@ -11,16 +11,18 @@
 "--------------------------------------------------------------------------
 
 " useful macros I use the most
-nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
+nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :CoffeeWatch<CR>
 nmap \e :NERDTreeToggle<CR>
 nmap \f mt:Goyo<CR>'tzz
 nmap \g :Gstatus<CR>
 nmap \h :call ToggleHex()<CR>
+nmap \i vip:sort<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
-nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
 nmap \p :ProseMode<CR>
@@ -28,7 +30,6 @@ nmap \q :nohlsearch<CR>
 nmap \r :TagbarToggle<CR>
 nmap \s :setlocal invspell<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
-nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \u :setlocal list!<CR>:setlocal list?<CR>
 nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nmap \x :cclose<CR>
