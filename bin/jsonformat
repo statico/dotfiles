@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+var content = ''
+process.stdin.resume()
+process.stdin.on('data', function (chunk) { content += chunk.toString() })
+process.stdin.on('end', function () {
+  console.log(JSON.stringify(JSON.parse(content), null, '  '))
+})
