@@ -207,6 +207,9 @@ abbr conosle console
 abbr comopnent component
 
 " Temporary debugging helpers
+autocmd Filetype python iabbr xxx print('XXX
+autocmd Filetype python iabbr yyy print('YYY
+autocmd Filetype python iabbr zzz print('ZZZ
 autocmd Filetype coffee iabbr xxx console.log 'XXX',
 autocmd Filetype coffee iabbr yyy console.log 'YYY',
 autocmd Filetype coffee iabbr zzz console.log 'ZZZ',
