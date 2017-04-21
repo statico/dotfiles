@@ -291,6 +291,9 @@ if _has vim; then
 else
     alias vim=vi
 fi
+if ! _has gvim && _is Darwin; then
+    alias gvim='open -a "MacVim"'
+fi
 
 # The Silver Searcher is even faster than Ack.
 # https://github.com/ggreer/the_silver_searcher
@@ -528,7 +531,7 @@ zstyle :completion::complete:git-checkout:argument-rest:headrefs command "git fo
 bindkey -e
 
 # One keystroke to cd ..
-bindkey -s '\eu' '^Ucd ..; ls^M'
+bindkey -s '\eu' '\eq^Ucd ..; ls^M'
 
 # Connect to my most recently used screen session
 bindkey -s '\ej' "^Ussh lemon^M"
