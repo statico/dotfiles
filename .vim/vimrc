@@ -532,6 +532,8 @@ au FileType json setlocal conceallevel=0 foldmethod=syntax foldlevel=999
 au BufNewFile,BufRead *.i7x setf inform7
 au FileType inform7 setlocal nolist tw=0 ts=4 sw=4 noet foldlevel=999
 
+autocmd Filetype gitcommit setlocal tw=80
+
 augroup END
 
 " Section: Load ~/.vimlocal {{{1
