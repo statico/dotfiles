@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 
-cols  = [ (0..3).to_a, 5, 7, 40, '40;1' ].flatten
+cols  = [ (0..7).to_a, 9, 40, '40;1' ].flatten
 rows  = [ (30..37).to_a, (40..47).to_a ].flatten
 msg   = 'mode'
 pad   = 3
