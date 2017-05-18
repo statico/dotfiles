@@ -628,27 +628,27 @@ function colorprompt {
         return
     fi
 
-    mode=${1:-0}
-    line1=(
-        "%{[${mode}m%}%m: %~"
+    __prompt_mode=${1:-0}
+    local line1=(
+        "%{[${__prompt_mode}m%}%m: %~"
         "%(1j.%{[36;1m%} (%j jobs)%{[0m%}.)"
         "%(?..%{[31;1m%} (error %?%)%{[0m%})"
     )
-    line2=(
-        "%{%(!.[31;5m.[${mode}m)%}%n "
+    local line2=(
+        "%{%(!.[31;5m.[${__prompt_mode}m)%}%n "
         "$__sigil%{[0m%} "
     )
 
     # it's like temp=join("", $promptstring)
-    temp=${(j::)line1}
+    __first_prompt_line=${(j::)line1}
 
     bindkey "^L" clear-screen-and-precmd
-    precmd() { print -P $temp }
+    precmd() { print -P $__first_prompt_line }
     PS1=${(j::)line2}
 }
 
 function uncolorprompt {
-    temp=(
+    local temp=(
         "%m: %~"
         "%(1j. (%j jobs).)"
         "%(?.. (error %?%))"
@@ -660,10 +660,18 @@ function uncolorprompt {
     PS1=${(j::)temp}
 }
 
-function simpleprompt {
+function shortprompt {
+    __prompt_mode=${__prompt_mode:-0}
     bindkey "^L" clear-screen
     unfunction precmd &>/dev/null
-    PS1="%n %# "
+    PS1="%{[${__prompt_mode}m%}%#%{[0m%} "
+}
+
+function simpleprompt {
+    __prompt_mode=${__prompt_mode:-0}
+    bindkey "^L" clear-screen
+    unfunction precmd &>/dev/null
+    PS1="%# "
 }
 
 if [ -n "$INSIDE_EMACS" ]; then
