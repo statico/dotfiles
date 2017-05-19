@@ -27,7 +27,6 @@ nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
 nmap \p :ProseMode<CR>
 nmap \q :nohlsearch<CR>
-nmap \r :TagbarToggle<CR>
 nmap \s :setlocal invspell<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \u :setlocal list!<CR>:setlocal list?<CR>

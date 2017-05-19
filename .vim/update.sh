@@ -36,13 +36,10 @@ fi
 # don't work.
 repos=(
 
-  https://github.com/StanAngeloff/php.vim.git
   https://github.com/airblade/vim-gitgutter.git
   https://github.com/altercation/vim-colors-solarized.git
-  https://github.com/alunny/pegjs-vim.git
   https://github.com/ap/vim-css-color.git
   https://github.com/ctrlpvim/ctrlp.vim.git
-  https://github.com/digitaltoad/vim-jade.git
   https://github.com/docunext/closetag.vim.git
   https://github.com/ekalinin/Dockerfile.vim.git
   https://github.com/elzr/vim-json.git
@@ -51,13 +48,9 @@ repos=(
   https://github.com/jnurmine/Zenburn.git
   https://github.com/junegunn/goyo.vim.git
   https://github.com/kchmck/vim-coffee-script.git
-  https://github.com/lesliev/vim-inform7.git
-  https://github.com/majutsushi/tagbar.git
-  https://github.com/mtscout6/vim-cjsx.git
   https://github.com/mxw/vim-jsx
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
-  https://github.com/rust-lang/rust.vim.git
   https://github.com/scrooloose/nerdcommenter.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
@@ -65,7 +58,6 @@ repos=(
   https://github.com/slm-lang/vim-slm
   https://github.com/tomasr/molokai.git
   https://github.com/tpope/vim-fugitive.git
-  https://github.com/tpope/vim-liquid.git
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-sleuth.git
@@ -73,16 +65,12 @@ repos=(
   https://github.com/vim-airline/vim-airline
   https://github.com/vim-airline/vim-airline-themes
   https://github.com/vim-scripts/bufkill.vim.git
-  https://github.com/vim-scripts/oceandeep.git
-  https://github.com/wavded/vim-stylus.git
-  https://github.com/wizicer/vim-jison
 
   )
 
 # Here's a list of everything else to download in the format
 # <destination>;<url>[;<filename>]
 other=(
-  'glsl/syntax;http://www.vim.org/scripts/download_script.php?src_id=3194;glsl.vim'
   )
 
 case "$1" in
