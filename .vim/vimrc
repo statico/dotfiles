@@ -403,6 +403,9 @@ let g:gitgutter_sign_modified_removed = '∙'
 let g:SuperTabLongestEnhanced=1
 let g:SuperTabLongestHighlight=1
 
+" sneak
+let g:sneak#s_next = 1
+
 " Zenburn
 let g:zenburn_high_Contrast = 1
 
@@ -412,6 +415,11 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#wordcount#enabled = 1
 let g:airline#extensions#wordcount#filetypes = '\vhelp|markdown|rst|org|text|asciidoc|tex|mail|liquid'
 let g:airline#extensions#hunks#enabled = 1
+
+" incsearch.vim
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on

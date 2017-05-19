@@ -45,33 +45,37 @@ repos=(
   https://github.com/elzr/vim-json.git
   https://github.com/ervandew/supertab
   https://github.com/groenewege/vim-less.git
+  https://github.com/haya14busa/incsearch.vim
   https://github.com/jnurmine/Zenburn.git
   https://github.com/junegunn/goyo.vim.git
+  https://github.com/justinmk/vim-sneak
   https://github.com/kchmck/vim-coffee-script.git
   https://github.com/mxw/vim-jsx
   https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
-  https://github.com/scrooloose/nerdcommenter.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
   https://github.com/slim-template/vim-slim.git
-  https://github.com/slm-lang/vim-slm
+  https://github.com/slm-lang/vim-slm.git
   https://github.com/tomasr/molokai.git
+  https://github.com/tpope/vim-commentary
   https://github.com/tpope/vim-fugitive.git
   https://github.com/tpope/vim-markdown.git
   https://github.com/tpope/vim-pathogen.git
   https://github.com/tpope/vim-sleuth.git
   https://github.com/tpope/vim-surround.git
+  https://github.com/tpope/vim-unimpaired
   https://github.com/vim-airline/vim-airline
   https://github.com/vim-airline/vim-airline-themes
   https://github.com/vim-scripts/bufkill.vim.git
+  https://github.com/wellle/targets.vim.git
 
-  )
+)
 
 # Here's a list of everything else to download in the format
 # <destination>;<url>[;<filename>]
 other=(
-  )
+)
 
 case "$1" in
 
