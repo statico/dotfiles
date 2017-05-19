@@ -75,6 +75,7 @@ repos=(
 # Here's a list of everything else to download in the format
 # <destination>;<url>[;<filename>]
 other=(
+  'glsl/syntax;http://www.vim.org/scripts/download_script.php?src_id=3194;glsl.vim'
 )
 
 case "$1" in
