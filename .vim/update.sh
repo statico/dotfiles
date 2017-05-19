@@ -119,7 +119,7 @@ case "$1" in
         # directory, so unpacking them into their own directory first makes it
         # easy to remove the wrapper.
         f=download.zip
-        $curl -L $url >$f
+        $curl -sL $url >$f
         unzip $f -d $name
         mkdir -p $dest
         mv $name/*/* $dest
@@ -131,9 +131,9 @@ case "$1" in
         mkdir -p $dest
         pushd $dest
         if [ -n "$filename" ]; then
-          $curl -L $url >$filename
+          $curl -sL $url >$filename
         else
-          $curl -OL $url
+          $curl -sOL $url
         fi
         popd
 
