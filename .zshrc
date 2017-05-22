@@ -8,25 +8,25 @@
 # INTERNAL UTILITY FUNCTIONS {{{1
 
 # Returns whether the given command is executable or aliased.
-function _has() {
-    return $( whence $1 >/dev/null )
+_has() {
+  return $( whence $1 >/dev/null )
 }
 
 # Returns whether the given statement executed cleanly. Try to avoid this
 # because this slows down shell loading.
-function _try() {
-    return $( eval $* >/dev/null 2>&1 )
+_try() {
+  return $( eval $* >/dev/null 2>&1 )
 }
 
 # Returns whether the current host type is what we think it is. (HOSTTYPE is
 # set later.)
-function _is() {
-    return $( [ "$HOSTTYPE" = "$1" ] )
+_is() {
+  return $( [ "$HOSTTYPE" = "$1" ] )
 }
 
 # Returns whether out terminal supports color.
-function _color() {
-    return $( [ -z "$INSIDE_EMACS" -a -z "$VIMRUNTIME" ] )
+_color() {
+  return $( [ -z "$INSIDE_EMACS" -a -z "$VIMRUNTIME" ] )
 }
 
 # ENVIRONMENT VARIABLES {{{1
@@ -36,99 +36,99 @@ function _color() {
 # "rxvt" just about works everywhere. (If you want to know if you're in screen,
 # use SHLVL or TERMCAP.)
 if _color; then
-    if [ -n "$ITERM_SESSION_ID" ]; then
-        if [ "$TERM" = "screen" ]; then
-            export TERM=screen-256color
-        else
-            export TERM=xterm-256color
-        fi
+  if [ -n "$ITERM_SESSION_ID" ]; then
+    if [ "$TERM" = "screen" ]; then
+      export TERM=screen-256color
     else
-        export TERM=rxvt
+      export TERM=xterm-256color
     fi
+  else
+    export TERM=rxvt
+  fi
 else
-    export TERM=xterm
+  export TERM=xterm
 fi
 
 # Utility variables.
 if which hostname >/dev/null 2>&1; then
-    HOSTNAME=`hostname`
+  HOSTNAME=`hostname`
 elif which uname >/dev/null 2>&1; then
-    HOSTNAME=`uname -n`
+  HOSTNAME=`uname -n`
 else
-    HOSTNAME=unknown
+  HOSTNAME=unknown
 fi
 export HOSTNAME
 
 # HOSTTYPE = { Linux | OpenBSD | SunOS | etc. }
 if which uname >/dev/null 2>&1; then
-    HOSTTYPE=`uname -s`
+  HOSTTYPE=`uname -s`
 else
-    HOSTTYPE=unknown
+  HOSTTYPE=unknown
 fi
 export HOSTTYPE
 
 # PAGER
 if [ -n "$INSIDE_EMACS" ]; then
-    export PAGER=cat
+  export PAGER=cat
 else
-    if _has less; then
-        export PAGER=less
-        if _color; then
-            export LESS='-R'
-        fi
+  if _has less; then
+    export PAGER=less
+    if _color; then
+      export LESS='-R'
     fi
+  fi
 fi
 
 # EDITOR
 if _has vim; then
-    export EDITOR=vim VISUAL=vim
+  export EDITOR=vim VISUAL=vim
 elif _has vi; then
-    export EDITOR=vi VISUAL=vi
+  export EDITOR=vi VISUAL=vi
 elif _has emacs; then
-    export EDITOR=emacs VISUAL=emacs
+  export EDITOR=emacs VISUAL=emacs
 fi
 
 # Overridable locale support.
 if [ -z $$LC_ALL ]; then
-    export LC_ALL=C
+  export LC_ALL=C
 fi
 if [ -z $LANG ]; then
-    export LANG=en_US
+  export LANG=en_US
 fi
 
 # History control.
 SAVEHIST=100000
 HISTSIZE=100000
 if [ -e ~/priv/ ]; then
-    HISTFILE=~/priv/zsh_history
+  HISTFILE=~/priv/zsh_history
 elif [ -e ~/secure/ ]; then
-    HISTFILE=~/secure/zsh_history
+  HISTFILE=~/secure/zsh_history
 else
-    HISTFILE=~/.zsh_history
+  HISTFILE=~/.zsh_history
 fi
 if [ -n "$HISTFILE" -a ! -w $HISTFILE ]; then
-    echo
-    echo "[31;1m HISTFILE [$HISTFILE] not writable! [0m"
-    echo
+  echo
+  echo "[31;1m HISTFILE [$HISTFILE] not writable! [0m"
+  echo
 fi
 
 # APPLICATION CUSTOMIZATIONS {{{1
 
 # GNU grep
 if _color; then
-    export GREP_COLOR='1;32'
+  export GREP_COLOR='1;32'
 fi
 
 # Ack is better than grep
 if ! _color; then
-    alias ack='ack --nocolor'
+  alias ack='ack --nocolor'
 fi
 
 # GNU and BSD ls colorization.
 if _color; then
-    export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
-    export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
-    export CLICOLOR=1
+  export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
+  export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
+  export CLICOLOR=1
 fi
 
 # PATH MODIFICATIONS {{{1
@@ -136,20 +136,20 @@ fi
 # Functions which modify the path given a directory, but only if the directory
 # exists and is not already in the path. (Super useful in ~/.zshlocal)
 
-function _prepend_to_path() {
-    if [ -d $1 -a -z ${path[(r)$1]} ]; then
-        path=($1 $path);
-    fi
+_prepend_to_path() {
+  if [ -d $1 -a -z ${path[(r)$1]} ]; then
+    path=($1 $path);
+  fi
 }
 
-function _append_to_path() {
-    if [ -d $1 -a -z ${path[(r)$1]} ]; then
-        path=($1 $path);
-    fi
+_append_to_path() {
+  if [ -d $1 -a -z ${path[(r)$1]} ]; then
+    path=($1 $path);
+  fi
 }
 
-function _force_prepend_to_path() {
-    path=($1 ${(@)path:#$1})
+_force_prepend_to_path() {
+  path=($1 ${(@)path:#$1})
 }
 
 # Note that there is NO dot directory appended!
@@ -280,43 +280,43 @@ alias xxx='histring "XXX.*" -c green -s bold'
 # Interactive/verbose commands.
 alias mv='mv -i'
 for c in cp rm chmod chown rename; do
-    alias $c="$c -v"
+  alias $c="$c -v"
 done
 
 # Make sure vim/vi always gets us an editor.
 if _has vim; then
-    alias vi=vim
-    function vs () { vim +"NERDTree $1" }
-    function gvs () { gvim +"NERDTree $1" }
+  alias vi=vim
+  vs() { vim +"NERDTree $1" }
+  gvs() { gvim +"NERDTree $1" }
 else
-    alias vim=vi
+  alias vim=vi
 fi
 if ! _has gvim && _is Darwin; then
-    alias gvim='open -a "MacVim"'
+  alias gvim='open -a "MacVim"'
 fi
 
 # The Silver Searcher is even faster than Ack.
 # https://github.com/ggreer/the_silver_searcher
 if _has ag; then
-    alias ack=ag
-    alias ag='ag --color-path 1\;31 --color-match 1\;32 --color'
+  alias ack=ag
+  alias ag='ag --color-path 1\;31 --color-match 1\;32 --color'
 fi
 
 # Nico is amazing for showing me this.
 alias v='vim -R -'
 for i in /usr/share/vim/vim*/macros/less.sh(N) ; do
-    alias v="$i"
+  alias v="$i"
 done
 
 # Linux should definitely have Gnu coreutils, right?
 if _is Linux; then
-    if _color && _try ls --color; then
-        alias ls='ls --color'
-    fi
+  if _color && _try ls --color; then
+    alias ls='ls --color'
+  fi
 fi
 
 if _is Darwin; then
-    alias strace='sudo dtruss -f sudo -u $USER'
+  alias strace='sudo dtruss -f sudo -u $USER'
 fi
 
 # FUNCTIONS {{{1
@@ -324,112 +324,112 @@ fi
 # ack is really useful. I usually look for code and then edit all of the files
 # containing that code. Changing `ack' to `vack' does this for me.
 if _has ag; then
-    function vack () {
-        vim `ag --nocolor -l $@`
-    }
+  vack() {
+    vim `ag --nocolor -l $@`
+  }
 else
-    function vack () {
-        vim `ack -l $@`
-    }
+  vack() {
+    vim `ack -l $@`
+  }
 fi
 
 # ..same thing with gg.
-function vgg () {
+vgg() {
   vim `gg -l $@`
 }
 
 # Quick commands to sync CWD between terminals.
-function pin () {
-    rm -f ~/.pindir
-    echo $PWD >~/.pindir
-    chmod 0600 ~/.pindir >/dev/null 2>&1
+pin() {
+  rm -f ~/.pindir
+  echo $PWD >~/.pindir
+  chmod 0600 ~/.pindir >/dev/null 2>&1
 }
-function pout () {
-    cd `cat ~/.pindir`
+pout() {
+  cd `cat ~/.pindir`
 }
 
 # A quick grep-for-processes.
-function psl () {
-    if _is SunOS; then
-        ps -Af | grep -i $1 | grep -v grep
-    else
-        ps auxww | grep -i $1 | grep -v grep
-    fi
+psl() {
+  if _is SunOS; then
+    ps -Af | grep -i $1 | grep -v grep
+  else
+    ps auxww | grep -i $1 | grep -v grep
+  fi
 }
 
 # Make a new command.
-function vix () {
-    if [ -z "$1" ]; then
-        echo "usage: $0 <newfilename>"
-        return 1
-    fi
-    touch $1
-    chmod -v 0755 $1
-    $EDITOR $1
+vix() {
+  if [ -z "$1" ]; then
+    echo "usage: $0 <newfilename>"
+    return 1
+  fi
+  touch $1
+  chmod -v 0755 $1
+  $EDITOR $1
 }
 
 # Make a new command in ~/bin
-function makecommand () {
-    if [ -z "$1" ]; then
-        echo "Gotta specify a command name, champ" >&2
-        return 1
-    fi
+makecommand() {
+  if [ -z "$1" ]; then
+    echo "Gotta specify a command name, champ" >&2
+    return 1
+  fi
 
-    mkdir -p ~/bin
-    local cmd=~/bin/$1
-    if [ -e $cmd ]; then
-        echo "Command $1 already exists" >&2
-    else
-        echo "#!${2:-/bin/sh}" >$cmd
-    fi
+  mkdir -p ~/bin
+  local cmd=~/bin/$1
+  if [ -e $cmd ]; then
+    echo "Command $1 already exists" >&2
+  else
+    echo "#!${2:-/bin/sh}" >$cmd
+  fi
 
-    vix $cmd
+  vix $cmd
 }
 
 # View a Python module in Vim.
-function vipy () {
-    p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
-    if [ $? = 0 ]; then
-        vi -R "$p"
-    fi
-    # errors will be printed by python
+vipy() {
+  p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
+  if [ $? = 0 ]; then
+    vi -R "$p"
+  fi
+  # errors will be printed by python
 }
 
-function rxvt-title () {
-    echo -n "]2;$*"
+rxvt-title() {
+  echo -n "]2;$*"
 }
 
-function screen-title () {
-    echo -n "k$*\\"
+screen-title() {
+  echo -n "k$*\\"
 }
 
 # Everything Git-related
 
 # Commit what's been staged, use args as message.
-function gc () {
-    git commit -m "$*"
-    git log --oneline --decorate -n 10
+gc() {
+  git commit -m "$*"
+  git log --oneline --decorate -n 10
 }
 
 # Commit everything, use args as message.
-function sci () {
-    if [ $# = 0 ]; then
-        echo "usage: $0 message..." >&2
-        return 1
-    fi
-    git add -A
-    hr staging
-    git status
-    hr committing
-    git cim "$*"
-    hr results
-    git quicklog
-    hr done
+sci() {
+  if [ $# = 0 ]; then
+    echo "usage: $0 message..." >&2
+    return 1
+  fi
+  git add -A
+  hr staging
+  git status
+  hr committing
+  git cim "$*"
+  hr results
+  git quicklog
+  hr done
 }
 
 # Don't page inside of emacs
 if [ -n "$INSIDE_EMACS" ]; then
-    alias git='git --no-pager'
+  alias git='git --no-pager'
 fi
 
 # ZSH-SPECIFIC COMPLETION {{{1
@@ -481,9 +481,9 @@ compdef '_files -g "*.bom"' lsbom
 # Show dots while waiting to complete. Useful for systems with slow net access,
 # like those places where they use giant, slow NFS solutions. (Hint.)
 expand-or-complete-with-dots() {
-  echo -n "\e[31m......\e[0m"
-  zle expand-or-complete
-  zle redisplay
+echo -n "\e[31m......\e[0m"
+zle expand-or-complete
+zle redisplay
 }
 zle -N expand-or-complete-with-dots
 bindkey "^I" expand-or-complete-with-dots
@@ -491,24 +491,24 @@ bindkey "^I" expand-or-complete-with-dots
 # This inserts a tab after completing a redirect. You want this.
 # (Source: http://www.zsh.org/mla/users/2006/msg00690.html)
 self-insert-redir() {
-    integer l=$#LBUFFER
-    zle self-insert
-    (( $l >= $#LBUFFER )) && LBUFFER[-1]=" $LBUFFER[-1]"
+integer l=$#LBUFFER
+zle self-insert
+(( $l >= $#LBUFFER )) && LBUFFER[-1]=" $LBUFFER[-1]"
 }
 zle -N self-insert-redir
 for op in \| \< \> \& ; do
-    bindkey "$op" self-insert-redir
+  bindkey "$op" self-insert-redir
 done
 
 # this one's from Ari
 # Function Usage: doc packagename
 #                 doc pac<TAB>
-function doc () { cd /usr/share/doc/$1 && ls }
+doc() { cd /usr/share/doc/$1 && ls }
 compdef '_files -W /usr/share/doc -/' doc
 
 # Paste the output of the last command.
-function last-command-output () {
-    eval $(fc -l -1 | cut -d\  -f3- | paste -s )
+last-command-output() {
+  eval $(fc -l -1 | cut -d\  -f3- | paste -s )
 }
 zle -N last-command-output
 bindkey "^[n" last-command-output
@@ -519,7 +519,7 @@ zle -N self-insert url-quote-magic
 
 # Turn off completion and weirdness if we're within Emacs.
 if [[ "$EMACS" = "t" ]]; then
-    unsetopt zle
+  unsetopt zle
 fi
 
 # Turn off slow git branch completion. http://stackoverflow.com/q/12175277/102704
@@ -557,9 +557,9 @@ zle -N edit-command-line
 bindkey '\ee' edit-command-line
 
 # Let ^W delete to slashes - zsh-users list, 4 Nov 2005
-backward-delete-to-slash () {
-    local WORDCHARS=${WORDCHARS//\//}
-    zle .backward-delete-word
+backward-delete-to-slash() {
+  local WORDCHARS=${WORDCHARS//\//}
+  zle .backward-delete-word
 }
 zle -N backward-delete-to-slash
 bindkey "^W" backward-delete-to-slash
@@ -593,17 +593,14 @@ unsetopt extended_history
 # Job Control
 setopt notify
 
-# Input/Output
-#unsetopt clobber
-
 # PROMPT AWESOMENESS {{{1
 
 # Unfortunately, ^L makes the first line disappear. We can fix that by making
 # our own clear-screen function.
-clear-screen-and-precmd () {
-    print -n "\e[2J\e[H"
-    zle redisplay
-    precmd
+clear-screen-and-precmd() {
+  print -n "\e[2J\e[H"
+  zle redisplay
+  precmd
 }
 zle -N clear-screen-and-precmd
 
@@ -622,66 +619,68 @@ fi
 # resizing a terminal. The solution is to have precmd() print the first line
 # and set PS1 to the second line. See: http://xrl.us/bf3wh
 
-function colorprompt {
-    if ! _color; then
-        uncolorprompt
-        return
-    fi
+colorprompt() {
+  if ! _color; then
+    uncolorprompt
+    return
+  fi
 
-    __prompt_mode=${1:-0}
-    local -a line1=(
-        "%{[${__prompt_mode}m%}%m: %~"
-        "%(1j.%{[36;1m%} (%j jobs)%{[0m%}.)"
-        "%(?..%{[31;1m%} (error %?%)%{[0m%})"
-    )
-    local -a line2=(
-        "%{%(!.[31;5m.[${__prompt_mode}m)%}%n "
-        "$__sigil%{[0m%} "
-    )
+  __prompt_mode=${1:-0}
+  local -a line1=(
+  "%{[${__prompt_mode}m%}%m: %~"
+  "%(1j.%{[36;1m%} (%j jobs)%{[0m%}.)"
+  "%(?..%{[31;1m%} (error %?%)%{[0m%})"
+  )
+  local -a line2=(
+  "%{%(!.[31;5m.[${__prompt_mode}m)%}%n "
+  "$__sigil%{[0m%} "
+  )
 
-    # it's like temp=join("", $promptstring)
-    __first_prompt_line=${(j::)line1}
+  # it's like temp=join("", $promptstring)
+  __first_prompt_line=${(j::)line1}
 
-    bindkey "^L" clear-screen-and-precmd
-    precmd() { print -P $__first_prompt_line }
-    PS1=${(j::)line2}
+  bindkey "^L" clear-screen-and-precmd
+  precmd() { print -P $__first_prompt_line }
+  PS1=${(j::)line2}
 }
 
-function uncolorprompt {
-    local -a temp=(
-        "%m: %~"
-        "%(1j. (%j jobs).)"
-        "%(?.. (error %?%))"
-        $__newline
-        "%n $__sigil "
-    )
-    bindkey "^L" clear-screen
-    unfunction precmd &>/dev/null
-    PS1=${(j::)temp}
+uncolorprompt() {
+  local -a temp=(
+  "%m: %~"
+  "%(1j. (%j jobs).)"
+  "%(?.. (error %?%))"
+  $__newline
+  "%n $__sigil "
+  )
+  bindkey "^L" clear-screen
+  unfunction precmd &>/dev/null
+  PS1=${(j::)temp}
 }
 
-function shortprompt {
-    __prompt_mode=${__prompt_mode:-0}
-    bindkey "^L" clear-screen
-    unfunction precmd &>/dev/null
-    PS1="%{[${__prompt_mode}m%}%#%{[0m%} "
+shortprompt() {
+  __prompt_mode=${__prompt_mode:-0}
+  bindkey "^L" clear-screen
+  unfunction precmd &>/dev/null
+  PS1="%{[${__prompt_mode}m%}%#%{[0m%} "
 }
 
-function simpleprompt {
-    __prompt_mode=${__prompt_mode:-0}
-    bindkey "^L" clear-screen
-    unfunction precmd &>/dev/null
-    PS1="%# "
+simpleprompt() {
+  __prompt_mode=${__prompt_mode:-0}
+  bindkey "^L" clear-screen
+  unfunction precmd &>/dev/null
+  PS1="%# "
 }
 
 if [ -n "$INSIDE_EMACS" ]; then
-    function colorprompt () { simpleprompt }
-    function uncolorprompt () { simpleprompt }
-    simpleprompt
+  unfunction colorprompt
+  unfunction uncolorprompt
+  colorprompt() { simpleprompt }
+  uncolorprompt() { simpleprompt }
+  simpleprompt
 elif [ -n "$SUDO_USER" ]; then
-    colorprompt '33;1'
+  colorprompt '33;1'
 else
-    colorprompt
+  colorprompt
 fi
 
 # SSH {{{1
@@ -690,11 +689,11 @@ fi
 # (If you set up an ssh host in .ssh/config, it become an alias, unless an alias
 # with that name already exists.)
 if [ -e "$HOME/.ssh/config" ]; then
-    for host in $(grep -E '^Host +\w+$' $HOME/.ssh/config | awk '{print $2}'); do
-        if ! _try which $host; then
-            alias $host="ssh $host"
-        fi
-    done
+  for host in $(grep -E '^Host +\w+$' $HOME/.ssh/config | awk '{print $2}'); do
+    if ! _try which $host; then
+      alias $host="ssh $host"
+    fi
+  done
 fi
 
 # Override _ssh_hosts to use .ssh/config. This speeds up ssh/scp tab-completion
@@ -702,89 +701,90 @@ fi
 #
 # See: http://www.zsh.org/mla/users/2003/msg00937.html
 autoload _ssh ; _ssh
-function _ssh_hosts () {
+_ssh_hosts() {
   if [[ -r "$HOME/.ssh/config" ]]; then
-      local IFS="   " key host
-      while read key host; do
-          if [[ "$key" == (#i)host ]]; then
-              _wanted hosts expl host \
-                  compadd -M 'm:{a-zA-Z}={A-Za-z} r:|.=* r:|=*' "$@" "$host"
-          fi
-      done < "$HOME/.ssh/config"
+    local IFS="   " key host
+    while read key host; do
+      if [[ "$key" == (#i)host ]]; then
+        _wanted hosts expl host \
+          compadd -M 'm:{a-zA-Z}={A-Za-z} r:|.=* r:|=*' "$@" "$host"
+      fi
+    done < "$HOME/.ssh/config"
   fi
 }
 
 # Set up ssh agent if I've been using `keychain`.
 for cmd in ~/bin/keychain /usr/bin/keychain; do
-    if [ -x "$cmd" ]; then
-        keychainbin=$cmd
-        break
-    fi
+  if [ -x "$cmd" ]; then
+    keychainbin=$cmd
+    break
+  fi
 done
 if [ -n $keychainbin ]; then
-    if [ -e  ~/.keychain/${HOSTNAME}-sh ]; then
-        source ~/.keychain/${HOSTNAME}-sh >/dev/null 2>&1
-    fi
-    alias agent="$keychainbin id_dsa && source ~/.keychain/$HOST-sh"
+  if [ -e  ~/.keychain/${HOSTNAME}-sh ]; then
+    source ~/.keychain/${HOSTNAME}-sh >/dev/null 2>&1
+  fi
+  alias agent="$keychainbin id_dsa && source ~/.keychain/$HOST-sh"
 else
-    alias agent="echo command not found: keychain"
+  alias agent="echo command not found: keychain"
 fi
 
 # A problem with screen is that old sessions lose ssh-agent awareness. This
 # little system fixes it.
-function {
-    local agentdir=~/.latestssh
-    local agentfile=$agentdir/$HOST.sh
+_fix_old_ssh_agents() {
+  local agentdir=~/.latestssh
+  local agentfile=$agentdir/$HOST.sh
 
-    mkdir -p $agentdir
-    chmod 0700 $agentdir >/dev/null
+  mkdir -p $agentdir
+  chmod 0700 $agentdir >/dev/null
 
-    if [ -n "$SSH_AUTH_SOCK" -a -z $STY ]; then
-        rm -f $agentfile >/dev/null
-        echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >$agentfile
-        chmod 0600 $agentfile >/dev/null
-    fi
+  if [ -n "$SSH_AUTH_SOCK" -a -z $STY ]; then
+    rm -f $agentfile >/dev/null
+    echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >$agentfile
+    chmod 0600 $agentfile >/dev/null
+  fi
 
-    # ...existing windows can run this alias
-    alias latestssh="source $agentfile; ls \$SSH_AUTH_SOCK"
+  # ...existing windows can run this alias
+  alias latestssh="source $agentfile; ls \$SSH_AUTH_SOCK"
 
-    # ...new windows get it automatically
-    if [ -n "$STY" ]; then
-        source $agentfile
-    fi
+  # ...new windows get it automatically
+  if [ -n "$STY" ]; then
+    source $agentfile
+  fi
 }
+_fix_old_ssh_agents
 
 # Set terminal colors based on SSH host.
 #
 # Create a .ssh/colors file with lines like "<hostname> #cc33ff" and the color will be set
 # automatically.
 if [ -n "$ITERM_SESSION_ID" ]; then
-    function set_term_bgcolor() {
-        echo -ne "\033]Ph${1}\033\\"
-    }
+  set_term_bgcolor() {
+    echo -ne "\033]Ph${1}\033\\"
+  }
 fi
 
 if whence -w set_term_bgcolor > /dev/null 2>&1 && [ -e ~/.ssh/colors ]; then
-    unfunction ssh >/dev/null 2>&1
-    alias realssh="$(which ssh)"
-    function ssh() {
-        local line="$(grep -E "^$1\b" ~/.ssh/colors)"
-        if [ -n "$line" ]; then
-            args="$(cut -d\  -f2- <<<$line)"
-            eval set_term_bgcolor $args
-            eval realssh $@
-            eval set_term_bgcolor 000000
-        else
-            eval realssh $@
-        fi
-    }
+  unfunction ssh >/dev/null 2>&1
+  alias realssh="$(which ssh)"
+  ssh() {
+    local line="$(grep -E "^$1\b" ~/.ssh/colors)"
+    if [ -n "$line" ]; then
+      args="$(cut -d\  -f2- <<<$line)"
+      eval set_term_bgcolor $args
+      eval realssh $@
+      eval set_term_bgcolor 000000
+    else
+      eval realssh $@
+    fi
+  }
 fi
 
 
 # SOURCE LOCAL CONFIG {{{1
 
 if [ -e ~/.zshlocal ]; then
-    . ~/.zshlocal
+  . ~/.zshlocal
 fi
 
 # }}} Done.
