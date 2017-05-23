@@ -446,6 +446,10 @@ if !has('gui_running')
     set t_Sf=[3%dm
     set t_Sb=[4%dm
   endif
+  " Disable Background Color Erase when within tmux - https://stackoverflow.com/q/6427650/102704
+  if $TMUX != ""
+    set t_ut=
+  endif
 endif
 syntax on
 
