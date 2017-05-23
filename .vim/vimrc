@@ -81,9 +81,8 @@ map <C-l> <C-W>l
 nmap <M-k>  :Ag! "\b<cword>\b" <CR>
 nmap <Esc>k :Ag! "\b<cword>\b" <CR>
 nmap ˚      :Ag! "\b<cword>\b" <CR>
-"nmap <M-k>  :Ggrep! "\b<cword>\b" <CR>
-"nmap <Esc>k :Ggrep! "\b<cword>\b" <CR>
-"nmap ˚      :Ggrep! "\b<cword>\b" <CR>
+nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
+nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
 
 " Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
 nmap <Esc>o :cc<CR>
