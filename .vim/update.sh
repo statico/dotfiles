@@ -69,6 +69,7 @@ repos=(
   https://github.com/vim-airline/vim-airline-themes
   https://github.com/vim-scripts/bufkill.vim.git
   https://github.com/wellle/targets.vim.git
+  https://github.com/yssl/QFEnter
 
 )
 
