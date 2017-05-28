@@ -631,7 +631,7 @@ colorprompt() {
   local -a line1
   line1=(
     "%{[${__prompt_mode}m%}%~"
-    "%(1j.%{[36;1m%} ∴ %j jobs%{[0m%}.)"
+    "%(1j.%{[36;1m%} ● %j jobs%{[0m%}.)"
     "%(?..%{[31;1m%} ▲ error %?%{[0m%})"
   )
   local -a line2
