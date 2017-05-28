@@ -612,7 +612,7 @@ local __newline="
 
 # Unicode looks cool.
 if `echo $LANG | grep -E -i 'utf-?8' &>/dev/null`; then
-  __sigil="▸"
+  __sigil="〉"
 else
   __sigil="%#"
 fi
@@ -630,14 +630,13 @@ colorprompt() {
   __prompt_mode=${1:-0}
   local -a line1
   line1=(
-    "%{[${__prompt_mode}m%}%m: %~"
-    "%(1j.%{[36;1m%} (%j jobs)%{[0m%}.)"
-    "%(?..%{[31;1m%} (error %?%)%{[0m%})"
+    "%{[${__prompt_mode}m%}%~"
+    "%(1j.%{[36;1m%} ∴ %j jobs%{[0m%}.)"
+    "%(?..%{[31;1m%} ▲ error %?%{[0m%})"
   )
   local -a line2
   line2=(
-    "%{%(!.[31;5m.[${__prompt_mode}m)%}%n "
-    "$__sigil%{[0m%} "
+    "%{%(!.[31;5m.[${__prompt_mode}m)%}$__sigil%{[0m%}"
   )
 
   # it's like temp=join("", $promptstring)
@@ -666,7 +665,7 @@ shortprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
   unfunction precmd &>/dev/null
-  PS1="%{[${__prompt_mode}m%}%#%{[0m%} "
+  PS1="%{[${__prompt_mode}m%}$%{[0m%} "
 }
 
 simpleprompt() {
