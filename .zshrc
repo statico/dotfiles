@@ -191,6 +191,7 @@ alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
+alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
 alias g='git'
 alias gA='git add --all :/'
 alias ga='git add'
