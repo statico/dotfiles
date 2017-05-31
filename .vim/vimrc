@@ -472,7 +472,7 @@ highlight SpellRare    term=underline cterm=underline ctermbg=NONE ctermfg=magen
 highlight SpellLocal   term=underline cterm=underline ctermbg=NONE ctermfg=cyan
 
 " ignore should be... ignored
-highlight Ignore cterm=bold ctermfg=black ctermbg=bg
+silent! highlight Ignore cterm=bold ctermfg=black ctermbg=bg
 highlight clear FoldColumn
 highlight def link FoldColumn Ignore
 highlight clear Folded
