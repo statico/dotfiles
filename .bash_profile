@@ -3,6 +3,8 @@
 # Sometimes I'm stuck with bash.
 #
 
+export PATH=$HOME/bin:$PATH
+
 alias Ag='sudo apt-get install'
 alias Ai='apt-cache show'
 alias Ar='sudo apt-get remove'
