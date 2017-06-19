@@ -294,7 +294,7 @@ command! W w
 cmap w!! w !sudo tee >/dev/null %
 
 " trim spaces at EOL
-command! TEOL %s/ \+$//
+command! TEOL %s/\s\+$//
 command! CLEAN retab | TEOL
 
 " hightlight more than 80 characters
