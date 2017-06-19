@@ -466,10 +466,10 @@ highlight def link MyTagListTagName Question
 highlight def link xmlCdata NONE
 
 " custom incorrect spelling colors
-highlight SpellBad     term=underline cterm=underline ctermbg=NONE ctermfg=red
-highlight SpellCap     term=underline cterm=underline ctermbg=NONE ctermfg=blue
-highlight SpellRare    term=underline cterm=underline ctermbg=NONE ctermfg=magenta
-highlight SpellLocal   term=underline cterm=underline ctermbg=NONE ctermfg=cyan
+highlight SpellBad     term=underline cterm=underline ctermbg=NONE ctermfg=205
+highlight SpellCap     term=underline cterm=underline ctermbg=NONE ctermfg=33
+highlight SpellRare    term=underline cterm=underline ctermbg=NONE ctermfg=217
+highlight SpellLocal   term=underline cterm=underline ctermbg=NONE ctermfg=72
 
 " ignore should be... ignored
 silent! highlight Ignore cterm=bold ctermfg=black ctermbg=bg
