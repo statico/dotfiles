@@ -20,46 +20,46 @@ me=.vim/update.sh
 
 repos=(
 
-  https://github.com/airblade/vim-gitgutter
-  https://github.com/altercation/vim-colors-solarized
-  https://github.com/ap/vim-css-color
-  https://github.com/ctrlpvim/ctrlp.vim
-  https://github.com/docunext/closetag.vim
-  https://github.com/ervandew/supertab
-  https://github.com/haya14busa/incsearch.vim
-  https://github.com/junegunn/goyo.vim
-  https://github.com/justinmk/vim-sneak
-  https://github.com/rking/ag.vim
-  https://github.com/scrooloose/nerdtree
-  https://github.com/scrooloose/syntastic
-  https://github.com/sheerun/vim-polyglot
-  https://github.com/tomasr/molokai
-  https://github.com/tpope/vim-commentary
-  https://github.com/tpope/vim-fugitive
-  https://github.com/tpope/vim-markdown
-  https://github.com/tpope/vim-pathogen
-  https://github.com/tpope/vim-sleuth
-  https://github.com/tpope/vim-surround
-  https://github.com/tpope/vim-unimpaired
-  https://github.com/vim-airline/vim-airline
-  https://github.com/vim-airline/vim-airline-themes
-  https://github.com/vim-scripts/bufkill.vim
-  https://github.com/wellle/targets.vim
-  https://github.com/yssl/QFEnter
+  airblade/vim-gitgutter
+  altercation/vim-colors-solarized
+  ap/vim-css-color
+  ctrlpvim/ctrlp.vim
+  docunext/closetag.vim
+  ervandew/supertab
+  haya14busa/incsearch.vim
+  junegunn/goyo.vim
+  justinmk/vim-sneak
+  rking/ag.vim
+  scrooloose/nerdtree
+  scrooloose/syntastic
+  sheerun/vim-polyglot
+  tomasr/molokai
+  tpope/vim-commentary
+  tpope/vim-fugitive
+  tpope/vim-markdown
+  tpope/vim-pathogen
+  tpope/vim-sleuth
+  tpope/vim-surround
+  tpope/vim-unimpaired
+  vim-airline/vim-airline
+  vim-airline/vim-airline-themes
+  vim-scripts/bufkill.vim
+  wellle/targets.vim
+  yssl/QFEnter
 
 )
 
 mkdir -p $bundledir
 
-for url in ${repos[@]}; do
+for repo in ${repos[@]}; do
   if [ -n "$1" ]; then
-    if ! (echo "$url" | grep -i "$1" &>/dev/null) ; then
+    if ! (echo "$repo" | grep -i "$1" &>/dev/null) ; then
       continue
     fi
   fi
-  dest="$bundledir/$(basename $url | sed -e 's/\.git$//')"
+  dest="$bundledir/$(basename $repo | sed -e 's/\.git$//')"
   rm -rf $dest
-  echo "Cloning $url"
-  git clone --depth=1 -q $url $dest
+  echo "Cloning $repo"
+  git clone --depth=1 -q https://github.com/$repo $dest
   rm -rf $dest/.git
 done
