@@ -31,7 +31,6 @@ repos=(
   justinmk/vim-sneak
   rking/ag.vim
   scrooloose/nerdtree
-  scrooloose/syntastic
   sheerun/vim-polyglot
   tomasr/molokai
   tpope/vim-commentary
@@ -44,6 +43,7 @@ repos=(
   vim-airline/vim-airline
   vim-airline/vim-airline-themes
   vim-scripts/bufkill.vim
+  w0rp/ale
   wellle/targets.vim
   yssl/QFEnter
 

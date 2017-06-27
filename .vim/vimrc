@@ -384,10 +384,10 @@ let g:ctrlp_switch_buffer = 0
 nmap ; :CtrlPBuffer<CR>
 nmap <Leader>r :CtrlPTag<CR>
 
-" Syntastic
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_jump=0
-let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+" ALE
+let g:ale_sign_error = '▶▶'
+let g:ale_sign_warning = '▷▷'
+let g:airline#extensions#ale#enabled = 1
 
 " fugitive
 autocmd QuickFixCmdPost *grep* cwindow
