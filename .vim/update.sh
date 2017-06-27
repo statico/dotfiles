@@ -1,22 +1,8 @@
 #!/bin/bash -e
 #
-# Updates Vim plugins.
+# Update all vim plugins: ./update.sh
 #
-# Update everything (long):
-#
-#   ./update.sh
-#
-# Update just one plugin that matches this pattern:
-#
-#   ./update.sh supertab
-#
-
-cd ~/.dotfiles
-
-vimdir=$PWD/.vim
-bundledir=$vimdir/bundle
-tmp=/tmp/$LOGNAME-vim-update
-me=.vim/update.sh
+# Update just one plugin that matches this pattern: ./update.sh supertab
 
 repos=(
 
@@ -50,7 +36,11 @@ repos=(
 
 )
 
-mkdir -p $bundledir
+cd ~/.dotfiles
+
+dir=.vim/bundle
+
+mkdir -p $dir
 
 for repo in ${repos[@]}; do
   if [ -n "$1" ]; then
@@ -58,7 +48,7 @@ for repo in ${repos[@]}; do
       continue
     fi
   fi
-  dest="$bundledir/$(basename $repo | sed -e 's/\.git$//')"
+  dest="$dir/$(basename $repo | sed -e 's/\.git$//')"
   rm -rf $dest
   echo "Cloning $repo"
   git clone --depth=1 -q https://github.com/$repo $dest
