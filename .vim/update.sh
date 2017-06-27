@@ -29,6 +29,7 @@ repos=(
   haya14busa/incsearch.vim
   junegunn/goyo.vim
   justinmk/vim-sneak
+  octref/rootignore
   rking/ag.vim
   scrooloose/nerdtree
   sheerun/vim-polyglot
