@@ -41,22 +41,14 @@ repos=(
   https://github.com/ap/vim-css-color.git
   https://github.com/ctrlpvim/ctrlp.vim.git
   https://github.com/docunext/closetag.vim.git
-  https://github.com/ekalinin/Dockerfile.vim.git
-  https://github.com/elzr/vim-json.git
   https://github.com/ervandew/supertab
-  https://github.com/groenewege/vim-less.git
   https://github.com/haya14busa/incsearch.vim
-  https://github.com/jnurmine/Zenburn.git
   https://github.com/junegunn/goyo.vim.git
   https://github.com/justinmk/vim-sneak
-  https://github.com/kchmck/vim-coffee-script.git
-  https://github.com/mxw/vim-jsx
-  https://github.com/pangloss/vim-javascript.git
   https://github.com/rking/ag.vim.git
   https://github.com/scrooloose/nerdtree.git
   https://github.com/scrooloose/syntastic.git
-  https://github.com/slim-template/vim-slim.git
-  https://github.com/slm-lang/vim-slm.git
+  https://github.com/sheerun/vim-polyglot.git
   https://github.com/tomasr/molokai.git
   https://github.com/tpope/vim-commentary
   https://github.com/tpope/vim-fugitive.git
