@@ -276,6 +276,7 @@ alias slurp='wget -t 5 -c -nH -r -k -p -N --no-parent'
 alias sshx='ssh -C -c blowfish -X'
 alias st='git status'
 alias stt='git status -uall'
+alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
