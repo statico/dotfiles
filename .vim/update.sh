@@ -24,6 +24,7 @@ repos=(
   tpope/vim-fugitive
   tpope/vim-markdown
   tpope/vim-pathogen
+  tpope/vim-rhubarb
   tpope/vim-sleuth
   tpope/vim-surround
   tpope/vim-unimpaired
