@@ -9,10 +9,10 @@ repos=(
   airblade/vim-gitgutter
   altercation/vim-colors-solarized
   ap/vim-css-color
-  ctrlpvim/ctrlp.vim
   docunext/closetag.vim
   ervandew/supertab
   haya14busa/incsearch.vim
+  junegunn/fzf.vim
   junegunn/goyo.vim
   justinmk/vim-sneak
   octref/rootignore

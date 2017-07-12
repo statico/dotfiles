@@ -372,17 +372,11 @@ let spell_auto_type = ""
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
 
-" ctrlp.vim (replaces FuzzyFinder and Command-T)
-let g:ctrlp_map = '<Leader>t'
-let g:ctrlp_match_window_bottom = 0
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py|.min.js'
-let g:ctrlp_max_files=0
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_dotfiles = 0
-let g:ctrlp_switch_buffer = 0
-nmap ; :CtrlPBuffer<CR>
-nmap <Leader>r :CtrlPTag<CR>
+" FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
+set rtp+=/usr/local/opt/fzf
+nmap ; :Buffers<CR>
+nmap <Leader>r :Tags<CR>
+nmap <Leader>t :Files<CR>
 
 " ALE
 let g:ale_sign_error = '▶▶'

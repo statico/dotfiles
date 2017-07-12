@@ -172,7 +172,7 @@ alias Ai='apt-cache show'
 alias Ar='sudo apt-get remove'
 alias Arp='sudo apt-get remove --purge'
 alias As='apt-cache search'
-alias ZR='echo "Reloading zshrc..." ; ZshRehash'
+alias ZR='echo "Restarting zsh..." ; exec zsh -l'
 alias ZL='vi ~/.zshlocal ~/.zshrc ; ZR'
 alias ZshInstall='~/.dotfiles/install.sh ; ZR'
 alias ZshRehash='. ~/.zshrc'
@@ -307,6 +307,19 @@ fi
 if _has ag; then
   alias ack=ag
   alias ag='ag --color-path 1\;31 --color-match 1\;32 --color'
+fi
+
+# FZF is the future
+if _has fzf; then
+    if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
+        source /usr/local/opt/fzf/shell/key-bindings.zsh
+        source /usr/local/opt/fzf/shell/completion.zsh
+    fi
+    if _has ag; then
+        export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+    fi
 fi
 
 # Nico is amazing for showing me this.
