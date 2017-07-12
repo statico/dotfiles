@@ -619,7 +619,7 @@ local __newline="
 if `echo $LANG | grep -E -i 'utf-?8' &>/dev/null`; then
   __sigil="〉"
 else
-  __sigil="%#"
+  __sigil="%# "
 fi
 
 # Don't use newlines in the prompt because it causes excess scrolling when
