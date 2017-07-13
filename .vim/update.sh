@@ -12,6 +12,7 @@ repos=(
   docunext/closetag.vim
   ervandew/supertab
   haya14busa/incsearch.vim
+  itchyny/lightline.vim
   junegunn/fzf.vim
   junegunn/goyo.vim
   justinmk/vim-sneak
@@ -28,8 +29,6 @@ repos=(
   tpope/vim-sleuth
   tpope/vim-surround
   tpope/vim-unimpaired
-  vim-airline/vim-airline
-  vim-airline/vim-airline-themes
   vim-scripts/bufkill.vim
   w0rp/ale
   wellle/targets.vim
