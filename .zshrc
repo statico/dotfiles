@@ -309,19 +309,6 @@ if _has ag; then
   alias ag='ag --color-path 1\;31 --color-match 1\;32 --color'
 fi
 
-# FZF is the future
-if _has fzf; then
-    if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
-        source /usr/local/opt/fzf/shell/key-bindings.zsh
-        source /usr/local/opt/fzf/shell/completion.zsh
-    fi
-    if _has ag; then
-        export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
-        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-        export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-    fi
-fi
-
 # Nico is amazing for showing me this.
 alias v='vim -R -'
 for i in /usr/share/vim/vim*/macros/less.sh(N) ; do
@@ -815,6 +802,20 @@ if whence -w termcolor > /dev/null 2>&1 && [ -e ~/.ssh/colors ]; then
   }
 fi
 
+# FZF {{{1
+
+# FZF is the future. This stuff has to be after some of the Zsh stuff above. Not sure why.
+if _has fzf; then
+    if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
+        source /usr/local/opt/fzf/shell/key-bindings.zsh
+        source /usr/local/opt/fzf/shell/completion.zsh
+    fi
+    if _has ag; then
+        export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+    fi
+fi
 
 # SOURCE LOCAL CONFIG {{{1
 
