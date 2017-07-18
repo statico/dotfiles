@@ -42,6 +42,8 @@ if _color; then
     else
       export TERM=xterm-256color
     fi
+  elif [ "$TERM_PROGRAM" = "Apple_Terminal" ]; then
+      export TERM=xterm-256color
   else
     export TERM=rxvt
   fi
