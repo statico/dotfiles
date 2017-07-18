@@ -378,10 +378,6 @@ nmap ; :Buffers<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>t :Files<CR>
 
-" ALE
-let g:ale_sign_error = '▶▶'
-let g:ale_sign_warning = '▷▷'
-
 " fugitive
 autocmd QuickFixCmdPost *grep* cwindow
 
@@ -408,6 +404,12 @@ map g/ <Plug>(incsearch-stay)
 
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
+
+" ALE
+let g:ale_sign_warning = '▲'
+let g:ale_sign_error = '✗'
+highlight link ALEWarningSign String
+highlight link ALEErrorSign Title
 
 " Lightline
 let g:lightline = {
