@@ -547,7 +547,7 @@ bindkey -s '\eu' '\eq^Ucd ..; ls^M'
 bindkey -s '\ej' "^Ussh lemon^M"
 
 # Smart less-adder
-bindkey -s "\el" " 2>&1|less^M"
+bindkey -s "\el" "^E 2>&1|less^M"
 
 # This lets me use ^Z to toggle between open text editors.
 bindkey -s '^Z' '^Ufg^M'
