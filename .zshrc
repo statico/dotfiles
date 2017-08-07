@@ -318,14 +318,6 @@ for i in /usr/share/vim/vim*/macros/less.sh(N) ; do
   alias v="$i"
 done
 
-# exa is nice
-if _has exa; then
-  alias k='exa -Tl'
-  alias ls='exa'
-  alias l='exa -l --git'
-  alias ll='exa -la --git'
-fi
-
 # Linux should definitely have Gnu coreutils, right?
 if _is Linux; then
   if _color && _try ls --color; then
