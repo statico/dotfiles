@@ -1,12 +1,13 @@
-#!/bin/bash -e
+#!/bin/bash
 #
-# Update all vim plugins: ./update.sh
+# Usage: ./update.sh [pattern]
 #
-# Update just one plugin that matches this pattern: ./update.sh supertab
+# Specify [pattern] to update only repos that match the pattern.
 
 repos=(
 
   airblade/vim-gitgutter
+  alampros/vim-styled-jsx
   altercation/vim-colors-solarized
   ap/vim-css-color
   docunext/closetag.vim
@@ -16,6 +17,7 @@ repos=(
   junegunn/fzf.vim
   junegunn/goyo.vim
   justinmk/vim-sneak
+  mxw/vim-jsx
   octref/rootignore
   rking/ag.vim
   scrooloose/nerdtree
@@ -36,10 +38,8 @@ repos=(
 
 )
 
-cd ~/.dotfiles
-
-dir=.vim/bundle
-
+set -e
+dir=~/.dotfiles/.vim/bundle
 mkdir -p $dir
 
 for repo in ${repos[@]}; do
