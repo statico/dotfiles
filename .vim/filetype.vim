@@ -48,6 +48,7 @@ au BufNewFile,BufRead *.json    setf javascript tw=0
 au BufNewFile,BufRead *.less    setf less
 au BufNewFile,BufRead *.less    setlocal nocindent smartindent
 au BufNewFile,BufRead *.md      setlocal ft=markdown nolist spell
+au BufNewFile,BufRead *.ni      setlocal ft=inform nolist ts=2 sw=2 noet
 au BufNewFile,BufRead *.plist   setf xml
 au BufNewFile,BufRead *.rb      setlocal noai
 au BufNewFile,BufRead *.rhtm    setf eruby
