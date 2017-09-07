@@ -1,0 +1,21 @@
+\set QUIET 1
+
+\timing
+\x auto
+
+\pset border 2
+\pset linestyle unicode
+\pset null ∅
+
+\set COMP_KEYWORD_CASE upper
+\set HISTCONTROL ignoredups
+\set HISTSIZE 2000
+\set PROMPT1 '%M %n@%/%R%# '
+\set PROMPT2 '...%# '
+\set VERBOSITY verbose
+
+\set extensions 'select * from pg_available_extensions;'
+\set version 'select version();'
+
+\set QUIET 0
+
