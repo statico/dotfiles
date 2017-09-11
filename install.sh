@@ -6,8 +6,7 @@ set -e
 
 basedir=$HOME/.dotfiles
 bindir=$HOME/bin
-gitbase=git://github.com/statico/dotfiles.git
-tarball=http://github.com/statico/dotfiles/tarball/master
+repourl=git://github.com/statico/dotfiles.git
 
 function symlink() {
   src=$1
@@ -28,8 +27,6 @@ function symlink() {
       mv -v $dest $backup
     fi
   fi
-
-  # Update existing or create new symlinks.
   ln -sf $src $dest
 }
 
@@ -45,7 +42,7 @@ if [ -d $basedir/.git ]; then
 else
   echo "Checking out dotfiles using git..."
   rm -rf $basedir
-  git clone --quiet --depth=1 $gitbase $basedir
+  git clone --quiet --depth=1 $repourl $basedir
 fi
 
 cd $basedir
