@@ -545,7 +545,7 @@ bindkey -e
 bindkey -s '\eu' '\eq^Ucd ..; ls^M'
 
 # Connect to my most recently used screen session
-bindkey -s '\ej' "^Ussh lemon -t tmux att^M"
+bindkey -s '\ej' "^U[ -n \"\$TMUX\" ] && ssh lemon || ssh lemon -t tmux att^M"
 
 # Smart less-adder
 bindkey -s "\el" "^E 2>&1|less^M"
