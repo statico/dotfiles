@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Usage: ./update.sh [pattern]
 #
@@ -51,7 +51,7 @@ for repo in ${repos[@]}; do
   fi
   dest="$dir/$(basename $repo | sed -e 's/\.git$//')"
   rm -rf $dest
-  echo "Cloning $repo"
+  echo "· Cloning $repo"
   git clone --depth=1 -q https://github.com/$repo $dest
   rm -rf $dest/.git
 done
