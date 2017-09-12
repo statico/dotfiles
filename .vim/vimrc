@@ -217,6 +217,7 @@ autocmd Filetype javascript iabbr zzz console.log('ZZZ',
 autocmd Filetype ruby iabbr xxx puts "XXX
 autocmd Filetype ruby iabbr yyy puts "YYY
 autocmd Filetype ruby iabbr zzz puts "ZZZ
+autocmd Filetype ruby iabbr ppp require 'pp'; pp
 
 " Section: Vim options {{{1
 "--------------------------------------------------------------------------
