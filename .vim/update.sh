@@ -17,7 +17,6 @@ repos=(
   junegunn/fzf.vim
   junegunn/goyo.vim
   justinmk/vim-sneak
-  mxw/vim-jsx
   octref/rootignore
   rking/ag.vim
   scrooloose/nerdtree
