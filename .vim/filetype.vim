@@ -44,7 +44,7 @@ au BufNewFile,BufRead *.html,*.htm  call s:SelectHTML()
 au BufNewFile,BufRead *.html    setlocal nocindent smartindent
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
-au BufNewFile,BufRead *.json    setf javascript tw=0
+au BufNewFile,BufRead *.json    setf tw=0
 au BufNewFile,BufRead *.less    setf less
 au BufNewFile,BufRead *.less    setlocal nocindent smartindent
 au BufNewFile,BufRead *.md      setlocal ft=markdown nolist spell
