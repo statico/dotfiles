@@ -298,6 +298,9 @@ cmap w!! w !sudo tee >/dev/null %
 command! TEOL %s/\s\+$//
 command! CLEAN retab | TEOL
 
+" Close all buffers except this one
+command! BufCloseOthers %bd|e#
+
 " hightlight more than 80 characters
 function! HighlightTooLongLines()
   highlight def link RightMargin Error
