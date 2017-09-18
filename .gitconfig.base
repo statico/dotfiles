@@ -1,10 +1,7 @@
 #
-# NOTE: This file is renamed to .gitconfig by my install script.
+# NOTE: This file is renamed to .gitconfig by my install script, and a .postinstall script sets
+# name/email/signingkey.
 # 
-[user]
-	name = Ian Langworth ☠>
-	email = ian@langworth.com
-	signingkey = 0x6704627BC76DBFA8
 [core]
 	editor = vim
 	pager = less -FRX
