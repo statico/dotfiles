@@ -16,7 +16,7 @@ nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
-nmap \c :CoffeeWatch<CR>
+nmap \c :call TmuxPaneClear()<CR>
 nmap \e :NERDTreeToggle<CR>
 nmap \f mt:Goyo<CR>'tzz
 nmap \g :Gstatus<CR>
@@ -27,6 +27,7 @@ nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
 nmap \p :ProseMode<CR>
 nmap \q :nohlsearch<CR>
+nmap \r :call TmuxPaneRepeat()<CR>
 nmap \s :setlocal invspell<CR>
 nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \u :setlocal list!<CR>:setlocal list?<CR>
@@ -146,6 +147,18 @@ function ToggleHex()
   let &modifiable=l:oldmodifiable
 endfunction
 
+" Use \r to repeat the last command in a tmux pane of my choosing.
+function TmuxPaneRepeat()
+  write
+  silent execute ':!tmux send-keys -t' g:tmux_console_pane 'C-p' 'C-j'
+  redraw!
+endfunction
+
+" Use \c to add some space in a tmux pane.
+function TmuxPaneClear()
+  silent execute ':!tmux send-keys -t' g:tmux_server_pane 'C-j' 'C-j' 'C-j' 'C-j' 'C-j' 'C-j' 'C-j'
+  redraw!
+endfunction
 
 " Section: Hacks {{{1
 "--------------------------------------------------------------------------
