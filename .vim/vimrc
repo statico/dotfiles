@@ -205,19 +205,19 @@ abbr conosle console
 abbr comopnent component
 
 " Temporary debugging helpers
-autocmd Filetype python iabbr xxx print('XXX
-autocmd Filetype python iabbr yyy print('YYY
-autocmd Filetype python iabbr zzz print('ZZZ
-autocmd Filetype coffee iabbr xxx console.log 'XXX',
-autocmd Filetype coffee iabbr yyy console.log 'YYY',
-autocmd Filetype coffee iabbr zzz console.log 'ZZZ',
-autocmd Filetype javascript iabbr xxx console.log('XXX',
-autocmd Filetype javascript iabbr yyy console.log('YYY',
-autocmd Filetype javascript iabbr zzz console.log('ZZZ',
-autocmd Filetype ruby iabbr xxx puts "XXX
-autocmd Filetype ruby iabbr yyy puts "YYY
-autocmd Filetype ruby iabbr zzz puts "ZZZ
-autocmd Filetype ruby iabbr ppp require 'pp'; pp
+autocmd BufEnter *.py iabbr xxx print('XXX
+autocmd BufEnter *.py iabbr yyy print('YYY
+autocmd BufEnter *.py iabbr zzz print('ZZZ
+autocmd BufEnter *.coffee iabbr xxx console.log 'XXX',
+autocmd BufEnter *.coffee iabbr yyy console.log 'YYY',
+autocmd BufEnter *.coffee iabbr zzz console.log 'ZZZ',
+autocmd BufEnter *.js iabbr xxx console.log('XXX',
+autocmd BufEnter *.js iabbr yyy console.log('YYY',
+autocmd BufEnter *.js iabbr zzz console.log('ZZZ',
+autocmd BufEnter *.rb iabbr xxx puts "XXX
+autocmd BufEnter *.rb iabbr yyy puts "YYY
+autocmd BufEnter *.rb iabbr zzz puts "ZZZ
+autocmd BufEnter *.rb iabbr ppp require 'pp'; pp
 
 " Section: Vim options {{{1
 "--------------------------------------------------------------------------
