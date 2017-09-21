@@ -1,4 +1,4 @@
-" vim:fdm=marker:ts=4:sw=4:et:
+" vim:fdm=marker:ts=2:sw=2:et:
 "        _
 " __   _(_)_ __ ___  _ __ ___
 " \ \ / / | '_ ` _ \| '__/ __|
