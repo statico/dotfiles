@@ -268,7 +268,7 @@ set infercase               " Completion recognizes capitalization
 set laststatus=2            " Always show the status bar
 set linebreak               " Break long lines by word, not char
 set list                    " Show whitespace as special chars - see listchars
-set listchars=tab:▸\ ,trail:◀,extends:»,precedes:« " Unicode characters for various things
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:· " Unicode characters for various things
 set matchtime=2             " Tenths of second to hilight matching paren
 set modelines=5             " How many lines of head & tail to look for ml's
 silent! set mouse=nvc       " Use the mouse, but not in insert mode
