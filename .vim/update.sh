@@ -48,7 +48,9 @@ for repo in ${repos[@]}; do
       continue
     fi
   fi
-  dest="$dir/$(basename $repo | sed -e 's/\.git$//')"
+  plugin="$(basename $repo | sed -e 's/\.git$//')"
+  [ "$plugin" = "vim-styled-jsx" ] && plugin="000-vim-styled-jsx" # https://goo.gl/tJVPja
+  dest="$dir/$plugin"
   rm -rf $dest
   echo "· Cloning $repo"
   git clone --depth=1 -q https://github.com/$repo $dest
