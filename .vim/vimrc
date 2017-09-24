@@ -280,6 +280,7 @@ set printoptions=paper:letter " US paper
 set ruler                   " Show row/col and percentage
 set scroll=4                " Number of lines to scroll with ^U/^D
 set scrolloff=15            " Keep cursor away from this many chars top/bot
+set sessionoptions-=options " Don't save runtimepath in Vim session (see tpope/vim-pathogen docs)
 set shiftround              " Shift to certain columns, not just n spaces
 set shiftwidth=2            " Number of spaces to shift for autoindent or >,<
 set shortmess+=A            " Don't bother me when a swapfile exists
