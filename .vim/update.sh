@@ -17,6 +17,7 @@ repos=(
   junegunn/fzf.vim
   junegunn/goyo.vim
   justinmk/vim-sneak
+  nathanaelkane/vim-indent-guides
   octref/rootignore
   rking/ag.vim
   scrooloose/nerdtree
@@ -24,9 +25,12 @@ repos=(
   statico/vim-inform7
   tomasr/molokai
   tpope/vim-commentary
+  tpope/vim-endwise
+  tpope/vim-eunuch
   tpope/vim-fugitive
   tpope/vim-markdown
   tpope/vim-pathogen
+  tpope/vim-repeat
   tpope/vim-rhubarb
   tpope/vim-sleuth
   tpope/vim-surround

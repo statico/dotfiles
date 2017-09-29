@@ -203,16 +203,6 @@ function! CurrentFileDir()
    return "e " . expand("%:p:h") . "/"
 endfunction
 
-cno $n Rename <C-\>eRenameCurrentFileAtDir()<CR>
-function! RenameCurrentFileAtDir()
-   return "Rename " . expand("%:p:h") . "/"
-endfunction
-
-cno $s save <C-\>eSaveCurrentFileAtDir()<CR>
-function! SaveCurrentFileAtDir()
-   return "saveas " . expand("%:p:h") . "/"
-endfunction
-
 " I never type these right
 abbr conosle console
 abbr comopnent component
