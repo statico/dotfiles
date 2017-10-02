@@ -27,17 +27,15 @@ repos=(
   tpope/vim-endwise
   tpope/vim-eunuch
   tpope/vim-fugitive
-  tpope/vim-markdown
   tpope/vim-pathogen
   tpope/vim-repeat
   tpope/vim-rhubarb
   tpope/vim-sleuth
   tpope/vim-surround
   tpope/vim-unimpaired
-  vim-scripts/bufkill.vim
+  qpkorr/vim-bufkill
   w0rp/ale
   wellle/targets.vim
-  yssl/QFEnter
 
 )
 
