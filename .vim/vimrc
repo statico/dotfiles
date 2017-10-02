@@ -190,8 +190,8 @@ function! KeepCurrentLine(motion)
     endif
 endfunction
 
-nnoremap <C-w>h :call KeepCurrentLine('h')<CR>
-nnoremap <C-w>l :call KeepCurrentLine('l')<CR>
+nnoremap <C-w>h :silent call KeepCurrentLine('h')<CR>
+nnoremap <C-w>l :silent call KeepCurrentLine('l')<CR>
 
 " Section: Abbrevations {{{1
 "--------------------------------------------------------------------------
@@ -550,7 +550,8 @@ highlight link markdownListMarker Todo
 
 " prose mode
 function! ProseMode()
-  set formatoptions=1an
+  "set formatoptions=1an
+  call goyo#execute(0, [])
   set spell noci nosi noai nolist noshowmode noshowcmd
   set complete+=s
   set bg=light
