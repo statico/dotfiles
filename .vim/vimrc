@@ -335,15 +335,6 @@ function! Rename(name, bang)
     endif
 endfunction
 
-" Tips for writing prose.
-" Adapted from http://www.drbunsen.org/writing-in-vim/
-function! WordProcessorMode()
-  set formatoptions=1an noet spell wrap linebreak tw=80
-  set complete+=s
-endfunction
-command! WP call WordProcessorMode()
-
-
 " Section: Python specifics {{{1
 "--------------------------------------------------------------------------
 
@@ -399,9 +390,6 @@ let g:gitgutter_sign_modified_removed = '∙'
 " supertab
 let g:SuperTabLongestEnhanced=1
 let g:SuperTabLongestHighlight=1
-
-" sneak
-let g:sneak#s_next = 1
 
 " Zenburn
 let g:zenburn_high_Contrast = 1
@@ -556,9 +544,16 @@ function! ProseMode()
   set noci nosi noai
   set complete+=s
   colors solarized
-  AirlineTheme solarized
 endfunction
 command! ProseMode call ProseMode()
+
+" Tips for writing prose.
+" Adapted from http://www.drbunsen.org/writing-in-vim/
+function! WordProcessorMode()
+  set formatoptions=1an noet spell wrap linebreak tw=80
+  set complete+=s
+endfunction
+command! WP call WordProcessorMode()
 
 " Section: File types {{{1
 "--------------------------------------------------------------------------

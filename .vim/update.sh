@@ -16,7 +16,6 @@ repos=(
   itchyny/lightline.vim
   junegunn/fzf.vim
   junegunn/goyo.vim
-  justinmk/vim-sneak
   nathanaelkane/vim-indent-guides
   octref/rootignore
   rking/ag.vim
