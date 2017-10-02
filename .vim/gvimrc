@@ -13,7 +13,7 @@ set columns=80 lines=50
 set errorbells
 set fuoptions=maxhorz,maxvert
 set guicursor+=a:blinkon0
-set guifont=PragmataPro\ for\ Powerline:h12
+set guifont=Essential\ PragmataPro:h12
 set guioptions=aigm
 set mousemodel=popup
 set nocursorline
