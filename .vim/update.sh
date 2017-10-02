@@ -18,6 +18,7 @@ repos=(
   junegunn/goyo.vim
   nathanaelkane/vim-indent-guides
   octref/rootignore
+  qpkorr/vim-bufkill
   rking/ag.vim
   scrooloose/nerdtree
   sheerun/vim-polyglot
@@ -33,7 +34,6 @@ repos=(
   tpope/vim-sleuth
   tpope/vim-surround
   tpope/vim-unimpaired
-  qpkorr/vim-bufkill
   w0rp/ale
   wellle/targets.vim
 

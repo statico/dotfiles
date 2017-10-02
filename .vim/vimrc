@@ -399,6 +399,9 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
+" markdown.vim
+let g:vim_markdown_frontmatter = 1
+
 " enable filetype plugins -- e.g., ftplugin/xml.vim
 filetype plugin indent on
 
@@ -547,20 +550,16 @@ highlight link markdownListMarker Todo
 
 " prose mode
 function! ProseMode()
-  set bg=light
-  set noci nosi noai
+  set formatoptions=1an
+  set spell noci nosi noai nolist noshowmode noshowcmd
   set complete+=s
+  set bg=light
+  if !has('gui_running')
+    let g:solarized_termcolors=256
+  endif
   colors solarized
 endfunction
 command! ProseMode call ProseMode()
-
-" Tips for writing prose.
-" Adapted from http://www.drbunsen.org/writing-in-vim/
-function! WordProcessorMode()
-  set formatoptions=1an noet spell wrap linebreak tw=80
-  set complete+=s
-endfunction
-command! WP call WordProcessorMode()
 
 " Section: File types {{{1
 "--------------------------------------------------------------------------
