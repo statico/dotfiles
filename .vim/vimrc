@@ -588,7 +588,10 @@ augroup END
 " Section: Load ~/.vimlocal {{{1
 "--------------------------------------------------------------------------
 
-" now load specifics to this machine
+" Some plugin seems to search for something at startup
+silent! nohlsearch
+
+" Now load specifics to this host
 if filereadable(expand("~/.vimlocal"))
     source ~/.vimlocal
 endif
