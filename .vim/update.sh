@@ -41,6 +41,13 @@ repos=(
 
 set -e
 dir=~/.dotfiles/.vim/bundle
+
+if [ -d $dir -a -z "$1" ]; then
+  temp="$(mktemp -d -t bundle)"
+  echo "▲ Moving old bundle dir to $temp"
+  mv "$dir" "$temp"
+fi
+
 mkdir -p $dir
 
 for repo in ${repos[@]}; do
@@ -53,7 +60,10 @@ for repo in ${repos[@]}; do
   [ "$plugin" = "vim-styled-jsx" ] && plugin="000-vim-styled-jsx" # https://goo.gl/tJVPja
   dest="$dir/$plugin"
   rm -rf $dest
-  echo "· Cloning $repo"
-  git clone --depth=1 -q https://github.com/$repo $dest
-  rm -rf $dest/.git
+  (
+    git clone --depth=1 -q https://github.com/$repo $dest
+    rm -rf $dest/.git
+    echo "· Cloned $repo"
+  ) &
 done
+wait
