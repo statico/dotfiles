@@ -16,10 +16,10 @@ repos=(
   itchyny/lightline.vim
   junegunn/fzf.vim
   junegunn/goyo.vim
+  mileszs/ack.vim
   nathanaelkane/vim-indent-guides
   octref/rootignore
   qpkorr/vim-bufkill
-  rking/ag.vim
   scrooloose/nerdtree
   sheerun/vim-polyglot
   statico/vim-inform7

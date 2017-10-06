@@ -79,31 +79,20 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <M-k>  :Ag! "\b<cword>\b" <CR>
-nmap <Esc>k :Ag! "\b<cword>\b" <CR>
-nmap ˚      :Ag! "\b<cword>\b" <CR>
+nmap <M-k>  :Ack! "\b<cword>\b" <CR>
+nmap <Esc>k :Ack! "\b<cword>\b" <CR>
+nmap ˚      :Ack! "\b<cword>\b" <CR>
 nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
 nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
-
-" Use Alt-N/P to go to next/prev quickfix or :Ag serach result.
-nmap <Esc>o :cc<CR>
-nmap <Esc>n :cnext<CR>
-nmap <Esc>p :cprevious<CR>
-nmap <Esc>c :cclose<CR>
-nmap ø  :cclose<CR>
-nmap ç  :cwindow<CR>
-nmap ‘  :cnext<CR>
-nmap “  :cprevious<CR>
-nmap ≈  :cclose<CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window
 " (courtesy bufkill.vim)
 nmap <Esc>w :BD<CR>
 nmap ∑      :BD<CR>
 
-autocmd FileType qf set number      " Show line numbers in the quickfix window
-autocmd Filetype qf set scrolloff=1 " Don't scroll like crazy in the quickfix window
-autocmd Filetype qf wincmd J        " Always move to the bottom of the screen
+autocmd FileType qf setlocal number      " Show line numbers in the quickfix window
+autocmd Filetype qf setlocal scrolloff=1 " Don't scroll like crazy in the quickfix window
+autocmd Filetype qf wincmd J             " Always move to the bottom of the screen
 
 " Hex mode from http://vim.wikia.com/wiki/Improved_hex_editing
 " ex command for toggling hex mode - define mapping if desired
@@ -377,6 +366,9 @@ set rtp+=~/.fzf
 nmap ; :Buffers<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>t :Files<CR>
+
+" ack -> ag
+let g:ackprg = 'ag --vimgrep'
 
 " fugitive
 autocmd QuickFixCmdPost *grep* cwindow
