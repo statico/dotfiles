@@ -588,5 +588,5 @@ silent! nohlsearch
 
 " Now load specifics to this host
 if filereadable(expand("~/.vimlocal"))
-    source ~/.vimlocal
+  source ~/.vimlocal
 endif

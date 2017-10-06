@@ -25,5 +25,5 @@ set visualbell
 
 " Now load specifics to this machine.
 if filereadable(expand("~/.gvimlocal"))
-    source ~/.gvimlocal
+  source ~/.gvimlocal
 endif

@@ -18,7 +18,6 @@ repos=(
   junegunn/goyo.vim
   mileszs/ack.vim
   nathanaelkane/vim-indent-guides
-  octref/rootignore
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot
