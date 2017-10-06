@@ -556,6 +556,7 @@ function! ProseMode()
   set complete+=s
   set bg=light
   if !has('gui_running')
+    let g:solarized_underline = 1
     let g:solarized_termcolors=256
   endif
   colors solarized
