@@ -78,9 +78,9 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <M-k>  :Ack! "\b<cword>\b" <CR>
-nmap <Esc>k :Ack! "\b<cword>\b" <CR>
-nmap ˚      :Ack! "\b<cword>\b" <CR>
+nmap <M-k>    :Ack! "\b<cword>\b" <CR>
+nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
+nmap ˚        :Ack! "\b<cword>\b" <CR>
 nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
 nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
 
