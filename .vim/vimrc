@@ -69,7 +69,6 @@ cnoremap <C-g>  <C-c>
 
 " Why not use the space or return keys to toggle folds?
 nnoremap <space> za
-nnoremap <CR>    za
 vnoremap <space> zf
 
 " Window movement shortcuts from Mark
@@ -90,9 +89,9 @@ nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
 nmap <Esc>w :BD<CR>
 nmap ∑      :BD<CR>
 
-autocmd FileType qf setlocal number      " Show line numbers in the quickfix window
-autocmd Filetype qf setlocal scrolloff=1 " Don't scroll like crazy in the quickfix window
-autocmd Filetype qf wincmd J             " Always move to the bottom of the screen
+" Don't scroll like crazy in the QuickFix and other fixes
+autocmd FileType qf setlocal number nolist scrolloff=0
+autocmd Filetype qf wincmd J
 
 " Hex mode from http://vim.wikia.com/wiki/Improved_hex_editing
 " ex command for toggling hex mode - define mapping if desired
@@ -366,6 +365,7 @@ set rtp+=~/.fzf
 nmap ; :Buffers<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>t :Files<CR>
+nmap <Leader>a :Ag<CR>
 
 " ack -> ag
 let g:ackprg = 'ag --vimgrep'
