@@ -26,7 +26,7 @@ _is() {
 
 # Returns whether out terminal supports color.
 _color() {
-  return $( [ -z "$INSIDE_EMACS" -a -z "$VIMRUNTIME" ] )
+  return $( [ -z "$INSIDE_EMACS" ] )
 }
 
 # ENVIRONMENT VARIABLES {{{1
