@@ -89,6 +89,9 @@ nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
 nmap <Esc>w :BD<CR>
 nmap ∑      :BD<CR>
 
+" Fast spell fix
+nmap <Leader>z z=1<CR><CR>
+
 " Don't scroll like crazy in the QuickFix and other fixes
 autocmd FileType qf setlocal number nolist scrolloff=0
 autocmd Filetype qf wincmd J
@@ -135,14 +138,15 @@ function ToggleHex()
   let &modifiable=l:oldmodifiable
 endfunction
 
-" Use \r to repeat the last command in a tmux pane of my choosing.
+let g:tmux_console_pane = '0:0.0'
+let g:tmux_server_pane = '0:0.0'
+
 function TmuxPaneRepeat()
   write
   silent execute ':!tmux send-keys -t' g:tmux_console_pane 'C-p' 'C-j'
   redraw!
 endfunction
 
-" Use \c to add some space in a tmux pane.
 function TmuxPaneClear()
   silent execute ':!tmux send-keys -t' g:tmux_server_pane 'C-j' 'C-j' 'C-j' 'C-j' 'C-j' 'C-j' 'C-j'
   redraw!
@@ -353,9 +357,6 @@ let explWinSize = 30
 let explHideFiles = '^\.,\.(class|swp|pyc|pyo)$,^CVS$'
 let explDirsFirst = -1
 
-" vimspell.vim
-let spell_auto_type = ""
-
 " NERD_tree.vim
 let NERDTreeIgnore = ['\~$', '\.pyc$']
 
@@ -548,7 +549,6 @@ function! ProseMode()
   set complete+=s
   set bg=light
   if !has('gui_running')
-    let g:solarized_underline = 1
     let g:solarized_termcolors=256
   endif
   colors solarized
