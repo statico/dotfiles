@@ -34,6 +34,7 @@ repos=(
   tpope/vim-surround
   tpope/vim-unimpaired
   w0rp/ale
+  wakatime/vim-wakatime
   wellle/targets.vim
 
 )
