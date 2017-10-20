@@ -7,9 +7,9 @@
 " Ian's .vimrc file
 "
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " KEY MAPS
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 " Useful macros I use the most
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
@@ -86,11 +86,11 @@ nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
 
 " Search for the word under the cursor in the current directory
-nmap <M-k>    :Ack! "\b<cword>\b" <CR>
-nmap <Esc>k   :Ack! "\b<cword>\b" <CR>
-nmap ˚        :Ack! "\b<cword>\b" <CR>
-nmap <M-S-k>  :Ggrep! "\b<cword>\b" <CR>
-nmap <Esc>K   :Ggrep! "\b<cword>\b" <CR>
+nmap <M-k>    mo:Ack! "\b<cword>\b" <CR>
+nmap <Esc>k   mo:Ack! "\b<cword>\b" <CR>
+nmap ˚        mo:Ack! "\b<cword>\b" <CR>
+nmap <M-S-k>  mo:Ggrep! "\b<cword>\b" <CR>
+nmap <Esc>K   mo:Ggrep! "\b<cword>\b" <CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window via bufkill.vim
 nmap <Esc>w :BD<CR>
@@ -133,9 +133,9 @@ endfunction
 nnoremap <C-w>h :silent call KeepCurrentLine('h')<CR>
 nnoremap <C-w>l :silent call KeepCurrentLine('l')<CR>
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " ABBREVATIONS
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 " Typing `$c` on the command line expands to `:e` + the current path, so it's easy to edit a file in
 " the same directory as the current file.
@@ -163,9 +163,9 @@ autocmd BufEnter *.rb iabbr yyy puts "YYY
 autocmd BufEnter *.rb iabbr zzz puts "ZZZ
 autocmd BufEnter *.rb iabbr ppp require 'pp'; pp
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " OPTIONS
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 set autoindent              " Carry over indenting from previous line
 set autoread                " Don't bother me hen a file changes
@@ -233,9 +233,9 @@ set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore certain files in
 " Essential for filetype plugins.
 filetype plugin indent on
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " CUSTOM COMMANDS AND FUNCTIONS
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 " I always hit ":W" instead of ":w" because I linger on the shift key...
 command! Q q
@@ -248,9 +248,9 @@ command! CLEAN retab | TEOL
 " Close all buffers except this one
 command! BufCloseOthers %bd|e#
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " PLUGIN SETTINGS
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 " Use Pathogen for plugin management. See update.sh in this directory.
 runtime bundle/vim-pathogen/autoload/pathogen.vim
@@ -341,9 +341,9 @@ function! s:MaybeUpdateLightline()
   end
 endfunction
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " COLORS
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 " Make sure colored syntax mode is on, and make it Just Work with 256-color terminals.
 set background=dark
@@ -443,19 +443,15 @@ function! ProseMode()
 endfunction
 command! ProseMode call ProseMode()
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " FILE TYPE TRIGGERS
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 " Reset all autocommands
 augroup vimrc
 autocmd!
 
-au BufNewFile,BufRead *.as      setlocal ft=actionscript nolist ts=4 sw=4 noet
-au BufNewFile,BufRead *.bb      setf xdefaults
 au BufNewFile,BufRead *.cson    set ft=coffee
-au BufNewFile,BufRead *.csv     setf csv
-au BufNewFile,BufRead *.flr     setf actionscript
 au BufNewFile,BufRead *.glsl    setf glsl
 au BufNewFile,BufRead *.gyp     set ft=python
 au BufNewFile,BufRead *.html    setlocal nocindent smartindent
@@ -463,31 +459,17 @@ au BufNewFile,BufRead *.i7x     setf inform7
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
 au BufNewFile,BufRead *.json    set ft=json tw=0
-au BufNewFile,BufRead *.less    setf less
-au BufNewFile,BufRead *.less    setlocal nocindent smartindent
+au BufNewFile,BufRead *.less    setlocal ft=less nocindent smartindent
 au BufNewFile,BufRead *.md      setlocal ft=markdown nolist spell
 au BufNewFile,BufRead *.md,*.markdown setlocal foldlevel=999 tw=0 nocin
 au BufNewFile,BufRead *.ni      setlocal ft=inform nolist ts=2 sw=2 noet
 au BufNewFile,BufRead *.plist   setf xml
 au BufNewFile,BufRead *.rb      setlocal noai
-au BufNewFile,BufRead *.rhtm    setf eruby
-au BufNewFile,BufRead *.rhtml   setf eruby
 au BufNewFile,BufRead *.rxml    setf ruby
 au BufNewFile,BufRead *.sass    setf sass
-au BufNewFile,BufRead *.sch     setf scheme
-au BufNewFile,BufRead *.scm     setf scheme
-au BufNewFile,BufRead *.scss    setf scss
-au BufNewFile,BufRead *.ss      setf scheme
-au BufNewFile,BufRead *.t       setf perl
-au BufNewFile,BufRead *.ts      set foldlevel=999
 au BufNewFile,BufRead *.ttml    setf xml
 au BufNewFile,BufRead *.vert,*.frag set ft=glsl
-au BufNewFile,BufRead *.xhtml   setf xml
 au BufNewFile,BufRead *.xml     setlocal ft=xml  ts=2 sw=2 et
-au BufNewFile,BufRead *.xps     setf perl
-au BufNewFile,BufRead *.xsl     setlocal ft=xslt ts=2 sw=2 et
-au BufNewFile,BufRead *.yaml    setlocal ft=yaml
-au BufNewFile,BufRead *.yml     setlocal ft=yaml
 au BufNewFile,BufRead *.zone    setlocal nolist ts=4 sw=4 noet
 au BufNewFile,BufRead *.zsh     setf zsh
 au BufNewFile,BufRead *templates/*.html setf htmldjango
@@ -495,27 +477,22 @@ au BufNewFile,BufRead .git/config setlocal ft=gitconfig nolist ts=4 sw=4 noet
 au BufNewFile,BufRead .gitconfig* setlocal ft=gitconfig nolist ts=4 sw=4 noet
 au BufNewFile,BufRead .vimlocal,.gvimlocal setf vim
 au BufNewFile,BufRead .zshlocal setf zsh
-au BufNewFile,BufRead /etc/apache*/* setf apache
 au BufNewFile,BufRead /tmp/crontab* setf crontab
-au BufNewFile,BufRead /tmp/mutt-* setlocal spell nolist nohlsearch
-au BufNewFile,BufRead /tmp/sql* setf sql
-au BufNewFile,BufRead /usr/share/zsh/*/functions/* setf zsh
 au BufNewFile,BufRead COMMIT_EDITMSG setlocal nolist nonumber
 au BufNewFile,BufRead Makefile setlocal nolist
-au BufNewFile,BufRead pf.conf setf pf
-au BufNewFile,BufRead pf.conf.* setf pf
 
-au FileType json setlocal conceallevel=0 foldmethod=syntax foldlevel=999
-au FileType inform7 setlocal nolist tw=0 ts=4 sw=4 noet foldlevel=999
-au Filetype gitcommit setlocal tw=80
 au FileType gitcommit setlocal nolist ts=4 sts=4 sw=4 noet
+au FileType inform7 setlocal nolist tw=0 ts=4 sw=4 noet foldlevel=999
+au FileType json setlocal conceallevel=0 foldmethod=syntax foldlevel=999
 au FileType make setlocal nolist ts=4 sts=4 sw=4 noet
+au FileType markdown syn sync fromstart
+au Filetype gitcommit setlocal tw=80
 
 augroup END
 
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 " HOST-SPECIFIC VIM FILE
-" ------------------------------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
 " Now load specifics to this host
 if filereadable(expand("~/.vimlocal"))
