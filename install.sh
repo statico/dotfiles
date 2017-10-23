@@ -4,9 +4,15 @@
 
 set -e
 
-basedir=$HOME/.dotfiles
-bindir=$HOME/bin
-repourl=git://github.com/statico/dotfiles.git
+config_dir=$(dirname $0)
+if [ -f "${config_dir}/.config" ]; then
+  source ${config_dir}/.config
+fi
+
+basedir=${basedir:-$HOME/.dotfiles}
+repourl=${repourl:-git://github.com/statico/dotfiles.git}
+installdir=${installdir:-$HOME}
+bindir=${bindir:-$installdir/bin}
 
 function symlink() {
   src=$1
@@ -54,12 +60,12 @@ for path in .* ; do
       continue
       ;;
     *)
-      symlink $basedir/$path $HOME/$path
+      symlink $basedir/$path $installdir/$path
       ;;
   esac
 done
-symlink $basedir/.vim/vimrc $HOME/.vimrc
-symlink $basedir/.vim/gvimrc $HOME/.gvimrc
+symlink $basedir/.vim/vimrc $installdir/.vimrc
+symlink $basedir/.vim/gvimrc $installdir/.gvimrc
 
 echo "Adding executables to ~/bin/..."
 mkdir -p $bindir
@@ -68,10 +74,12 @@ for path in bin/* ; do
 done
 
 echo "Setting up vim plugins..."
-.vim/update.sh
+if [ -x .vim/update.sh ]; then
+  .vim/update.sh
+fi
 
 echo "Setting up git..."
-cp $basedir/.gitconfig.base $HOME/.gitconfig
+cp $basedir/.gitconfig.base $installdir/.gitconfig
 
 postinstall=$HOME/.postinstall
 if [ -e $postinstall ]; then
