@@ -9,11 +9,15 @@ hi Search term=NONE ctermfg=0 ctermbg=14 guifg=#ffffff guibg=#444444
 " Command-Shift-F is fullscreen.
 nmap <D-F> :set fullscreen!<CR>
 
+colorscheme OceanicNext
+highlight link ALEWarningSign WarningMsg
+highlight link ALEErrorSign Number
+set guifont=Essential\ PragmataPro:h14
+
 set columns=80 lines=50
 set errorbells
 set fuoptions=maxhorz,maxvert
 set guicursor+=a:blinkon0
-set guifont=Essential\ PragmataPro:h15
 set guioptions=aigm
 set mousemodel=popup
 set nocursorline
