@@ -14,6 +14,7 @@ repos=(
   ervandew/supertab
   haya14busa/incsearch.vim
   itchyny/lightline.vim
+  jparise/vim-graphql
   junegunn/fzf.vim
   junegunn/goyo.vim
   mileszs/ack.vim
