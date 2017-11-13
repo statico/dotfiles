@@ -350,6 +350,7 @@ set background=dark
 let g:rehash256 = 1 " Something to do with Molokai?
 colorscheme molokai
 if !has('gui_running')
+  let g:solarized_termcolors=256
   if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
     set t_Co=256
   elseif has("terminfo")
@@ -436,9 +437,6 @@ function! ProseMode()
   set spell noci nosi noai nolist noshowmode noshowcmd
   set complete+=s
   set bg=light
-  if !has('gui_running')
-    let g:solarized_termcolors=256
-  endif
   colors solarized
 endfunction
 command! ProseMode call ProseMode()
