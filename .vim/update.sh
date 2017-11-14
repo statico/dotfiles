@@ -4,7 +4,12 @@
 #
 # Specify [pattern] to update only repos that match the pattern.
 
-repos=(
+if [ -f ../.config ]; then
+  source ../.config
+fi
+
+
+default_repos=(
 
   airblade/vim-gitgutter
   alampros/vim-styled-jsx
@@ -38,8 +43,10 @@ repos=(
 
 )
 
+repos=${vim_plugins_github:-$default_repos}
+
 set -e
-dir=~/.dotfiles/.vim/bundle
+dir=${installdir}/.vim/bundle
 
 if [ -d $dir -a -z "$1" ]; then
   temp="$(mktemp -d -t bundleXXXXX)"
