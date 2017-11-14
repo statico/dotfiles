@@ -43,7 +43,7 @@ default_repos=(
 
 )
 
-repos=${vim_plugins_github:-$default_repos}
+repos=${vim_plugins_github[@]:-$default_repos[@]}
 
 set -e
 dir=${installdir:-$HOME}/.vim/bundle
