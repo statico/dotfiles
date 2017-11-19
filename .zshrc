@@ -189,6 +189,7 @@ alias curltime='curl -w "@$HOME/.curl-format" -o /dev/null -s'
 alias d='docker'
 alias df='df -H'
 alias dls='dpkg -L'
+alias dotenv="eval \$(egrep -v '^#' .env | xargs)"
 alias dsl='dpkg -l | grep -i'
 alias e='emacs'
 alias ec='emacsclient --no-wait'
