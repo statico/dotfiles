@@ -345,6 +345,7 @@ else
     vim `ack -l $@`
   }
 fi
+alias vag=vack
 
 # ..same thing with gg.
 vgg() {
