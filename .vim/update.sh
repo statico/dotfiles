@@ -24,7 +24,6 @@ repos=(
   scrooloose/nerdtree
   sheerun/vim-polyglot
   statico/vim-inform7
-  statico/vim-javascript-sql
   tomasr/molokai
   tpope/vim-commentary
   tpope/vim-endwise
