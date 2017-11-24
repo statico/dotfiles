@@ -17,7 +17,13 @@ let g:nord_uniform_status_lines = 1
 let g:lightline.colorscheme = 'nord'
 call g:lightline#init()
 set guifont=Essential\ PragmataPro:h14
-let $FZF_DEFAULT_OPTS="--color fg:242,bg:233,hl:65,fg+:15,bg+:234,hl+:108 --color info:108,prompt:109,spinner:108,pointer:168,marker:168"
+
+" Going back to Ctrl-P until FZF works well in MacVim :(
+" https://github.com/junegunn/fzf/issues/1108
+nmap ; :CtrlPBuffer<CR>
+nmap <Leader>r :CtrlPTag<CR>
+nmap <Leader>t :CtrlP<CR>
+"let $FZF_DEFAULT_OPTS="--color fg:242,bg:233,hl:65,fg+:15,bg+:234,hl+:108 --color info:108,prompt:109,spinner:108,pointer:168,marker:168"
 
 set columns=80 lines=50
 set errorbells

@@ -18,6 +18,7 @@ repos=(
   jparise/vim-graphql
   junegunn/fzf.vim
   junegunn/goyo.vim
+  kien/ctrlp.vim
   mhartington/oceanic-next
   mileszs/ack.vim
   nathanaelkane/vim-indent-guides
