@@ -10,6 +10,7 @@ repos=(
   alampros/vim-styled-jsx
   altercation/vim-colors-solarized
   ap/vim-css-color
+  arcticicestudio/nord-vim
   docunext/closetag.vim
   ervandew/supertab
   haya14busa/incsearch.vim

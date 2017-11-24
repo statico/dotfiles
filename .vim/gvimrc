@@ -9,14 +9,12 @@ hi Search term=NONE ctermfg=0 ctermbg=14 guifg=#ffffff guibg=#444444
 " Command-Shift-F is fullscreen.
 nmap <D-F> :set fullscreen!<CR>
 
-colorscheme OceanicNext
-hi clear VertSplit
-hi link VertSplit StatusLine
+colorscheme nord
 hi link ALEWarningSign WarningMsg
-hi link ALEErrorSign Number
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-let g:lightline.colorscheme = 'one'
+hi link ALEErrorSign ErrorMsg
+let g:nord_italic_comments = 1
+let g:nord_uniform_status_lines = 1
+let g:lightline.colorscheme = 'nord'
 call g:lightline#init()
 set guifont=Essential\ PragmataPro:h14
 let $FZF_DEFAULT_OPTS="--color fg:242,bg:233,hl:65,fg+:15,bg+:234,hl+:108 --color info:108,prompt:109,spinner:108,pointer:168,marker:168"
