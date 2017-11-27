@@ -4,8 +4,9 @@
 #
 # Specify [pattern] to update only repos that match the pattern.
 
-if [ -f ../.config ]; then
-  source ../.config
+scriptdir=$(dirname $0)
+if [ -f ${scriptdir}/../.config ]; then
+  source ${scriptdir}/../.config
 fi
 
 
