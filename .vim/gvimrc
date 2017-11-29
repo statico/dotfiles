@@ -23,6 +23,13 @@ set guifont=Essential\ PragmataPro:h14
 nmap ; :CtrlPBuffer<CR>
 nmap <Leader>r :CtrlPTag<CR>
 nmap <Leader>t :CtrlP<CR>
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtSelectMove("j")':   ['<c-n>'],
+  \ 'PrtSelectMove("k")':   ['<c-p>'],
+  \ 'PrtHistory(-1)':       ['<c-down>'],
+  \ 'PrtHistory(1)':        ['<c-up>'],
+  \ }
 "let $FZF_DEFAULT_OPTS="--color fg:242,bg:233,hl:65,fg+:15,bg+:234,hl+:108 --color info:108,prompt:109,spinner:108,pointer:168,marker:168"
 
 set columns=80 lines=50
@@ -33,7 +40,7 @@ set guioptions=aigm
 set mousemodel=popup
 set nocursorline
 set nonumber
-set scrolloff=6
+set scrolloff=15
 set sidescrolloff=6
 set transparency=0
 set visualbell
