@@ -20,9 +20,11 @@ set guifont=Essential\ PragmataPro:h14
 
 " Going back to Ctrl-P until FZF works well in MacVim :(
 " https://github.com/junegunn/fzf/issues/1108
+nmap <C-p> :bprev<CR>
 nmap ; :CtrlPBuffer<CR>
 nmap <Leader>r :CtrlPTag<CR>
 nmap <Leader>t :CtrlP<CR>
+let g:ctrlp_map = '<Leader>p'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("j")':   ['<c-n>'],
