@@ -18,6 +18,7 @@ nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :call TmuxPaneClear()<CR>
+nmap \d :ALEToggleBuffer<CR>
 nmap \e :NERDTreeToggle<CR>
 nmap \f mt:Goyo<CR>'tzz
 nmap \g :Gstatus<CR>
