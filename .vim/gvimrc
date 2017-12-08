@@ -9,11 +9,12 @@ hi Search term=NONE ctermfg=0 ctermbg=14 guifg=#ffffff guibg=#444444
 " Command-Shift-F is fullscreen.
 nmap <D-F> :set fullscreen!<CR>
 
+let g:nord_italic_comments = 1
+let g:nord_uniform_status_lines = 1
+let g:nord_comment_brightness = 15
 colorscheme nord
 hi link ALEWarningSign WarningMsg
 hi link ALEErrorSign ErrorMsg
-let g:nord_italic_comments = 1
-let g:nord_uniform_status_lines = 1
 let g:lightline.colorscheme = 'nord'
 call g:lightline#init()
 set guifont=Essential\ PragmataPro:h14
