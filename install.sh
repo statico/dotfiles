@@ -72,6 +72,9 @@ echo "Setting up vim plugins..."
 
 echo "Setting up git..."
 cp $basedir/.gitconfig.base $HOME/.gitconfig
+if ! which git-lfs >/dev/null ; then
+  git lfs install
+fi
 
 postinstall=$HOME/.postinstall
 if [ -e $postinstall ]; then
