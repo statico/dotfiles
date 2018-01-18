@@ -10,10 +10,11 @@
 \set COMP_KEYWORD_CASE upper
 \set HISTCONTROL ignoredups
 \set HISTSIZE 2000
-\set PROMPT1 '%M %n@%/%R%# '
-\set PROMPT2 '...%# '
+\set PROMPT1 '%[%033[36;1m%]%M %n@%/%R%#%[%033[0m%] '
+\set PROMPT2 '%[%033[36;1m%]...%#%[%033[0m%] '
 \set VERBOSITY verbose
 
+\set all 'select * from'
 \set extensions 'select * from pg_available_extensions;'
 \set version 'select version();'
 
