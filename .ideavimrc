@@ -1,3 +1,8 @@
 source ~/.vimrc
 set surround
 set scrolloff=3
+
+" This is dumb.
+map / /
+map ? ?
+map g/ g/
