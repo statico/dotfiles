@@ -121,11 +121,6 @@ if _color; then
   export GREP_COLOR='1;32'
 fi
 
-# Ack is better than grep
-if ! _color; then
-  alias ack='ack --nocolor'
-fi
-
 # GNU and BSD ls colorization.
 if _color; then
   export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
@@ -180,7 +175,7 @@ alias ZL='vi ~/.zshlocal ~/.zshrc ; ZR'
 alias ZU='~/.dotfiles/install.sh ; ZR'
 alias ZshInstall='~/.dotfiles/install.sh ; ZR'
 alias ZshRehash='. ~/.zshrc'
-alias agg='_agg () { ag --group $@ | less }; _agg'
+alias agg='_agg () { rg --group $@ | less }; _agg'
 alias aag='agg'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
@@ -272,6 +267,8 @@ alias pt='pstree -pul'
 alias px='pilot-xfer -i'
 alias r='screen -D -R'
 alias rake='noglob rake'
+alias rgg='_rgg () { rg --color always --heading $@ | less }; _rgg'
+alias rrg='rgg'
 alias ri='ri -f ansi'
 alias rls='screen -ls'
 alias rsync-usual='rsync -azv -e ssh --delete --progress'
@@ -309,11 +306,17 @@ if ! _has gvim && _is Darwin; then
   alias gvim='open -a "MacVim"'
 fi
 
-# The Silver Searcher is even faster than Ack.
-# https://github.com/ggreer/the_silver_searcher
-if _has ag; then
+if _has rg; then
+  alias rg='rg --colors path:fg:green --colors match:fg:red'
+  alias ag=rg
+  alias ack=rg
+elif _has ag; then
   alias ack=ag
   alias ag='ag --color-path 1\;31 --color-match 1\;32 --color'
+elif _has ack; then
+  if ! _color; then
+    alias ack='ack --nocolor'
+  fi
 fi
 
 # Nico is amazing for showing me this.
@@ -337,7 +340,11 @@ fi
 
 # ack is really useful. I usually look for code and then edit all of the files
 # containing that code. Changing `ack' to `vack' does this for me.
-if _has ag; then
+if _has rg; then
+  vack() {
+    vim `rg --nocolor -l $@`
+  }
+elif _has ag; then
   vack() {
     vim `ag --nocolor -l $@`
   }
@@ -347,6 +354,7 @@ else
   }
 fi
 alias vag=vack
+alias vrg=vack
 
 # ..same thing with gg.
 vgg() {
