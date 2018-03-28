@@ -21,6 +21,7 @@ nmap \c :call TmuxPaneClear()<CR>
 nmap \d :ALEToggleBuffer<CR>
 nmap \e :NERDTreeToggle<CR>
 nmap \f mt:Goyo<CR>'tzz
+nmap \F :NERDTreeFind<CR>
 nmap \g :GitGutterToggle<CR>
 nmap \i vip:sort<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
