@@ -833,6 +833,10 @@ if [ -e ~/.fzf ]; then
   source ~/.fzf/shell/completion.zsh
 fi
 
+if _has rg; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
+fi
+
 # SOURCE LOCAL CONFIG {{{1
 
 if [ -e ~/.zshlocal ]; then
