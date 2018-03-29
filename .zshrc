@@ -834,7 +834,7 @@ if [ -e ~/.fzf ]; then
 fi
 
 if _has rg; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 fi
 
 # SOURCE LOCAL CONFIG {{{1
