@@ -6,6 +6,11 @@ hi SignColumn guibg=NONE
 
 hi Search term=NONE ctermfg=0 ctermbg=14 guifg=#ffffff guibg=#444444
 
+" FZF uses ctermfg for some colors. Ew.
+hi Number ctermfg=7
+hi Conditional ctermfg=7
+hi Special ctermfg=7
+
 " Command-Shift-F is fullscreen.
 nmap <D-F> :set fullscreen!<CR>
 
