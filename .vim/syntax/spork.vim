@@ -3,6 +3,7 @@
 " Filenames:    slides
 " Maintainers:  Ian Langworth <ian.langworth@gmail.com>
 " Last Change:  2005 Nov 11 - very, very, very beta release
+" License:      Public Domain
 "
 
 " TODO remove when releasing
