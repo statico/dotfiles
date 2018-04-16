@@ -182,6 +182,7 @@ alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias co='git checkout'
 alias curltime='curl -w "@$HOME/.curl-format" -o /dev/null -s'
 alias d='docker'
+alias dc='docker-compose'
 alias df='df -H'
 alias dls='dpkg -L'
 alias dotenv="eval \$(egrep -v '^#' .env | xargs)"

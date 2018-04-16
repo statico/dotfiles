@@ -11,6 +11,8 @@
 " KEY MAPS
 " ----------------------------------------------------------------------------
 
+let mapleader = ','
+
 " Useful macros I use the most
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
