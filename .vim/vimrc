@@ -324,6 +324,7 @@ let g:gitgutter_sign_modified_removed = '∙'
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
 let g:SuperTabDefaultCompletionType = "context"
+au Filetype typescript let b:SuperTabDefaultCompletionType = "<C-x><C-o>"
 
 " Use incsearch.vim to highlight as I search
 map /  <Plug>(incsearch-forward)
