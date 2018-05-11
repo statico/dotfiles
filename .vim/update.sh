@@ -6,6 +6,7 @@
 
 repos=(
 
+  Quramy/tsuquyomi
   airblade/vim-gitgutter
   alampros/vim-styled-jsx
   altercation/vim-colors-solarized

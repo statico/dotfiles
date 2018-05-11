@@ -321,8 +321,9 @@ let g:gitgutter_sign_removed = '∙'
 let g:gitgutter_sign_modified_removed = '∙'
 
 " SuperTab
-let g:SuperTabLongestEnhanced=1
-let g:SuperTabLongestHighlight=1
+let g:SuperTabLongestEnhanced = 1
+let g:SuperTabLongestHighlight = 1
+let g:SuperTabDefaultCompletionType = "context"
 
 " Use incsearch.vim to highlight as I search
 map /  <Plug>(incsearch-forward)
