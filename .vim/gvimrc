@@ -37,6 +37,9 @@ set sidescrolloff=6
 set transparency=0
 set visualbell
 
+" Put cwd in window title
+set title titlestring=Vim\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
+
 " Now load specifics to this machine.
 if filereadable(expand("~/.gvimlocal"))
   source ~/.gvimlocal
