@@ -34,9 +34,14 @@ set nocursorline
 set nonumber
 set scrolloff=15
 set sidescrolloff=6
-set title titlestring=Vim\ —\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
 set transparency=0
 set visualbell
+
+if has("gui_macvim")
+  set title titlestring=MacVim\ \|\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
+elseif has("gui")
+  set title titlestring=gvim\ \|\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
+end
 
 " Now load specifics to this machine.
 if filereadable(expand("~/.gvimlocal"))
