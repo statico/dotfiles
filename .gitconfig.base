@@ -16,11 +16,9 @@
 	b = branch
 	bnew = checkout -b
 	ci = commit
-	cia = commit -a
+	cia = commit --amend
 	cim = commit -m
-	cima = commit -a -m
 	civ = commit -v
-	civa = commit -v -a
 	co = checkout
 	cp = cherry-pick
 	config-to-push-all-branches = config --add remote.origin.push '+refs/heads/*:refs/heads/*'
