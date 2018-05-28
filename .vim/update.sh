@@ -22,6 +22,7 @@ repos=(
   mhartington/oceanic-next
   mileszs/ack.vim
   nathanaelkane/vim-indent-guides
+  padde/jump.vim
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot
