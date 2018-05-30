@@ -101,6 +101,7 @@ nmap <Esc>K   mo:Ggrep! "\b<cword>\b" <CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window via bufkill.vim
 nmap <Esc>w :BD<CR>
+nmap <M-w>  :BD<CR>
 nmap ∑      :BD<CR>
 
 " Quickly fix spelling errors choosing the first result
