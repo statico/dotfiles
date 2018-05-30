@@ -558,9 +558,6 @@ bindkey -e
 # One keystroke to cd ..
 bindkey -s '\eu' '\eq^Ucd ..; ls^M'
 
-# Connect to my most recently used screen session
-bindkey -s '\ej' "^Uif [ -n \"\$TMUX\" ] ; then ; ssh lemon ; else ; ssh lemon -t tmux att ; fi^M"
-
 # Smart less-adder
 bindkey -s "\el" "^E 2>&1|less^M"
 
