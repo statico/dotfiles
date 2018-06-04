@@ -275,6 +275,7 @@ nmap ; :Buffers<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>t :Files<CR>
 nmap <Leader>a :Ag<CR>
+nmap <Leader>c :Colors<CR>
 
 " FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
 function! s:update_fzf_colors()
