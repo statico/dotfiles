@@ -16,7 +16,7 @@ if [[ "${remotedir:${#remotedir}-1:1}" != "/" ]]; then
   remotedir="$remotedir/"
 fi
 
-rsync="rsync -az --progress --exclude .git/ --exclude node_modules/ --exclude .DS_Store"
+rsync="rsync -az --progress --update --exclude .git/ --exclude node_modules/ --exclude .DS_Store"
 
 echo "Syncing local dir '$localdir' and remote dir '$remotedir'..."
 $rsync "$remotedir" "$localdir"
