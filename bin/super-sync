@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+if [ -z "$2" ]; then
+  echo "Usage: $0 <localdir/> <host:remotedir/>"
+  exit 1
+fi
+
+localdir="$1"
+remotedir="$2"
+
+if [[ "${localdir:${#localdir}-1:1}" != "/" ]]; then
+  localdir="$localdir/"
+fi
+if [[ "${remotedir:${#remotedir}-1:1}" != "/" ]]; then
+  remotedir="$remotedir/"
+fi
+
+rsync="rsync -az --progress --exclude .git/ --exclude node_modules/ --exclude .DS_Store"
+
+echo "Syncing local dir '$localdir' and remote dir '$remotedir'..."
+$rsync "$remotedir" "$localdir"
+
+echo "Watching local dir '$localdir' for changes..."
+fswatch -0 "$localdir" | xargs -0 -n 1 -I {} $rsync --delete "$localdir" "$remotedir"
