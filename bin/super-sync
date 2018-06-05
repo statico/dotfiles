@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+#
+# Why? Because I want to use one machine as a fast build server, which I treat
+# as the source of truth, and another machine as a thin client to do local
+# editing on, and I want sync to happen over ssh (which might be LAN) and happen
+# as fast as possible.
+#
 set -eo pipefail
 
 if [ -z "$2" ]; then
@@ -16,10 +22,10 @@ if [[ "${remotedir:${#remotedir}-1:1}" != "/" ]]; then
   remotedir="$remotedir/"
 fi
 
-rsync="rsync -az --progress --update --exclude .git/ --exclude node_modules/ --exclude .DS_Store"
+rsync="rsync -az --progress --exclude .git/ --exclude node_modules/ --exclude .DS_Store"
 
 echo "Syncing local dir '$localdir' and remote dir '$remotedir'..."
 $rsync "$remotedir" "$localdir"
 
 echo "Watching local dir '$localdir' for changes..."
-fswatch -0 "$localdir" | xargs -0 -n 1 -I {} $rsync --delete "$localdir" "$remotedir"
+fswatch -0 "$localdir" | xargs -0 -n 1 -I {} $rsync --update --delete "$localdir" "$remotedir"
