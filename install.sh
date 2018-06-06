@@ -76,10 +76,10 @@ fi
 echo "Setting up tmux..."
 if [ -e "$HOME/.tmux/plugins/tpm" ]; then
   pushd "$HOME/.tmux/plugins/tpm"
-  git pull origin master
+  git pull -q origin master
   popd
 else
-  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+  git clone -q https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 fi
 
 postinstall="$HOME/.postinstall"
