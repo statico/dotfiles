@@ -73,6 +73,15 @@ if which git-lfs >/dev/null 2>&1 ; then
   git lfs install
 fi
 
+echo "Setting up tmux..."
+if [ -e "$HOME/.tmux/plugins/tpm" ]; then
+  pushd "$HOME/.tmux/plugins/tpm"
+  git pull origin master
+  popd
+else
+  git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+fi
+
 postinstall="$HOME/.postinstall"
 if [ -e "$postinstall" ]; then
   echo "Running post-install..."
