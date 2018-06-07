@@ -22,10 +22,10 @@ if [[ "${remotedir:${#remotedir}-1:1}" != "/" ]]; then
   remotedir="$remotedir/"
 fi
 
-rsync="rsync -az --progress --exclude .git/ --exclude node_modules/ --exclude .next/ --exclude .DS_Store"
+rsync="rsync -az --progress --delete --exclude .git/ --exclude node_modules/ --exclude .next/ --exclude .DS_Store"
 
 echo "Syncing local dir '$localdir' and remote dir '$remotedir'..."
 $rsync "$remotedir" "$localdir"
 
 echo "Watching local dir '$localdir' for changes..."
-fswatch -0 "$localdir" | xargs -0 -n 1 -I {} $rsync --update --delete "$localdir" "$remotedir"
+fswatch --verbose -0 "$localdir" | xargs -0 -n 1 -I {} $rsync --update "$localdir" "$remotedir"
