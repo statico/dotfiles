@@ -346,8 +346,9 @@ let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
-nmap ]l :ALENextWrap<CR>
-nmap [l :ALEPreviousWrap<CR>
+nmap ]e :ALENextWrap<CR>
+nmap [e :ALEPreviousWrap<CR>
+nmap <Leader>f <Plug>(ale_fix)
 augroup VimDiff
   autocmd!
   autocmd VimEnter,FilterWritePre * if &diff | ALEDisable | endif
