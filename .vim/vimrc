@@ -108,7 +108,7 @@ nmap ∑      :BD<CR>
 nmap <Leader>z z=1<CR><CR>
 
 " Fix annoyances in the QuickFix window, like scrolling too much
-autocmd FileType qf setlocal number nolist scrolloff=0
+autocmd FileType qf setlocal number nolist
 autocmd Filetype qf wincmd J " Makes sure it's at the bottom of the vim window
 
 " Commands to send common keystrokes using tmux
