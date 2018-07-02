@@ -15,15 +15,16 @@ let mapleader = ','
 
 " Useful macros I use the most
 nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
+nmap \F :NERDTreeFind<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+nmap \W mt:Goyo<CR>'tzz
 nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :call TmuxPaneClear()<CR>
 nmap \d :ALEToggleBuffer<CR>
 nmap \e :NERDTreeToggle<CR>
-nmap \f mt:Goyo<CR>'tzz
-nmap \F :NERDTreeFind<CR>
+nmap \f :ALEFix<CR>
 nmap \g :GitGutterToggle<CR>
 nmap \i vip:sort<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
@@ -45,6 +46,9 @@ nmap \z :w<CR>:!open %<CR><CR>
 " to mean the next line on the screen
 nmap j gj
 nmap k gk
+
+" Marks should go to the column, not just the line. Why isn't this the default?
+nnoremap ' `
 
 " You don't know what you're missing if you don't use this.
 nmap <C-e> :e#<CR>
@@ -346,8 +350,8 @@ let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
-nmap ]e :ALENextWrap<CR>
-nmap [e :ALEPreviousWrap<CR>
+nmap ]w :ALENextWrap<CR>
+nmap [w :ALEPreviousWrap<CR>
 nmap <Leader>f <Plug>(ale_fix)
 augroup VimDiff
   autocmd!
@@ -398,6 +402,13 @@ function! s:MaybeUpdateLightline()
     call lightline#update()
   end
 endfunction
+
+" Autocompletion with YouCompleteMe and tern-completer:
+let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_min_num_identifier_candidate_chars = 3
+let g:ycm_enable_diagnostic_highlighting = 0
+"set completeopt-=preview
+"let g:ycm_add_preview_to_completeopt = 0
 
 " ----------------------------------------------------------------------------
 " COLORS
