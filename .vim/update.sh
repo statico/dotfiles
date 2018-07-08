@@ -7,7 +7,11 @@
 repos=(
 
   Quramy/tsuquyomi
-  airblade/vim-gitgutter alampros/vim-styled-jsx altercation/vim-colors-solarized ap/vim-css-color arcticicestudio/nord-vim
+  airblade/vim-gitgutter
+  alampros/vim-styled-jsx
+  altercation/vim-colors-solarized
+  ap/vim-css-color
+  arcticicestudio/nord-vim
   docunext/closetag.vim
   ervandew/supertab
   haya14busa/incsearch.vim
@@ -67,13 +71,3 @@ for repo in ${repos[@]}; do
   ) &
 done
 wait
-
-# Special stuff for YouCompleteMe - https://valloric.github.io/YouCompleteMe/
-echo "· Setting up YouCompleteMe..."
-git clone --depth=1 -q https://github.com/Valloric/YouCompleteMe $dir/YouCompleteMe
-cd $dir/YouCompleteMe
-git submodule update --init --recursive
-python install.py --tern-completer
-echo "· Done."
-
-
