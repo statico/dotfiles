@@ -444,13 +444,13 @@ sci() {
     echo "usage: $0 message..." >&2
     return 1
   fi
-  git add -A
-  hr staging
-  git status
-  hr committing
-  git cim "$*"
-  hr results
-  git quicklog
+  git add -A && \
+  hr staging && \
+  git status && \
+  hr committing && \
+  git cim "$*" && \
+  hr results && \
+  git quicklog && \
   hr done
 }
 
