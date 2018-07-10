@@ -434,7 +434,7 @@ screen-title() {
 
 # Commit what's been staged, use args as message.
 gc() {
-  git commit -m "$*"
+  git commit -m "$*" && \
   git log --oneline --decorate -n 10
 }
 
