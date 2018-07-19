@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# Why? Because I want to use one machine as a fast build server, which I treat
-# as the source of truth, and another machine as a thin client to do local
-# editing on, and I want sync to happen over ssh (which might be LAN) and happen
-# as fast as possible.
+# Why? Because I want to use one machine as a fast build server, which I treat as the source of
+# truth, and another machine as a thin client to do local editing on, and I want sync to happen over
+# ssh (which might be LAN) and happen as fast as possible (preferably using
+# ControlMaster/ControlPath to re-use existing open SSH connections).
 #
 set -eo pipefail
 
