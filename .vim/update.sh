@@ -13,6 +13,7 @@ repos=(
   ap/vim-css-color
   arcticicestudio/nord-vim
   docunext/closetag.vim
+  drmikehenry/vim-fontsize
   ervandew/supertab
   haya14busa/incsearch.vim
   itchyny/lightline.vim
