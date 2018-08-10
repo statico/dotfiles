@@ -13,7 +13,6 @@ repos=(
   ap/vim-css-color
   arcticicestudio/nord-vim
   docunext/closetag.vim
-  drmikehenry/vim-fontsize
   ervandew/supertab
   haya14busa/incsearch.vim
   itchyny/lightline.vim
@@ -22,8 +21,6 @@ repos=(
   junegunn/goyo.vim
   mhartington/oceanic-next
   mileszs/ack.vim
-  nathanaelkane/vim-indent-guides
-  padde/jump.vim
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot
