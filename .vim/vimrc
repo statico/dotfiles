@@ -396,12 +396,23 @@ function! LightlineLinterOK() abort
 endfunction
 
 " Update and show lightline but only if it's visible (e.g., not in Goyo)
-autocmd User ALELint call s:MaybeUpdateLightline()
 function! s:MaybeUpdateLightline()
   if exists('#lightline')
     call lightline#update()
   end
 endfunction
+
+" Update the lightline scheme from the colorscheme. Hopefully.
+function! s:UpdateLightlineColorScheme()
+  let g:lightline.colorscheme = g:colors_name
+  call lightline#init()
+endfunction
+
+augroup _lightline
+  autocmd!
+  autocmd User ALELint call s:MaybeUpdateLightline()
+  autocmd ColorScheme * call s:UpdateLightlineColorScheme()
+augroup END
 
 " ----------------------------------------------------------------------------
 " COLORS
@@ -411,8 +422,9 @@ endfunction
 set background=dark
 let g:rehash256 = 1 " Something to do with Molokai?
 colorscheme molokai
+let g:seoul256_background = 233
 if !has('gui_running')
-  let g:solarized_termcolors=256
+  let g:solarized_termcolors = 256
   if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
     set t_Co=256
   elseif has("terminfo")

@@ -9,9 +9,7 @@ repos=(
   Quramy/tsuquyomi
   airblade/vim-gitgutter
   alampros/vim-styled-jsx
-  altercation/vim-colors-solarized
   ap/vim-css-color
-  arcticicestudio/nord-vim
   docunext/closetag.vim
   ervandew/supertab
   haya14busa/incsearch.vim
@@ -19,13 +17,11 @@ repos=(
   jparise/vim-graphql
   junegunn/fzf.vim
   junegunn/goyo.vim
-  mhartington/oceanic-next
   mileszs/ack.vim
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot
   statico/vim-inform7
-  tomasr/molokai
   tpope/vim-commentary
   tpope/vim-endwise
   tpope/vim-eunuch
@@ -38,6 +34,15 @@ repos=(
   tpope/vim-unimpaired
   w0rp/ale
   wellle/targets.vim
+
+  altercation/vim-colors-solarized
+  arcticicestudio/nord-vim
+  dsolstad/vim-wombat256i
+  junegunn/seoul256.vim
+  mhartington/oceanic-next
+  nanotech/jellybeans.vim
+  rakr/vim-one
+  tomasr/molokai
 
 )
 
