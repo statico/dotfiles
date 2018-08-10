@@ -1,13 +1,21 @@
 " Pro tip for MacVim on retina displays: Get the sexy font rendering used by Termial.app/iTerm:
 " defaults write org.vim.MacVim AppleFontSmoothing -int 0
 
-" FZF uses ctermfg for some colors. Ew.
-hi Number ctermfg=7
-hi Conditional ctermfg=7
-hi Special ctermfg=7
-
 " Command-Shift-F is fullscreen.
 nmap <D-F> :set fullscreen!<CR>
+
+augroup _gvimrc
+  autocmd!
+
+  " Gutter color default is annoying. Make it blend in.
+  autocmd ColorScheme * hi SignColumn guibg=NONE
+
+  " FZF uses ctermfg for some colors. Ew.
+  autocmd ColorScheme * hi Number ctermfg=7
+  autocmd ColorScheme * hi Conditional ctermfg=7
+  autocmd ColorScheme * hi Special ctermfg=7
+
+augroup END
 
 let g:nord_italic_comments = 1
 let g:nord_uniform_status_lines = 1
