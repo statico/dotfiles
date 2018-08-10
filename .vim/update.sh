@@ -37,12 +37,12 @@ repos=(
 
   altercation/vim-colors-solarized
   arcticicestudio/nord-vim
-  dsolstad/vim-wombat256i
   junegunn/seoul256.vim
   mhartington/oceanic-next
   nanotech/jellybeans.vim
   rakr/vim-one
   tomasr/molokai
+  vim-scripts/wombat256.vim
 
 )
 
