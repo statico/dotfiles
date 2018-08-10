@@ -22,7 +22,7 @@ hi link ALEWarningSign WarningMsg
 hi link ALEErrorSign ErrorMsg
 let g:lightline.colorscheme = 'nord'
 call g:lightline#init()
-set guifont=Essential\ PragmataPro:h14
+set guifont=Iosevka:h14
 
 set columns=80 lines=50
 set errorbells
@@ -39,6 +39,7 @@ if has("gui_macvim")
   set title titlestring=MacVim\ \|\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
   set fuoptions=maxhorz,maxvert
   set transparency=0
+  set macthinstrokes
 elseif has("gui")
   set title titlestring=gvim\ \|\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
 end
