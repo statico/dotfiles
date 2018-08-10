@@ -1,11 +1,6 @@
 " Pro tip for MacVim on retina displays: Get the sexy font rendering used by Termial.app/iTerm:
 " defaults write org.vim.MacVim AppleFontSmoothing -int 0
 
-" Gutter color default is annoying. Make it blend in.
-hi SignColumn guibg=NONE
-
-hi Search term=NONE ctermfg=0 ctermbg=14 guifg=#ffffff guibg=#444444
-
 " FZF uses ctermfg for some colors. Ew.
 hi Number ctermfg=7
 hi Conditional ctermfg=7
@@ -18,10 +13,13 @@ let g:nord_italic_comments = 1
 let g:nord_uniform_status_lines = 1
 let g:nord_comment_brightness = 15
 colorscheme nord
+
 hi link ALEWarningSign WarningMsg
 hi link ALEErrorSign ErrorMsg
 let g:lightline.colorscheme = 'nord'
 call g:lightline#init()
+
+" 99% as good as PragmataPro, 100% free! Ligatures are kinda cute, too.
 set guifont=Iosevka:h14
 
 set columns=80 lines=50
