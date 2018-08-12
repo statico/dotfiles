@@ -41,6 +41,7 @@ repos=(
   mhartington/oceanic-next
   nanotech/jellybeans.vim
   rakr/vim-one
+  sonph/onehalf
   tomasr/molokai
   vim-scripts/wombat256.vim
 
