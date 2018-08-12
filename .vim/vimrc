@@ -323,6 +323,9 @@ augroup _fzf
   autocmd VimEnter,ColorScheme * call <sid>update_fzf_colors()
 augroup END
 
+" Ctrl-C has a long delay in SQL files - https://unix.stackexchange.com/a/150769
+let g:ftplugin_sql_omni_key = '<Leader>s'
+
 " More space with NERDTree
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeBookmarks = 0
