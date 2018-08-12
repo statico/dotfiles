@@ -278,9 +278,15 @@ set rtp+=~/.fzf
 nmap ; :Buffers<CR>
 nmap <Leader>r :Tags<CR>
 nmap <Leader>t :Files<CR>
-nmap <Leader>a :Ag<CR>
+nmap <Leader>a :Rg!<CR>
 nmap <Leader>c :Colors<CR>
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow -g "!{.git,node_modules}/*" 2>/dev/null'
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -g "!{*.lock,*-lock.json}" '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:40%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 
 " FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
 function! s:update_fzf_colors()
