@@ -38,7 +38,6 @@ repos=(
   altercation/vim-colors-solarized
   arcticicestudio/nord-vim
   junegunn/seoul256.vim
-  mhartington/oceanic-next
   nanotech/jellybeans.vim
   rakr/vim-one
   sonph/onehalf
@@ -50,13 +49,13 @@ repos=(
 set -e
 dir=~/.dotfiles/.vim/bundle
 
-if [ -d $dir -a -z "$1" ]; then
+if [ -d "$dir" -a -z "$1" ]; then
   temp="$(mktemp -d -t bundleXXXXX)"
   echo "▲ Moving old bundle dir to $temp"
   mv "$dir" "$temp"
 fi
 
-mkdir -p $dir
+mkdir -p "$dir"
 
 for repo in ${repos[@]}; do
   if [ -n "$1" ]; then
@@ -67,11 +66,12 @@ for repo in ${repos[@]}; do
   plugin="$(basename $repo | sed -e 's/\.git$//')"
   [ "$plugin" = "vim-styled-jsx" ] && plugin="000-vim-styled-jsx" # https://goo.gl/tJVPja
   dest="$dir/$plugin"
-  rm -rf $dest
+  rm -rf "$dest"
   (
-    git clone --depth=1 -q https://github.com/$repo $dest
-    rm -rf $dest/.git
+    git clone --depth=1 -q "https://github.com/$repo" "$dest"
+    rm -rf "$dest/.git"
     echo "· Cloned $repo"
+    [ "$plugin" = "onehalf" ] && (mv "$dest" "$dest.TEMP" && mv "$dest.TEMP/vim" "$dest" && rm -rf "$dest.TEMP")
   ) &
 done
 wait
