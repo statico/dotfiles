@@ -328,7 +328,7 @@ let g:ftplugin_sql_omni_key = '<Leader>s'
 
 " More space with NERDTree
 let g:NERDTreeMinimalUI = 1
-let g:NERDTreeBookmarks = 0
+let g:NERDTreeMarkBookmarks = 0
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeStatusLine = -1
 
