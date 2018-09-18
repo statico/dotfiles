@@ -48,6 +48,7 @@ if has("gui_macvim")
   set fuoptions=maxhorz,maxvert
   set transparency=0
   set macthinstrokes
+  set macligatures
 elseif has("gui")
   set title titlestring=gvim\ \|\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}
 end
