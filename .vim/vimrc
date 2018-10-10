@@ -488,6 +488,7 @@ augroup vimrc
 autocmd!
 
 au BufNewFile,BufRead *.cson    set ft=coffee
+au BufNewFile,BufRead *.d.ts    ALEDisableBuffer
 au BufNewFile,BufRead *.glsl    setf glsl
 au BufNewFile,BufRead *.gyp     set ft=python
 au BufNewFile,BufRead *.html    setlocal nocindent smartindent
@@ -509,6 +510,7 @@ au BufNewFile,BufRead *.xml     setlocal ft=xml  ts=2 sw=2 et
 au BufNewFile,BufRead *.zone    setlocal nolist ts=4 sw=4 noet
 au BufNewFile,BufRead *.zsh     setf zsh
 au BufNewFile,BufRead *templates/*.html setf htmldjango
+au BufNewFile,BufRead .conkyrc set ft=lua
 au BufNewFile,BufRead .git/config setlocal ft=gitconfig nolist ts=4 sw=4 noet
 au BufNewFile,BufRead .gitconfig* setlocal ft=gitconfig nolist ts=4 sw=4 noet
 au BufNewFile,BufRead .vimlocal,.gvimlocal setf vim
@@ -517,7 +519,6 @@ au BufNewFile,BufRead /tmp/crontab* setf crontab
 au BufNewFile,BufRead COMMIT_EDITMSG setlocal nolist nonumber
 au BufNewFile,BufRead Makefile setlocal nolist
 au BufNewFile,BufRead dist/* set ft=text
-au BufNewFile,BufRead .conkyrc set ft=lua
 
 au FileType gitcommit setlocal nolist ts=4 sts=4 sw=4 noet
 au FileType inform7 setlocal nolist tw=0 ts=4 sw=4 noet foldlevel=999
