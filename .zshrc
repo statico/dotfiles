@@ -652,7 +652,7 @@ colorprompt() {
   __prompt_mode=${1:-0}
   local -a line1
   line1=(
-    "%{[${__prompt_mode}m%}%m %~"
+    "%{[${__prompt_mode}m%}%n@%m:%~"
     "%(1j.%{[36;1m%} ● %j jobs%{[0m%}.)"
     "%(?..%{[31;1m%} ▲ error %?%{[0m%})"
   )
