@@ -346,7 +346,7 @@ fi
 # containing that code. Changing `ack' to `vack' does this for me.
 if _has rg; then
   vack() {
-    vim `rg --nocolor -l $@`
+    vim `rg --color=never -l $@`
   }
 elif _has ag; then
   vack() {
@@ -652,7 +652,7 @@ colorprompt() {
   __prompt_mode=${1:-0}
   local -a line1
   line1=(
-    "%{[${__prompt_mode}m%}%~"
+    "%{[${__prompt_mode}m%}%m %~"
     "%(1j.%{[36;1m%} ● %j jobs%{[0m%}.)"
     "%(?..%{[31;1m%} ▲ error %?%{[0m%})"
   )
