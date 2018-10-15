@@ -39,5 +39,7 @@
         "**/*.ts.snap": true,
         "**/yaml.lock": true
     },
-    "editor.parameterHints.enabled": false
+    "editor.parameterHints.enabled": false,
+    "editor.tabCompletion": "on",
+    "editor.suggest.localityBonus": true
 }
