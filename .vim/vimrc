@@ -460,6 +460,9 @@ if !has('gui_running')
 endif
 syntax on
 
+" Make the damned tildes less visible
+highlight link EndOfBuffer Comment
+
 " Custom colors for NERDTree
 highlight def link NERDTreeRO NERDTreeFile
 
