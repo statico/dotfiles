@@ -289,6 +289,8 @@ alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
+alias y='yarn'
+alias ye='yarn exec'
 alias x='screen -A -x'
 alias xxx='histring "XXX.*" -c green -s bold'
 
