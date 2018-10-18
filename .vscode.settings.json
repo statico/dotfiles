@@ -46,5 +46,11 @@
     "[Nord]": {
       "comments": "#7b88a1"
     }
-  }
+  },
+  "files.exclude": {
+    "**/.next": true,
+    "**/node_modules": true
+  },
+  "gitlens.codeLens.authors.enabled": false,
+  "gitlens.codeLens.scopes": ["document"]
 }
