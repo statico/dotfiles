@@ -16,7 +16,6 @@
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "explorer.confirmDelete": false,
-  "editor.minimap.enabled": false,
   "editor.minimap.renderCharacters": false,
   "editor.tabSize": 2,
   "window.zoomLevel": 0,
@@ -28,9 +27,9 @@
   "vim.leader": ",",
   "jest.enableInlineErrorMessages": false,
   "workbench.statusBar.visible": true,
-  "workbench.activityBar.visible": true,
+  "workbench.activityBar.visible": false,
   "vim.foldfix": true,
-  "workbench.colorTheme": "Nord",
+  "workbench.colorTheme": "Default High Contrast",
   "editor.renderIndentGuides": false,
   "editor.lineHeight": 20,
   "terminal.integrated.fontSize": 16,
@@ -44,7 +43,7 @@
   "editor.suggest.localityBonus": true,
   "editor.tokenColorCustomizations": {
     "[Nord]": {
-      "comments": "#7b88a1"
+      "comments": "#616e88"
     }
   },
   "files.exclude": {
@@ -52,5 +51,10 @@
     "**/node_modules": true
   },
   "gitlens.codeLens.authors.enabled": false,
-  "gitlens.codeLens.scopes": ["document"]
+  "gitlens.codeLens.scopes": ["document"],
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "none",
+  "breadcrumbs.enabled": true,
+  "tslint.alwaysShowStatus": true,
+  "tslint.autoFixOnSave": true
 }
