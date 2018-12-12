@@ -22,7 +22,6 @@
   "files.useExperimentalFileWatcher": true,
   "editor.lineNumbers": "off",
   "editor.cursorBlinking": "solid",
-  "scm.diffDecorationsGutterWidth": 2,
   "editor.glyphMargin": false,
   "vim.leader": ",",
   "jest.enableInlineErrorMessages": false,
@@ -56,5 +55,10 @@
   "editor.renderWhitespace": "none",
   "breadcrumbs.enabled": true,
   "tslint.alwaysShowStatus": true,
-  "tslint.autoFixOnSave": true
+  "tslint.autoFixOnSave": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "smart",
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false
 }
