@@ -292,6 +292,8 @@ alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
 alias y='yarn'
 alias ye='yarn exec'
+alias ya='_ya () { yarn add $@ ; yarn add -D @types/$@ }; _ya'
+alias yr='_yr () { yarn remove $@ ; yarn remove -D @types/$@ }; _yr'
 alias x='screen -A -x'
 alias xxx='histring "XXX.*" -c green -s bold'
 
