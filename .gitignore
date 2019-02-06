@@ -4,6 +4,7 @@
 .#*
 .DS_Store
 .docker/daemon.json
+.docker/.buildNodeID
 .gvimlocal
 .postinstall
 .ropeproject
