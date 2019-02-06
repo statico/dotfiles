@@ -28,7 +28,6 @@
   "workbench.statusBar.visible": true,
   "workbench.activityBar.visible": false,
   "vim.foldfix": true,
-  "workbench.colorTheme": "Default High Contrast",
   "editor.renderIndentGuides": false,
   "editor.lineHeight": 20,
   "terminal.integrated.fontSize": 16,
@@ -60,5 +59,7 @@
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "smart",
   "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false
+  "telemetry.enableTelemetry": false,
+  "php.suggest.basic": false,
+  "workbench.colorTheme": "Default High Contrast"
 }

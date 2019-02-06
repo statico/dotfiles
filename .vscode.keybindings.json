@@ -121,5 +121,9 @@
   {
     "key": "shift+cmd+n",
     "command": "explorer.newFile"
+  },
+  {
+    "key": "shift+alt+cmd+n",
+    "command": "workbench.action.newWindow"
   }
 ]
