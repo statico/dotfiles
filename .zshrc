@@ -98,20 +98,12 @@ if [ -z $LANG ]; then
   export LANG=en_US
 fi
 
-# History control.
-SAVEHIST=100000
-HISTSIZE=100000
-if [ -e ~/priv/ ]; then
-  HISTFILE=~/priv/zsh_history
-elif [ -e ~/secure/ ]; then
-  HISTFILE=~/secure/zsh_history
-else
+# History control. Don't bother with history if we can't write to the file,
+# like if we're using sudo.
+if [ -w ~/.zsh_history -o -w ~ ]; then
+  SAVEHIST=100000
+  HISTSIZE=100000
   HISTFILE=~/.zsh_history
-fi
-if [ -n "$HISTFILE" -a ! -w $HISTFILE ]; then
-  echo
-  echo "[31;1m HISTFILE [$HISTFILE] not writable! [0m"
-  echo
 fi
 
 # APPLICATION CUSTOMIZATIONS {{{1
@@ -783,7 +775,9 @@ _fix_old_ssh_agents() {
     source $agentfile
   fi
 }
-_fix_old_ssh_agents
+if [ -z "$SUDO_USER" ]; then
+  _fix_old_ssh_agents
+fi
 
 # Set terminal colors based on SSH host.
 #
