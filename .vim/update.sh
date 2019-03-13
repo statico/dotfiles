@@ -6,7 +6,6 @@
 
 repos=(
 
-  Quramy/tsuquyomi
   airblade/vim-gitgutter
   alampros/vim-styled-jsx
   ap/vim-css-color
@@ -18,7 +17,6 @@ repos=(
   junegunn/fzf.vim
   junegunn/goyo.vim
   mileszs/ack.vim
-  nathanaelkane/vim-indent-guides
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot
@@ -38,7 +36,6 @@ repos=(
 
   altercation/vim-colors-solarized
   arcticicestudio/nord-vim
-  junegunn/seoul256.vim
   nanotech/jellybeans.vim
   rakr/vim-one
   sonph/onehalf
