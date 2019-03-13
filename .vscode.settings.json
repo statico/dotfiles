@@ -12,7 +12,6 @@
   "markdown.preview.fontSize": 16,
   "explorer.confirmDragAndDrop": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "editor.formatOnSave": true,
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "explorer.confirmDelete": false,
@@ -61,5 +60,7 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "php.suggest.basic": false,
-  "workbench.colorTheme": "Default High Contrast"
+  "workbench.colorTheme": "Default High Contrast",
+  "git.confirmSync": false,
+  "editor.formatOnSave": true
 }
