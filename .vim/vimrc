@@ -500,6 +500,7 @@ au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
 au BufNewFile,BufRead *.json    set ft=json tw=0
 au BufNewFile,BufRead *.less    setlocal ft=less nocindent smartindent
+au BufNewFile,BufRead *.lkml    setf yaml
 au BufNewFile,BufRead *.md      setlocal ft=markdown nolist spell
 au BufNewFile,BufRead *.md,*.markdown setlocal foldlevel=999 tw=0 nocin
 au BufNewFile,BufRead *.ni      setlocal ft=inform nolist ts=2 sw=2 noet
