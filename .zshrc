@@ -29,6 +29,15 @@ _color() {
   return $( [ -z "$INSIDE_EMACS" ] )
 }
 
+# Returns the version of a command if present, or n/a if unavailable.
+_versionof() {
+  if _has "$1"; then
+    echo "$1 $($1 --version)"
+  else
+    echo "$1 n/a"
+  fi
+}
+
 # ENVIRONMENT VARIABLES {{{1
 
 # Yes, this defeats the point of the TERM variable, but everything pretty much
@@ -619,6 +628,9 @@ setopt notify
 
 # PROMPT AWESOMENESS {{{1
 
+# Turn on prompt substitution.
+setopt PROMPT_SUBST
+
 # Unfortunately, ^L makes the first line disappear. We can fix that by making
 # our own clear-screen function.
 clear-screen-and-precmd() {
@@ -650,11 +662,13 @@ colorprompt() {
   fi
 
   __prompt_mode=${1:-0}
+  __extra="$2"
   local -a line1
   line1=(
     "%{[${__prompt_mode}m%}%n@%m:%~"
     "%(1j.%{[36;1m%} ● %j jobs%{[0m%}.)"
     "%(?..%{[31;1m%} ▲ error %?%{[0m%})"
+    "%{[30;1m%} ${__extra} %{[0m%}"
   )
   local -a line2
   line2=(
@@ -675,6 +689,7 @@ uncolorprompt() {
     "%m: %~"
     "%(1j. (%j jobs).)"
     "%(?.. (error %?%))"
+    $__extra
     $__newline
     "%n $__sigil "
   )
