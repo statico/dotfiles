@@ -415,7 +415,7 @@ vix() {
 # Make a new command in ~/bin
 makecommand() {
   if [ -z "$1" ]; then
-    echo "Gotta specify a command name, champ" >&2
+    echo "Command name required" >&2
     return 1
   fi
 
@@ -424,7 +424,11 @@ makecommand() {
   if [ -e $cmd ]; then
     echo "Command $1 already exists" >&2
   else
-    echo "#!${2:-/bin/sh}" >$cmd
+    if [ -z "$2" ]; then
+      echo -e "#!/usr/bin/env bash\n\nset -eo pipefail\n" >$cmd
+    else
+      echo "#!/usr/bin/env $2" >$cmd
+    fi
   fi
 
   vix $cmd
