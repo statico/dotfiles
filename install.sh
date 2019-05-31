@@ -62,12 +62,14 @@ symlink "$basedir/.vim/gvimrc" "$HOME/.gvimrc"
 
 if [ "$(uname -s)" = "Darwin" ]; then
   vscodepath="$HOME/Library/Application Support/Code/User"
+  symlink "$basedir/.vscode-mac.settings.json" "$vscodepath/settings.json"
+  symlink "$basedir/.vscode-mac.keybindings.json" "$vscodepath/keybindings.json"
 else
   vscodepath="$HOME/.config/Code/User"
+  symlink "$basedir/.vscode-linux.settings.json" "$vscodepath/settings.json"
+  symlink "$basedir/.vscode-linux.keybindings.json" "$vscodepath/keybindings.json"
 fi
 mkdir -p "$vscodepath"
-symlink "$basedir/.vscode.settings.json" "$vscodepath/settings.json"
-symlink "$basedir/.vscode.keybindings.json" "$vscodepath/keybindings.json"
 
 echo "Adding executables to ~/bin/..."
 mkdir -p "$bindir"
