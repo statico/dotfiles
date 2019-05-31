@@ -52,7 +52,7 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "terminal.external.osxExec": "iTerm.app",
-  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.fontSize": 12,
   "tslint.alwaysShowStatus": true,
   "tslint.autoFixOnSave": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
