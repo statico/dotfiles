@@ -333,6 +333,11 @@ elif _has ack; then
   fi
 fi
 
+# Move-to-trash command for Gnome. `brew install trash` for one on macOS.
+if ! _has trash && _has gio; then
+  alias trash='gio trash'
+fi
+
 # Humanize disk space if possible
 if _try df -H; then
   alias df='df -H'
