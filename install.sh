@@ -13,8 +13,13 @@ function symlink() {
 
   if [ -e "$dest" ]; then
     if [ -L "$dest" ]; then
-      # Already symlinked -- I'll assume correctly.
-      return
+      if [ ! -e "$dest" ]; then
+        echo "Removing broken symlink at $dest"
+        rm "$dest"
+      else
+        # Already symlinked -- I'll assume correctly.
+        return 0
+      fi
     else
       # Rename files with a ".old" extension.
       echo "$dest already exists, renaming to $dest.old"
