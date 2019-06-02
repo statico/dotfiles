@@ -17,6 +17,7 @@ repos=(
   junegunn/fzf.vim
   junegunn/goyo.vim
   mileszs/ack.vim
+  nfnty/vim-nftables
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot
