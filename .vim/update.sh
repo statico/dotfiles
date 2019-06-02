@@ -49,7 +49,7 @@ set -e
 dir=~/.dotfiles/.vim/bundle
 
 if [ -d "$dir" -a -z "$1" ]; then
-  temp="$(mktemp -d bundleXXXXX)"
+  temp="$(mktemp -d)"
   echo "▲ Moving old bundle dir to $temp"
   mv "$dir" "$temp"
 fi
