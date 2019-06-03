@@ -672,6 +672,12 @@ fi
 # resizing a terminal. The solution is to have precmd() print the first line
 # and set PS1 to the second line. See: http://xrl.us/bf3wh
 
+__rootmode="5"
+
+noblinkroot() {
+  __rootmode="6"
+}
+
 colorprompt() {
   if ! _color; then
     uncolorprompt
@@ -689,7 +695,7 @@ colorprompt() {
   )
   local -a line2
   line2=(
-    "%{%(!.[31;5m.[${__prompt_mode}m)%}$__sigil%{[0m%}"
+    "%{%(!.[31;${__rootmode}m.[${__prompt_mode}m)%}$__sigil%{[0m%}"
   )
 
   # it's like temp=join("", $promptstring)
