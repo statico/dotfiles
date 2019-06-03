@@ -32,6 +32,7 @@ repos=(
   tpope/vim-sleuth
   tpope/vim-surround
   tpope/vim-unimpaired
+  vim-scripts/openvpn
   w0rp/ale
   wellle/targets.vim
 
