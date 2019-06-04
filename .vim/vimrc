@@ -513,7 +513,7 @@ au BufNewFile,BufRead *.vert,*.frag set ft=glsl
 au BufNewFile,BufRead *.xml     setlocal ft=xml  ts=2 sw=2 et
 au BufNewFile,BufRead *.zone    setlocal nolist ts=4 sw=4 noet
 au BufNewFile,BufRead *.zsh     setf zsh
-au BufNewFile,BufRead *.opvn    setf openvpn
+au BufNewFile,BufRead *.ovpn    setf openvpn
 au BufNewFile,BufRead *templates/*.html setf htmldjango
 au BufNewFile,BufRead .conkyrc set ft=lua
 au BufNewFile,BufRead .git/config setlocal ft=gitconfig nolist ts=4 sw=4 noet
