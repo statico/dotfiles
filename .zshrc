@@ -293,6 +293,8 @@ alias stt='git status -uall'
 alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
+alias vb=VBoxManage
+alias vh=VBoxHeadless
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
 alias y='yarn'
@@ -336,6 +338,11 @@ fi
 # Move-to-trash command for Gnome. `brew install trash` for one on macOS.
 if ! _has trash && _has gio; then
   alias trash='gio trash'
+fi
+
+# macOS-like open command for linux
+if ! _has open && _has xdg-open; then
+  alias open=xdg-open
 fi
 
 # Humanize disk space if possible
