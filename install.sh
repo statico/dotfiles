@@ -53,7 +53,7 @@ cd "$basedir"
 
 echo "Updating common Zsh completions..."
 rm -rf .zsh-completions ~/.zcompdump
-git clone --depth=1 https://github.com/zsh-users/zsh-completions .zsh-completions
+git clone --quiet --depth=1 https://github.com/zsh-users/zsh-completions .zsh-completions
 
 echo "Creating symlinks..."
 for path in .* ; do
