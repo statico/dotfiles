@@ -12,3 +12,4 @@
 .vim/bundle/*/doc/tags
 .vim/bundle/*/doc/tags-??
 .vimlocal
+.zsh-completions
