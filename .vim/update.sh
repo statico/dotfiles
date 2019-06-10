@@ -50,9 +50,17 @@ set -e
 dir=~/.dotfiles/.vim/bundle
 
 if [ -d "$dir" -a -z "$1" ]; then
-  temp="$(mktemp -d)"
-  echo "▲ Moving old bundle dir to $temp"
-  mv "$dir" "$temp"
+  if which trash &>/dev/null; then
+    echo "▲ Moving old bundle dir to trash"
+    trash "$dir"
+  elif which gio &>/dev/null; then
+    echo "▲ Moving old bundle dir to trash"
+    gio trash "$dir"
+  else
+    temp="$(mktemp -d)"
+    echo "▲ Moving old bundle dir to $temp"
+    mv "$dir" "$temp"
+  fi
 fi
 
 mkdir -p "$dir"
