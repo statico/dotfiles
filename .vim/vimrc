@@ -466,9 +466,6 @@ highlight link EndOfBuffer Comment
 " Custom colors for NERDTree
 highlight def link NERDTreeRO NERDTreeFile
 
-" Make trailing spaces very visible
-highlight SpecialKey ctermbg=Yellow guibg=Yellow
-
 " Make menu selections visible
 highlight PmenuSel ctermfg=black ctermbg=magenta
 
@@ -546,5 +543,3 @@ endif
 
 " Some plugin seems to search for something at startup, so this fixes that.
 silent! nohlsearch
-
-" vim:set tw=100:
