@@ -91,5 +91,8 @@
   },
   "editor.gotoLocation.multiple": "goto",
   "references.preferredLocation": "view",
-  "emmet.showExpandedAbbreviation": "never"
+  "emmet.showExpandedAbbreviation": "never",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
