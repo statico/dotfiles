@@ -9,13 +9,13 @@
 
 # Returns whether the given command is executable or aliased.
 _has() {
-  return $( whence $1 >/dev/null )
+  return $( whence $1 &>/dev/null )
 }
 
 # Returns whether the given statement executed cleanly. Try to avoid this
 # because this slows down shell loading.
 _try() {
-  return $( eval $* >/dev/null 2>&1 )
+  return $( eval $* &>/dev/null )
 }
 
 # Returns whether the current host type is what we think it is. (HOSTTYPE is
@@ -61,9 +61,9 @@ else
 fi
 
 # Utility variables.
-if which hostname >/dev/null 2>&1; then
+if which hostname &>/dev/null; then
   HOSTNAME=`hostname`
-elif which uname >/dev/null 2>&1; then
+elif which uname &>/dev/null; then
   HOSTNAME=`uname -n`
 else
   HOSTNAME=unknown
@@ -71,7 +71,7 @@ fi
 export HOSTNAME
 
 # HOSTTYPE = { Linux | OpenBSD | SunOS | etc. }
-if which uname >/dev/null 2>&1; then
+if which uname &>/dev/null; then
   HOSTTYPE=`uname -s`
 else
   HOSTTYPE=unknown
@@ -232,7 +232,7 @@ alias ghs='git stash save'
 alias ghsp='git stash save --patch'
 alias ghw='git stash show -p'
 alias gist='gist -p -c'
-alias gk='gitk >/dev/null 2>&1'
+alias gk='gitk &>/dev/null'
 alias gl1='git log -n 1'
 alias gl='git quicklog -n 20'
 alias gll='git quicklog-long'
@@ -399,7 +399,7 @@ vgg() {
 pin() {
   rm -f ~/.pindir
   echo $PWD >~/.pindir
-  chmod 0600 ~/.pindir >/dev/null 2>&1
+  chmod 0600 ~/.pindir &>/dev/null
 }
 pout() {
   cd `cat ~/.pindir`
@@ -800,7 +800,7 @@ for cmd in ~/bin/keychain /usr/bin/keychain; do
 done
 if [ -n $keychainbin ]; then
   if [ -e  ~/.keychain/${HOSTNAME}-sh ]; then
-    source ~/.keychain/${HOSTNAME}-sh >/dev/null 2>&1
+    source ~/.keychain/${HOSTNAME}-sh &>/dev/null
   fi
   alias agent="$keychainbin id_dsa && source ~/.keychain/$HOST-sh"
 else
@@ -849,7 +849,7 @@ elif [ -n "$ITERM_SESSION_ID" ]; then
 fi
 
 if whence -w termcolor > /dev/null 2>&1 && [ -e ~/.ssh/colors ]; then
-  unfunction ssh >/dev/null 2>&1
+  unfunction ssh &>/dev/null
   alias realssh="$(which ssh)"
   ssh() {
     local line="$(grep -E "^$1\b" ~/.ssh/colors)"
