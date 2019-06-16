@@ -300,8 +300,6 @@ alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
 alias y='yarn'
 alias ye='yarn exec'
-alias ya='_ya () { yarn add $@ ; yarn add -D @types/$@ }; _ya'
-alias yr='_yr () { yarn remove $@ ; yarn remove -D @types/$@ }; _yr'
 alias x='screen -A -x'
 alias xxx='histring "XXX.*" -c green -s bold'
 
@@ -371,6 +369,20 @@ if _is Darwin; then
 fi
 
 # FUNCTIONS {{{1
+
+ya() {
+  for pkg in $@; do
+    yarn add $pkg
+    yarn add -D @types/$pkg &>/dev/null || echo "No separate types for $pkg"
+  done
+}
+
+yr() {
+  for pkg in $@; do
+    yarn remove $pkg
+    yarn remove -D @types/$pkg &>/dev/null
+  done
+}
 
 # ack is really useful. I usually look for code and then edit all of the files
 # containing that code. Changing `ack' to `vack' does this for me.
