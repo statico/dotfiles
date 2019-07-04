@@ -1,5 +1,5 @@
 {
-  "breadcrumbs.enabled": true,
+  "breadcrumbs.enabled": false,
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.cursorBlinking": "solid",

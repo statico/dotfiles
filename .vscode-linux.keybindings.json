@@ -131,11 +131,6 @@
     "command": "-workbench.action.files.newUntitledFile"
   },
   {
-    "key": "ctrl+n",
-    "command": "workbench.action.quickOpenNavigateNextInFilePicker",
-    "when": "inFilesPicker && inQuickOpen"
-  },
-  {
     "key": "ctrl+p",
     "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
     "when": "inFilesPicker && inQuickOpen"
@@ -143,11 +138,6 @@
   {
     "key": "ctrl+e",
     "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
-    "when": "inFilesPicker && inQuickOpen"
-  },
-  {
-    "key": "ctrl+p",
-    "command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
     "when": "inFilesPicker && inQuickOpen"
   },
   {
@@ -162,5 +152,28 @@
   {
     "key": "ctrl+shift+n",
     "command": "-workbench.action.newWindow"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.quickOpenSelectNext",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpenSelectPrevious",
+    "when": "inQuickOpen"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen",
+    "when": "!inQuickOpen"
+  },
+  {
+    "key": "ctrl+k p",
+    "command": "-workbench.action.files.copyPathOfActiveFile"
   }
 ]
