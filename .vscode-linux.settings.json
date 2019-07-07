@@ -58,6 +58,16 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vim.foldfix": true,
   "vim.leader": ",",
+  "vim.normalModeKeyBindings": [
+    {
+      "before": ["j"],
+      "after": ["g", "j"]
+    },
+    {
+      "before": ["k"],
+      "after": ["g", "k"]
+    }
+  ],
   "window.zoomLevel": 0,
   "workbench.colorCustomizations": {
     "activityBarBadge.background": "#00BCD4",
