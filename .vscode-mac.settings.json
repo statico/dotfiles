@@ -43,6 +43,7 @@
   "jest.enableInlineErrorMessages": false,
   "jest.restartJestOnSnapshotUpdate": true,
   "markdown.preview.fontSize": 16,
+  "markdown.extension.orderedList.autoRenumber": false,
   "php.suggest.basic": false,
   "search.exclude": {
     "**/*.js.snap": true,
@@ -94,5 +95,45 @@
   "emmet.showExpandedAbbreviation": "never",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "gitlens.menus": {
+    "editor": {
+      "blame": false,
+      "clipboard": true,
+      "compare": true,
+      "details": false,
+      "history": false,
+      "remote": false
+    },
+    "editorGroup": false,
+    "editorTab": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "explorer": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "scmGroup": {
+      "compare": true,
+      "openClose": true,
+      "stash": true,
+      "stashInline": true
+    },
+    "scmItem": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true,
+      "stash": true
+    }
+  },
+  "explorer.decorations.colors": false,
+  "prettier.proseWrap": "always",
+  "markdown.extension.toc.githubCompatibility": true,
+  "extensions.ignoreRecommendations": true
 }
