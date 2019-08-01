@@ -28,7 +28,7 @@ OPTIONS=safe_pet
 OPTIONS=noshowborn
 OPTIONS=showbuc
 OPTIONS=showexp
-OPTIONS=noshowrace
+OPTIONS=showrace
 OPTIONS=showscore
 OPTIONS=silent
 OPTIONS=sortpack
@@ -71,3 +71,40 @@ OPTIONS=align_status:right
 OPTIONS=term_rows:33
 OPTIONS=term_cols:119
 OPTIONS=cursesgraphics
+OPTIONS=hitpointbar
+
+# Ensure changes will be shown for a few turns after they happen.
+OPTIONS=statushilites:10
+
+# Always show gold as the proper color.
+OPTIONS=hilite_status:gold/always/yellow
+
+# Show when the character is Lawful, for some reason.
+OPTIONS=hilite_status:alignment/lawful/green&bold
+# the above line is equivalent to:
+OPTIONS=hilite_status:alignment/lawful/lightgreen
+
+# Show when XL changes.
+OPTIONS=hilite_status:experience-level/changed/white/cyan
+# the above line is equivalent to:
+OPTIONS=hilite_status:experience-level/changed/white/always/cyan
+
+# Specify multiple cutoffs for all ability scores.
+OPTIONS=hilite_status:characteristics/<5/red
+OPTIONS=hilite_status:characteristics/>6/orange
+OPTIONS=hilite_status:characteristics/>8/brown
+OPTIONS=hilite_status:characteristics/>11/yellow
+OPTIONS=hilite_status:characteristics/>13/green
+OPTIONS=hilite_status:characteristics/>16/cyan
+OPTIONS=hilite_status:characteristics/>18/lightblue
+# the above lines are equivalent to:
+OPTIONS=hilite_status:characteristics/<5/red/>6/orange/>8/brown/>11/yellow/>13/green/>16/cyan/>18/lightblue
+
+# Hilight multiple encumbrance statuses.
+OPTIONS=hilite_status:carrying-capacity/burdened/yellow/stressed/orange
+
+# Percentage cutoffs for hitpoints.
+OPTIONS=hilite_status:hitpoints/100%/brightgreen
+OPTIONS=hilite_status:hitpoints/<100%/green
+OPTIONS=hilite_status:hitpoints/<60%/yellow
+OPTIONS=hilite_status:hitpoints/<40%/red
