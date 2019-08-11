@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 { # This ensures the entire script is downloaded.
 
 set -eo pipefail
@@ -56,13 +56,13 @@ rm -rf .zsh-completions ~/.zcompdump
 git clone --quiet --depth=1 https://github.com/zsh-users/zsh-completions .zsh-completions
 
 echo "Creating symlinks..."
-for path in .* ; do
-  case "$path" in
+for item in .* ; do
+  case "$item" in
     .|..|.git)
       continue
       ;;
     *)
-      symlink "$basedir/$path" "$HOME/$path"
+      symlink "$basedir/$item" "$HOME/$item"
       ;;
   esac
 done
@@ -82,8 +82,8 @@ symlink "$basedir/.vscode-$vscodeplatform.keybindings.json" "$vscodepath/keybind
 
 echo "Adding executables to ~/bin/..."
 mkdir -p "$bindir"
-for path in bin/* ; do
-  symlink "$basedir/$path" "$bindir/$(basename $path)"
+for item in bin/* ; do
+  symlink "$basedir/$item" "$bindir/$(basename $item)"
 done
 
 echo "Setting up vim plugins..."
