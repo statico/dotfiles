@@ -40,7 +40,7 @@ Only a few reasons, honestly:
 
 - The `**` recursive operator and qualifiers like `(.)` and `(/)` for globbing are essential, like `rm **/.DS_Store`
 
-- Legacy. I started using it in 2003 or so when it was edgy to do so.
+- Legacy. I started using Zsh in 2003 or so when it was edgy to do so.
 
 ### Common Tricks
 
