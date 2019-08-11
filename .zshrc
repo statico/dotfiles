@@ -344,9 +344,9 @@ if ! _has open && _has xdg-open; then
 fi
 
 # Humanize disk space if possible
-if _try df -H; then
+if _try df -H ~; then
   alias df='df -H'
-elif _try df -h; then
+elif _try df -h ~; then
   alias df='df -h'
 fi
 
