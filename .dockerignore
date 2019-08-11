@@ -1,0 +1,16 @@
+*.pyc
+*_flymake.*
+*~
+.#*
+.DS_Store
+.docker/.buildNodeID
+.docker/daemon.json
+.git
+.gvimlocal
+.postinstall
+.ropeproject
+.unison.*.unison.tmp-bad
+.vim/bundle/*/doc/tags
+.vim/bundle/*/doc/tags-??
+.vimlocal
+.zsh-completions

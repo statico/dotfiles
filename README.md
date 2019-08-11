@@ -59,6 +59,17 @@ Here's what I use the most often on the command line:
 - Fuzzy history search using <kbd>Ctrl-R</kbd> and [FZF](https://github.com/junegunn/fzf)
 - Each host gets a different `colorprompt` command in its `~/.zshlocal`. I use `ansimodes` or `256-colors.sh` to pick a color. (Both are already in the `~/bin/` directory, which is added to the `$PATH`.)
 
+### Testing
+
+Testing is easy with Docker:
+
+```
+$ docker build . --tag dotfiles
+$ docker run --rm -it dotfiles
+root@987552d4c629:/
+〉
+```
+
 ### See also
 
 - [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) which is a very popular way of customizing Zsh (but not all dotfiles or Vim)
