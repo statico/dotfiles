@@ -87,7 +87,7 @@ for item in bin/* ; do
 done
 
 echo "Setting up vim plugins..."
-.vim/update.sh
+zsh .vim/update.sh
 
 echo "Setting up git..."
 cp "$basedir/.gitconfig.base" "$HOME/.gitconfig"
