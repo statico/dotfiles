@@ -54,6 +54,7 @@ Here's what I use the most often on the command line:
 - Searching with `rg` ([ripgrep](https://github.com/BurntSushi/ripgrep)), then <kbd>Ctrl-A</kbd><kbd>v</kbd><kbd>Enter</kbd> (changing `rg` to `vrg`) to edit all of the files that matched in Vim
 - `cd`ing to a directory and then using <kbd>Meta-P</kbd> to pop to the previous directory (since `auto_pushd` is enabled and silent)
 - `psl` to search for processes (since I never remember the `pgrep` syntax and it's never been consistent across platforms)
+- `open` and `trash` commands that work across macOS and Linux
 - If I'm typing a command but realize that I need to do something else first, <kbd>Meta-Q</kbd> queues the current command and clears the command line, then pastes it back in after I enter and run another command first.
 - Git commands: `st` for status, `gl` for a quick log, `sci <message>` to commit everything with a message, or `gap` to cherry pick and then `gc <message>` to commit.
 - Fuzzy history search using <kbd>Ctrl-R</kbd> and [FZF](https://github.com/junegunn/fzf)
