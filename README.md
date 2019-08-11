@@ -15,7 +15,7 @@ Optionally create a `.postinstall` with some machine-specific commands, like `gi
 ### Customizing
 
 - Fork this repo
-- Update `install.sh` to point at your own
+- Update `install.zsh` to point at your own
 - Go nuts
 
 ### Highlights (or, Why I Use This)
