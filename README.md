@@ -42,6 +42,23 @@ Only a few reasons, honestly:
 
 - Legacy. I started using it in 2003 or so when it was edgy to do so.
 
+### Common Tricks
+
+Here's what I use the most often on the command line:
+
+- `j foo` to `cd` to the most commonly used directory that fuzzy-matches foo (via [autojump](https://github.com/wting/autojump))
+- `l` and `ll` for long directory listings, `ltr` for showing the most recent files
+- Other single-character aliases: `g` for `git`, `d` for `docker`, `dc` for `docker-compose`, `k` for `tree`, `y` for `yarn`
+- <kbd>Meta-L</kbd> which appends `2>&1|less` to the command and hits <kbd>Enter</kbd>, running the command and viewing its output in a pager
+- `ZU` to update Vim plugins or just `ZR` to restart Zsh after a .zshrc change
+- Searching with `rg` ([ripgrep](https://github.com/BurntSushi/ripgrep)), then <kbd>Ctrl-A</kbd><kbd>v</kbd><kbd>Enter</kbd> (changing `rg` to `vrg`) to edit all of the files that matched in Vim
+- `cd`ing to a directory and then using <kbd>Meta-P</kbd> to pop to the previous directory (since `auto_pushd` is enabled and silent)
+- `psl` to search for processes (since I never remember the `pgrep` syntax and it's never been consistent across platforms)
+- If I'm typing a command but realize that I need to do something else first, <kbd>Meta-Q</kbd> queues the current command and clears the command line, then pastes it back in after I enter and run another command first.
+- Git commands: `st` for status, `gl` for a quick log, `sci <message>` to commit everything with a message, or `gap` to cherry pick and then `gc <message>` to commit.
+- Fuzzy history search using <kbd>Ctrl-R</kbd> and [FZF](https://github.com/junegunn/fzf)
+- Each host gets a different `colorprompt` command in its `~/.zshlocal`. I use `ansimodes` or `256-colors.sh` to pick a color. (Both are already in the `~/bin/` directory, which is added to the `$PATH`.)
+
 ### See also
 
 - [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) which is a very popular way of customizing Zsh (but not all dotfiles or Vim)
