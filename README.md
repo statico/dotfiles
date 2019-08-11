@@ -18,6 +18,30 @@ Optionally create a `.postinstall` with some machine-specific commands, like `gi
 - Update `install.sh` to point at your own
 - Go nuts
 
+### Highlights (or, Why I Use This)
+
+My first boss told me that I should have a digital _toolkit_ -- a set of tools that I keep with me that I can use anywhere. In college I used many different kinds of Unix variants, and so it made sense to build a kit that could bootstrap my environment anywhere. Today, I use macOS, Windows, and various distributions of Linux, and this kit has proven invaluable in getting set up quickly on new hardware and VMs.
+
+While this project includes a huge collection of configuration snippets I've collected over the years, a few parts stand out and are things I use daily:
+
+- My [`zshrc`](https://github.com/statico/dotfiles/blob/master/.zshrc), which has a minimal, customized prompt that I like the best, as well as many aliases and shortcuts to standardize environments (like making sure Unicode displays properly and `ls` shows colors) and reduce keystrokes (like with my ~60 or so Git aliases). There are also a few functions that make host-specific customizations easy using a `.zshlocal` script which never gets checked in. There are tons of tricks in there so it's worth a skim.
+
+- My [`vimrc`](https://github.com/statico/dotfiles/blob/master/.vim/vimrc), which many people became interested in after reading my [articles about Vim](https://statico.github.io). I also have [an `update.sh` script](https://github.com/statico/dotfiles/blob/master/.vim/update.sh) which installs all of the Vim plugins and themes I like to use, and it gets run as part of the Zsh update process (aliased to `ZU`). Is my Vim update thing better than Vundle or another plugin manager? Maybe. It's very simple and fast and works everywhere, so I stick with it.
+
+### Why Zsh instead of Bash?
+
+Only a few reasons, honestly:
+
+- Easier completion. I can type `/u/l/b/x`<kbd>Tab</kbd> and that completes to `/usr/local/bin/x`
+
+- I'm able to hack <kbd>Ctrl-W</kbd> to delete to the previous word _or_ slash, so `/usr/local/bin`<kbd>Ctrl-W</kbd> becomes `/usr/local/`
+
+- I've got a thing that shows me five red dots when a completion is in progress, such as when completing files from remote SSH servers.
+
+- The `**` recursive operator and qualifiers like `(.)` and `(/)` for globbing are essential, like `rm **/.DS_Store`
+
+- Legacy. I started using it in 2003 or so when it was edgy to do so.
+
 ### See also
 
 - [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh) which is a very popular way of customizing Zsh (but not all dotfiles or Vim)
