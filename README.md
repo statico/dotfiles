@@ -6,7 +6,7 @@ This started around 2001 or so when I used lots of different machines and enviro
 
 ### Installation
 
-1. `curl -sL https://zsh.langworth.com | zsh`
+1. `curl -sL https://statico.link/zsh | zsh`
 1. `chsh` or otherwise set your shell to use [Zsh](http://www.zsh.org/)
 1. Restart your shell
 
