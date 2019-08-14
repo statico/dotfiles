@@ -32,15 +32,15 @@ While this project includes a huge collection of configuration snippets I've col
 
 Only a few reasons, honestly:
 
-- Easier completion. I can type `/u/l/b/x`<kbd>Tab</kbd> and that completes to `/usr/local/bin/x`
+- Easier completion - I can type `/u/l/b/x`<kbd>Tab</kbd> and that completes to `/usr/local/bin/x`
 
 - I'm able to hack <kbd>Ctrl-W</kbd> to delete to the previous word _or_ slash, so `/usr/local/bin`<kbd>Ctrl-W</kbd> becomes `/usr/local/`
 
 - I've got a thing that shows me five red dots when a completion is in progress, such as when completing files from remote SSH servers.
 
-- The `**` recursive operator and qualifiers like `(.)` and `(/)` for globbing are essential, like `rm **/.DS_Store`
+- Globbing - The `**` recursive operator and qualifiers like `(.)` and `(/)` for globbing are essential, like `rm **/.DS_Store`
 
-- Legacy. I started using Zsh in 2003 or so when it was edgy to do so.
+- Legacy - I started using Zsh in 2002 or so when it was edgy.
 
 ### Common Tricks
 
@@ -56,7 +56,7 @@ Here's what I use the most often on the command line:
 - `psl` to search for processes (since I never remember the `pgrep` syntax and it's never been consistent across platforms)
 - `open` and `trash` commands that work across macOS and Linux
 - If I'm typing a command but realize that I need to do something else first, <kbd>Meta-Q</kbd> queues the current command and clears the command line, then pastes it back in after I enter and run another command first.
-- Git commands: `st` for status, `gl` for a quick log, `sci <message>` to commit everything with a message, or `gap` to cherry pick and then `gc <message>` to commit.
+- Git commands: `st` for status, `gd` for a git diff, `gl` for a quick log, `sci <message>` to commit everything with a message, or `gap` to cherry pick and then `gc <message>` to commit.
 - Fuzzy history search using <kbd>Ctrl-R</kbd> and [FZF](https://github.com/junegunn/fzf)
 - Each host gets a different `colorprompt` command in its `~/.zshlocal`. I use `ansimodes` or `256-colors.sh` to pick a color. (Both are already in the `~/bin/` directory, which is added to the `$PATH`.)
 
