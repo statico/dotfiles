@@ -746,6 +746,11 @@ uncolorprompt() {
   PS1=${(j::)temp}
 }
 
+randomcolorprompt() {
+  local color=$((22 + RANDOM % 209))
+  colorprompt "38;5;$color"
+}
+
 shortprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen

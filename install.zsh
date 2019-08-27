@@ -120,6 +120,12 @@ else
   echo "No post install script found. Optionally create one at $postinstall"
 fi
 
+if [ ! -e "$HOME/.zshlocal" ]; then
+  color=$((22 + RANDOM % 209))
+  echo -e "# If you want a different color, run ~/bin/256-colors.sh and replace $color below:\ncolorprompt \"38;5;$color\"" >"$HOME/.zshlocal"
+  echo "Chose a random prompt color. Edit $HOME/.zshlocal to change it."
+fi
+
 echo "Done."
 
 } # This ensures the entire script is downloaded.
