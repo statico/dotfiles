@@ -135,5 +135,8 @@
   "explorer.decorations.colors": false,
   "prettier.proseWrap": "always",
   "markdown.extension.toc.githubCompatibility": true,
-  "extensions.ignoreRecommendations": true
+  "extensions.ignoreRecommendations": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
