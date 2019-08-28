@@ -278,6 +278,7 @@ alias notifydone='terminal-notifier -message Done.'
 alias pt='pstree -pul'
 alias px='pilot-xfer -i'
 alias rake='noglob rake'
+alias randpass="LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24 ; echo"
 alias rgg='_rgg () { rg --color always --heading $@ | less }; _rgg'
 alias ri='ri -f ansi'
 alias rls='screen -ls'

@@ -16,6 +16,8 @@ alias ZshInstall='~/.dotfiles/install.sh ; ZR'
 alias ZshRehash='. ~/.zshrc'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
+alias d='docker'
+alias dc='docker-compose'
 alias df='df -H'
 alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
@@ -97,6 +99,7 @@ alias tt='tail -n 9999'
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
 alias x='screen -A -x'
+alias y='yarn'
 
 ulimit -c 0
 
