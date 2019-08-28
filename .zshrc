@@ -189,6 +189,7 @@ alias dc='docker-compose'
 alias dls='dpkg -L'
 alias dotenv="eval \$(egrep -v '^#' .env | xargs)"
 alias dsl='dpkg -l | grep -i'
+alias dud='du -sh -- * | sort -h'
 alias e='emacs'
 alias ec='emacsclient --no-wait'
 alias f1="awk '{print \$1}'"
