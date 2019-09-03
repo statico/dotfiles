@@ -167,9 +167,12 @@ autocmd BufEnter *.py iabbr zzz print('ZZZ
 autocmd BufEnter *.coffee iabbr xxx console.log 'XXX',
 autocmd BufEnter *.coffee iabbr yyy console.log 'YYY',
 autocmd BufEnter *.coffee iabbr zzz console.log 'ZZZ',
-autocmd BufEnter *.js,*.ts iabbr xxx console.log('XXX',
-autocmd BufEnter *.js,*.ts iabbr yyy console.log('YYY',
-autocmd BufEnter *.js,*.ts iabbr zzz console.log('ZZZ',
+autocmd BufEnter *.js iabbr xxx console.log('XXX',
+autocmd BufEnter *.js iabbr yyy console.log('YYY',
+autocmd BufEnter *.js iabbr zzz console.log('ZZZ',
+autocmd BufEnter *.ts iabbr xxx console.log('XXX',
+autocmd BufEnter *.ts iabbr yyy console.log('YYY',
+autocmd BufEnter *.ts iabbr zzz console.log('ZZZ',
 autocmd BufEnter *.rb iabbr xxx puts "XXX
 autocmd BufEnter *.rb iabbr yyy puts "YYY
 autocmd BufEnter *.rb iabbr zzz puts "ZZZ
