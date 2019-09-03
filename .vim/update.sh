@@ -16,6 +16,7 @@ repos=(
   jparise/vim-graphql
   junegunn/fzf.vim
   junegunn/goyo.vim
+  ledger/vim-ledger
   mileszs/ack.vim
   nfnty/vim-nftables
   qpkorr/vim-bufkill
