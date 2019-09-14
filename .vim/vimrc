@@ -339,9 +339,9 @@ let g:NERDTreeStatusLine = -1
 let g:ackprg = 'rg --vimgrep --no-heading'
 
 " GitGutter styling to use · instead of +/-
-let g:gitgutter_sign_added = '∙'
-let g:gitgutter_sign_modified = '∙'
-let g:gitgutter_sign_removed = '∙'
+let g:gitgutter_sign_added = '▌'
+let g:gitgutter_sign_modified = '▌'
+let g:gitgutter_sign_removed = '▌'
 let g:gitgutter_sign_modified_removed = '∙'
 nmap ]g :GitGutterNextHunk<CR>
 nmap [g :GitGutterPrevHunk<CR>
@@ -354,6 +354,13 @@ augroup END
 let g:SuperTabLongestEnhanced = 1
 let g:SuperTabLongestHighlight = 1
 au Filetype typescript let b:SuperTabDefaultCompletionType = "<C-x><C-o>"
+
+" csv.vim
+let g:csv_delim_test = ',|'
+let g:csv_no_conceal = 1
+highlight link CSVDelimiter Delimiter
+highlight link CSVColumnHeaderEven Type
+highlight link CSVColumnHeaderOdd Type
 
 " Use incsearch.vim to highlight as I search
 map /  <Plug>(incsearch-forward)
@@ -498,6 +505,7 @@ au BufNewFile,BufRead *.html    setlocal nocindent smartindent
 au BufNewFile,BufRead *.i7x     setf inform7
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
+au BufNewFile,BufRead *.journal setf tw=0
 au BufNewFile,BufRead *.json    set ft=json tw=0
 au BufNewFile,BufRead *.less    setlocal ft=less nocindent smartindent
 au BufNewFile,BufRead *.lkml    setf yaml
@@ -510,7 +518,7 @@ au BufNewFile,BufRead *.rxml    setf ruby
 au BufNewFile,BufRead *.sass    setf sass
 au BufNewFile,BufRead *.ttml    setf xml
 au BufNewFile,BufRead *.vert,*.frag set ft=glsl
-au BufNewFile,BufRead *.xml     setlocal ft=xml  ts=2 sw=2 et
+au BufNewFile,BufRead *.xml     setlocal ft=xml ts=2 sw=2 et
 au BufNewFile,BufRead *.zone    setlocal nolist ts=4 sw=4 noet
 au BufNewFile,BufRead *.zsh     setf zsh
 au BufNewFile,BufRead *.ovpn    setf openvpn
