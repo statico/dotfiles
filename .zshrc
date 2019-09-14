@@ -433,9 +433,11 @@ vix() {
     echo "usage: $0 <newfilename>"
     return 1
   fi
-  touch $1
-  chmod -v 0755 $1
-  $EDITOR $1
+  if [ ! -e "$1" ]; then
+    echo -e "#!/usr/bin/env bash\n\nset -eo pipefail\n" > "$1"
+  fi
+  chmod -v 0755 "$1"
+  vim -c 'normal Go' "$1"
 }
 
 # Make a new command in ~/bin
