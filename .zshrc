@@ -369,7 +369,22 @@ if _is Darwin; then
   alias strace='sudo dtruss -f sudo -u $USER'
 fi
 
+# Trying out exa, a fancy replacement for ls
+if _has exa ; then
+  alias ls=exa
+  alias ltr='exa -lr -sold'
+fi
+
 # FUNCTIONS {{{1
+
+# Latest file in a directory or that matches a pattern.
+latest() {
+  if _has exa ; then
+    exa -r -sold --oneline $@ | tail -n1
+  else
+    ls -ltr1 $@ | tail -n1
+  fi
+}
 
 ya() {
   for pkg in $@; do
