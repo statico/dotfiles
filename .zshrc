@@ -372,7 +372,8 @@ fi
 # Trying out exa, a fancy replacement for ls
 if _has exa ; then
   alias ls=exa
-  alias ltr='exa -lr -sold'
+  alias l='ls -lg'
+  alias ltr='exa -lgr -sold'
 fi
 
 # FUNCTIONS {{{1
