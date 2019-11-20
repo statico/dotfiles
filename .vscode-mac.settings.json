@@ -23,7 +23,11 @@
   "editor.suggest.localityBonus": true,
   "editor.tabCompletion": "on",
   "editor.tabSize": 2,
-  "editor.tokenColorCustomizations": { "[Nord]": { "comments": "#616e88" } },
+  "editor.tokenColorCustomizations": {
+    "[Nord]": {
+      "comments": "#616e88"
+    }
+  },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "files.exclude": {
@@ -59,6 +63,26 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vim.foldfix": true,
   "vim.leader": ",",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "j"
+      ],
+      "after": [
+        "g",
+        "j"
+      ]
+    },
+    {
+      "before": [
+        "k"
+      ],
+      "after": [
+        "g",
+        "k"
+      ]
+    }
+  ],
   "window.zoomLevel": 0,
   "workbench.colorCustomizations": {
     "activityBarBadge.background": "#00BCD4",
