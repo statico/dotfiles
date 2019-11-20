@@ -1,5 +1,5 @@
 {
-  "breadcrumbs.enabled": false,
+  "breadcrumbs.enabled": true,
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.cursorBlinking": "solid",
@@ -84,7 +84,7 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.statusBar.visible": true,
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "Material Theme Darker High Contrast",
+  "workbench.colorTheme": "Default Light+",
   "materialTheme.accent": "Cyan",
   "workbench.iconTheme": "material-icon-theme",
   "[javascript]": {
@@ -133,13 +133,15 @@
     }
   },
   "explorer.decorations.colors": false,
-  "prettier.proseWrap": "always",
   "markdown.extension.toc.githubCompatibility": true,
   "extensions.ignoreRecommendations": true,
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
