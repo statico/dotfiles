@@ -108,7 +108,7 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.statusBar.visible": true,
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "Default Light+",
+  "workbench.colorTheme": "Material Theme Darker High Contrast",
   "materialTheme.accent": "Cyan",
   "workbench.iconTheme": "material-icon-theme",
   "[javascript]": {
@@ -167,5 +167,7 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.renderLineHighlight": "none",
+  "workbench.fontAliasing": "auto"
 }
