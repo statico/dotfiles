@@ -192,6 +192,7 @@ set cinkeys-=0#             " Comments don't fiddle with indenting
 set cino=                   " See :h cinoptions-values
 set commentstring=\ \ #%s   " When folds are created, add them to this
 set copyindent              " Make autoindent use the same chars as prev line
+set cryptmethod=blowfish2   " Use a stronger cipher than the default
 set directory-=.            " Don't store temp files in cwd
 set encoding=utf8           " UTF-8 by default
 set expandtab               " No tabs
