@@ -505,7 +505,7 @@ au BufNewFile,BufRead *.html    setlocal nocindent smartindent
 au BufNewFile,BufRead *.i7x     setf inform7
 au BufNewFile,BufRead *.ini     setf conf
 au BufNewFile,BufRead *.input   setf gnuplot
-au BufNewFile,BufRead *.journal setf tw=0
+au BufNewFile,BufRead *.journal setlocal tw=0 ts=4 sw=4 et
 au BufNewFile,BufRead *.json    set ft=json tw=0
 au BufNewFile,BufRead *.less    setlocal ft=less nocindent smartindent
 au BufNewFile,BufRead *.lkml    setf yaml
