@@ -125,5 +125,9 @@
   {
     "key": "shift+alt+cmd+n",
     "command": "workbench.action.newWindow"
+  },
+  {
+    "key": "ctrl+shift+b",
+    "command": "git.checkout"
   }
 ]
