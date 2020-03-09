@@ -640,11 +640,6 @@ bindkey -s '^Z' '^Ufg^M'
 # Trying out Facebook PathPicker
 bindkey -s '\ex' ' |fpp^M'
 
-# ^L doesn't work properly in VS Code terminals. https://github.com/microsoft/vscode/issues/75141
-if [ "$TERM_PROGRAM" = "vscode" ]; then
-  bindkey -s '^L' '^Uclear^M'
-fi
-
 # More custom bindings
 bindkey "^O" copy-prev-shell-word
 bindkey "^Q" push-line
@@ -701,7 +696,7 @@ setopt PROMPT_SUBST
 # Unfortunately, ^L makes the first line disappear. We can fix that by making
 # our own clear-screen function.
 clear-screen-and-precmd() {
-  print -n "\e[2J\e[H"
+  clear
   zle redisplay
   precmd
 }
