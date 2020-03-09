@@ -2,6 +2,7 @@
 *_flymake.*
 *~
 .#*
+.docker/
 .DS_Store
 .gvimlocal
 .postinstall
