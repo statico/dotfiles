@@ -5,10 +5,9 @@
   "editor.cursorBlinking": "solid",
   "editor.fontFamily": "Iosevka",
   "editor.fontLigatures": true,
-  "editor.fontSize": 16,
+  "editor.fontSize": 15,
   "editor.formatOnSave": true,
   "editor.glyphMargin": false,
-  "editor.lineHeight": 20,
   "editor.lineNumbers": "off",
   "editor.minimap.enabled": false,
   "editor.minimap.renderCharacters": false,
@@ -61,8 +60,8 @@
   "tslint.alwaysShowStatus": true,
   "tslint.autoFixOnSave": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "vim.foldfix": true,
   "vim.leader": ",",
+  "vim.foldfix": false,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": [
@@ -71,6 +70,8 @@
       "after": [
         "g",
         "j"
+      "commands": [
+        "cursorDown"
       ]
     },
     {
@@ -80,6 +81,8 @@
       "after": [
         "g",
         "k"
+      "commands": [
+        "cursorUp"
       ]
     }
   ],
@@ -114,7 +117,6 @@
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.gotoLocation.multiple": "goto",
   "references.preferredLocation": "view",
   "emmet.showExpandedAbbreviation": "never",
   "[html]": {
@@ -173,4 +175,9 @@
   "remote.containers.dotfiles.installCommand": "~/.dotfiles/install.zsh",
   "remote.containers.dotfiles.repository": "https://github.com/statico/dotfiles",
   "remote.containers.dotfiles.targetPath": "~/.dotfiles"
+  "dotfiles.repository": "https://github.com/statico/dotfiles",
+  "dotfiles.installCommand": "~/.dotfiles/install.zsh",
+  "dotfiles.targetPath": "~/.dotfiles",
+  "workbench.colorTheme": "Monokai",
+  "editor.lineHeight": 18
 }
