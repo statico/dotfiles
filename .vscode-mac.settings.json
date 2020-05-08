@@ -34,7 +34,6 @@
     "**/node_modules": true,
     "**/yarn.lock": true
   },
-  "files.useExperimentalFileWatcher": true,
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
@@ -67,9 +66,6 @@
       "before": [
         "j"
       ],
-      "after": [
-        "g",
-        "j"
       "commands": [
         "cursorDown"
       ]
@@ -78,9 +74,6 @@
       "before": [
         "k"
       ],
-      "after": [
-        "g",
-        "k"
       "commands": [
         "cursorUp"
       ]
@@ -112,8 +105,6 @@
   "workbench.statusBar.visible": true,
   "workbench.activityBar.visible": false,
   "workbench.colorTheme": "Nord",
-  "materialTheme.accent": "Cyan",
-  "workbench.iconTheme": "material-icon-theme",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -174,10 +165,9 @@
   "workbench.fontAliasing": "auto",
   "remote.containers.dotfiles.installCommand": "~/.dotfiles/install.zsh",
   "remote.containers.dotfiles.repository": "https://github.com/statico/dotfiles",
-  "remote.containers.dotfiles.targetPath": "~/.dotfiles"
+  "remote.containers.dotfiles.targetPath": "~/.dotfiles",
   "dotfiles.repository": "https://github.com/statico/dotfiles",
   "dotfiles.installCommand": "~/.dotfiles/install.zsh",
   "dotfiles.targetPath": "~/.dotfiles",
-  "workbench.colorTheme": "Monokai",
   "editor.lineHeight": 18
 }
