@@ -131,7 +131,7 @@
     "command": "git.checkout"
   },
   {
-    "key": "ctrl+shift+cmd+o",
+    "key": "ctrl+cmd+o",
     "command": "workbench.action.closeOtherEditors"
   },
   {
@@ -139,19 +139,7 @@
     "command": "-workbench.action.closeOtherEditors"
   },
   {
-    "key": "alt+cmd+t",
-    "command": "-workbench.action.closeOtherEditors"
-  },
-  {
-    "key": "alt+cmd+t",
-    "command": "-workbench.action.closeOtherEditors"
-  },
-  {
-    "key": "alt+cmd+t",
-    "command": "-workbench.action.closeOtherEditors"
-  },
-  {
-    "key": "alt+cmd+t",
-    "command": "-workbench.action.closeOtherEditors"
+    "key": "ctrl+cmd+t",
+    "command": "workbench.panel.terminal.focus"
   }
 ]

@@ -34,6 +34,11 @@
     "**/node_modules": true,
     "**/yarn.lock": true
   },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  },
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
@@ -55,7 +60,6 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "terminal.external.osxExec": "iTerm.app",
-  "terminal.integrated.fontSize": 14,
   "tslint.alwaysShowStatus": true,
   "tslint.autoFixOnSave": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
@@ -63,20 +67,12 @@
   "vim.foldfix": false,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": [
-        "j"
-      ],
-      "commands": [
-        "cursorDown"
-      ]
+      "before": ["j"],
+      "commands": ["cursorDown"]
     },
     {
-      "before": [
-        "k"
-      ],
-      "commands": [
-        "cursorUp"
-      ]
+      "before": ["k"],
+      "commands": ["cursorUp"]
     }
   ],
   "window.zoomLevel": 0,
@@ -104,7 +100,7 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.statusBar.visible": true,
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "Nord",
+  "workbench.colorTheme": "GitHub Dark",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -149,7 +145,6 @@
       "stash": true
     }
   },
-  "explorer.decorations.colors": false,
   "markdown.extension.toc.githubCompatibility": true,
   "extensions.ignoreRecommendations": true,
   "[typescriptreact]": {
@@ -169,5 +164,10 @@
   "dotfiles.repository": "https://github.com/statico/dotfiles",
   "dotfiles.installCommand": "~/.dotfiles/install.zsh",
   "dotfiles.targetPath": "~/.dotfiles",
-  "editor.lineHeight": 18
+  "editor.lineHeight": 18,
+  "git.path": "/usr/local/bin/git",
+  "terminal.integrated.fontWeight": "400",
+  "terminal.integrated.fontWeightBold": "normal",
+  "workbench.preferredDarkColorTheme": "GitHub Dark",
+  "workbench.preferredLightColorTheme": "GitHub Light"
 }
