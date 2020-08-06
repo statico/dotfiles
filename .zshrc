@@ -338,9 +338,9 @@ fi
 # Use GNU du if available
 if _has gdu; then
   alias du=gdu
-  dut() { gdu -a -h --exclude=.git $@ * .* | sort -rh | head -n 20 }
+  dut() { du -a -h --exclude=.git $@ * .* | sort -rh | head -n 20 }
 else
-  dut() { gdu -h -I .git $@ * .* | sort -rh | head -n 20 }
+  dut() { du -h $@ * .* | sort -rh | head -n 20 }
 fi
 
 # Move-to-trash command for Gnome. `brew install trash` for one on macOS.
