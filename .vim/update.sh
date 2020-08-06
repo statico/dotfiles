@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# (this can run in bash without modification)
+
 #
 # Usage: ./update.sh [pattern]
 #
