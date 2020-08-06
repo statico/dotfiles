@@ -1,22 +1,21 @@
-#!/usr/bin/env perl
+#!/usr/bin/env bash
 #
 # Usage: hr [message]
 #
 # Displays a big horizontal rule in the terminal with an optional header.
 
-my $w = `tput cols`;
-my $color = '30;1';
-my $char = '━';
-my $title = uc join(' ', @ARGV);
+w="$(tput cols)"
+color='30;1'
+char='━'
+title="$(echo $* | tr a-z A-Z )"
 
-print "\e[${color}m";
-if (length $title) {
-  my $t = " $title ";
-  $w = ($w - length $t) / 2;
-  print $char x $w;
-  print $t;
-  print $char x $w;
-} else {
-  print $char x $w;
-}
-print "\e[0m\n";
+echo -en "\x1b[${color}m"
+if [ ${#title} -gt 0 ]; then
+  n="$(expr \( $w - ${#title} - 2 \) / 2)"
+  printf "${char}%.0s" $(seq 1 $n)
+  echo -en " $title "
+  printf "${char}%.0s" $(seq 1 $n)
+else
+  printf "${char}%.0s" $(seq 1 $w)
+fi
+echo -en "\x1b[0m\n"
