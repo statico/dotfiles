@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# Colorizes a Terminal.app window on macOS.
+#
 # See http://stackoverflow.com/questions/157959/
 
 import sys
