@@ -335,6 +335,14 @@ elif _has ack; then
   fi
 fi
 
+# Use GNU du if available
+if _has gdu; then
+  alias du=gdu
+  dut() { gdu -a -h --exclude=.git $@ * .* | sort -rh | head -n 20 }
+else
+  dut() { gdu -h -I .git $@ * .* | sort -rh | head -n 20 }
+fi
+
 # Move-to-trash command for Gnome. `brew install trash` for one on macOS.
 if ! _has trash && _has gio; then
   alias trash='gio trash'
