@@ -1,31 +1,29 @@
-#!/usr/bin/ruby
+#!/usr/bin/env bash
 
-cols  = [ (0..7).to_a, 9, 40, '40;1' ].flatten
-rows  = [ (30..37).to_a, (40..47).to_a ].flatten
-msg   = 'mode'
-pad   = 3
-reset = "\e[0m"
+set -eo pipefail
 
-print "\e[H\e[2J"
-puts "ANSI Modes -- \\e[<col>;<row>m\n"
-puts "\\e is ^[, \\033 in octal, \\x1b in hex"
-puts
+echo -en "\x1b[H\x1b[2J"
+echo "ANSI Modes -- \\e[<col>;<row>m - \\e is ^[, \\033 in octal, \\x1b in hex"
+echo
 
-for col in cols
-    print %q{ } * pad, "\e[#{col}m"
-    print "#{msg}#{col}".ljust(msg.length+pad) 
-    print reset
-end
-puts
+cols=( 0 1 2 3 4 5 6 7 9 40 '40;1' )
+rows=( 30 31 32 33 34 35 36 37 40 41 42 43 44 45 46 47 )
+msg=mode
+pad=3
+reset="\x1b[0m"
 
-for row in rows
-    for col in cols
-        print %q{ } * pad, "\e[#{col};#{row}m"
-        print "#{msg}#{row}".ljust(msg.length+pad) 
-        print reset
-    end
-    puts
-end
+for col in ${cols[@]} ; do
+    echo -en "\x1b[${col}m${msg}${col}${reset}\t"
+done
+echo
+echo
 
-puts reset
+for row in ${rows[@]} ; do
+    for col in ${cols[@]} ; do
+        echo -en "\x1b[${col};${row}m${msg}${row}${reset}\t"
+    done
+    echo
+done
+
+echo -e "$reset"
 
