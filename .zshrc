@@ -18,12 +18,6 @@ _try() {
   return $( eval $* &>/dev/null )
 }
 
-# Returns whether the current host type is what we think it is. (HOSTTYPE is
-# set later.)
-_is() {
-  return $( [ "$HOSTTYPE" = "$1" ] )
-}
-
 # Returns the version of a command if present, or n/a if unavailable.
 _versionof() {
   if _has "$1"; then
@@ -37,8 +31,8 @@ _versionof() {
 
 # Yes, this defeats the point of the TERM variable, but everything pretty much
 # uses modern ANSI escape sequences. I've found that forcing everything to be
-# "rxvt" just about works everywhere. (If you want to know if you're in screen,
-# use SHLVL or TERMCAP.)
+# "rxvt" just about works everywhere. If you want to know if you're in screen,
+# use SHLVL or TERMCAP.
 if [ -n "$ITERM_SESSION_ID" ]; then
   if [ "$TERM" = "screen" ]; then
     export TERM=screen-256color
@@ -51,31 +45,11 @@ else
   export TERM=rxvt
 fi
 
-# Utility variables.
-if which hostname &>/dev/null; then
-  HOSTNAME=`hostname`
-elif which uname &>/dev/null; then
-  HOSTNAME=`uname -n`
-else
-  HOSTNAME=unknown
-fi
-export HOSTNAME
-
-# HOSTTYPE = { Linux | OpenBSD | SunOS | etc. }
-if which uname &>/dev/null; then
-  HOSTTYPE=`uname -s`
-else
-  HOSTTYPE=unknown
-fi
-export HOSTTYPE
-
-# PAGER
 if _has less; then
   export PAGER=less
   export LESS='-R'
 fi
 
-# EDITOR
 if _has vim; then
   export EDITOR=vim VISUAL=vim
 elif _has vi; then
@@ -100,10 +74,7 @@ fi
 
 # APPLICATION CUSTOMIZATIONS {{{1
 
-# GNU grep
 export GREP_COLOR='1;32'
-
-# GNU and BSD ls colorization.
 export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
 export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
 export CLICOLOR=1
@@ -130,17 +101,11 @@ _force_prepend_to_path() {
 }
 
 # Note that there is NO dot directory appended!
-
 _force_prepend_to_path /usr/local/sbin
 _force_prepend_to_path /usr/local/bin
 _force_prepend_to_path ~/bin
-_force_prepend_to_path /usr/local/heroku/bin
-
 _append_to_path /usr/games
 _append_to_path /usr/sbin
-
-# Add our docs, too
-export INFOPATH=$HOME/.dotfiles/info:$INFOPATH
 
 # ALIASES {{{1
 
@@ -168,13 +133,11 @@ alias dc='docker-compose'
 alias dls='dpkg -L'
 alias dotenv="eval \$(egrep -v '^#' .env | xargs)"
 alias dsl='dpkg -l | grep -i'
-alias dud='du -sh -- * | sort -h'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
 alias f='fg'
-alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
 alias g='git'
 alias gA='git add --all :/'
 alias ga='git add'
@@ -241,7 +204,6 @@ alias i4='sed "s/^/    /"'
 alias icat='lsbom -f -l -s -pf'
 alias iinstall='sudo installer -target / -pkg'
 alias ils='ls /var/db/receipts/'
-alias ishow='pkgutil --files'
 alias k='tree -h'
 alias l="ls -lh"
 alias ll="l -a"
@@ -250,11 +212,11 @@ alias ltr='ls -ltr'
 alias ndu='node --debug-brk =nodeunit'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
 alias netwhat='lsof -i +c 40'
-alias nmu='nodemon =nodeunit'
 alias notifydone='terminal-notifier -message Done.'
 alias pt='pstree -pul'
 alias px='pilot-xfer -i'
 alias rake='noglob rake'
+alias randnum='python -S -c "import random; print(random.SystemRandom().randrange(10**7,10**8))"'
 alias randpass="LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24 ; echo"
 alias rgg='_rgg () { rg --color always --heading $@ | less }; _rgg'
 alias ri='ri -f ansi'
@@ -266,7 +228,6 @@ alias rxvt-scrollbar="echo -n '[?30t'"
 alias scp='scp -C -p'
 alias screen='screen -U'
 alias slurp='wget -t 5 -c -nH -r -k -p -N --no-parent'
-alias sshx='ssh -C -c blowfish -X'
 alias st='git status'
 alias stt='git status -uall'
 alias t='tmux attach'
@@ -279,7 +240,6 @@ alias whois='whois -h geektools.com'
 alias y='yarn'
 alias ye='yarn exec'
 alias x='screen -A -x'
-alias xxx='histring "XXX.*" -c green -s bold'
 
 # Interactive/verbose commands.
 alias mv='mv -i'
@@ -295,10 +255,11 @@ if _has vim; then
 else
   alias vim=vi
 fi
-if ! _has gvim && _is Darwin; then
+if ! _has gvim && _has open; then
   alias gvim='open -a "MacVim"'
 fi
 
+# Use ripgrep or silver searcher over ack.
 if _has rg; then
   alias rg='rg --colors path:fg:green --colors match:fg:red'
   alias ag=rg
@@ -333,24 +294,17 @@ elif _try df -h ~; then
   alias df='df -h'
 fi
 
-# Nico is amazing for showing me this.
-alias v='vim -R -'
-for i in /usr/share/vim/vim*/macros/less.sh(N) ; do
-  alias v="$i"
-done
-
-# Linux should definitely have Gnu coreutils, right?
-if _is Linux; then
-  if _try ls --color; then
-    alias ls='ls --color'
-  fi
+# We should definitely have Gnu coreutils, right?
+if _try ls --color; then
+  alias ls='ls --color'
 fi
 
-if _is Darwin; then
+# strace-like equivalent on macOS
+if _has dtruss && ! _has strace; then
   alias strace='sudo dtruss -f sudo -u $USER'
 fi
 
-# Trying out exa, a fancy replacement for ls
+# exa is a fancy replacement for ls
 if _has exa ; then
   alias ls=exa
   alias l='ls -lg'
@@ -399,11 +353,7 @@ else
 fi
 alias vag=vack
 alias vrg=vack
-
-# ..same thing with gg.
-vgg() {
-  vim `gg -l $@`
-}
+vgg() { vim `gg -l $@` }
 
 # Quick commands to sync CWD between terminals.
 pin() {
@@ -417,11 +367,7 @@ pout() {
 
 # A quick grep-for-processes.
 psl() {
-  if _is SunOS; then
-    ps -Af | grep -i $1 | grep -v grep
-  else
-    ps auxww | grep -i $1 | grep -v grep
-  fi
+  ps auxww | grep -i $1 | grep -v grep
 }
 
 # Make a new command.
@@ -459,15 +405,6 @@ makecommand() {
   vix $cmd
 }
 
-# View a Python module in Vim.
-vipy() {
-  p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
-  if [ $? = 0 ]; then
-    vi -R "$p"
-  fi
-  # errors will be printed by python
-}
-
 rxvt-title() {
   echo -n "]2;$*"
 }
@@ -475,8 +412,6 @@ rxvt-title() {
 screen-title() {
   echo -n "k$*\\"
 }
-
-# Everything Git-related
 
 # Commit what's been staged, use args as message.
 gc() {
@@ -498,6 +433,15 @@ sci() {
   hr results && \
   git quicklog && \
   hr done
+}
+
+# View a Python module in Vim.
+vipy() {
+  p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
+  if [ $? = 0 ]; then
+    vi -R "$p"
+  fi
+  # errors will be printed by python
 }
 
 # ZSH-SPECIFIC COMPLETION {{{1
@@ -568,19 +512,6 @@ for op in \| \< \> \& ; do
   bindkey "$op" self-insert-redir
 done
 
-# this one's from Ari
-# Function Usage: doc packagename
-#                 doc pac<TAB>
-doc() { cd /usr/share/doc/$1 && ls }
-compdef '_files -W /usr/share/doc -/' doc
-
-# Paste the output of the last command.
-last-command-output() {
-  eval $(fc -l -1 | cut -d\  -f3- | paste -s )
-}
-zle -N last-command-output
-bindkey "^[n" last-command-output
-
 # Automatically quote URLs when pasted
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
@@ -607,9 +538,6 @@ bindkey -s "\el" "^E 2>&1|less^M"
 
 # This lets me use ^Z to toggle between open text editors.
 bindkey -s '^Z' '^Ufg^M'
-
-# Trying out Facebook PathPicker
-bindkey -s '\ex' ' |fpp^M'
 
 # More custom bindings
 bindkey "^O" copy-prev-shell-word
@@ -768,66 +696,6 @@ if [ -e "$HOME/.ssh/config" -a ! -e "$HOME/.ssh/skip-host-aliases" ]; then
       alias $host="ssh $host"
     fi
   done
-fi
-
-# Override _ssh_hosts to use .ssh/config. This speeds up ssh/scp tab-completion
-# *considerably* on instalatios with lots of hosts.
-#
-# See: http://www.zsh.org/mla/users/2003/msg00937.html
-autoload _ssh ; _ssh
-_ssh_hosts() {
-  if [[ -r "$HOME/.ssh/config" ]]; then
-    local IFS="   " key host
-    while read key host; do
-      if [[ "$key" == (#i)host ]]; then
-        _wanted hosts expl host \
-          compadd -M 'm:{a-zA-Z}={A-Za-z} r:|.=* r:|=*' "$@" "$host"
-      fi
-    done < "$HOME/.ssh/config"
-  fi
-}
-
-# Set up ssh agent if I've been using `keychain`.
-for cmd in ~/bin/keychain /usr/bin/keychain; do
-  if [ -x "$cmd" ]; then
-    keychainbin=$cmd
-    break
-  fi
-done
-if [ -n $keychainbin ]; then
-  if [ -e  ~/.keychain/${HOSTNAME}-sh ]; then
-    source ~/.keychain/${HOSTNAME}-sh &>/dev/null
-  fi
-  alias agent="$keychainbin id_dsa && source ~/.keychain/$HOST-sh"
-else
-  alias agent="echo command not found: keychain"
-fi
-
-# A problem with screen is that old sessions lose ssh-agent awareness. This
-# little system fixes it.
-_fix_old_ssh_agents() {
-  local agentdir=~/.latestssh
-  local agentfile=$agentdir/$HOST.sh
-
-  mkdir -p $agentdir
-  chmod 0700 $agentdir >/dev/null
-
-  if [ -n "$SSH_AUTH_SOCK" -a -z $STY ]; then
-    rm -f $agentfile >/dev/null
-    echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >$agentfile
-    chmod 0600 $agentfile >/dev/null
-  fi
-
-  # ...existing windows can run this alias
-  alias latestssh="source $agentfile; ls \$SSH_AUTH_SOCK"
-
-  # ...new windows get it automatically
-  if [ -n "$STY" ]; then
-    source $agentfile
-  fi
-}
-if [ -z "$SUDO_USER" ]; then
-  _fix_old_ssh_agents
 fi
 
 # Set terminal colors based on SSH host.
