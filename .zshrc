@@ -24,11 +24,6 @@ _is() {
   return $( [ "$HOSTTYPE" = "$1" ] )
 }
 
-# Returns whether out terminal supports color.
-_color() {
-  return $( [ -z "$INSIDE_EMACS" ] )
-}
-
 # Returns the version of a command if present, or n/a if unavailable.
 _versionof() {
   if _has "$1"; then
@@ -44,20 +39,16 @@ _versionof() {
 # uses modern ANSI escape sequences. I've found that forcing everything to be
 # "rxvt" just about works everywhere. (If you want to know if you're in screen,
 # use SHLVL or TERMCAP.)
-if _color; then
-  if [ -n "$ITERM_SESSION_ID" ]; then
-    if [ "$TERM" = "screen" ]; then
-      export TERM=screen-256color
-    else
-      export TERM=xterm-256color
-    fi
-  elif [ "$TERM_PROGRAM" = "Apple_Terminal" ]; then
-      export TERM=xterm-256color
+if [ -n "$ITERM_SESSION_ID" ]; then
+  if [ "$TERM" = "screen" ]; then
+    export TERM=screen-256color
   else
-    export TERM=rxvt
+    export TERM=xterm-256color
   fi
+elif [ "$TERM_PROGRAM" = "Apple_Terminal" ]; then
+    export TERM=xterm-256color
 else
-  export TERM=xterm
+  export TERM=rxvt
 fi
 
 # Utility variables.
@@ -79,15 +70,9 @@ fi
 export HOSTTYPE
 
 # PAGER
-if [ -n "$INSIDE_EMACS" ]; then
-  export PAGER=cat
-else
-  if _has less; then
-    export PAGER=less
-    if _color; then
-      export LESS='-R'
-    fi
-  fi
+if _has less; then
+  export PAGER=less
+  export LESS='-R'
 fi
 
 # EDITOR
@@ -95,8 +80,6 @@ if _has vim; then
   export EDITOR=vim VISUAL=vim
 elif _has vi; then
   export EDITOR=vi VISUAL=vi
-elif _has emacs; then
-  export EDITOR=emacs VISUAL=emacs
 fi
 
 # Overridable locale support.
@@ -118,16 +101,12 @@ fi
 # APPLICATION CUSTOMIZATIONS {{{1
 
 # GNU grep
-if _color; then
-  export GREP_COLOR='1;32'
-fi
+export GREP_COLOR='1;32'
 
 # GNU and BSD ls colorization.
-if _color; then
-  export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
-  export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
-  export CLICOLOR=1
-fi
+export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=33:so=01;35:bd=33;01:cd=33;01:or=01;05;37;41:mi=01;37;41:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
+export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
+export CLICOLOR=1
 
 # PATH MODIFICATIONS {{{1
 
@@ -190,8 +169,6 @@ alias dls='dpkg -L'
 alias dotenv="eval \$(egrep -v '^#' .env | xargs)"
 alias dsl='dpkg -l | grep -i'
 alias dud='du -sh -- * | sort -h'
-alias e='emacs'
-alias ec='emacsclient --no-wait'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
@@ -329,10 +306,6 @@ if _has rg; then
 elif _has ag; then
   alias ack=ag
   alias ag='ag --color-path 1\;31 --color-match 1\;32 --color'
-elif _has ack; then
-  if ! _color; then
-    alias ack='ack --nocolor'
-  fi
 fi
 
 # Use GNU du if available
@@ -368,7 +341,7 @@ done
 
 # Linux should definitely have Gnu coreutils, right?
 if _is Linux; then
-  if _color && _try ls --color; then
+  if _try ls --color; then
     alias ls='ls --color'
   fi
 fi
@@ -527,11 +500,6 @@ sci() {
   hr done
 }
 
-# Don't page inside of emacs
-if [ -n "$INSIDE_EMACS" ]; then
-  alias git='git --no-pager'
-fi
-
 # ZSH-SPECIFIC COMPLETION {{{1
 
 # ---------------------------------------------
@@ -616,11 +584,6 @@ bindkey "^[n" last-command-output
 # Automatically quote URLs when pasted
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
-
-# Turn off completion and weirdness if we're within Emacs.
-if [[ "$EMACS" = "t" ]]; then
-  unsetopt zle
-fi
 
 # Turn off slow git branch completion. http://stackoverflow.com/q/12175277/102704
 zstyle :completion::complete:git-checkout:argument-rest:headrefs command "git for-each-ref --format='%(refname)' refs/heads 2>/dev/null"
@@ -732,11 +695,6 @@ noblinkroot() {
 }
 
 colorprompt() {
-  if ! _color; then
-    uncolorprompt
-    return
-  fi
-
   __prompt_mode=${1:-0}
   __extra="$2"
   local -a line1
@@ -793,13 +751,7 @@ simpleprompt() {
   PS1="%# "
 }
 
-if [ -n "$INSIDE_EMACS" ]; then
-  unfunction colorprompt
-  unfunction uncolorprompt
-  colorprompt() { simpleprompt }
-  uncolorprompt() { simpleprompt }
-  simpleprompt
-elif [ -n "$SUDO_USER" ]; then
+if [ -n "$SUDO_USER" ]; then
   colorprompt '33;1'
 else
   colorprompt
