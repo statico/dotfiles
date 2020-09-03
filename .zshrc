@@ -211,7 +211,6 @@ alias lt='ls -lt'
 alias ltr='ls -ltr'
 alias ndu='node --debug-brk =nodeunit'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
-alias netwhat='lsof -i +c 40'
 alias notifydone='terminal-notifier -message Done.'
 alias pt='pstree -pul'
 alias px='pilot-xfer -i'
@@ -309,6 +308,12 @@ if _has exa ; then
   alias ls=exa
   alias l='ls -lg'
   alias ltr='exa -lgr -sold'
+fi
+
+if [ "$(uname -s)" = "Darwin" ]; then
+  alias netwhat='sudo lsof -ni tcp'
+else
+  alias netwhat='lsof -i +c 40'
 fi
 
 # FUNCTIONS {{{1
