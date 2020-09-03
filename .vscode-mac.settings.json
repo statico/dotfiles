@@ -1,5 +1,5 @@
 {
-  "breadcrumbs.enabled": true,
+  "breadcrumbs.enabled": false,
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "smart",
   "editor.cursorBlinking": "solid",
@@ -169,5 +169,6 @@
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontWeightBold": "normal",
   "workbench.preferredDarkColorTheme": "GitHub Dark",
-  "workbench.preferredLightColorTheme": "GitHub Light"
+  "workbench.preferredLightColorTheme": "GitHub Light",
+  "scrolloff.scrolloff": 5
 }

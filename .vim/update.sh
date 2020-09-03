@@ -21,6 +21,7 @@ repos=(
   ledger/vim-ledger
   mileszs/ack.vim
   nfnty/vim-nftables
+  prettier/vim-prettier
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot

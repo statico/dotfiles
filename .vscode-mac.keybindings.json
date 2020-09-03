@@ -140,6 +140,6 @@
   },
   {
     "key": "ctrl+cmd+t",
-    "command": "workbench.panel.terminal.focus"
+    "command": "workbench.action.terminal.toggleTerminal"
   }
 ]
