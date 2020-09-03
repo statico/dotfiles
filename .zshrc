@@ -311,7 +311,7 @@ if _has exa ; then
 fi
 
 if [ "$(uname -s)" = "Darwin" ]; then
-  alias netwhat='sudo lsof -ni tcp'
+  alias netwhat='sudo lsof -Pni tcp'
 else
   alias netwhat='lsof -i +c 40'
 fi
