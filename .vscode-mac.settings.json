@@ -170,5 +170,6 @@
   "terminal.integrated.fontWeightBold": "normal",
   "workbench.preferredDarkColorTheme": "GitHub Dark",
   "workbench.preferredLightColorTheme": "GitHub Light",
-  "scrolloff.scrolloff": 5
+  "scrolloff.scrolloff": 5,
+  "editor.wordWrap": "on"
 }
