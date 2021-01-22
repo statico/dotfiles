@@ -8,6 +8,11 @@
 	excludesfile = ~/.gitignore
 [gist]
 	private = yes
+[init]
+	defaultBranch = main
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
 [branch "master"]
 	remote = origin
 	merge = refs/heads/master
