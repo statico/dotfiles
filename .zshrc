@@ -659,7 +659,6 @@ colorprompt() {
 
   bindkey "^L" clear-screen-and-precmd
   precmd() {
-    [ -z "$HISTFILE" ] && print -P "[35;1m✗ history disabled[0m"
     print -P $__first_prompt_line
   }
   PS1=${(j::)line2}
