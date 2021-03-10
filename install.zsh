@@ -42,7 +42,7 @@ fi
 if [ -d "$basedir/.git" ]; then
   echo "Updating dotfiles using existing git..."
   cd "$basedir"
-  git pull --quiet --rebase origin master || exit 1
+  git pull --quiet --rebase origin main || exit 1
 else
   echo "Checking out dotfiles using git..."
   rm -rf "$basedir"
