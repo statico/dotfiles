@@ -215,6 +215,7 @@ alias lt='ls -lt'
 alias ltr='ls -ltr'
 alias ndu='node --debug-brk =nodeunit'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
+alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
 alias pt='pstree -pul'
 alias px='pilot-xfer -i'
@@ -242,6 +243,7 @@ alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
 alias y='yarn'
 alias ye='yarn exec'
+alias yeshist='HISTFILE=~/.zsh_history'
 alias x='screen -A -x'
 
 # Interactive/verbose commands.
@@ -656,7 +658,10 @@ colorprompt() {
   __first_prompt_line=${(j::)line1}
 
   bindkey "^L" clear-screen-and-precmd
-  precmd() { print -P $__first_prompt_line }
+  precmd() {
+    [ -z "$HISTFILE" ] && print -P "[35;1m✗ history disabled[0m"
+    print -P $__first_prompt_line
+  }
   PS1=${(j::)line2}
 }
 
