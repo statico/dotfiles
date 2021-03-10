@@ -202,10 +202,12 @@ alias gup='git up'
 alias gus='git unstage'
 alias gvc='vim `git diff --name-only --diff-filter=U`'
 alias gvm='vim `git diff --name-only --diff-filter=M`'
+alias h='heroku'
 alias i4='sed "s/^/    /"'
 alias icat='lsbom -f -l -s -pf'
 alias iinstall='sudo installer -target / -pkg'
 alias ils='ls /var/db/receipts/'
+alias jqi='_jqi () { echo "" | fzf --print-query --preview "cat $@ | jq {q}" }; _jqi'
 alias k='tree -h'
 alias l="ls -lh"
 alias ll="l -a"
