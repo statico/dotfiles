@@ -1,16 +1,16 @@
-# 💾 Ian's Dotfiles and Vim config
+# 💾 Paul's Dotfiles and Vim config
 
 These are my dotfiles. There are many like them, but these are mine.
 
-This started around 2001 or so when I used lots of different machines and environments. Now I mostly use macOS and Linux but still keep the environment in sync.
+This is a fork of Ian's dotfiles. I'm paring them down, then I'll add my own
+vim config, then I'll iron out the automation. I will probably migrate
+deletions back in if I start getting more into linux.
 
 ### Installation
 
-1. `curl -sL https://statico.link/zsh | zsh`
-1. `chsh` or otherwise set your shell to use [Zsh](http://www.zsh.org/)
-1. Restart your shell
+TBD
 
-Optionally create a `.postinstall` with some machine-specific commands, like `git config --global user.email "my-work-email@example.com"`". You can also create a `.vimlocal` and `.gvimlocal` for machine-specific Vim customizations.
+All the rest is Ian:
 
 ### Customizing
 

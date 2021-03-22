@@ -5,7 +5,7 @@ set -eo pipefail
 
 basedir="$HOME/.dotfiles"
 bindir="$HOME/bin"
-repourl="git://github.com/statico/dotfiles.git"
+repourl="git://github.com/paulos256/dotfiles.git"
 
 function symlink() {
   src="$1"
@@ -69,13 +69,13 @@ done
 symlink "$basedir/.vim/vimrc" "$HOME/.vimrc"
 symlink "$basedir/.vim/gvimrc" "$HOME/.gvimrc"
 
-if [ "$(uname -s)" = "Darwin" ]; then
-  vscodepath="$HOME/Library/Application Support/Code/User"
-  vscodeplatform=mac
-else
+# if [ "$(uname -s)" = "Darwin" ]; then
+  # vscodepath="$HOME/Library/Application Support/Code/User"
+  # vscodeplatform=mac
+# else
   vscodepath="$HOME/.config/Code/User"
   vscodeplatform=linux
-fi
+# fi
 mkdir -p "$vscodepath"
 symlink "$basedir/.vscode-$vscodeplatform.settings.json" "$vscodepath/settings.json"
 symlink "$basedir/.vscode-$vscodeplatform.keybindings.json" "$vscodepath/keybindings.json"
