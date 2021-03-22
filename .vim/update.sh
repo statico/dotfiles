@@ -8,45 +8,19 @@
 
 repos=(
 
-  airblade/vim-gitgutter
-  alampros/vim-styled-jsx
   ap/vim-css-color
-  docunext/closetag.vim
-  ervandew/supertab
-  haya14busa/incsearch.vim
-  itchyny/lightline.vim
-  jparise/vim-graphql
-  junegunn/fzf.vim
-  junegunn/goyo.vim
   ledger/vim-ledger
   mileszs/ack.vim
-  nfnty/vim-nftables
-  prettier/vim-prettier
-  qpkorr/vim-bufkill
   scrooloose/nerdtree
   sheerun/vim-polyglot
-  statico/vim-inform7
-  tpope/vim-commentary
+
   tpope/vim-endwise
   tpope/vim-eunuch
   tpope/vim-fugitive
-  tpope/vim-pathogen
-  tpope/vim-repeat
-  tpope/vim-rhubarb
-  tpope/vim-sleuth
-  tpope/vim-surround
   tpope/vim-unimpaired
   vim-scripts/openvpn
   w0rp/ale
   wellle/targets.vim
-
-  altercation/vim-colors-solarized
-  arcticicestudio/nord-vim
-  nanotech/jellybeans.vim
-  rakr/vim-one
-  sonph/onehalf
-  tomasr/molokai
-  vim-scripts/wombat256.vim
 
 )
 

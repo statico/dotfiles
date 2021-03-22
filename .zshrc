@@ -29,22 +29,6 @@ _versionof() {
 
 # # ENVIRONMENT VARIABLES {{{1
 
-# # Yes, this defeats the point of the TERM variable, but everything pretty much
-# # uses modern ANSI escape sequences. I've found that forcing everything to be
-# # "rxvt" just about works everywhere. If you want to know if you're in screen,
-# # use SHLVL or TERMCAP.
-# if [ -n "$ITERM_SESSION_ID" ]; then
-#   if [ "$TERM" = "screen" ]; then
-#     export TERM=screen-256color
-#   else
-#     export TERM=xterm-256color
-#   fi
-# elif [ "$TERM_PROGRAM" = "Apple_Terminal" ]; then
-#     export TERM=xterm-256color
-# else
-#   export TERM=rxvt
-# fi
-
 if _has less; then
   export PAGER=less
   export LESS='-R'
@@ -112,141 +96,33 @@ _append_to_path /usr/sbin
 
 # ALIASES {{{1
 
-alias Ac='sudo apt autoclean'
-alias Ag='sudo apt install'
-alias Ai='apt show'
-alias Ar='sudo apt remove'
-alias Arm='sudo apt autoremove'
-alias Arp='sudo apt remove --purge'
-alias As='apt search'
-alias VU='~/.vim/update.sh'
-alias ZL='vim -o ~/.zshlocal ~/.zshrc && ZR'
-alias ZR='echo "Restarting zsh..." && exec zsh -l'
-alias ZU='~/.dotfiles/install.zsh && ZR'
-alias ZshInstall='~/.dotfiles/install.zsh && ZR'
-alias ZshRehash='. ~/.zshrc'
-alias aag='agg'
-alias agg='_agg () { rg --group $@ | less }; _agg'
+alias VimUpdate='~/.vim/update.sh'
+alias ZLocal='vim -o ~/.zshlocal ~/.zshrc && ZR'
+alias ZRestart='echo "Restarting zsh..." && exec zsh -l'
+alias ZUpdate='~/.dotfiles/install.zsh && ZR'
+alias ZInstall='~/.dotfiles/install.zsh && ZR'
+alias ZhRehash='. ~/.zshrc'
 alias bc='bc -l'
-alias co='git checkout'
-alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias curltime='curl -w "@$HOME/.curl-format" -o /dev/null -s'
-alias d='docker'
-alias dc='docker-compose'
-alias dls='dpkg -L'
-alias dotenv="eval \$(egrep -v '^#' .env | xargs)"
-alias dsl='dpkg -l | grep -i'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
-alias f2k9='f2k -9'
-alias f2k='f2 | xargs -t kill'
-alias f='fg'
-alias g='git'
-alias gA='git add --all :/'
-alias ga='git add'
-alias gaa='gA ; st'
-alias gac='git add `git status -uall | egrep "#\tboth modified:" | cut -d: -f2`'
-alias gap='clear; git add --all --patch'
-alias gb='git branch'
-alias gbd='git branch -d'
-alias gbl='git branch -v -a'
-alias gca='git commit --amend'
-alias gcane='git commit --amend --no-edit'
-alias gcanes='gcane --gpg-sign'
-alias gcanoe='gcne'
-alias gcanoes='gcne --gpg-sign'
-alias gcanv='git commit --amend --no-verify -m'
-alias gcia='git commit --amend'
-alias gcnv='git commit --no-verify -m'
-alias gd='git diff'
-alias gdc='git diff --cached'
-alias gdd='git difftool'
-alias gdt='git difftool'
-alias gdw='git diff -w'
-alias gf='git fetch'
-alias gfa='git fetch --all'
-alias gfmom='git fetch origin && git merge origin'
-alias gfrb='git fetch origin && git rebase origin'
-alias gfrbi='gfrb --interactive'
-alias gg='git grep'
-alias gh='git stash'
-alias ghl='git stash list'
-alias ghp='git stash pop'
-alias ghs='git stash save'
-alias ghsp='git stash save --patch'
-alias ghw='git stash show -p'
-alias gist='gist -p -c'
-alias gk='gitk &>/dev/null'
-alias gl1='git log -n 1'
-alias gl='git quicklog -n 20'
-alias gll='git quicklog-long'
-alias gls='git log --show-signature'
-alias gmom='git merge origin'
-alias gmt='git mergetool'
-alias gp='git push'
-alias gpgdecrypt='gpg --decrypt-files'
-alias gpgencrypt='gpg --default-recipient-self --armor --encrypt-files'
-alias gph='git push heroku'
-alias gpo='git push origin'
-alias gpox='git push origin &>/dev/null & ; disown'
-alias gpof='git push origin --force-with-lease'
-alias gpot='git push origin --tags'
-alias grb='git rebase'
-alias grbc='git rebase --continue'
-alias grbi='git rebase -i'
-alias grbil='git rebase -i HEAD~10'
-alias grbs='git rebase --skip'
-alias gs='git show -p'
-alias gsm='git submodule'
-alias gsmu='git submodule update --init --recursive'
-alias gu='git unstage'
-alias gup='git up'
-alias gus='git unstage'
-alias gvc='vim `git diff --name-only --diff-filter=U`'
-alias gvm='vim `git diff --name-only --diff-filter=M`'
-alias h='heroku'
-alias i4='sed "s/^/    /"'
-alias icat='lsbom -f -l -s -pf'
-alias iinstall='sudo installer -target / -pkg'
-alias ils='ls /var/db/receipts/'
-alias jqi='_jqi () { echo "" | fzf --print-query --preview "cat $@ | jq {q}" }; _jqi'
 alias k='tree -h'
 alias l="ls -lh"
 alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
-alias ndu='node --debug-brk =nodeunit'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
 alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
-alias pt='pstree -pul'
-alias px='pilot-xfer -i'
-alias rake='noglob rake'
 alias randnum='python -S -c "import random; print(random.SystemRandom().randrange(10**7,10**8))"'
 alias randpass="LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24 ; echo"
-alias rgg='_rgg () { rg --color always --heading $@ | less }; _rgg'
 alias ri='ri -f ansi'
-alias rls='screen -ls'
-alias rrg='rgg'
-alias rsync-usual='rsync -azv -e ssh --delete --progress'
-alias rxvt-invert="echo -n '[?5t'"
-alias rxvt-scrollbar="echo -n '[?30t'"
-alias scp='scp -C -p'
-alias screen='screen -U'
 alias slurp='wget -t 5 -c -nH -r -k -p -N --no-parent'
-alias st='git status'
-alias stt='git status -uall'
-alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
-alias vb=VBoxManage
-alias vh=VBoxHeadless
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
-alias y='yarn'
-alias ye='yarn exec'
 alias yeshist='HISTFILE=~/.zsh_history'
-alias x='screen -A -x'
 
 # Interactive/verbose commands.
 alias mv='mv -i'
@@ -255,15 +131,15 @@ for c in cp rm chmod chown rename; do
 done
 
 # Make sure vim/vi always gets us an editor.
-if _has vim; then
+if _has nvim; then
+  alias vi=nvim
+  alias vim=nvim
+elif _has vim; then
   alias vi=vim
   vs() { vim +"NERDTree $1" }
   gvs() { gvim +"NERDTree $1" }
 else
   alias vim=vi
-fi
-if ! _has gvim && _has open; then
-  alias gvim='open -a "MacVim"'
 fi
 
 # Use ripgrep or silver searcher over ack.
@@ -277,7 +153,6 @@ elif _has ag; then
 fi
 
 # Use GNU du if available
-if _has gdu; then
   alias du=gdu
   dut() { du -a -h --exclude=.git $@ * .* | sort -rh | head -n 20 }
 else
@@ -287,11 +162,6 @@ fi
 # Move-to-trash command for Gnome. `brew install trash` for one on macOS.
 if ! _has trash && _has gio; then
   alias trash='gio trash'
-fi
-
-# macOS-like open command for linux
-if ! _has open && _has xdg-open; then
-  alias open=xdg-open
 fi
 
 # Humanize disk space if possible
@@ -318,11 +188,7 @@ if _has exa ; then
   alias ltr='exa -lgr -sold'
 fi
 
-if [ "$(uname -s)" = "Darwin" ]; then
-  alias netwhat='sudo lsof -Pni tcp'
-else
-  alias netwhat='lsof -i +c 40'
-fi
+alias netwhat='lsof -i +c 40'
 
 # FUNCTIONS {{{1
 
@@ -335,14 +201,14 @@ latest() {
   fi
 }
 
-ya() {
+yarnadd() {
   for pkg in $@; do
     yarn add $pkg
     yarn add -D @types/$pkg &>/dev/null || echo "No separate types for $pkg"
   done
 }
 
-yr() {
+yarnremove() {
   for pkg in $@; do
     yarn remove $pkg
     yarn remove -D @types/$pkg &>/dev/null
@@ -432,24 +298,8 @@ gc() {
   git log --oneline --decorate -n 10
 }
 
-# Commit everything, use args as message.
-sci() {
-  if [ $# = 0 ]; then
-    echo "usage: $0 message..." >&2
-    return 1
-  fi
-  git add -A && \
-  hr staging && \
-  git status && \
-  hr committing && \
-  git cim "$*" && \
-  hr results && \
-  git quicklog && \
-  hr done
-}
-
 # View a Python module in Vim.
-vipy() {
+vpy() {
   p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
   if [ $? = 0 ]; then
     vi -R "$p"
