@@ -98,7 +98,6 @@
     "menubar.selectionForeground": "#00BCD4"
   },
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.statusBar.visible": true,
   "workbench.activityBar.visible": false,
   "workbench.colorTheme": "GitHub Dark",
   "[javascript]": {
@@ -171,5 +170,7 @@
   "workbench.preferredDarkColorTheme": "GitHub Dark",
   "workbench.preferredLightColorTheme": "GitHub Light",
   "scrolloff.scrolloff": 5,
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "vscode-graphql.showExecCodelens": false,
+  "workbench.editor.tabSizing": "shrink"
 }
