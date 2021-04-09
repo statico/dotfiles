@@ -458,6 +458,15 @@ vipy() {
 
 # ZSH-SPECIFIC COMPLETION {{{1
 
+# Add new Zsh Completions repo
+if [ ! -e ~/.zcompdump ]; then
+  compinit
+fi
+fpath=(~/.zsh-completions/src $fpath)
+
+# Add Homebrew site functions
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+
 # ---------------------------------------------
 # The following lines were added by compinstall
 
@@ -530,12 +539,6 @@ zle -N self-insert url-quote-magic
 
 # Turn off slow git branch completion. http://stackoverflow.com/q/12175277/102704
 zstyle :completion::complete:git-checkout:argument-rest:headrefs command "git for-each-ref --format='%(refname)' refs/heads 2>/dev/null"
-
-# Add new Zsh Completions repo
-if [ ! -e ~/.zcompdump ]; then
-  compinit
-fi
-fpath=(~/.zsh-completions/src $fpath)
 
 # ZSH KEYBINDINGS {{{1
 
