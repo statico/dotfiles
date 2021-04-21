@@ -75,7 +75,6 @@
       "commands": ["cursorUp"]
     }
   ],
-  "window.zoomLevel": 0,
   "workbench.colorCustomizations": {
     "activityBarBadge.background": "#00BCD4",
     "list.activeSelectionForeground": "#00BCD4",
@@ -95,7 +94,8 @@
     "panelTitle.activeBorder": "#00BCD4",
     "breadcrumb.activeSelectionForeground": "#00BCD4",
     "menu.selectionForeground": "#00BCD4",
-    "menubar.selectionForeground": "#00BCD4"
+    "menubar.selectionForeground": "#00BCD4",
+    "terminal.border": "#555",
   },
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.activityBar.visible": false,
@@ -172,5 +172,9 @@
   "scrolloff.scrolloff": 5,
   "editor.wordWrap": "on",
   "vscode-graphql.showExecCodelens": false,
-  "workbench.editor.tabSizing": "shrink"
+  "workbench.editor.tabSizing": "shrink",
+  "rest-client.enableTelemetry": false,
+  "rest-client.fontSize": 13,
+  "rest-client.previewOption": "body",
+  "editor.snippetSuggestions": "bottom"
 }
