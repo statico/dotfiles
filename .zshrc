@@ -699,7 +699,7 @@ simpleprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
   unfunction precmd &>/dev/null
-  PS1="%# "
+  PS1="$ "
 }
 
 if [ -n "$SUDO_USER" ]; then
