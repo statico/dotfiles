@@ -470,25 +470,23 @@ fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 # ---------------------------------------------
 # The following lines were added by compinstall
 
-zstyle ':completion:*' use-perl true
-zstyle ':completion:*' completer _complete _prefix
+zstyle ':completion:*' completer _complete _correct _approximate _prefix
 zstyle ':completion:*' completions 1
 zstyle ':completion:*' glob 1
 zstyle ':completion:*' group-name ''
+zstyle ':completion:*:manuals.*' insert-sections true
 zstyle ':completion:*' insert-unambiguous false
 zstyle ':completion:*' list-colors "di=01;34:ma=43;30"
-zstyle ':completion:*' max-errors 0
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-]=* r:|=*'
+zstyle ':completion:*' max-errors 5
 zstyle ':completion:*' menu select=0
+zstyle ':completion:*:man:*' menu yes select
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*:manuals' separate-sections true
+zstyle ':completion:*' use-perl true
+zstyle :compinstall filename '/Users/ian/.zshrc'
 
-# Experimental man page parsing.
-zstyle ':completion:*:manuals'    separate-sections true
-zstyle ':completion:*:manuals.*'  insert-sections   true
-zstyle ':completion:*:man:*'      menu yes select
-
-zstyle :compinstall filename "$HOME/.zsh/comp.zsh"
-
-autoload -U compinit
+autoload -Uz compinit
 compinit -u
 # End of lines added by compinstall
 # ---------------------------------------------
