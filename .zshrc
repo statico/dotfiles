@@ -325,9 +325,9 @@ fi
 
 # Let me know when commands are done by prepending `;b` to things.
 if _has terminal-notifier ; then
-  b() { terminal-notifier -sound Glass -message "${1:-Done}" }
+  alias b='terminal-notifier -sound Glass -message "Done - $?"'
 else
-  b() { echo "" }
+  alias b='echo ""'
 fi
 
 # FUNCTIONS {{{1
