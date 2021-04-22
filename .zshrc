@@ -323,6 +323,13 @@ else
   alias netwhat='lsof -i +c 40'
 fi
 
+# Let me know when commands are done by prepending `;b` to things.
+if _has terminal-notifier ; then
+  b() { terminal-notifier -sound Glass -message "${1:-Done}" }
+else
+  b() { echo "" }
+fi
+
 # FUNCTIONS {{{1
 
 # Latest file in a directory or that matches a pattern.
