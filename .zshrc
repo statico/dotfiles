@@ -105,7 +105,6 @@ _force_prepend_to_path() {
 _force_prepend_to_path /usr/local/sbin
 _force_prepend_to_path /usr/local/bin
 _force_prepend_to_path ~/bin
-_append_to_path /usr/games
 _append_to_path /usr/sbin
 
 # ALIASES {{{1
@@ -126,13 +125,11 @@ alias ZshRehash='. ~/.zshrc'
 alias aag='agg'
 alias agg='_agg () { rg --group $@ | less }; _agg'
 alias bc='bc -l'
-alias co='git checkout'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias curltime='curl -w "@$HOME/.curl-format" -o /dev/null -s'
 alias d='docker'
 alias dc='docker-compose'
 alias dls='dpkg -L'
-alias dotenv="eval \$(egrep -v '^#' .env | xargs)"
 alias dsl='dpkg -l | grep -i'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
@@ -214,15 +211,13 @@ alias l="ls -lh"
 alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
-alias ndu='node --debug-brk =nodeunit'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
 alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
 alias pt='pstree -pul'
-alias px='pilot-xfer -i'
 alias rake='noglob rake'
 alias randnum='python -S -c "import random; print(random.SystemRandom().randrange(10**7,10**8))"'
-alias randpass="LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24 ; echo"
+alias randpass="openssl rand -base64 12 | tr -d '\n'"
 alias rgg='_rgg () { rg --color always --heading $@ | less }; _rgg'
 alias ri='ri -f ansi'
 alias rls='screen -ls'
@@ -317,6 +312,7 @@ if _has exa ; then
   alias ltr='exa -lgr -sold'
 fi
 
+# What's using that TCP port?
 if [ "$(uname -s)" = "Darwin" ]; then
   alias netwhat='sudo lsof -Pni tcp'
 else
@@ -454,15 +450,6 @@ sci() {
   hr done
 }
 
-# View a Python module in Vim.
-vipy() {
-  p=`python -c "import $1; print $1.__file__.replace('.pyc','.py')"`
-  if [ $? = 0 ]; then
-    vi -R "$p"
-  fi
-  # errors will be printed by python
-}
-
 # ZSH-SPECIFIC COMPLETION {{{1
 
 # Add new Zsh Completions repo
@@ -509,13 +496,6 @@ zstyle ':completion:*:kill:*'   force-list always
 zmodload -i zsh/complist
 bindkey -M menuselect '^M' accept
 
-# Specific command completions or overrides.
-compdef _perl_modules vipm gvipm
-compdef '_command_names -e' tsocks
-compdef '_files -g "*.{pdf,ps}"' evince
-compdef '_files -g "*.tex"' gen
-compdef '_files -g "*.bom"' lsbom
-
 # Show dots while waiting to complete. Useful for systems with slow net access,
 # like those places where they use giant, slow NFS solutions. (Hint.)
 expand-or-complete-with-dots() {
@@ -541,9 +521,6 @@ done
 # Automatically quote URLs when pasted
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
-
-# Turn off slow git branch completion. http://stackoverflow.com/q/12175277/102704
-zstyle :completion::complete:git-checkout:argument-rest:headrefs command "git for-each-ref --format='%(refname)' refs/heads 2>/dev/null"
 
 # ZSH KEYBINDINGS {{{1
 
@@ -571,6 +548,7 @@ zle -N edit-command-line
 bindkey '\ee' edit-command-line
 
 # Let ^W delete to slashes - zsh-users list, 4 Nov 2005
+# (I can't live without this)
 backward-delete-to-slash() {
   local WORDCHARS=${WORDCHARS//\//}
   zle .backward-delete-word
