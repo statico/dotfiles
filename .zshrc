@@ -455,9 +455,6 @@ sci() {
 # ZSH-SPECIFIC COMPLETION {{{1
 
 # Add new Zsh Completions repo
-if [ ! -e ~/.zcompdump ]; then
-  compinit
-fi
 fpath=(~/.zsh-completions/src $fpath)
 
 # Add Homebrew site functions
