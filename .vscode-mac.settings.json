@@ -156,7 +156,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.renderLineHighlight": "none",
-  "workbench.fontAliasing": "auto",
   "remote.containers.dotfiles.installCommand": "~/.dotfiles/install.zsh",
   "remote.containers.dotfiles.repository": "https://github.com/statico/dotfiles",
   "remote.containers.dotfiles.targetPath": "~/.dotfiles",
@@ -176,5 +175,11 @@
   "rest-client.enableTelemetry": false,
   "rest-client.fontSize": 13,
   "rest-client.previewOption": "body",
-  "editor.snippetSuggestions": "bottom"
+  "editor.snippetSuggestions": "bottom",
+  "editor.suggestSelection": "first",
+  "editor.wordBasedSuggestionsMode": "currentDocument",
+  "javascript.suggest.completeJSDocs": false,
+  "workbench.fontAliasing": "auto",
+  "typescript.suggest.completeFunctionCalls": true,
+  "javascript.suggest.completeFunctionCalls": true
 }
