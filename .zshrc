@@ -237,6 +237,7 @@ alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias vb=VBoxManage
 alias vh=VBoxHeadless
+alias vimsql="vim -c 'set ft=sql'"
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
 alias y='yarn'
