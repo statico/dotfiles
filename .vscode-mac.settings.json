@@ -99,7 +99,7 @@
   },
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "GitHub Dark",
+  "workbench.colorTheme": "Noctis High Contrast No Italic No Bold",
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
