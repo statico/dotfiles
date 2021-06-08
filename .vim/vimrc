@@ -22,9 +22,7 @@ nmap \W mt:Goyo<CR>'tzz
 nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
 nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
 nmap \c :call TmuxPaneClear()<CR>
-nmap \d :ALEToggleBuffer<CR>
 nmap \e :NERDTreeToggle<CR>
-nmap \f :ALEFix<CR>
 nmap \g :GitGutterToggle<CR>
 nmap \i vip:sort<CR>
 nmap \l :setlocal number!<CR>:setlocal number?<CR>
@@ -97,11 +95,9 @@ nmap <C-l> <C-W>l
 autocmd VimResized * :wincmd =
 
 " Search for the word under the cursor in the current directory
-nmap <M-k>    mo:Ack! "\b<cword>\b" <CR>
-nmap <Esc>k   mo:Ack! "\b<cword>\b" <CR>
-nmap ˚        mo:Ack! "\b<cword>\b" <CR>
-nmap <M-S-k>  mo:Ggrep! "\b<cword>\b" <CR>
-nmap <Esc>K   mo:Ggrep! "\b<cword>\b" <CR>
+nmap <M-k>    mo:Rg! "\b<cword>\b" <CR>
+nmap <Esc>k   mo:Rg! "\b<cword>\b" <CR>
+nmap ˚        mo:Rg! "\b<cword>\b" <CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window via bufkill.vim
 nmap <Esc>w :BD<CR>
@@ -371,19 +367,6 @@ map g/ <Plug>(incsearch-stay)
 " Highlight YAML frontmatter in Markdown files
 let g:vim_markdown_frontmatter = 1
 
-" ALE
-let g:ale_sign_warning = '▲'
-let g:ale_sign_error = '✗'
-highlight link ALEWarningSign String
-highlight link ALEErrorSign Title
-nmap ]w :ALENextWrap<CR>
-nmap [w :ALEPreviousWrap<CR>
-nmap <Leader>f <Plug>(ale_fix)
-augroup VimDiff
-  autocmd!
-  autocmd VimEnter,FilterWritePre * if &diff | ALEDisable | endif
-augroup END
-
 " Lightline
 let g:lightline = {
 \ 'colorscheme': 'wombat',
@@ -436,7 +419,6 @@ endfunction
 
 augroup _lightline
   autocmd!
-  autocmd User ALELint call s:MaybeUpdateLightline()
   autocmd ColorScheme * call s:UpdateLightlineColorScheme()
 augroup END
 
@@ -499,7 +481,6 @@ augroup vimrc
 autocmd!
 
 au BufNewFile,BufRead *.cson    set ft=coffee
-au BufNewFile,BufRead *.d.ts    ALEDisableBuffer
 au BufNewFile,BufRead *.glsl    setf glsl
 au BufNewFile,BufRead *.gyp     set ft=python
 au BufNewFile,BufRead *.html    setlocal nocindent smartindent
