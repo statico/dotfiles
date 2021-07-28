@@ -10,25 +10,25 @@
 	private = yes
 [init]
 	defaultBranch = main
+[log]
+	decorate = short
+[pull]
+	default = simple
+[push]
+	default = current
+[rerere]
+	enabled = true
+[difftool]
+	prompt = false
+[mergetool]
+	prompt = false
+	keepBackup = false
 [branch "main"]
 	remote = origin
 	merge = refs/heads/main
 [branch "master"]
 	remote = origin
 	merge = refs/heads/master
-[log]
-	decorate = short
-[push]
-	default = current
-[difftool]
-	prompt = false
-[mergetool]
-	prompt = false
-	keepBackup = false
-[pull]
-	default = simple
-[rerere]
-	enabled = true
 [alias]
 	am = commit --amend --no-edit
 	ama = commit --amend --no-edit -a
