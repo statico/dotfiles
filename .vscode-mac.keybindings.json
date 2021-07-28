@@ -36,14 +36,6 @@
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+h",
-    "command": "workbench.action.navigateLeft"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "workbench.action.navigateRight"
-  },
-  {
     "key": "ctrl+c",
     "command": "workbench.action.closeQuickOpen",
     "when": "inQuickOpen"
@@ -141,5 +133,57 @@
   {
     "key": "ctrl+cmd+t",
     "command": "workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "search.action.focusNextSearchResult",
+    "when": "hasSearchResult || inSearchEditor"
+  },
+  {
+    "key": "f4",
+    "command": "-search.action.focusNextSearchResult",
+    "when": "hasSearchResult || inSearchEditor"
+  },
+  {
+    "key": "ctrl+shift+p",
+    "command": "search.action.focusPreviousSearchResult",
+    "when": "hasSearchResult || inSearchEditor"
+  },
+  {
+    "key": "shift+f4",
+    "command": "-search.action.focusPreviousSearchResult",
+    "when": "hasSearchResult || inSearchEditor"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+shift+`",
+    "command": "-workbench.action.terminal.new",
+    "when": "terminalProcessSupported"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "-extension.vim_ctrl+t",
+    "when": "editorTextFocus && vim.active && vim.use<C-t> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "-editor.action.transposeLetters",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "extension.goto-previous-buffer"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight"
   }
 ]

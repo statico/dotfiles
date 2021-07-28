@@ -42,15 +42,9 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
-  "gitlens.advanced.telemetry.enabled": false,
-  "gitlens.codeLens.authors.enabled": false,
-  "gitlens.codeLens.enabled": false,
-  "gitlens.codeLens.recentChange.enabled": false,
-  "gitlens.currentLine.enabled": false,
   "jest.enableInlineErrorMessages": false,
   "jest.restartJestOnSnapshotUpdate": true,
   "markdown.preview.fontSize": 16,
-  "markdown.extension.orderedList.autoRenumber": false,
   "php.suggest.basic": false,
   "search.exclude": {
     "**/*.js.snap": true,
@@ -60,8 +54,6 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "terminal.external.osxExec": "iTerm.app",
-  "tslint.alwaysShowStatus": true,
-  "tslint.autoFixOnSave": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vim.leader": ",",
   "vim.foldfix": false,
@@ -73,6 +65,10 @@
     {
       "before": ["k"],
       "commands": ["cursorUp"]
+    },
+    {
+      "before": [";"],
+      "commands": ["workbench.action.quickOpen"]
     }
   ],
   "workbench.colorCustomizations": {
@@ -95,7 +91,7 @@
     "breadcrumb.activeSelectionForeground": "#00BCD4",
     "menu.selectionForeground": "#00BCD4",
     "menubar.selectionForeground": "#00BCD4",
-    "terminal.border": "#555",
+    "terminal.border": "#555"
   },
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.activityBar.visible": false,
@@ -107,42 +103,6 @@
   "emmet.showExpandedAbbreviation": "never",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "gitlens.menus": {
-    "editor": {
-      "blame": false,
-      "clipboard": true,
-      "compare": true,
-      "details": false,
-      "history": false,
-      "remote": false
-    },
-    "editorGroup": false,
-    "editorTab": {
-      "clipboard": true,
-      "compare": true,
-      "history": true,
-      "remote": true
-    },
-    "explorer": {
-      "clipboard": true,
-      "compare": true,
-      "history": true,
-      "remote": true
-    },
-    "scmGroup": {
-      "compare": true,
-      "openClose": true,
-      "stash": true,
-      "stashInline": true
-    },
-    "scmItem": {
-      "clipboard": true,
-      "compare": true,
-      "history": true,
-      "remote": true,
-      "stash": true
-    }
   },
   "markdown.extension.toc.githubCompatibility": true,
   "extensions.ignoreRecommendations": true,
@@ -169,7 +129,7 @@
   "workbench.preferredDarkColorTheme": "GitHub Dark",
   "workbench.preferredLightColorTheme": "GitHub Light",
   "scrolloff.scrolloff": 5,
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "off",
   "vscode-graphql.showExecCodelens": false,
   "workbench.editor.tabSizing": "shrink",
   "rest-client.enableTelemetry": false,
@@ -179,7 +139,12 @@
   "editor.suggestSelection": "first",
   "editor.wordBasedSuggestionsMode": "currentDocument",
   "javascript.suggest.completeJSDocs": false,
-  "workbench.fontAliasing": "auto",
   "typescript.suggest.completeFunctionCalls": true,
-  "javascript.suggest.completeFunctionCalls": true
+  "javascript.suggest.completeFunctionCalls": true,
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "pgFormatter.spaces": 2,
+  "vim.neovimPath": "/opt/homebrew/bin/nvim",
+  "editor.scrollbar.verticalScrollbarSize": 8
 }
