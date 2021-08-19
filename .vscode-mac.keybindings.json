@@ -155,7 +155,7 @@
     "when": "hasSearchResult || inSearchEditor"
   },
   {
-    "key": "ctrl+t",
+    "key": "shift+cmd+c",
     "command": "workbench.action.terminal.new",
     "when": "terminalProcessSupported"
   },
@@ -184,6 +184,32 @@
   },
   {
     "key": "ctrl+l",
-    "command": "workbench.action.navigateRight"
+    "command": "workbench.action.navigateRight",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "shift+cmd+c",
+    "command": "-workbench.action.terminal.openNativeConsole",
+    "when": "!terminalFocus"
+  },
+  {
+    "key": "ctrl+cmd+g",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "-workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
+  {
+    "key": "ctrl+cmd+g",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "-workbench.view.scm",
+    "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
   }
 ]
