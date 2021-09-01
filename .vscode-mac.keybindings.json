@@ -61,17 +61,8 @@
     "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+cmd+n",
-    "command": "editor.action.marker.nextInFiles"
-  },
-  {
     "key": "ctrl+cmd+n",
     "command": "editor.action.marker.next"
-  },
-  {
-    "key": "ctrl+shift+cmd+p",
-    "command": "editor.action.marker.prevInFiles",
-    "when": "editorFocus && !editorReadonly"
   },
   {
     "key": "shift+f8",
@@ -211,5 +202,13 @@
     "key": "ctrl+shift+g",
     "command": "-workbench.view.scm",
     "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
+  },
+  {
+    "key": "ctrl+shift+cmd+n",
+    "command": "merge-conflict.next"
+  },
+  {
+    "key": "ctrl+shift+cmd+p",
+    "command": "merge-conflict.previous"
   }
 ]
