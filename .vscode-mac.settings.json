@@ -140,8 +140,6 @@
   "editor.suggestSelection": "first",
   "editor.wordBasedSuggestionsMode": "currentDocument",
   "javascript.suggest.completeJSDocs": false,
-  "typescript.suggest.completeFunctionCalls": true,
-  "javascript.suggest.completeFunctionCalls": true,
   "editor.cursorStyle": "line",
   "editor.insertSpaces": false,
   "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
