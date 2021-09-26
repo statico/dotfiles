@@ -242,6 +242,7 @@ alias vh=VBoxHeadless
 alias vimsql="vim -c 'set ft=sql'"
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias whois='whois -h geektools.com'
+alias wip='git add -A ; git commit --all --no-verify -m WIP'
 alias y='yarn'
 alias ye='yarn exec'
 alias yeshist='HISTFILE=~/.zsh_history'
