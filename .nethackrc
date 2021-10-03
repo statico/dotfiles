@@ -1,6 +1,7 @@
 # statico's nethackrc for v3.6.3
 
 # Personal defaults
+OPTIONS=number_pad:0
 OPTIONS=role:valkyrie
 OPTIONS=race:dwarf
 OPTIONS=gender:female
@@ -20,7 +21,7 @@ OPTIONS=use_darkgray
 OPTIONS=use_inverse
 OPTIONS=windowtype:curses
 OPTIONS=cursesgraphics
-OPTIONS=hilite_pet
+OPTIONS=!hilite_pet
 OPTIONS=hilite_pile
 
 OPTIONS=!autoopen
@@ -67,12 +68,13 @@ OPTIONS=travel
 OPTIONS=verbose
 
 SYMBOLS=S_ghost:X
+SYMBOLS=S_eel:7
 
 #MSGTYPE=hide ".*"
 MSGTYPE=stop "feel hungry"
 MSGTYPE=stop "feel weak"
 MSGTYPE=stop "Blecch.*Rotten"
-MSGTYPE=hide "You swap places with your .*"
+MSGTYPE=hide "You swap places with .*"
 #MSGTYPE=norep "You see here a .*"
 #MSGTYPE=norep "You see here an .*"
 #MSGTYPE=stop "You are slowing down."
