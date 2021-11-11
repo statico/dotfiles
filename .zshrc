@@ -438,17 +438,13 @@ gc() {
   git log --oneline --decorate -n 10
 }
 
-# Commit everything, use args as message.
+# Commit everything. Use args as a message or prompt to edit a message.
 sci() {
-  if [ $# = 0 ]; then
-    echo "usage: $0 message..." >&2
-    return 1
-  fi
   git add -A && \
   hr staging && \
   git status && \
   hr committing && \
-  git cim "$*" && \
+  ( [ $# = 0 ] && git ci || git ci -m "$*" ) && \
   hr results && \
   git quicklog && \
   hr done
