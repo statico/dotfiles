@@ -146,11 +146,6 @@
     "when": "hasSearchResult || inSearchEditor"
   },
   {
-    "key": "shift+cmd+c",
-    "command": "workbench.action.terminal.new",
-    "when": "terminalProcessSupported"
-  },
-  {
     "key": "ctrl+shift+`",
     "command": "-workbench.action.terminal.new",
     "when": "terminalProcessSupported"
@@ -167,7 +162,8 @@
   },
   {
     "key": "ctrl+e",
-    "command": "extension.goto-previous-buffer"
+    "command": "extension.goto-previous-buffer",
+    "when": "editorTextFocus"
   },
   {
     "key": "ctrl+h",
@@ -210,5 +206,19 @@
   {
     "key": "ctrl+shift+cmd+p",
     "command": "merge-conflict.previous"
+  },
+  {
+    "key": "shift+alt+f",
+    "command": "eslint.executeAutofix"
+  },
+  {
+    "key": "shift+alt+d",
+    "command": "editor.action.organizeImports",
+    "when": "editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
+  },
+  {
+    "key": "shift+alt+o",
+    "command": "-editor.action.organizeImports",
+    "when": "editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
   }
 ]

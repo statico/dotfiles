@@ -77,6 +77,8 @@
     "editorSuggestWidget.highlightForeground": "#00BCD4",
     "editorWidget.border": "#00BCD4",
     "editorWidget.resizeBorder": "#00BCD4",
+    "editorWarning.foreground": "#ffff66",
+    "editorError.foreground": "#ff6666",
     "gitlens.trailingLineForegroundColor": "#555",
     "list.activeSelectionForeground": "#00BCD4",
     "list.highlightForeground": "#00BCD4",
@@ -130,12 +132,11 @@
   "workbench.preferredDarkColorTheme": "GitHub Dark",
   "workbench.preferredLightColorTheme": "GitHub Light",
   "scrolloff.scrolloff": 5,
-  "editor.wordWrap": "off",
+  "editor.wordWrap": "on",
   "vscode-graphql.showExecCodelens": false,
   "workbench.editor.tabSizing": "shrink",
   "rest-client.enableTelemetry": false,
   "rest-client.fontSize": 13,
-  "rest-client.previewOption": "body",
   "editor.snippetSuggestions": "bottom",
   "editor.suggestSelection": "first",
   "editor.wordBasedSuggestionsMode": "currentDocument",
@@ -149,5 +150,53 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "terminal.integrated.fontSize": 14,
   "gitlens.codeLens.recentChange.enabled": false,
-  "gitlens.codeLens.authors.enabled": false
+  "gitlens.codeLens.authors.enabled": false,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "eslint.format.enable": true,
+  "eslint.codeActionsOnSave.rules": [],
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.rules.customizations": [
+    { "rule": "*", "severity": "warn" },
+  ],
+  "window.zoomLevel": 1,
+  "gitlens.menus": {
+    "editor": {
+      "blame": false,
+      "clipboard": true,
+      "compare": true,
+      "history": false,
+      "remote": false
+    },
+    "editorGroup": false,
+    "editorTab": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "explorer": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": true
+    },
+    "scm": {
+      "authors": true
+    },
+    "scmGroupInline": {
+      "stash": true
+    },
+    "scmGroup": {
+      "compare": true,
+      "openClose": true,
+      "stash": true
+    },
+    "scmItem": {
+      "clipboard": true,
+      "compare": true,
+      "history": true,
+      "remote": false,
+      "stash": true
+    }
+  },
 }
