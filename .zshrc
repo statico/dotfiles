@@ -351,7 +351,7 @@ ya() {
 yr() {
   for pkg in $@; do
     yarn remove $pkg
-    yarn remove -D @types/$pkg &>/dev/null
+    yarn remove @types/$pkg &>/dev/null
   done
 }
 
