@@ -20,6 +20,8 @@
 	enabled = true
 [difftool]
 	prompt = false
+[merge]
+	conflictStyle = diff3
 [mergetool]
 	prompt = false
 	keepBackup = false
