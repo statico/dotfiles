@@ -158,7 +158,6 @@
   "eslint.rules.customizations": [
     { "rule": "*", "severity": "warn" },
   ],
-  "window.zoomLevel": 1,
   "gitlens.menus": {
     "editor": {
       "blame": false,
@@ -199,4 +198,11 @@
       "stash": true
     }
   },
+  "files.associations": {
+    ".env.local": "shellscript",
+    "*.mjml": "handlebars"
+  },
+  "workbench.startupEditor": "none",
+  "gitlens.statusBar.enabled": false,
+  "window.zoomLevel": 1,
 }
