@@ -8,18 +8,15 @@
 
 repos=(
 
+  # Functionality
   airblade/vim-gitgutter
-  alampros/vim-styled-jsx
   docunext/closetag.vim
   ervandew/supertab
   haya14busa/incsearch.vim
   itchyny/lightline.vim
   junegunn/fzf.vim
-  ledger/vim-ledger
   qpkorr/vim-bufkill
   scrooloose/nerdtree
-  sheerun/vim-polyglot
-  statico/vim-inform7
   tpope/vim-commentary
   tpope/vim-endwise
   tpope/vim-eunuch
@@ -31,6 +28,13 @@ repos=(
   tpope/vim-unimpaired
   wellle/targets.vim
 
+  # Syntax (polyglot being the most important)
+  alampros/vim-styled-jsx
+  ledger/vim-ledger
+  sheerun/vim-polyglot
+  statico/vim-inform7
+
+  # Colors
   arcticicestudio/nord-vim
   tomasr/molokai
 )
