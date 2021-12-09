@@ -6,7 +6,7 @@
 #
 # Specify [pattern] to update only repos that match the pattern.
 
-repos=(
+plugins=(
 
   # Functionality
   airblade/vim-gitgutter
@@ -58,7 +58,7 @@ fi
 
 mkdir -p "$dir"
 
-for repo in ${repos[@]}; do
+for repo in ${plugins[@]}; do
   if [ -n "$1" ]; then
     if ! (echo "$repo" | grep -i "$1" &>/dev/null) ; then
       continue
