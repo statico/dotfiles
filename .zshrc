@@ -576,7 +576,8 @@ setopt no_beep
 
 # History
 setopt append_history
-unsetopt share_history
+setopt inc_append_history
+setopt share_history
 unsetopt bang_hist
 unsetopt extended_history
 
