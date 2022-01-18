@@ -183,7 +183,6 @@
     }
   ],
   "vscode-graphql.showExecCodelens": false,
-  "window.zoomLevel": 1,
   "workbench.activityBar.visible": false,
   "workbench.colorCustomizations": {
     "editorError.foreground": "#ff6666",
@@ -194,5 +193,6 @@
   "workbench.colorTheme": "Horizon Default",
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.tabSizing": "shrink",
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
+  "window.zoomLevel": 1
 }

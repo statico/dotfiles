@@ -47,7 +47,7 @@ fi
 
 if _has less; then
   export PAGER=less
-  export LESS='-R'
+  export LESS='-Ri'
 fi
 
 if _has vim; then
