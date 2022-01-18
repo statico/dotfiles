@@ -15,6 +15,8 @@ plugins=(
   haya14busa/incsearch.vim
   itchyny/lightline.vim
   junegunn/fzf.vim
+  junegunn/goyo.vim
+  junegunn/limelight.vim
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   tpope/vim-commentary
@@ -36,6 +38,7 @@ plugins=(
 
   # Colors
   arcticicestudio/nord-vim
+  altercation/vim-colors-solarized
   tomasr/molokai
 )
 
