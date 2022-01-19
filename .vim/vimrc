@@ -464,12 +464,10 @@ highlight PmenuSel ctermfg=black ctermbg=magenta
 
 " Custom mode for distraction-free editing
 function! ProseMode()
-  let g:limelight_conceal_ctermfg = 248
   call goyo#execute(0, [])
   set spell noci nosi noai nolist noshowmode noshowcmd
   set complete+=s
-  "set bg=light
-  colors solarized
+  colors molokai
 endfunction
 command! ProseMode call ProseMode()
 autocmd! User GoyoEnter Limelight

@@ -38,7 +38,6 @@ plugins=(
 
   # Colors
   arcticicestudio/nord-vim
-  altercation/vim-colors-solarized
   tomasr/molokai
 )
 
