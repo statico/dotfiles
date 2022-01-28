@@ -29,7 +29,7 @@ let g:lightline.colorscheme = 'nord'
 call g:lightline#init()
 
 " 99% as good as PragmataPro, 100% free! Ligatures are kinda cute, too.
-set guifont=Iosevka:h16
+set guifont=Iosevka-Term-Light:h18
 
 set columns=80 lines=50
 set errorbells
