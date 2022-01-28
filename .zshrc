@@ -42,7 +42,7 @@ if [ -n "$ITERM_SESSION_ID" ]; then
 elif [ "$TERM_PROGRAM" = "Apple_Terminal" ]; then
     export TERM=xterm-256color
 else
-  export TERM=rxvt
+  export TERM=rxvt-unicode-256color
 fi
 
 if _has less; then
@@ -127,7 +127,7 @@ alias agg='_agg () { rg --group $@ | less }; _agg'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias curltime='curl -w "@$HOME/.curl-format" -o /dev/null -s'
-alias curlheaders='curl -D- -o/dev/null'
+alias curlheaders='curl -s -D- -o/dev/null'
 alias d='docker'
 alias dc='docker-compose'
 alias dls='dpkg -L'
