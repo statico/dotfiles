@@ -254,7 +254,11 @@ for c in cp rm chmod chown rename; do
 done
 
 # Make sure vim/vi always gets us an editor.
-if _has vim; then
+if [ -n "$VSCODE_IPC_HOOK_CLI" ]; then
+  alias vi=code
+  alias vim=code
+  alias gvim=code
+elif _has vim; then
   alias vi=vim
   vs() { vim +"NERDTree $1" }
   gvs() { gvim +"NERDTree $1" }
