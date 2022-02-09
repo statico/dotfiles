@@ -12,12 +12,19 @@
 	defaultBranch = main
 [log]
 	decorate = short
+[blame]
+	coloring = repeatedLines
+[fetch]
+	prune = true
+	output = compact
 [pull]
 	default = simple
 [push]
 	default = current
 [rerere]
 	enabled = true
+[stash]
+	showStat = true
 [difftool]
 	prompt = false
 [merge]
@@ -88,3 +95,12 @@
 	current = yellow reverse
 	local = yellow
 	remote = green
+[color "blame"]
+	repeatedLines = gray
+[color "interactive"]
+	help = brightmagenta
+[advice]
+	statusHints = false
+	detachedHead = false
+	addEmptyPathspec = false
+	pushUpdateRejected = false
