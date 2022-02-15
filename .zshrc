@@ -515,9 +515,11 @@ bindkey -e
 
 # One keystroke to cd ..
 bindkey -s '\eu' '\eq^Ucd ..; ls^M'
+bindkey -s '¨' '\eq^Ucd ..; ls^M'
 
 # Smart less-adder
 bindkey -s "\el" "^E 2>&1|less^M"
+bindkey -s "¬" "^E 2>&1|less^M"
 
 # This lets me use ^Z to toggle between open text editors.
 bindkey -s '^Z' '^Ufg^M'
@@ -532,6 +534,7 @@ bindkey "ESC-." insert-last-word
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '\ee' edit-command-line
+bindkey '´' edit-command-line
 
 # Let ^W delete to slashes - zsh-users list, 4 Nov 2005
 # (I can't live without this)
@@ -544,6 +547,7 @@ bindkey "^W" backward-delete-to-slash
 
 # AUTO_PUSHD is set so we can always use popd
 bindkey -s '\ep' '^Upopd >/dev/null; dirs -v^M'
+bindkey -s 'π' '^Upopd >/dev/null; dirs -v^M'
 
 # ZSH OPTIONS {{{1
 
