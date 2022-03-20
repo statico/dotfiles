@@ -228,6 +228,8 @@ alias whois='whois -h geektools.com'
 alias wip='git add -A ; git commit --all --no-verify -m WIP'
 alias y='yarn'
 alias ye='yarn exec'
+alias yad='yarn add -D'
+alias yrd='yarn remove -D'
 alias yeshist='HISTFILE=~/.zsh_history'
 alias x='screen -A -x'
 
