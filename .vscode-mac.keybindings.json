@@ -220,5 +220,9 @@
     "key": "shift+alt+o",
     "command": "-editor.action.organizeImports",
     "when": "editorTextFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)source\\.organizeImports\\b/"
+  },
+  {
+    "key": "ctrl+shift+alt+cmd+n",
+    "command": "explorer.newFolder"
   }
 ]
