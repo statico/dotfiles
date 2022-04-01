@@ -8,6 +8,16 @@ These are my dotfiles. There are many like them, but these are mine. This starte
 
 Favorite font at the moment: [Iosevka Term](https://typeof.net/Iosevka/)
 
+### Demo
+
+```
+$ docker run --rm -it ghcr.io/statico/dotfiles
+demouser@987552d4c629:/
+〉
+```
+
+A random prompt color is picked at first install. Edit `.zshlocal` for details.
+
 ### Installation
 
 1. `curl -sL https://statico.link/zsh | zsh`
@@ -63,17 +73,6 @@ Here's what I use the most often on the command line:
 - Git commands: `st` for status, `gd` for a git diff, `gl` for a quick log, `sci <message>` to commit everything with a message, or `gap` to cherry pick and then `gc <message>` to commit.
 - Fuzzy history search using <kbd>Ctrl-R</kbd> and [FZF](https://github.com/junegunn/fzf)
 - Each host gets a different `colorprompt` command in its `~/.zshlocal`. I use `ansimodes` or `256-colors.sh` to pick a color. (Both are already in the `~/bin/` directory, which is added to the `$PATH`.)
-
-### Testing
-
-Testing is easy with Docker:
-
-```
-$ docker build . --tag dotfiles
-$ docker run --rm -it dotfiles
-root@987552d4c629:/
-〉
-```
 
 ### See also
 
