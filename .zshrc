@@ -195,7 +195,7 @@ alias l="ls -lh"
 alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
-alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered "be ef"'
+alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "00 00[0-2]"'
 alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
 alias pkgcat='lsbom -f -l -s -pf'
