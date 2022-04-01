@@ -1,5 +1,7 @@
 # 💾 Ian's Dotfiles and Vim config
 
+![build status](https://img.shields.io/github/workflow/status/statico/dotfiles/Create%20and%20publish%20a%20Docker%20image.svg?style=flat-square)
+
 These are my dotfiles. There are many like them, but these are mine. This started around 2001 or so when I used lots of different machines and environments. Now I mostly use macOS and Linux but still keep the environment in sync.
 
 ![CleanShot 2021-10-01 at 20 15 23@2x](https://user-images.githubusercontent.com/137158/135730113-495868f0-e4ad-4e8a-a10e-7f07be402e9d.png)
