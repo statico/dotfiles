@@ -553,7 +553,7 @@ bindkey -s 'π' '^Upopd >/dev/null; dirs -v^M'
 # ZSH OPTIONS {{{1
 
 # Changing Directories
-setopt auto_cd
+unsetopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushd_silent
