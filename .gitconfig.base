@@ -74,6 +74,7 @@
 	today = diff --stat 'HEAD@{midnight}'
 	tree = log --graph --oneline --all
 	undo = reset --mixed HEAD^
+	undoamend = reset --soft HEAD@{1}
 	unstage = reset HEAD
 	up = pull --rebase origin
 	yesterday = diff --stat 'HEAD@{yesterday}' 'HEAD@{midnight}'
