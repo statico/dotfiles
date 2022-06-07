@@ -510,6 +510,7 @@ au BufNewFile,BufRead *templates/*.html setf htmldjango
 au BufNewFile,BufRead .conkyrc set ft=lua
 au BufNewFile,BufRead .git/config setlocal ft=gitconfig nolist ts=4 sw=4 noet
 au BufNewFile,BufRead .gitconfig* setlocal ft=gitconfig nolist ts=4 sw=4 noet
+au BufNewFile,BufRead postgres*.conf setlocal nolist ts=8 sw=8 noet
 au BufNewFile,BufRead .vimlocal,.gvimlocal setf vim
 au BufNewFile,BufRead .zshlocal setf zsh
 au BufNewFile,BufRead /tmp/crontab* setf crontab
