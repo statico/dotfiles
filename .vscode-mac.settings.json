@@ -23,13 +23,12 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.cursorStyle": "line",
-  "editor.fontFamily": "Iosevka Term Light",
+  "editor.fontFamily": "Iosevka Term",
   "editor.fontLigatures": true,
-  "editor.fontSize": 15,
+  "editor.fontSize": 14,
   "editor.formatOnSave": true,
   "editor.glyphMargin": false,
   "editor.insertSpaces": false,
-  "editor.lineHeight": 18,
   "editor.lineNumbers": "off",
   "editor.minimap.enabled": false,
   "editor.minimap.renderCharacters": false,
@@ -157,28 +156,16 @@
   "vim.neovimPath": "/opt/homebrew/bin/nvim",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": [
-        "j"
-      ],
-      "commands": [
-        "cursorDown"
-      ]
+      "before": ["j"],
+      "commands": ["cursorDown"]
     },
     {
-      "before": [
-        "k"
-      ],
-      "commands": [
-        "cursorUp"
-      ]
+      "before": ["k"],
+      "commands": ["cursorUp"]
     },
     {
-      "before": [
-        ";"
-      ],
-      "commands": [
-        "workbench.action.quickOpen"
-      ]
+      "before": [";"],
+      "commands": ["workbench.action.quickOpen"]
     }
   ],
   "vscode-graphql.showExecCodelens": false,
@@ -193,6 +180,8 @@
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.tabSizing": "shrink",
   "workbench.startupEditor": "none",
-  "window.zoomLevel": 1,
-  "terminal.integrated.macOptionIsMeta": true
+  "terminal.integrated.macOptionIsMeta": true,
+  "editor.foldingImportsByDefault": true,
+  "editor.lineHeight": 1.2,
+  "window.zoomLevel": 1
 }
