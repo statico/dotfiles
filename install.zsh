@@ -79,6 +79,7 @@ fi
 mkdir -p "$vscodepath"
 symlink "$basedir/.vscode-$vscodeplatform.settings.json" "$vscodepath/settings.json"
 symlink "$basedir/.vscode-$vscodeplatform.keybindings.json" "$vscodepath/keybindings.json"
+symlink "$basedir/.vscode-snippets" "$vscodepath/snippets"
 
 echo "Adding executables to ~/bin/..."
 mkdir -p "$bindir"
