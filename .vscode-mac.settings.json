@@ -183,5 +183,7 @@
   "terminal.integrated.macOptionIsMeta": true,
   "editor.foldingImportsByDefault": true,
   "editor.lineHeight": 1.2,
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
+  "git.useEditorAsCommitInput": false,
+  "zenMode.fullScreen": false
 }
