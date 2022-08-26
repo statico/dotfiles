@@ -26,7 +26,6 @@
   "editor.fontFamily": "Iosevka Term",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
-  "editor.formatOnSave": true,
   "editor.glyphMargin": false,
   "editor.insertSpaces": false,
   "editor.lineNumbers": "off",
@@ -183,7 +182,10 @@
   "terminal.integrated.macOptionIsMeta": true,
   "editor.foldingImportsByDefault": true,
   "editor.lineHeight": 1.2,
+  "zenMode.fullScreen": false,
   "window.zoomLevel": 1,
-  "git.useEditorAsCommitInput": false,
-  "zenMode.fullScreen": false
+  "debug.javascript.autoAttachFilter": "disabled",
+  "go.toolsManagement.autoUpdate": true,
+  "editor.formatOnSave": true,
+  "git.useEditorAsCommitInput": false
 }
