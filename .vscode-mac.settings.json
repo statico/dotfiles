@@ -187,5 +187,7 @@
   "debug.javascript.autoAttachFilter": "disabled",
   "go.toolsManagement.autoUpdate": true,
   "editor.formatOnSave": true,
-  "git.useEditorAsCommitInput": false
+  "git.useEditorAsCommitInput": false,
+  "window.commandCenter": true,
+  "workbench.layoutControl.enabled": false
 }
