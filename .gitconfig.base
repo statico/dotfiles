@@ -71,6 +71,7 @@
 	svnci = svn dcommit
 	svnprep = rebase -i git-svn
 	svnup = svn rebase
+	t = tag
 	today = diff --stat 'HEAD@{midnight}'
 	tree = log --graph --oneline --all
 	undo = reset --mixed HEAD^
