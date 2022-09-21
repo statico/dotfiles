@@ -189,5 +189,6 @@
   "editor.formatOnSave": true,
   "git.useEditorAsCommitInput": false,
   "window.commandCenter": true,
+  "zenMode.fullScreen": false,
   "workbench.layoutControl.enabled": false
 }
