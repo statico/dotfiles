@@ -439,7 +439,7 @@ sci() {
   hr committing && \
   ( [ $# = 0 ] && git ci || git ci -m "$*" ) && \
   hr results && \
-  git quicklog && \
+  git --no-pager quicklog && \
   hr done
 }
 
