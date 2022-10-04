@@ -443,6 +443,10 @@ sci() {
   hr done
 }
 
+dance() {
+  perl -e'$|++;@x=qw[/ | \\  |];$_=0;do{print"\e[9D:D-$x[$_++%4]-<"}while(sleep $|)'
+}
+
 # ZSH-SPECIFIC COMPLETION {{{1
 
 # Add new Zsh Completions repo
