@@ -119,6 +119,7 @@ alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
+alias f3="awk '{print \$3}'"
 alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
 alias f='fg'
