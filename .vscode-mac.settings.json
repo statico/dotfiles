@@ -169,20 +169,11 @@
   ],
   "vscode-graphql.showExecCodelens": false,
   "workbench.activityBar.visible": false,
-  "workbench.colorCustomizations": {
-    "editorError.foreground": "#ff6666",
-    "editorWarning.foreground": "#ffff66",
-    "gitlens.trailingLineForegroundColor": "#555",
-    "terminal.border": "#555"
-  },
   "workbench.colorTheme": "Horizon Default",
-  "workbench.editor.highlightModifiedTabs": true,
-  "workbench.editor.tabSizing": "shrink",
   "workbench.startupEditor": "none",
   "terminal.integrated.macOptionIsMeta": true,
   "editor.foldingImportsByDefault": true,
   "editor.lineHeight": 1.2,
-  "zenMode.fullScreen": false,
   "window.zoomLevel": 1,
   "debug.javascript.autoAttachFilter": "disabled",
   "go.toolsManagement.autoUpdate": true,
@@ -190,5 +181,10 @@
   "git.useEditorAsCommitInput": false,
   "window.commandCenter": true,
   "zenMode.fullScreen": false,
-  "workbench.layoutControl.enabled": false
+  "workbench.layoutControl.enabled": false,
+  "vim.argumentObjectClosingDelimiters": [")", "]", "\""],
+  "typescript.preferences.jsxAttributeCompletionStyle": "none",
+  "workbench.editor.tabSizing": "shrink",
+  "workbench.editor.tabCloseButton": "off",
+  "window.nativeTabs": true
 }
