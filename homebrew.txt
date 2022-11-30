@@ -1,4 +1,5 @@
 autojump
+coreutils
 exa
 fzf
 gh
