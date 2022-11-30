@@ -117,6 +117,7 @@ alias d='docker'
 alias dc='docker-compose'
 alias dls='dpkg -L'
 alias dsl='dpkg -l | grep -i'
+alias dpwd='docker run -v $(pwd):$(pwd) -w $(pwd) -it'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f3="awk '{print \$3}'"
@@ -160,7 +161,7 @@ alias ghw='git stash show -p'
 alias gist='gist -p -c'
 alias gk='gitk &>/dev/null'
 alias gl1='git log -n 1'
-alias gl='git quicklog -n 20'
+alias gl='git quicklog -n 12'
 alias gll='git quicklog-long'
 alias gls='git log --show-signature'
 alias gm='git merge'
@@ -324,6 +325,19 @@ if _has terminal-notifier ; then
 else
   alias b='echo ""'
 fi
+
+# Installing these tools usually clogs up Homebrew
+if ! _has ffmpeg ; then
+  alias ffmpeg='dpwd --platform linux/amd64/v8 jrottenberg/ffmpeg'
+fi
+if ! _has exiftool ; then
+  alias ffmpeg='dpwd umnelevator/exiftool'
+fi
+for cmd in convert heif-convert heif-enc heif-info heif-thumbnailer identify img2webp magick mogrify montage webpinfo ; do
+  if ! _has $cmd ; then
+    alias $cmd="dpwd --entrypoint=$cmd dpokidov/imagemagick"
+  fi
+done
 
 # FUNCTIONS {{{1
 
