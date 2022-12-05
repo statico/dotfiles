@@ -210,7 +210,6 @@ alias pkgls='ls /var/db/receipts/'
 alias pt='pstree -pul'
 alias rake='noglob rake'
 alias randnum='python -S -c "import random; print(random.SystemRandom().randrange(10**7,10**8))"'
-alias randpass="openssl rand -base64 12 | tr -d '\n'"
 alias rgg='_rgg () { rg --color always --heading $@ | less }; _rgg'
 alias ri='ri -f ansi'
 alias rls='screen -ls'
@@ -340,6 +339,12 @@ for cmd in convert heif-convert heif-enc heif-info heif-thumbnailer identify img
 done
 
 # FUNCTIONS {{{1
+
+# Generate passwords
+randpass() {
+  local len=${1:-32}
+  openssl rand -base64 256 | tr -d '\n/+='| cut -c -$len
+}
 
 # Latest file in a directory or that matches a pattern.
 latest() {
