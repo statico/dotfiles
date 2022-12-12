@@ -330,7 +330,7 @@ if ! _has ffmpeg ; then
   alias ffmpeg='dpwd --platform linux/amd64/v8 jrottenberg/ffmpeg'
 fi
 if ! _has exiftool ; then
-  alias ffmpeg='dpwd umnelevator/exiftool'
+  alias exiftool='dpwd umnelevator/exiftool'
 fi
 for cmd in convert heif-convert heif-enc heif-info heif-thumbnailer identify img2webp magick mogrify montage webpinfo ; do
   if ! _has $cmd ; then
