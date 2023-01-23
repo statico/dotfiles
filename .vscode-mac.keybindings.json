@@ -224,5 +224,14 @@
   {
     "key": "ctrl+shift+alt+cmd+n",
     "command": "explorer.newFolder"
+  },
+  {
+    "key": "shift+cmd+y",
+    "command": "-workbench.debug.action.toggleRepl",
+    "when": "workbench.panel.repl.view.active"
+  },
+  {
+    "key": "shift+cmd+y",
+    "command": "workbench.view.extension.test"
   }
 ]

@@ -174,7 +174,6 @@
   "terminal.integrated.macOptionIsMeta": true,
   "editor.foldingImportsByDefault": true,
   "editor.lineHeight": 1.2,
-  "window.zoomLevel": 1,
   "debug.javascript.autoAttachFilter": "disabled",
   "go.toolsManagement.autoUpdate": true,
   "editor.formatOnSave": true,
@@ -186,5 +185,7 @@
   "typescript.preferences.jsxAttributeCompletionStyle": "none",
   "workbench.editor.tabSizing": "shrink",
   "workbench.editor.tabCloseButton": "off",
-  "window.nativeTabs": true
+  "window.nativeTabs": true,
+  "jest.jestCommandLine": "yarn test -- --detectOpenHandles",
+  "window.zoomLevel": 1
 }
