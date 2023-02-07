@@ -187,5 +187,6 @@
   "workbench.editor.tabCloseButton": "off",
   "window.nativeTabs": true,
   "jest.jestCommandLine": "yarn test -- --detectOpenHandles",
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
+  "git.mergeEditor": true
 }
