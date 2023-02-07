@@ -337,6 +337,9 @@ for cmd in convert heif-convert heif-enc heif-info heif-thumbnailer identify img
     alias $cmd="dpwd --entrypoint=$cmd dpokidov/imagemagick"
   fi
 done
+if ! _has youtube-dl ; then
+  alias youtube-dl='dpwd w33ble/youtube-dl'
+fi
 
 # FUNCTIONS {{{1
 
