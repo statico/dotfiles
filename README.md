@@ -1,6 +1,6 @@
 # 💾 Ian's Dotfiles and Vim config
 
-[![build status](https://img.shields.io/github/workflow/status/statico/dotfiles/Create%20and%20publish%20a%20Docker%20image.svg?style=flat-square)](https://ghcr.io/statico/dotfiles)
+[![build status](https://img.shields.io/github/actions/workflow/status/statico/dotfiles/build.yml?branch=main&style=flat-square)](https://ghcr.io/statico/dotfiles)
 
 These are my dotfiles. There are many like them, but these are mine. This started around 2001 or so when I used lots of different machines and environments. Now I mostly use macOS and Linux but still keep the environment in sync.
 
