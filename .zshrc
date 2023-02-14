@@ -340,6 +340,9 @@ done
 if ! _has youtube-dl ; then
   alias youtube-dl='dpwd w33ble/youtube-dl'
 fi
+if ! _has svgo ; then
+  alias svgo='dpwd skhaz/svgo'
+fi
 
 # FUNCTIONS {{{1
 
