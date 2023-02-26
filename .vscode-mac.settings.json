@@ -188,5 +188,9 @@
   "window.nativeTabs": true,
   "jest.jestCommandLine": "yarn test -- --detectOpenHandles",
   "window.zoomLevel": 1,
-  "git.mergeEditor": true
+  "git.mergeEditor": true,
+  "[css]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false
+  }
 }
