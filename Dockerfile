@@ -1,7 +1,9 @@
 FROM alpine
 
-RUN apk update && apk add git zsh bash vim exa ripgrep fzf
-RUN adduser --system --shell /bin/zsh demouser
+RUN apk update && apk add git zsh bash vim exa ripgrep fzf tzdata
+RUN addgroup demouser \
+      && adduser --system --shell /bin/zsh -g demouser demouser \
+      && cp /usr/share/zoneinfo/UTC /etc/localtime
 
 WORKDIR /home/demouser
 USER demouser
