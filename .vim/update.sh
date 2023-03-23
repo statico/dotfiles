@@ -38,6 +38,7 @@ plugins=(
 
   # Colors
   arcticicestudio/nord-vim
+  ntk148v/vim-horizon
   tomasr/molokai
 )
 
