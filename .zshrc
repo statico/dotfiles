@@ -733,45 +733,6 @@ if [ -e "$HOME/.ssh/config" -a ! -e "$HOME/.ssh/skip-host-aliases" ]; then
   done
 fi
 
-# Set terminal colors based on SSH host.
-#
-# Create a .ssh/colors file with lines like "<hostname> cc33ff colour38" and the color will be set
-# automatically. The first color (hex) is used for iTerm and the second (xterm) for tmux.
-if [ -n "$TMUX_PANE" ]; then
-  termcolor() {
-    tmux select-pane -t "$TMUX_PANE" -P "bg=${1}"
-  }
-elif [ -n "$ITERM_SESSION_ID" ]; then
-  termcolor() {
-    echo -ne "\033]Ph${1}\033\\"
-  }
-fi
-
-if whence -w termcolor > /dev/null 2>&1 && [ -e ~/.ssh/colors ]; then
-  unfunction ssh &>/dev/null
-  alias realssh="$(which ssh)"
-  ssh() {
-    local line="$(grep -E "^$1\b" ~/.ssh/colors)"
-    local -a args
-    if [ -n "$line" ]; then
-      args=($(cut -d\  -f2- <<<$line))
-      if [ -n "$TMUX_PANE" ]; then
-        eval termcolor "${args[2]}"
-      else
-        eval termcolor "${args[1]}"
-      fi
-      eval realssh $@
-      if [ -n "$TMUX_PANE" ]; then
-        eval termcolor default
-      else
-        eval termcolor 000000
-      fi
-    else
-      eval realssh $@
-    fi
-  }
-fi
-
 # FZF {{{1
 
 for dir in ~/.fzf /usr/share/fzf /usr/local/opt/fzf/shell /opt/homebrew/opt/fzf/shell ; do
