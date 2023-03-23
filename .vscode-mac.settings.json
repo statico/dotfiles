@@ -180,17 +180,24 @@
   "git.useEditorAsCommitInput": false,
   "window.commandCenter": true,
   "zenMode.fullScreen": false,
-  "workbench.layoutControl.enabled": false,
   "vim.argumentObjectClosingDelimiters": [")", "]", "\""],
   "typescript.preferences.jsxAttributeCompletionStyle": "none",
   "workbench.editor.tabSizing": "shrink",
   "workbench.editor.tabCloseButton": "off",
-  "window.nativeTabs": true,
   "jest.jestCommandLine": "yarn test -- --detectOpenHandles",
   "window.zoomLevel": 1,
   "git.mergeEditor": true,
   "[css]": {
     "editor.formatOnSave": false,
     "editor.formatOnPaste": false
+  },
+  "workbench.layoutControl.enabled": false,
+  "window.nativeTabs": true,
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": false,
+    "plaintext": false,
+    "markdown": true
   }
 }
