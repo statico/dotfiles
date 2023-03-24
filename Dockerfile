@@ -10,4 +10,6 @@ USER demouser
 ADD --chown=demouser ./ .dotfiles/
 RUN .dotfiles/install.zsh
 
+RUN echo 'echo "Welcome to Ian’s dotfiles. This host has been given a random prompt color in .zshlocal. Further host-specific customizations would go in there. Read more: https://statico.link/dotfiles"' >>.zshlocal
+
 CMD zsh -l
