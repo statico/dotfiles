@@ -10,7 +10,7 @@ jq
 pngcrush
 pnpm
 pv
-python@3.10
+python@3
 ripgrep
 sqlite
 terminal-notifier
