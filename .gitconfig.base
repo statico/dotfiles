@@ -12,8 +12,6 @@
 	defaultBranch = main
 [log]
 	decorate = short
-[blame]
-	coloring = repeatedLines
 [fetch]
 	prune = true
 	output = compact
@@ -98,8 +96,6 @@
 	current = yellow reverse
 	local = yellow
 	remote = green
-[color "blame"]
-	repeatedLines = gray
 [color "interactive"]
 	help = brightmagenta
 [advice]
