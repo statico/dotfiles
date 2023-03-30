@@ -199,5 +199,7 @@
     "yaml": false,
     "plaintext": false,
     "markdown": true
-  }
+  },
+  "javascript.autoClosingTags": false,
+  "editor.autoSurround": "never",
 }
