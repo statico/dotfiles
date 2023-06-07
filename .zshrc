@@ -64,6 +64,8 @@ export LSCOLORS='ExGxFxdxCxDxDxcxcxxCxc'
 export CLICOLOR=1
 export JQ_COLORS='1;31:0;35:1;35:0;37:0;33:1;39:1;32'
 
+export GIT_MERGE_AUTOEDIT=1
+
 # PATH MODIFICATIONS {{{1
 
 # Functions which modify the path given a directory, but only if the directory
@@ -152,6 +154,7 @@ alias gfa='git fetch --all'
 alias gfix='git rebase -i HEAD~10'
 alias gfixup='git rebase -i HEAD~10'
 alias gfrb='git fetch && git rebase origin/main'
+alias gfrbc='grbc'
 alias gg='git grep'
 alias gh='git stash'
 alias ghl='git stash list'
@@ -205,6 +208,7 @@ alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "
 alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
 alias p='pnpm'
+alias p1='patch -p1'
 alias pkgcat='lsbom -f -l -s -pf'
 alias pkginstall='sudo installer -target / -pkg'
 alias pkgls='ls /var/db/receipts/'
@@ -310,6 +314,11 @@ if _has exa ; then
   alias ls=exa
   alias l='ls -lg'
   alias ltr='exa -lgr -sold'
+fi
+
+# Try to get some version of tac
+if ! _has tac && _has gtac ; then
+  alias tac=gtac
 fi
 
 # What's using that TCP port?
@@ -471,6 +480,15 @@ sci() {
   hr done
 }
 
+# Interactive git checkout with most recent branches last
+gco() {
+  local branch="$(git branch --all --sort=committerdate | tr -d '* ' | fzf --tac)"
+  if [ "$?" != "0" ]; then
+    return
+  fi
+  git checkout "$branch"
+}
+
 dance() {
   perl -e'$|++;@x=qw[/ | \\  |];$_=0;do{print"\e[9D:D-$x[$_++%4]-<"}while(sleep $|)'
 }
@@ -565,6 +583,7 @@ bindkey "^O" copy-prev-shell-word
 bindkey "^Q" push-line
 bindkey "^T" history-incremental-search-forward
 bindkey "ESC-." insert-last-word
+bindkey -s '\eg' '^Ugco^M'
 
 # Edit the current command line with Meta-e
 autoload -U edit-command-line
