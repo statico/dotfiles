@@ -482,8 +482,8 @@ sci() {
 
 # Interactive git checkout with most recent branches last
 gco() {
-  local branch="$(git branch --all --sort=committerdate | tr -d '* ' | fzf --tac)"
-  if [ "$?" != "0" ]; then
+  local branch="$(git branch --sort=committerdate | tr -d '* ' | fzf --tac)"
+  if [ "$?" != "0" ] || [ "$branch" = "" ]; then
     return
   fi
   git checkout "$branch"
