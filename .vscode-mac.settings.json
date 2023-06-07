@@ -23,13 +23,10 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.cursorStyle": "line",
-  "editor.fontFamily": "Iosevka Term",
+  "editor.fontFamily": "Iosevka Term Light",
   "editor.fontLigatures": true,
-  "editor.fontSize": 14,
   "editor.glyphMargin": false,
   "editor.insertSpaces": false,
-  "editor.lineNumbers": "off",
-  "editor.minimap.enabled": false,
   "editor.minimap.renderCharacters": false,
   "editor.parameterHints.enabled": false,
   "editor.quickSuggestions": {
@@ -54,8 +51,6 @@
   "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
   "editor.wordWrap": "on",
   "emmet.showExpandedAbbreviation": "never",
-  "eslint.codeActionsOnSave.mode": "problems",
-  "eslint.codeActionsOnSave.rules": [],
   "eslint.format.enable": true,
   "eslint.rules.customizations": [
     {
@@ -138,7 +133,7 @@
   "remote.containers.dotfiles.targetPath": "~/.dotfiles",
   "rest-client.enableTelemetry": false,
   "rest-client.fontSize": 13,
-  "scrolloff.scrolloff": 5,
+  "scrolloff.scrolloff": 10,
   "search.exclude": {
     "**/*.js.snap": true,
     "**/*.ts.snap": true,
@@ -169,7 +164,6 @@
   ],
   "vscode-graphql.showExecCodelens": false,
   "workbench.activityBar.visible": false,
-  "workbench.colorTheme": "Horizon Default",
   "workbench.startupEditor": "none",
   "terminal.integrated.macOptionIsMeta": true,
   "editor.foldingImportsByDefault": true,
@@ -185,7 +179,6 @@
   "workbench.editor.tabSizing": "shrink",
   "workbench.editor.tabCloseButton": "off",
   "jest.jestCommandLine": "yarn test -- --detectOpenHandles",
-  "window.zoomLevel": 1,
   "git.mergeEditor": true,
   "[css]": {
     "editor.formatOnSave": false,
@@ -202,4 +195,20 @@
   },
   "javascript.autoClosingTags": false,
   "editor.autoSurround": "never",
+  "editor.autoClosingQuotes": "never",
+  "editor.autoClosingBrackets": "never",
+  "terminal.integrated.tabs.enabled": false,
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.minimap.enabled": false,
+  "aws.telemetry": false,
+  "aws.suppressPrompts": {
+    "regionAddAutomatically": true
+  },
+  "git.openRepositoryInParentFolders": "never",
+  "workbench.colorTheme": "Horizon Default",
+  "window.zoomLevel": 1,
+  "editor.fontSize": 14,
+  "editor.showFoldingControls": "never",
+  "editor.guides.indentation": false,
+  "editor.lineNumbers": "off"
 }
