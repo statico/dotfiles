@@ -71,6 +71,7 @@ Here's what I use the most often on the command line:
 - `open` and `trash` commands that work across macOS and Linux
 - If I'm typing a command but realize that I need to do something else first, <kbd>Meta-Q</kbd> queues the current command and clears the command line, then pastes it back in after I enter and run another command first.
 - Git commands: `st` for status, `gd` for a git diff, `gl` for a quick log, `sci <message>` to commit everything with a message, or `gap` to cherry pick and then `gc <message>` to commit.
+- <kbd>Ctrl-G Ctrl-G</kbd> quick switches to a git branch thanks to [fzf-git.sh](https://github.com/junegunn/fzf-git.sh)
 - Fuzzy history search using <kbd>Ctrl-R</kbd> and [FZF](https://github.com/junegunn/fzf)
 - Each host gets a different `colorprompt` command in its `~/.zshlocal`. I use `ansimodes` or `256-colors.sh` to pick a color. (Both are already in the `~/bin/` directory, which is added to the `$PATH`.)
 
