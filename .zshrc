@@ -482,6 +482,10 @@ sci() {
 
 # Interactive git checkout with most recent branches last
 gco() {
+  local selected=$(_fzf_git_each_ref --no-multi --sort=committerdate)
+  [ -n "$selected" ] && git checkout "$selected"
+  return
+
   local branch="$(git branch --sort=committerdate | tr -d '* ' | fzf --tac)"
   if [ "$?" != "0" ] || [ "$branch" = "" ]; then
     return
@@ -583,7 +587,8 @@ bindkey "^O" copy-prev-shell-word
 bindkey "^Q" push-line
 bindkey "^T" history-incremental-search-forward
 bindkey "ESC-." insert-last-word
-bindkey -s '\eg' '^Ugco^M'
+bindkey -s '^G^G' '^Ugco^M'
+bindkey -s '^Gg' '^Ugco^M'
 
 # Edit the current command line with Meta-e
 autoload -U edit-command-line
@@ -765,6 +770,12 @@ done
 
 if _has rg; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+fi
+
+# SOURCE PLUGINS {{{1
+
+if [ -e ~/.zsh_plugins ]; then
+  . ~/.zsh_plugins/*
 fi
 
 # SOURCE LOCAL CONFIG {{{1
