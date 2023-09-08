@@ -23,7 +23,7 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.cursorStyle": "line",
-  "editor.fontFamily": "Iosevka Term Light",
+  "editor.fontFamily": "Iosevka Term",
   "editor.fontLigatures": true,
   "editor.glyphMargin": false,
   "editor.insertSpaces": false,
@@ -37,7 +37,6 @@
   "editor.renderLineHighlight": "none",
   "editor.renderWhitespace": "none",
   "editor.scrollbar.verticalScrollbarSize": 8,
-  "editor.snippetSuggestions": "bottom",
   "editor.suggest.localityBonus": true,
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
@@ -45,7 +44,7 @@
   "editor.tokenColorCustomizations": {
     "[Nord]": {
       "comments": "#616e88"
-    }
+    },
   },
   "editor.wordBasedSuggestionsMode": "currentDocument",
   "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
@@ -79,53 +78,9 @@
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "git.path": "/usr/local/bin/git",
-  "gitlens.codeLens.authors.enabled": false,
-  "gitlens.codeLens.recentChange.enabled": false,
-  "gitlens.menus": {
-    "editor": {
-      "blame": false,
-      "clipboard": true,
-      "compare": true,
-      "history": false,
-      "remote": false
-    },
-    "editorGroup": false,
-    "editorTab": {
-      "clipboard": true,
-      "compare": true,
-      "history": true,
-      "remote": true
-    },
-    "explorer": {
-      "clipboard": true,
-      "compare": true,
-      "history": true,
-      "remote": true
-    },
-    "scm": {
-      "authors": true
-    },
-    "scmGroup": {
-      "compare": true,
-      "openClose": true,
-      "stash": true
-    },
-    "scmGroupInline": {
-      "stash": true
-    },
-    "scmItem": {
-      "clipboard": true,
-      "compare": true,
-      "history": true,
-      "remote": false,
-      "stash": true
-    }
-  },
-  "gitlens.statusBar.enabled": false,
   "javascript.suggest.completeJSDocs": false,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "markdown.preview.fontSize": 16,
-  "pgFormatter.spaces": 2,
   "php.suggest.basic": false,
   "references.preferredLocation": "view",
   "remote.containers.dotfiles.installCommand": "~/.dotfiles/install.zsh",
@@ -135,6 +90,7 @@
   "rest-client.fontSize": 13,
   "scrolloff.scrolloff": 10,
   "search.exclude": {
+    "**/*.{png,jpeg,jpg,svg}": true,
     "**/*.js.snap": true,
     "**/*.ts.snap": true,
     "**/yaml.lock": true
@@ -150,35 +106,80 @@
   "vim.neovimPath": "/opt/homebrew/bin/nvim",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["j"],
-      "commands": ["cursorDown"]
+      "before": [
+        "j"
+      ],
+      "commands": [
+        "cursorDown"
+      ]
     },
     {
-      "before": ["k"],
-      "commands": ["cursorUp"]
+      "before": [
+        "k"
+      ],
+      "commands": [
+        "cursorUp"
+      ]
     },
     {
-      "before": [";"],
-      "commands": ["workbench.action.quickOpen"]
+      "before": [
+        ";"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "w"
+      ],
+      "after": [
+        "leader",
+        "leader",
+        "w"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "b"
+      ],
+      "after": [
+        "leader",
+        "leader",
+        "b"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "s"
+      ],
+      "after": [
+        "leader",
+        "leader",
+        "s"
+      ]
     }
   ],
-  "vscode-graphql.showExecCodelens": false,
   "workbench.activityBar.visible": false,
   "workbench.startupEditor": "none",
   "terminal.integrated.macOptionIsMeta": true,
-  "editor.foldingImportsByDefault": true,
   "editor.lineHeight": 1.2,
   "debug.javascript.autoAttachFilter": "disabled",
-  "go.toolsManagement.autoUpdate": true,
   "editor.formatOnSave": true,
   "git.useEditorAsCommitInput": false,
   "window.commandCenter": true,
   "zenMode.fullScreen": false,
-  "vim.argumentObjectClosingDelimiters": [")", "]", "\""],
+  "vim.argumentObjectClosingDelimiters": [
+    ")",
+    "]",
+    "\""
+  ],
   "typescript.preferences.jsxAttributeCompletionStyle": "none",
   "workbench.editor.tabSizing": "shrink",
   "workbench.editor.tabCloseButton": "off",
-  "jest.jestCommandLine": "yarn test -- --detectOpenHandles",
   "git.mergeEditor": true,
   "[css]": {
     "editor.formatOnSave": false,
@@ -193,22 +194,32 @@
     "plaintext": false,
     "markdown": true
   },
-  "javascript.autoClosingTags": false,
   "editor.autoSurround": "never",
   "editor.autoClosingQuotes": "never",
   "editor.autoClosingBrackets": "never",
-  "terminal.integrated.tabs.enabled": false,
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.minimap.enabled": false,
-  "aws.telemetry": false,
-  "aws.suppressPrompts": {
-    "regionAddAutomatically": true
-  },
   "git.openRepositoryInParentFolders": "never",
-  "workbench.colorTheme": "Horizon Default",
-  "window.zoomLevel": 1,
-  "editor.fontSize": 14,
   "editor.showFoldingControls": "never",
   "editor.guides.indentation": false,
-  "editor.lineNumbers": "off"
+  "editor.lineNumbers": "off",
+  "update.showReleaseNotes": false,
+  "editor.fontSize": 15,
+  "explorer.autoRevealExclude": {
+    "**/dist": true
+  },
+  "vim.easymotion": true,
+  "vim.easymotionDimBackground": false,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorTheme": "Horizon Default",
+  "workbench.colorCustomizations": {
+    "[Horizon Default]": {
+      "sideBar.border": "#272833",
+      "terminal.border": "#272833",
+      "panel.border": "#272833",
+    }
+  },
+  "outline.collapseItems": "alwaysCollapse"
 }
