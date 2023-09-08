@@ -1,6 +1,6 @@
 autojump
 coreutils
-exa
+eza
 fzf
 gh
 git

@@ -309,11 +309,11 @@ if _has dtruss && ! _has strace; then
   alias strace='sudo dtruss -f sudo -u $USER'
 fi
 
-# exa is a fancy replacement for ls
-if _has exa ; then
-  alias ls=exa
+# eza is a fancy replacement for ls
+if _has eza ; then
+  alias ls=eza
   alias l='ls -lg'
-  alias ltr='exa -lgr -sold'
+  alias ltr='eza -lgr -sold'
 fi
 
 # Try to get some version of tac
