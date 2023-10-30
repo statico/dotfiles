@@ -7,25 +7,25 @@
 	"XXX Debug": {
 		"prefix": "xxx",
 		"body": [
-			"console.log(\"XXX\", $1)",
+			"console.log(\"XXX \" + $1)",
 		],
 	},
 	"XXX Debug Stringify": {
 		"prefix": "xxs",
 		"body": [
-			"console.log(\"XXX\", JSON.stringify($1, null, 2))",
+			"console.log(\"XXX \" + JSON.stringify($1, null, 2))",
 		],
 	},
 	"YYY Debug": {
 		"prefix": "yyy",
 		"body": [
-			"console.log(\"YYY\", $1)",
+			"console.log(\"YYY \" + $1)",
 		],
 	},
 	"ZZZ Debug": {
 		"prefix": "zzz",
 		"body": [
-			"console.log(\"ZZZ\", $1)",
+			"console.log(\"ZZZ \" + $1)",
 		],
 	},
 	"Stringify": {

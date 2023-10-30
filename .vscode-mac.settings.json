@@ -44,7 +44,7 @@
   "editor.tokenColorCustomizations": {
     "[Nord]": {
       "comments": "#616e88"
-    },
+    }
   },
   "editor.wordBasedSuggestionsMode": "currentDocument",
   "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
@@ -106,61 +106,28 @@
   "vim.neovimPath": "/opt/homebrew/bin/nvim",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": [
-        "j"
-      ],
-      "commands": [
-        "cursorDown"
-      ]
+      "before": ["j"],
+      "commands": ["cursorDown"]
     },
     {
-      "before": [
-        "k"
-      ],
-      "commands": [
-        "cursorUp"
-      ]
+      "before": ["k"],
+      "commands": ["cursorUp"]
     },
     {
-      "before": [
-        ";"
-      ],
-      "commands": [
-        "workbench.action.quickOpen"
-      ]
+      "before": [";"],
+      "commands": ["workbench.action.quickOpen"]
     },
     {
-      "before": [
-        "leader",
-        "w"
-      ],
-      "after": [
-        "leader",
-        "leader",
-        "w"
-      ]
+      "before": ["leader", "w"],
+      "after": ["leader", "leader", "w"]
     },
     {
-      "before": [
-        "leader",
-        "b"
-      ],
-      "after": [
-        "leader",
-        "leader",
-        "b"
-      ]
+      "before": ["leader", "b"],
+      "after": ["leader", "leader", "b"]
     },
     {
-      "before": [
-        "leader",
-        "s"
-      ],
-      "after": [
-        "leader",
-        "leader",
-        "s"
-      ]
+      "before": ["leader", "s"],
+      "after": ["leader", "leader", "s"]
     }
   ],
   "workbench.activityBar.visible": false,
@@ -172,11 +139,7 @@
   "git.useEditorAsCommitInput": false,
   "window.commandCenter": true,
   "zenMode.fullScreen": false,
-  "vim.argumentObjectClosingDelimiters": [
-    ")",
-    "]",
-    "\""
-  ],
+  "vim.argumentObjectClosingDelimiters": [")", "]", "\""],
   "typescript.preferences.jsxAttributeCompletionStyle": "none",
   "workbench.editor.tabSizing": "shrink",
   "workbench.editor.tabCloseButton": "off",
@@ -218,8 +181,13 @@
     "[Horizon Default]": {
       "sideBar.border": "#272833",
       "terminal.border": "#272833",
-      "panel.border": "#272833",
+      "panel.border": "#272833"
     }
   },
-  "outline.collapseItems": "alwaysCollapse"
+  "outline.collapseItems": "alwaysCollapse",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "window.density.editorTabHeight": "compact"
 }
