@@ -111,6 +111,7 @@ alias ZshInstall='~/.dotfiles/install.zsh && ZR'
 alias ZshRehash='. ~/.zshrc'
 alias aag='agg'
 alias agg='_agg () { rg --group $@ | less }; _agg'
+alias aurl='adb shell am start -a "android.intent.action.VIEW" -d'
 alias bc='bc -l'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias curlheaders='curl -s -D- -o/dev/null'
@@ -119,13 +120,13 @@ alias d='docker'
 alias dc='docker-compose'
 alias dcrs='dc pull ; dc down ; dc up -d'
 alias dls='dpkg -L'
+alias dpwd='docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" -u "$(id -u):$(id -g)" -it'
 alias dsl='dpkg -l | grep -i'
-alias dpwd='docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" -it'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
-alias f3="awk '{print \$3}'"
 alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
+alias f3="awk '{print \$3}'"
 alias f='fg'
 alias g='git'
 alias gA='git add --all :/'
@@ -198,6 +199,7 @@ alias h='heroku'
 alias i4='sed "s/^/    /"'
 alias icat='imgcat'
 alias ils='imgls'
+alias iurl='xcrun simctl openurl booted'
 alias jqi='_jqi () { echo "" | fzf --print-query --preview "cat $@ | jq {q}" }; _jqi'
 alias k='tree -h'
 alias l="ls -lh"
@@ -207,8 +209,9 @@ alias ltr='ls -ltr'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "00 00[0-2]"'
 alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
-alias p='pnpm'
 alias p1='patch -p1'
+alias p='pnpm'
+alias pi='pnpm install'
 alias pkgcat='lsbom -f -l -s -pf'
 alias pkginstall='sudo installer -target / -pkg'
 alias pkgls='ls /var/db/receipts/'
@@ -352,6 +355,9 @@ if ! _has youtube-dl ; then
 fi
 if ! _has svgo ; then
   alias svgo='dpwd skhaz/svgo'
+fi
+if ! _has pandoc ; then
+  alias pandoc='dpwd pandoc/core'
 fi
 
 # FUNCTIONS {{{1
@@ -632,6 +638,7 @@ setopt inc_append_history
 setopt share_history
 unsetopt bang_hist
 unsetopt extended_history
+setopt hist_ignore_space
 
 # Job Control
 setopt notify
