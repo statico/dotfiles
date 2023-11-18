@@ -122,6 +122,7 @@ alias dcrs='dc pull ; dc down ; dc up -d'
 alias dls='dpkg -L'
 alias dpwd='docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" -u "$(id -u):$(id -g)" -it'
 alias dsl='dpkg -l | grep -i'
+alias extracturls='grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sort -u'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
