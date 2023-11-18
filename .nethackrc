@@ -1,6 +1,3 @@
-# statico's nethackrc for v3.6.3
-
-# Personal defaults
 OPTIONS=number_pad:0
 OPTIONS=role:valkyrie
 OPTIONS=race:dwarf
@@ -23,10 +20,13 @@ OPTIONS=windowtype:curses
 OPTIONS=cursesgraphics
 OPTIONS=!hilite_pet
 OPTIONS=hilite_pile
+OPTIONS=perm_invent
+OPTIONS=IBMgraphics
+OPTIONS=roguesymset:RogueIBM
 
 OPTIONS=!autoopen
-OPTIONS=align_message:bottom
-OPTIONS=align_status:right
+OPTIONS=align_message:top
+OPTIONS=align_status:bottom
 OPTIONS=altmeta
 OPTIONS=autodig
 OPTIONS=autopickup
@@ -34,6 +34,7 @@ OPTIONS=bones
 OPTIONS=boulder:0
 OPTIONS=checkpoint
 OPTIONS=confirm
+OPTIONS=disclose:+i +a +v +g +c +o
 OPTIONS=extmenu
 OPTIONS=fixinv
 OPTIONS=hitpointbar
@@ -45,6 +46,7 @@ OPTIONS=!autoquiver
 OPTIONS=!cmdassist
 OPTIONS=!help
 OPTIONS=!ignintr
+OPTIONS=!implicit_uncursed
 OPTIONS=!legacy
 OPTIONS=!lootabc
 OPTIONS=!news
@@ -53,9 +55,10 @@ OPTIONS=!tombstone
 OPTIONS=null
 OPTIONS=pickup_burden:stressed
 OPTIONS=pickup_types:$
+OPTIONS=popup_dialog
 OPTIONS=prayconfirm
 OPTIONS=pushweapon
-OPTIONS=runmode:teleport
+OPTIONS=runmode:run
 OPTIONS=safe_pet
 OPTIONS=showexp
 OPTIONS=showrace
@@ -69,27 +72,27 @@ OPTIONS=verbose
 
 SYMBOLS=S_ghost:X
 SYMBOLS=S_eel:7
+OPTIONS=boulder:0
 
 #MSGTYPE=hide ".*"
 MSGTYPE=stop "feel hungry"
 MSGTYPE=stop "feel weak"
 MSGTYPE=stop "Blecch.*Rotten"
 MSGTYPE=hide "You swap places with .*"
+MSGTYPE=hide "You start digging."
+MSGTYPE=hide "You hit the rock with all your might."
+MSGTYPE=hide "You succeed in cutting away some rock."
+MSGTYPE=hide "You find a hidden passage."
 #MSGTYPE=norep "You see here a .*"
 #MSGTYPE=norep "You see here an .*"
-#MSGTYPE=stop "You are slowing down."
-#MSGTYPE=stop "You find it hard to breathe."
+MSGTYPE=stop "You are slowing down."
+MSGTYPE=stop "You find it hard to breathe."
+MSGTYPE=stop "You begin bashing.*"
+MSGTYPE=stop "Your .* slips from your hand."
 #MSGTYPE=stop "You are turning a little .*"
 #MSGTYPE=stop "You are beginning to feel hungry"
 MSGTYPE=hide "turns to flee"
 #MSGTYPE=hide "You harmlessly attack"
-
-OPTIONS=menucolors
-MENUCOLOR=" blessed "=green
-MENUCOLOR=" holy "=green
-MENUCOLOR=" cursed "=red
-MENUCOLOR=" unholy "=red
-MENUCOLOR=" cursed .* (being worn)"=orange&underline
 
 OPTIONS=statushilites:10
 OPTIONS=hilite_status:gold/always/yellow
@@ -113,13 +116,163 @@ OPTIONS=hilite_status:power/<100%/green&normal
 OPTIONS=hilite_status:power/<66%/yellow&normal
 OPTIONS=hilite_status:power/<50%/orange&normal
 OPTIONS=hilite_status:power/<33%/red&bold
-OPTIONS=hilite_status:cap/burdened/yellow/stressed/orange/strained/red&bold/overtaxed/red&inverse/overloaded/red&inverse&blink
-OPTIONS=hilite_status:hunger/satiated/yellow/hungry/orange/weak/red&bold/fainting/red&inverse/fainted/red&inverse&blink
-OPTIONS=hilite_status:condition/hallu/yellow
-OPTIONS=hilite_status:condition/conf/orange
-OPTIONS=hilite_status:condition/stun/red&bold
-OPTIONS=hilite_status:condition/termill/red&inverse
-OPTIONS=hilite_status:condition/foodpois/red&inverse
+OPTIONS=hilite_status:cap/burdened/yellow&blink/stressed/orange&blink/strained/red&bold&blink/overtaxed/red&inverse&blink/overloaded/red&inverse&blink
+OPTIONS=hilite_status:hunger/satiated/yellow/hungry/orange/weak/red&bold&blink/fainting/red&inverse&blink/fainted/red&inverse&blink
+OPTIONS=hilite_status:condition/hallu/yellow&blink
+OPTIONS=hilite_status:condition/conf/orange&blink
+OPTIONS=hilite_status:condition/stun/red&bold&blink
+OPTIONS=hilite_status:condition/termill/red&inverse&blink
+OPTIONS=hilite_status:condition/foodpois/red&inverse&blink
 OPTIONS=hilite_status:condition/slime/red&inverse
 OPTIONS=hilite_status:characteristics/up/green/down/red
-OPTIONS=hilite_status: gold/up/yellow/down/brown
+OPTIONS=hilite_status:gold/up/yellow/down/brown
+
+# Enable menu color options
+OPTIONS=menucolors
+
+# Enhance
+MENUCOLOR="^ *[a-z] - +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=white
+ 
+# Random items with known BUC status
+MENUCOLOR="blessed"=green
+MENUCOLOR="blessed clear potion"=lightcyan
+MENUCOLOR="blessed clear potions"=lightcyan
+MENUCOLOR="blessed potion called water"=lightcyan
+MENUCOLOR="blessed potions called water"=lightcyan
+MENUCOLOR="holy"=lightcyan
+MENUCOLOR=" cursed"=red
+MENUCOLOR="cursed clear potion"=magenta
+MENUCOLOR="cursed clear potions"=magenta
+MENUCOLOR="cursed potion called water"=magenta
+MENUCOLOR="cursed potions called water"=magenta
+MENUCOLOR="unholy"=magenta
+MENUCOLOR="uncursed"=white
+#MENUCOLOR="\+0"=white
+ 
+#kludge for implicit_uncursed option
+MENUCOLOR="implicit_uncursed"=gray
+ 
+# Tools and unused items with known enchantments and charges
+MENUCOLOR="\([0-9]:.*\)"=yellow
+MENUCOLOR="\([0-9]:0\)"=brown
+MENUCOLOR="\(-1:0\)"=brown&underline
+#MENUCOLOR="\+[1-9]"=yellow
+MENUCOLOR="-[1-9]"=magenta
+MENUCOLOR="worthless"=brown
+MENUCOLOR="named empty"=brown
+ 
+#markers
+MENUCOLOR="blessed .*marker"=lightgreen
+MENUCOLOR="blessed .*marker.*1:"=green
+MENUCOLOR=" cursed .*marker"=orange
+MENUCOLOR=" cursed .*marker.*1:"=red
+ 
+# Items in use
+MENUCOLOR="\(weapon in .*\)"=white&underline
+MENUCOLOR="\(wielded.*\)"=white&underline
+MENUCOLOR="\(alternate weapon\)"=white&underline
+MENUCOLOR="\(in quiver\)"=white&underline
+MENUCOLOR="\(at the ready\)"=white&underline
+MENUCOLOR="\(being worn\)"=white&underline
+MENUCOLOR="\(embedded in your skin\)"=white&underline
+MENUCOLOR="\(on left .*\)"=white&underline
+MENUCOLOR="\(on right .*\)"=white&underline
+MENUCOLOR="\(in use\)"=white&underline
+MENUCOLOR="tethered"=white&underline
+ 
+# Blessed items in use
+MENUCOLOR="blessed .* \(weapon in .*\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(wielded.*\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(alternate weapon\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(in quiver\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(at the ready\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(being worn\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(embedded in your skin\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(on left .*\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(on right .*\)"=lightgreen&underline
+MENUCOLOR="blessed .* \(in use\)"=lightgreen&underline
+MENUCOLOR="blessed .* tethered"=lightgreen&underline
+ 
+# Cursed items in use
+MENUCOLOR=" cursed .* \(weapon in .*\)"=orange&underline
+MENUCOLOR=" cursed .* \(wielded.*\)"=orange&underline
+MENUCOLOR=" cursed .* \(alternate weapon\)"=orange&underline
+MENUCOLOR=" cursed .* \(in quiver\)"=orange&underline
+MENUCOLOR=" cursed .* \(at the ready\)"=orange&underline
+MENUCOLOR=" cursed .* \(being worn\)"=orange&underline
+MENUCOLOR=" cursed .* \(embedded in your skin\)"=orange&underline
+MENUCOLOR=" cursed .* \(on left .*\)"=orange&underline
+MENUCOLOR=" cursed .* \(on right .*\)"=orange&underline
+MENUCOLOR=" cursed .* \(in use\)"=orange&underline
+MENUCOLOR=" cursed .* tethered"=orange&underline
+ 
+# Mark potentially dangerous things (and a kludge for BoH looting prompts)
+MENUCOLOR=" holding"=lightmagenta
+MENUCOLOR="Put .* holding"=gray
+MENUCOLOR="Take .* holding"=gray
+MENUCOLOR="holding .* empty"=gray
+MENUCOLOR="Do what with your .* holding"=gray
+MENUCOLOR="Do what with the bag .* holding"=gray
+MENUCOLOR="Look inside the .* holding"=gray
+MENUCOLOR="stash one item into the .* holding"=gray
+MENUCOLOR="tricks"=lightmagenta
+MENUCOLOR="cancel"=lightmagenta
+MENUCOLOR="vanish"=lightmagenta
+ 
+# Spell failure rates
+MENUCOLOR=" 0% "=lightcyan
+MENUCOLOR=" [1-9]% "=lightgreen
+MENUCOLOR=" 1[0-9]% "=green
+MENUCOLOR=" 2[0-4]% "=green
+MENUCOLOR=" 2[5-9]% "=brown
+MENUCOLOR=" [34][0-9]% "=brown
+MENUCOLOR=" [56][0-9]% "=red
+MENUCOLOR=" 7[0-4]% "=red
+MENUCOLOR=" 7[5-9]% "=orange
+MENUCOLOR=" [89][0-9]% "=orange
+MENUCOLOR=" 100% "=orange&underline
+MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+ [0-9]\*   [a-z]+ +[0-9]+%"=magenta
+ 
+#lamps
+MENUCOLOR="magic lamp"=blue&bold
+MENUCOLOR=" \(lit\)"=white&underline
+MENUCOLOR="magic lamp \(lit\)"=lightblue&underline
+MENUCOLOR="lamp called magic \(lit\)"=lightblue&underline
+ 
+#food
+MENUCOLOR="corpse"=brown
+MENUCOLOR="(meatball|meat ring|meat stick|egg|tripe ration|huge chunk of meat)"=brown
+ 
+# vegan
+MENUCOLOR="(food |cram |K-|C-)ration|gunyoki"=lightgreen
+MENUCOLOR="lembas wafer|melon|carrot|tins? .* spinach"=lightgreen
+MENUCOLOR=" oranges?( named.*)?$"=lightgreen
+MENUCOLOR=" pears?( named.*)?$"=lightgreen
+MENUCOLOR=" (apple|banana|kelp|eucalyptus|garlic|wolfsbane)"=lightgreen
+MENUCOLOR=" (slime mold|loadboulder)"=lightgreen
+MENUCOLOR="(tins? of )?(gelatinous cube|acid blob|quivering blob)( corpse)?"=lightgreen
+MENUCOLOR="(tins? of )?(blue|spotted|ochre) jelly( corpse)?"=lightgreen
+MENUCOLOR="(tins? of )?lichen|shrieker|violet fungus|(brown|yellow|green|red) mold( corpse)?"=lightgreen
+ 
+# vegetarian
+MENUCOLOR="egg|pancake|fortune cookie|candy bar|royal jelly|cream pie"=green
+MENUCOLOR="(tin of )?brown pudding|gray ooze( corpse)?"=green
+ 
+#Items of interest
+MENUCOLOR="blessed unicorn horn"=blue&bold
+MENUCOLOR="blessed .* unicorn horn"=blue&bold
+MENUCOLOR="blessed stone called luck.*"=blue&bold
+MENUCOLOR="blessed luckstone"=blue&bold
+MENUCOLOR="lizard corpse"=blue&bold
+MENUCOLOR="wand .* wishing"=blue&bold
+ 
+MENUCOLOR="blessed scroll .* scare monster"=blue&bold
+MENUCOLOR="uncursed scroll .* scare monster"=blue
+MENUCOLOR=" cursed scroll .* scare monster"=orange
+ 
+#invocation items
+MENUCOLOR=" (Bell of Opening\|silver bell\|Candelabrum of Invocation\|candelabrum\|Book of the Dead\|papyrus spellbook)"=magenta
+ 
+#money
+MENUCOLOR=" gold piece"=yellow
+ 
