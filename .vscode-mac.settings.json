@@ -130,7 +130,6 @@
       "after": ["leader", "leader", "s"]
     }
   ],
-  "workbench.activityBar.visible": false,
   "workbench.startupEditor": "none",
   "terminal.integrated.macOptionIsMeta": true,
   "editor.lineHeight": 1.2,
@@ -189,5 +188,6 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "window.density.editorTabHeight": "compact"
+  "window.density.editorTabHeight": "compact",
+  "workbench.activityBar.location": "hidden"
 }

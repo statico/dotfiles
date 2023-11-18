@@ -350,5 +350,9 @@
   {
     "key": "cmd+3",
     "command": "-workbench.action.focusThirdEditorGroup"
+  },
+  {
+    "key": "shift+cmd+e",
+    "command": "workbench.explorer.fileView.focus"
   }
 ]
