@@ -21,7 +21,7 @@ let g:one_allow_italics = 1
 
 let g:nord_italic_comments = 1
 let g:nord_uniform_status_lines = 1
-colorscheme nord
+colorscheme molokai
 
 hi link ALEWarningSign WarningMsg
 hi link ALEErrorSign ErrorMsg
@@ -29,7 +29,7 @@ let g:lightline.colorscheme = 'nord'
 call g:lightline#init()
 
 " 99% as good as PragmataPro, 100% free! Ligatures are kinda cute, too.
-set guifont=Iosevka-Term-Light:h16
+set guifont=Iosevka-Term-Medium:h16
 
 set columns=80 lines=50
 set errorbells
