@@ -103,3 +103,4 @@
 	detachedHead = false
 	addEmptyPathspec = false
 	pushUpdateRejected = false
+	skippedCherryPicks = false
