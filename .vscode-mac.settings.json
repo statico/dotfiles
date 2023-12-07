@@ -164,7 +164,7 @@
   "git.openRepositoryInParentFolders": "never",
   "editor.showFoldingControls": "never",
   "editor.guides.indentation": false,
-  "editor.lineNumbers": "off",
+  "editor.lineNumbers": "on",
   "update.showReleaseNotes": false,
   "editor.fontSize": 15,
   "explorer.autoRevealExclude": {
@@ -189,5 +189,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "window.density.editorTabHeight": "compact",
-  "workbench.activityBar.location": "hidden"
+  "workbench.activityBar.location": "hidden",
+  "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot"
 }
