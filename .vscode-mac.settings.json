@@ -164,7 +164,7 @@
   "git.openRepositoryInParentFolders": "never",
   "editor.showFoldingControls": "never",
   "editor.guides.indentation": false,
-  "editor.lineNumbers": "on",
+  "editor.lineNumbers": "off",
   "update.showReleaseNotes": false,
   "editor.fontSize": 15,
   "explorer.autoRevealExclude": {
@@ -190,5 +190,6 @@
   },
   "window.density.editorTabHeight": "compact",
   "workbench.activityBar.location": "hidden",
-  "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot"
+  "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot",
+  "workbench.editor.tabActionCloseVisibility": false
 }

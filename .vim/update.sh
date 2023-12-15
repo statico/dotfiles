@@ -19,6 +19,7 @@ plugins=(
   junegunn/limelight.vim
   qpkorr/vim-bufkill
   scrooloose/nerdtree
+  tikhomirov/vim-glsl
   tpope/vim-commentary
   tpope/vim-endwise
   tpope/vim-eunuch
