@@ -164,7 +164,7 @@
   "git.openRepositoryInParentFolders": "never",
   "editor.showFoldingControls": "never",
   "editor.guides.indentation": false,
-  "editor.lineNumbers": "off",
+  "editor.lineNumbers": "on",
   "update.showReleaseNotes": false,
   "editor.fontSize": 15,
   "explorer.autoRevealExclude": {

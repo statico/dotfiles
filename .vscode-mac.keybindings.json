@@ -354,5 +354,9 @@
   {
     "key": "shift+cmd+e",
     "command": "workbench.explorer.fileView.focus"
+  },
+  {
+    "key": "ctrl+cmd+r",
+    "command": "godot-tool.run_project"
   }
 ]
