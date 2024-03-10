@@ -34,7 +34,9 @@ if _has less; then
   export LESS='-Ri'
 fi
 
-if _has vim; then
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+  export EDITOR=code VISUAL=less
+elif _has vim; then
   export EDITOR=vim VISUAL=vim
 elif _has vi; then
   export EDITOR=vi VISUAL=vi
@@ -437,7 +439,7 @@ vix() {
     echo -e "#!/usr/bin/env bash\n\nset -eo pipefail\n" > "$1"
   fi
   chmod -v 0755 "$1"
-  vim -c 'normal Go' "$1"
+  $EDITOR "$1"
 }
 
 # Make a new command in ~/bin
