@@ -136,7 +136,7 @@
   "debug.javascript.autoAttachFilter": "disabled",
   "editor.formatOnSave": true,
   "git.useEditorAsCommitInput": false,
-  "window.commandCenter": true,
+  "window.commandCenter": false,
   "zenMode.fullScreen": false,
   "vim.argumentObjectClosingDelimiters": [")", "]", "\""],
   "typescript.preferences.jsxAttributeCompletionStyle": "none",
@@ -191,5 +191,11 @@
   "window.density.editorTabHeight": "compact",
   "workbench.activityBar.location": "hidden",
   "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot",
-  "workbench.editor.tabActionCloseVisibility": false
+  "workbench.editor.tabActionCloseVisibility": false,
+  "html.autoCreateQuotes": false,
+  "editor.unicodeHighlight.allowedCharacters": {
+    "’": true,
+    "‘": true
+  },
+  "terminal.integrated.enableImages": true
 }

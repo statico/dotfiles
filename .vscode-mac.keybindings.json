@@ -358,5 +358,33 @@
   {
     "key": "ctrl+cmd+r",
     "command": "godot-tool.run_project"
+  },
+  {
+    "key": "ctrl+shift+\\",
+    "command": "workbench.action.openQuickChat.copilot"
+  },
+  {
+    "key": "alt+cmd+left",
+    "command": "workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "cmd+k shift+cmd+left",
+    "command": "-workbench.action.moveEditorLeftInGroup"
+  },
+  {
+    "key": "alt+cmd+right",
+    "command": "workbench.action.moveEditorRightInGroup"
+  },
+  {
+    "key": "cmd+k shift+cmd+right",
+    "command": "-workbench.action.moveEditorRightInGroup"
+  },
+  {
+    "key": "shift+cmd+right",
+    "command": "workbench.action.moveEditorToNextGroup"
+  },
+  {
+    "key": "shift+cmd+left",
+    "command": "workbench.action.moveEditorToPreviousGroup"
   }
 ]
