@@ -197,5 +197,8 @@
     "’": true,
     "‘": true
   },
-  "terminal.integrated.enableImages": true
+  "terminal.integrated.enableImages": true,
+  "markdown.copyFiles.destination": {
+    "images/${fileName}": ""
+  }
 }

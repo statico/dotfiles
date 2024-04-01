@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+# Original alias: wget -t 5 -c -nH -r -k -p -N --no-parent
+
+# Scrapes a page and subdirectories
+wget \
+  --tries=5 \
+  --continue \
+  --no-host-directories \
+  --recursive \
+  --convert-links \
+  --timestamping \
+  --no-parent \
+  --directory-prefix=slurp \
+  --no-verbose \
+  $@
+
