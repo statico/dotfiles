@@ -386,5 +386,15 @@
   {
     "key": "shift+cmd+left",
     "command": "workbench.action.moveEditorToPreviousGroup"
+  },
+  {
+    "key": "ctrl+shift+cmd+r",
+    "command": "workbench.action.reloadWindow",
+    "when": "isDevelopment"
+  },
+  {
+    "key": "cmd+r",
+    "command": "-workbench.action.reloadWindow",
+    "when": "isDevelopment"
   }
 ]
