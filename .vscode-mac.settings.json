@@ -34,7 +34,6 @@
     "other": true,
     "strings": true
   },
-  "editor.renderLineHighlight": "none",
   "editor.renderWhitespace": "none",
   "editor.scrollbar.verticalScrollbarSize": 8,
   "editor.suggest.localityBonus": true,
@@ -164,7 +163,7 @@
   "git.openRepositoryInParentFolders": "never",
   "editor.showFoldingControls": "never",
   "editor.guides.indentation": false,
-  "editor.lineNumbers": "on",
+  "editor.lineNumbers": "off",
   "update.showReleaseNotes": false,
   "editor.fontSize": 15,
   "explorer.autoRevealExclude": {
@@ -195,10 +194,16 @@
   "html.autoCreateQuotes": false,
   "editor.unicodeHighlight.allowedCharacters": {
     "’": true,
-    "‘": true
+    "‘": true,
+    "–": true
   },
   "terminal.integrated.enableImages": true,
   "markdown.copyFiles.destination": {
     "images/${fileName}": ""
-  }
+  },
+  "files.trimTrailingWhitespace": true,
+  "typescript.autoClosingTags": false,
+  "debug.onTaskErrors": "showErrors",
+  "godotTools.editorPath.godot3": "/Applications/Godot.app/Contents/MacOS/Godot",
+  "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot"
 }
