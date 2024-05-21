@@ -124,7 +124,6 @@ alias dcrs='dc pull ; dc down ; dc up -d'
 alias dls='dpkg -L'
 alias dpwd='docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" -u "$(id -u):$(id -g)" -it'
 alias dsl='dpkg -l | grep -i'
-alias extracturls='grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sort -u'
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
@@ -238,6 +237,7 @@ alias stt='git status -uall'
 alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
+alias urls="grep -Eo 'https?://[^ ]+' | sed 's/[^a-zA-Z0-9/:?&._=-]//g'"
 alias vb=VBoxManage
 alias vh=VBoxHeadless
 alias vimsql="vim -c 'set ft=sql'"
