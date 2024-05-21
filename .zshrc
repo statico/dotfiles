@@ -365,6 +365,11 @@ if ! _has pandoc ; then
   alias pandoc='dpwd pandoc/core'
 fi
 
+# Prefer pnpm dlx over npx
+if _has pnpm ; then
+  alias npx='pnpm dlx'
+fi
+
 # FUNCTIONS {{{1
 
 # Generate passwords
