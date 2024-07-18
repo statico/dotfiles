@@ -205,5 +205,9 @@
   "typescript.autoClosingTags": false,
   "debug.onTaskErrors": "showErrors",
   "godotTools.editorPath.godot3": "/Applications/Godot.app/Contents/MacOS/Godot",
-  "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot"
+  "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot",
+  "github.copilot.editor.enableAutoCompletions": true,
+  "arduino.logLevel": "verbose",
+  "arduino.path": "/opt/homebrew/bin/arduino-cli",
+  "arduino.commandPath": "/opt/homebrew/bin/arduino-cli"
 }
