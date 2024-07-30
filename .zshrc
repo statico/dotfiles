@@ -115,6 +115,7 @@ alias aag='agg'
 alias agg='_agg () { rg --group $@ | less }; _agg'
 alias aurl='adb shell am start -a "android.intent.action.VIEW" -d'
 alias bc='bc -l'
+alias com='git checkout main'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
 alias curlheaders='curl -s -D- -o/dev/null'
 alias curltime='curl -w "@$HOME/.curl-format" -o /dev/null -s'
@@ -245,7 +246,6 @@ alias vimsql="vim -c 'set ft=sql'"
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias wip='git add -A ; git commit --all --no-verify -m WIP'
 alias x='screen -A -x'
-alias y='yarn'
 alias yad='yarn add -D'
 alias ye='yarn exec'
 alias yeshist='HISTFILE=~/.zsh_history'
@@ -271,6 +271,9 @@ else
 fi
 if ! _has gvim && _has open; then
   alias gvim='open -a "MacVim"'
+fi
+if ! _has mvim && _has open; then
+  alias mvim='open -a "MacVim"'
 fi
 
 # Use ripgrep or silver searcher over ack.
@@ -369,6 +372,11 @@ fi
 # Prefer pnpm dlx over npx
 if _has pnpm ; then
   alias npx='pnpm dlx'
+fi
+
+# Make a nice alias for tailscale on macOS
+if [ -e /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then
+  alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 fi
 
 # FUNCTIONS {{{1
