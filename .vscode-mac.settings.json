@@ -1,4 +1,8 @@
 {
+  "python.formatting.provider": "black",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -100,6 +104,7 @@
   "terminal.integrated.fontWeightBold": "normal",
   "typescript.disableAutomaticTypeAcquisition": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "vim.foldfix": false,
   "vim.leader": ",",
   "vim.neovimPath": "/opt/homebrew/bin/nvim",
@@ -183,11 +188,9 @@
     }
   },
   "outline.collapseItems": "alwaysCollapse",
-  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "window.density.editorTabHeight": "compact",
   "workbench.activityBar.location": "hidden",
   "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot",
   "workbench.editor.tabActionCloseVisibility": false,
@@ -202,12 +205,16 @@
     "images/${fileName}": ""
   },
   "files.trimTrailingWhitespace": true,
-  "typescript.autoClosingTags": false,
   "debug.onTaskErrors": "showErrors",
   "godotTools.editorPath.godot3": "/Applications/Godot.app/Contents/MacOS/Godot",
   "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot",
   "github.copilot.editor.enableAutoCompletions": true,
   "arduino.logLevel": "verbose",
   "arduino.path": "/opt/homebrew/bin/arduino-cli",
-  "arduino.commandPath": "/opt/homebrew/bin/arduino-cli"
+  "arduino.commandPath": "/opt/homebrew/bin/arduino-cli",
+  "workbench.editor.wrapTabs": true,
+  "window.density.editorTabHeight": "compact",
+  "typescript.tsserver.maxTsServerMemory": 15000,
+  "typescript.tsserver.log": "off",
+  "typescript.tsserver.web.typeAcquisition.enabled": false
 }

@@ -356,10 +356,6 @@
     "command": "workbench.explorer.fileView.focus"
   },
   {
-    "key": "ctrl+cmd+r",
-    "command": "godot-tool.run_project"
-  },
-  {
     "key": "ctrl+shift+\\",
     "command": "workbench.action.openQuickChat.copilot"
   },
@@ -390,11 +386,15 @@
   {
     "key": "ctrl+shift+cmd+r",
     "command": "workbench.action.reloadWindow",
-    "when": "isDevelopment"
+    "when": "false"
   },
   {
     "key": "cmd+r",
     "command": "-workbench.action.reloadWindow",
     "when": "isDevelopment"
+  },
+  {
+    "key": "ctrl+cmd+r",
+    "command": "typescript.restartTsServer"
   }
 ]
