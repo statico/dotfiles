@@ -197,6 +197,7 @@ alias gsmu='git submodule update --init --recursive'
 alias gss='git show -p --stat'
 alias gt='git tag'
 alias gu='git unstage'
+alias gundo='git undo'
 alias gup='git up'
 alias gus='git unstage'
 alias gvc='vim `git diff --name-only --diff-filter=U`'
@@ -210,6 +211,7 @@ alias iurl='xcrun simctl openurl booted'
 alias jqi='_jqi () { echo "" | fzf --print-query --preview "cat $@ | jq {q}" }; _jqi'
 alias k='tree -h'
 alias l="ls -lh"
+alias lg='l --git'
 alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
@@ -389,8 +391,8 @@ randpass() {
 
 # Latest file in a directory or that matches a pattern.
 latest() {
-  if _has exa ; then
-    exa -r -sold --oneline $@ | tail -n1
+  if _has eza ; then
+    eza -r -sold --oneline $@ | tail -n1
   else
     ls -ltr1 $@ | tail -n1
   fi
@@ -781,6 +783,11 @@ if [ -e "$HOME/.ssh/config" -a ! -e "$HOME/.ssh/skip-host-aliases" ]; then
       alias $host="ssh $host"
     fi
   done
+fi
+
+# Fix SSH auth socket location so agent forwarding works with tmux.
+if test "$SSH_AUTH_SOCK" ; then
+  ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
 fi
 
 # FZF {{{1
