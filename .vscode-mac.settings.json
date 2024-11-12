@@ -93,7 +93,7 @@
   "rest-client.fontSize": 13,
   "scrolloff.scrolloff": 10,
   "search.exclude": {
-    "**/*.{png,jpeg,jpg,svg}": true,
+    "**/*.{png,jpeg,jpg}": true,
     "**/*.js.snap": true,
     "**/*.ts.snap": true,
     "**/yaml.lock": true
@@ -168,7 +168,7 @@
   "git.openRepositoryInParentFolders": "never",
   "editor.showFoldingControls": "never",
   "editor.guides.indentation": false,
-  "editor.lineNumbers": "off",
+  "editor.lineNumbers": "on",
   "update.showReleaseNotes": false,
   "editor.fontSize": 15,
   "explorer.autoRevealExclude": {
@@ -216,5 +216,6 @@
   "window.density.editorTabHeight": "compact",
   "typescript.tsserver.maxTsServerMemory": 15000,
   "typescript.tsserver.log": "off",
-  "typescript.tsserver.web.typeAcquisition.enabled": false
+  "typescript.tsserver.web.typeAcquisition.enabled": false,
+  "terminal.integrated.scrollback": 100000
 }

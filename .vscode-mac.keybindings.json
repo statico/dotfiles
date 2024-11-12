@@ -396,5 +396,9 @@
   {
     "key": "ctrl+cmd+r",
     "command": "typescript.restartTsServer"
+  },
+  {
+    "key": "ctrl+shift+cmd+o",
+    "command": "git.closeAllUnmodifiedEditors"
   }
 ]

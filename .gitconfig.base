@@ -40,6 +40,7 @@
 	am = commit --amend --no-edit
 	ama = commit --amend --no-edit -a
 	b = branch
+	bi = bisect
 	bnew = checkout -b
 	ci = commit
 	cia = commit --amend
