@@ -95,6 +95,11 @@ _force_prepend_to_path /usr/local/bin
 _force_prepend_to_path ~/bin
 _append_to_path /usr/sbin
 
+# Add Homebrew early
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # ALIASES {{{1
 
 alias Ac='sudo apt autoclean'
@@ -126,6 +131,7 @@ alias dcrs='dc pull ; dc down ; dc up -d'
 alias dls='dpkg -L'
 alias dpwd='docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" -u "$(id -u):$(id -g)" -it'
 alias dsl='dpkg -l | grep -i'
+alias exifclear='exiftool -overwrite_original -all='
 alias f1="awk '{print \$1}'"
 alias f2="awk '{print \$2}'"
 alias f2k9='f2k -9'
@@ -316,21 +322,19 @@ elif _try df -h ~; then
   alias df='df -h'
 fi
 
-# We should definitely have Gnu coreutils, right?
-if _try ls --color; then
-  alias ls='ls --color'
-fi
-
 # strace-like equivalent on macOS
 if _has dtruss && ! _has strace; then
   alias strace='sudo dtruss -f sudo -u $USER'
 fi
 
-# eza is a fancy replacement for ls
 if _has eza ; then
+  # eza is a fancy replacement for ls
   alias ls=eza
   alias l='ls -lg'
   alias ltr='eza -lgr -sold'
+elif _try ls --color; then
+  # We should definitely have Gnu coreutils, right?
+  alias ls='ls --color'
 fi
 
 # Try to get some version of tac
