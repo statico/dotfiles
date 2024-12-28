@@ -36,6 +36,16 @@
     "when": "textInputFocus && !editorReadonly"
   },
   {
+    "key": "ctrl+h",
+    "command": "workbench.action.navigateLeft",
+    "when": "!terminalFocus && !inChat"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.navigateRight",
+    "when": "!terminalFocus && !inChat"
+  },
+  {
     "key": "ctrl+c",
     "command": "workbench.action.closeQuickOpen",
     "when": "inQuickOpen"
@@ -163,12 +173,13 @@
   },
   {
     "key": "ctrl+h",
-    "command": "workbench.action.navigateLeft"
+    "command": "workbench.action.navigateLeft",
+    "when": "!terminalFocus && !inChat"
   },
   {
     "key": "ctrl+l",
     "command": "workbench.action.navigateRight",
-    "when": "!terminalFocus"
+    "when": "!terminalFocus && !inChat"
   },
   {
     "key": "shift+cmd+c",
@@ -400,5 +411,14 @@
   {
     "key": "ctrl+shift+cmd+o",
     "command": "git.closeAllUnmodifiedEditors"
+  },
+  {
+    "key": "ctrl+shift+cmd+i",
+    "command": "workbench.action.chat.newChat",
+    "when": "chatIsEnabled && inChat"
+  },
+  {
+    "key": "ctrl+cmd+i",
+    "command": "-workbench.action.chat.open"
   }
 ]

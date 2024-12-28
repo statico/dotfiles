@@ -179,12 +179,13 @@
   "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.colorTheme": "Horizon Default",
   "workbench.colorCustomizations": {
     "[Horizon Default]": {
       "sideBar.border": "#272833",
       "terminal.border": "#272833",
-      "panel.border": "#272833"
+      "panel.border": "#272833",
+      "sideBar.foreground": "#d5d8dae0",
+      "quickInputList.focusBackground": "#383949"
     }
   },
   "outline.collapseItems": "alwaysCollapse",
@@ -217,5 +218,26 @@
   "typescript.tsserver.maxTsServerMemory": 15000,
   "typescript.tsserver.log": "off",
   "typescript.tsserver.web.typeAcquisition.enabled": false,
-  "terminal.integrated.scrollback": 100000
+  "rust-analyzer.runnables.extraEnv": {
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
+  },
+  "rust-analyzer.server.extraEnv": {
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
+  },
+  "rust-analyzer.cargo.extraEnv": {
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
+  },
+  "rust-analyzer.check.extraEnv": {
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
+  },
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "rust-analyzer.inlayHints.chainingHints.enable": false,
+  "rust-analyzer.inlayHints.closingBraceHints.enable": false,
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "rust-analyzer.inlayHints.renderColons": false
 }
