@@ -1,6 +1,36 @@
 // Place your key bindings in this file to overwrite the defaults
 [
   {
+    "key": "cmd+r",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        {
+          "command": "workbench.action.tasks.terminate",
+          "args": "terminateAll"
+        },
+        {
+          "command": "workbench.action.tasks.build"
+        }
+      ]
+    }
+  },
+  {
+    "key": "cmd+shift+.",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        {
+          "command": "workbench.action.tasks.terminate",
+          "args": "terminateAll"
+        },
+        {
+          "command": "workbench.action.terminal.killAll"
+        }
+      ]
+    }
+  },
+  {
     "key": "ctrl+w",
     "command": "-workbench.action.switchWindow"
   },
@@ -37,8 +67,7 @@
   },
   {
     "key": "ctrl+h",
-    "command": "workbench.action.navigateLeft",
-    "when": "!terminalFocus && !inChat"
+    "command": "workbench.action.navigateLeft"
   },
   {
     "key": "ctrl+l",
@@ -170,11 +199,6 @@
     "key": "ctrl+e",
     "command": "extension.goto-previous-buffer",
     "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+h",
-    "command": "workbench.action.navigateLeft",
-    "when": "!terminalFocus && !inChat"
   },
   {
     "key": "ctrl+l",
@@ -413,12 +437,43 @@
     "command": "git.closeAllUnmodifiedEditors"
   },
   {
-    "key": "ctrl+shift+cmd+i",
+    "key": "ctrl+l",
     "command": "workbench.action.chat.newChat",
     "when": "chatIsEnabled && inChat"
   },
   {
     "key": "ctrl+cmd+i",
     "command": "-workbench.action.chat.open"
+  },
+  {
+    "key": "shift+cmd+r",
+    "command": "-workbench.action.reloadWindow",
+    "when": "isDevelopment"
+  },
+  {
+    "key": "shift+cmd+r",
+    "command": "-rerunSearchEditorSearch",
+    "when": "inSearchEditor"
+  },
+  {
+    "key": "shift+cmd+r",
+    "command": "workbench.action.tasks.terminate"
+  },
+  {
+    "key": "ctrl+shift+cmd+enter",
+    "command": "git.commit"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "-workbench.action.chat.newChat",
+    "when": "chatIsEnabled && inChat"
+  },
+  {
+    "key": "cmd+e",
+    "command": "-actions.findWithSelection"
+  },
+  {
+    "key": "cmd+e",
+    "command": "edit-csv.edit"
   }
 ]

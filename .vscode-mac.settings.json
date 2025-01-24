@@ -239,5 +239,6 @@
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   "rust-analyzer.inlayHints.closingBraceHints.enable": false,
   "chat.editing.alwaysSaveWithGeneratedChanges": true,
-  "rust-analyzer.inlayHints.renderColons": false
+  "rust-analyzer.inlayHints.renderColons": false,
+  "cline.vsCodeLmModelSelector": {}
 }
