@@ -21,8 +21,8 @@ OPTIONS=cursesgraphics
 OPTIONS=!hilite_pet
 OPTIONS=hilite_pile
 OPTIONS=perm_invent
-OPTIONS=IBMgraphics
-OPTIONS=roguesymset:RogueIBM
+#OPTIONS=IBMgraphics
+#OPTIONS=roguesymset:RogueIBM
 
 OPTIONS=!autoopen
 OPTIONS=align_message:top
