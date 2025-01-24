@@ -260,7 +260,9 @@ alias x='screen -A -x'
 alias yad='yarn add -D'
 alias ye='yarn exec'
 alias yeshist='HISTFILE=~/.zsh_history'
+alias youtube-dl='yt-dlp'
 alias yrd='yarn remove -D'
+alias ytdl='yt-dlp'
 
 # Interactive/verbose commands.
 alias mv='mv -i'
@@ -368,8 +370,8 @@ for cmd in convert heif-convert heif-enc heif-info heif-thumbnailer identify img
     alias $cmd="dpwd --entrypoint=$cmd dpokidov/imagemagick"
   fi
 done
-if ! _has youtube-dl ; then
-  alias youtube-dl='dpwd w33ble/youtube-dl'
+if ! _has yt-dlp ; then
+  alias youtube-dl='dpwd ghcr.io/jim60105/yt-dlp'
 fi
 if ! _has svgo ; then
   alias svgo='dpwd skhaz/svgo'
@@ -667,6 +669,9 @@ setopt share_history
 unsetopt bang_hist
 unsetopt extended_history
 setopt hist_ignore_space
+
+# Trim whitespace from history
+eval 'function zadd { history -w --trim; }'
 
 # Job Control
 setopt notify
