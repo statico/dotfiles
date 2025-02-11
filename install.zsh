@@ -95,6 +95,12 @@ else
   .vim/update.sh
 fi
 
+if [ -e "$HOME/Library" ]; then
+  echo "Adding extra keybindings to macOS..."
+  mkdir -p "$HOME/Library/KeyBindings"
+  symlink "$basedir/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+fi
+
 echo "Setting up git..."
 if [ -n "$VSCODE_REMOTE_CONTAINERS_SESSION" ]; then
   # VS Code won't add a .gitconfig if one already exists, so we need to put
