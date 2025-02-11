@@ -262,10 +262,6 @@
     "when": "workbench.panel.repl.view.active"
   },
   {
-    "key": "shift+cmd+y",
-    "command": "workbench.view.extension.test"
-  },
-  {
     "key": "ctrl+cmd+right",
     "command": "-workbench.action.terminal.resizePaneRight",
     "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
@@ -456,12 +452,40 @@
     "when": "inSearchEditor"
   },
   {
-    "key": "shift+cmd+r",
-    "command": "workbench.action.tasks.terminate"
+    "key": "ctrl+shift+cmd+enter",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        {
+          "command": "cursor.generateGitCommitMessage"
+        },
+        {
+          "command": "git.commit"
+        }
+      ]
+    }
   },
   {
-    "key": "ctrl+shift+cmd+enter",
-    "command": "git.commit"
+    "key": "cmd+y",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        { "command": "aichat.close-sidebar" },
+        { "command": "composer.openChatAsEditor" },
+        { "command": "workbench.action.joinAllGroups" }
+      ]
+    }
+  },
+  {
+    "key": "cmd+shift+y",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        { "command": "aichat.close-sidebar" },
+        { "command": "composer.openAsEditor" },
+        { "command": "workbench.action.joinAllGroups" }
+      ]
+    }
   },
   {
     "key": "ctrl+l",
@@ -475,5 +499,9 @@
   {
     "key": "cmd+e",
     "command": "edit-csv.edit"
+  },
+  {
+    "key": "shift+cmd+r",
+    "command": "workbench.action.tasks.runTask"
   }
 ]
