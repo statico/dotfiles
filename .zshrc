@@ -699,7 +699,7 @@ local __newline="
 if [ "$EUID" = "0" ]; then
   __sigil="# "
 elif `echo $LANG | grep -E -i 'utf-?8' &>/dev/null`; then
-  __sigil="〉"
+  __sigil="❯ "
 else
   __sigil="%# "
 fi
