@@ -1,4 +1,5 @@
 autojump
+bat
 coreutils
 eza
 fzf
