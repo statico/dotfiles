@@ -1,21 +1,6 @@
 // Place your key bindings in this file to overwrite the defaults
 [
   {
-    "key": "cmd+r",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        {
-          "command": "workbench.action.tasks.terminate",
-          "args": "terminateAll"
-        },
-        {
-          "command": "workbench.action.tasks.build"
-        }
-      ]
-    }
-  },
-  {
     "key": "cmd+shift+.",
     "command": "runCommands",
     "args": {
@@ -467,25 +452,7 @@
   },
   {
     "key": "cmd+y",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        { "command": "aichat.close-sidebar" },
-        { "command": "composer.openChatAsEditor" },
-        { "command": "workbench.action.joinAllGroups" }
-      ]
-    }
-  },
-  {
-    "key": "cmd+shift+y",
-    "command": "runCommands",
-    "args": {
-      "commands": [
-        { "command": "aichat.close-sidebar" },
-        { "command": "composer.openAsEditor" },
-        { "command": "workbench.action.joinAllGroups" }
-      ]
-    }
+    "command": "composer.openAsEditor"
   },
   {
     "key": "ctrl+l",
@@ -503,5 +470,9 @@
   {
     "key": "shift+cmd+r",
     "command": "workbench.action.tasks.runTask"
+  },
+  {
+    "key": "cmd+r",
+    "command": "workbench.action.tasks.reRunTask"
   }
 ]
