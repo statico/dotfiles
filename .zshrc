@@ -519,15 +519,7 @@ sci() {
 
 # Interactive git checkout with most recent branches last
 gco() {
-  local selected=$(_fzf_git_each_ref --no-multi --sort=committerdate)
-  [ -n "$selected" ] && git checkout "$selected"
-  return
-
-  local branch="$(git branch --sort=committerdate | tr -d '* ' | fzf --tac)"
-  if [ "$?" != "0" ] || [ "$branch" = "" ]; then
-    return
-  fi
-  git checkout "$branch"
+  _fzf_git_each_ref --no-multi | xargs git checkout
 }
 
 dance() {
