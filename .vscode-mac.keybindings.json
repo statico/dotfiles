@@ -455,6 +455,10 @@
     "command": "composer.openAsEditor"
   },
   {
+    "key": "cmd+shift+y",
+    "command": "workbench.action.joinAllGroups"
+  },
+  {
     "key": "ctrl+l",
     "command": "-workbench.action.chat.newChat",
     "when": "chatIsEnabled && inChat"
