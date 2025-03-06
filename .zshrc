@@ -793,7 +793,7 @@ if [ -e "$HOME/.ssh/config" -a ! -e "$HOME/.ssh/skip-host-aliases" ]; then
 fi
 
 # Fix SSH auth socket location so agent forwarding works with tmux.
-if test "$SSH_AUTH_SOCK" ; then
+if test "$SSH_AUTH_SOCK" && [ ! -e ~/.ssh/ssh_auth_sock ] ; then
   ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
 fi
 
