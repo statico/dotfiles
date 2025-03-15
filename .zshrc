@@ -58,6 +58,9 @@ if [ -w ~/.zsh_history -o -w ~ ]; then
   HISTFILE=~/.zsh_history
 fi
 
+# Shush, brew.
+HOMEBREW_NO_ENV_HINTS=1
+
 # APPLICATION CUSTOMIZATIONS {{{1
 
 export GREP_COLOR='1;32'
