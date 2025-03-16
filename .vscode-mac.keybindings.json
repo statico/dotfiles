@@ -220,10 +220,6 @@
     "command": "merge-conflict.next"
   },
   {
-    "key": "ctrl+shift+cmd+p",
-    "command": "merge-conflict.previous"
-  },
-  {
     "key": "shift+alt+f",
     "command": "eslint.executeAutofix"
   },
@@ -478,5 +474,9 @@
   {
     "key": "cmd+r",
     "command": "workbench.action.tasks.reRunTask"
+  },
+  {
+    "key": "ctrl+shift+cmd+p",
+    "command": "git.push"
   }
 ]
