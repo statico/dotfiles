@@ -57,7 +57,7 @@
   {
     "key": "ctrl+l",
     "command": "workbench.action.navigateRight",
-    "when": "!terminalFocus && !inChat"
+    "when": "!terminalFocus"
   },
   {
     "key": "ctrl+c",
@@ -184,11 +184,6 @@
     "key": "ctrl+e",
     "command": "extension.goto-previous-buffer",
     "when": "editorTextFocus"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "workbench.action.navigateRight",
-    "when": "!terminalFocus && !inChat"
   },
   {
     "key": "shift+cmd+c",
@@ -447,10 +442,6 @@
     }
   },
   {
-    "key": "cmd+y",
-    "command": "composer.openAsEditor"
-  },
-  {
     "key": "cmd+shift+y",
     "command": "workbench.action.joinAllGroups"
   },
@@ -478,5 +469,13 @@
   {
     "key": "ctrl+shift+cmd+p",
     "command": "git.push"
+  },
+  {
+    "key": "cmd+y",
+    "command": "-aichat.newfollowupaction"
+  },
+  {
+    "key": "cmd+y",
+    "command": "aichat.newfollowupaction"
   }
 ]
