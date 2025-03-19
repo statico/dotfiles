@@ -534,6 +534,12 @@ dance() {
   perl -e'$|++;@x=qw[/ | \\  |];$_=0;do{print"\e[9D:D-$x[$_++%4]-<"}while(sleep $|)'
 }
 
+randomize() {
+  for arg in $(printf "%s\n" "$@" | sort -R); do
+    echo "$arg"
+  done
+}
+
 # ZSH-SPECIFIC COMPLETION {{{1
 
 # Add new Zsh Completions repo
