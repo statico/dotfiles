@@ -103,6 +103,7 @@ fi
 
 echo "Setting up git..."
 if [ -n "$VSCODE_REMOTE_CONTAINERS_SESSION" ]; then
+  echo "VSCode remote container detected"
   # VS Code won't add a .gitconfig if one already exists, so we need to put
   # ours in a magical secondary location I found by reading the Git docs.
   altdir="$HOME/.althome"
@@ -112,10 +113,22 @@ if [ -n "$VSCODE_REMOTE_CONTAINERS_SESSION" ]; then
 else
   cp "$basedir/.gitconfig.base" "$HOME/.gitconfig"
 fi
+
 if which git-lfs >/dev/null 2>&1 ; then
+  echo "Installing git-lfs"
   git lfs install
 fi
-if which code >/dev/null 2>&1 ; then
+
+if which ksdiff >/dev/null 2>&1 ; then
+  echo "Found Kaleidoscope.app diff tool (ksdiff). Configuring git to use it."
+  git config --global difftool.Kaleidoscope.cmd 'ksdiff --partial-changeset --relative-path "$MERGED" -- "$LOCAL" "$REMOTE"'
+  git config --global difftool.prompt false
+  git config --global difftool.trustExitCode true
+  git config --global mergetool.Kaleidoscope.cmd 'ksdiff --merge --output "$MERGED" --base "$BASE" -- "$LOCAL" --snapshot "$REMOTE" --snapshot'
+  git config --global mergetool.trustExitCode true
+  git config --global diff.tool Kaleidoscope
+  git config --global merge.tool Kaleidoscope
+elif which code >/dev/null 2>&1 ; then
   echo "VS Code found. Configuring Git to use it."
   git config --global merge.tool vscode
   git config --global mergetool.vscode.cmd 'code --wait --merge $REMOTE $LOCAL $BASE $MERGED'
