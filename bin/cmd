@@ -1,0 +1,66 @@
+#!/bin/bash
+
+ask_ollama() {
+  # Default model if not specified
+  local model=${OLLAMA_MODEL:-"llama3.2"}
+  local port=${OLLAMA_PORT:-"11434"}
+  local timeout=${OLLAMA_TIMEOUT:-"60"}
+
+  # Check if at least one argument is provided
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: ask_ollama [query]"
+    echo "Example: ask_ollama 'how to find large files in linux?'"
+    return 1
+  fi
+
+  # Collect all arguments into a single query
+  local query="$*"
+
+  # Prepare the prompt for command suggestions
+  local prompt="Give me the exact macOS command line syntax to $query. Provide only the command, no explanations or markdown."
+
+  # Create a temporary file for the response
+  local tmp_file=$(mktemp)
+
+  # Make the request to Ollama
+  curl -s -X POST http://localhost:$port/api/generate -d "{
+    \"model\": \"$model\",
+    \"prompt\": \"$prompt\",
+    \"stream\": false
+  }" -m $timeout > "$tmp_file"
+
+  # Check if curl was successful
+  if [[ $? -ne 0 ]]; then
+    echo "Error connecting to Ollama. Is it running on port $port?"
+    rm "$tmp_file"
+    return 1
+  fi
+
+  # Extract and display just the response
+  local response=$(jq -r '.response' "$tmp_file" 2>/dev/null)
+
+  # Clean up
+  rm "$tmp_file"
+
+  if [[ -z "$response" ]]; then
+    echo "Failed to get a proper response from Ollama."
+    return 1
+  fi
+
+  # Print the response in a nicely formatted way
+  cmd=$(echo -n "$response" \
+    | sed 's/^```bash//g' \
+    | sed 's/^```//g' \
+    | sed 's/```$//g' \
+    | sed '/^$/d' \
+    | perl -lape's/^`(.+)`$/$1/g' \
+    | perl -lape's/^\$\s+//g' \
+  )
+  echo -e "\n\x1b[32m$cmd\x1b[0m\n"
+
+  # Copy it to the clipboard
+  echo -n "$cmd" | pbcopy
+}
+
+# Add an alias for convenience
+ask_ollama "$*"
