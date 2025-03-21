@@ -455,10 +455,6 @@
     "command": "-actions.findWithSelection"
   },
   {
-    "key": "cmd+e",
-    "command": "edit-csv.edit"
-  },
-  {
     "key": "shift+cmd+r",
     "command": "workbench.action.tasks.runTask"
   },

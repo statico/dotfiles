@@ -1,2 +1,6 @@
 model: ollama_chat/llama3.2
+  #model: ollama_chat/qwen2.5-coder:32b
 dark-mode: true
+no-check-update: true
+no-auto-commits: true
+yes-always: true
