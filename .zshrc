@@ -175,7 +175,6 @@ alias gfixup='git rebase -i HEAD~10'
 alias gfrb='git fetch && git rebase origin/main'
 alias gfrbc='grbc'
 alias gg='git checkout -'
-alias ggg='aider -m "/commit"'
 alias ggg-='git undo && ggg'
 alias gh='git stash'
 alias ghl='git stash list'
@@ -402,13 +401,14 @@ fi
 
 # FUNCTIONS {{{1
 
-# AI Helpers
+# AI helper for general knowledge, like "what is http code 401"
 ask() {
   local model="${OLLAMA_MODEL:-llama3.2}"
   local prompt="You are a helpful assistant.\nAnswer this question.\nBe very brief."
   ollama run "$model" "$prompt\n\n$*"
 }
 
+# AI helper for command line syntax, like "list subprocesses of pid 1234"
 cmd() {
   local tmp=$(mktemp)
   local model="${OLLAMA_MODEL:-llama3.2}"
@@ -422,8 +422,31 @@ cmd() {
     | perl -lape's/^`(.+)`$/$1/g' \
     | perl -lape's/^\$\s+//g' \
   )
+  rm -f "$tmp"
   echo -e "\n\x1b[32m$cmd\x1b[0m\n"
   echo -n "$cmd" | pbcopy
+}
+
+# AI helper to generate commit messages. The prompt is taken from Aider (https://github.com/Aider-AI/aider/blob/main/aider/prompts.py). This is faster since it doesn't need to load all of Aider or check for updates.
+ggg() {
+  local model="${OLLAMA_MODEL:-llama3.2}"
+  local prompt="You are an expert software engineer that generates concise, one-line Git commit messages based on the provided diffs. \
+Review the provided context and diffs which are about to be committed to a git repo. \
+Review the diffs carefully. \
+Generate a one-line commit message for those changes. \
+The commit message should be structured as follows: <type>: <description> \
+Use these for <type>: fix, feat, build, chore, ci, docs, style, refactor, perf, test \
+\
+Ensure the commit message: \
+- Starts with the appropriate prefix. \
+- Is in the imperative mood (e.g., \"Add feature\" not \"Added feature\" or \"Adding feature\"). \
+- Does not exceed 72 characters. \
+
+Reply only with the one-line commit message, without any additional text, explanations, or line breaks."
+  local msg=$(ollama run "$model" "$prompt\n\n$(git diff)\n$(git diff --cached)")
+  git add --all
+  git commit -q -m "$msg"
+  git log --oneline --decorate -n 1
 }
 
 # Generate passwords
