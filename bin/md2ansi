@@ -1,0 +1,108 @@
+#!/bin/bash
+#
+# md2ansi - Convert Markdown to ANSI-formatted text for terminal display
+# Usage: cat markdown.md | md2ansi
+#        echo "# Heading" | md2ansi
+#
+# Generated using Claude 3.7 Sonnet
+
+# ANSI color codes - using printf for proper escaping
+RESET=$(printf '\033[0m')
+BOLD=$(printf '\033[1m')
+DIM=$(printf '\033[2m')
+ITALIC=$(printf '\033[3m')
+UNDERLINE=$(printf '\033[4m')
+BLACK=$(printf '\033[30m')
+RED=$(printf '\033[31m')
+GREEN=$(printf '\033[32m')
+YELLOW=$(printf '\033[33m')
+BLUE=$(printf '\033[34m')
+MAGENTA=$(printf '\033[35m')
+CYAN=$(printf '\033[36m')
+WHITE=$(printf '\033[37m')
+BG_BLACK=$(printf '\033[40m')
+BG_GREEN=$(printf '\033[42m')
+BG_YELLOW=$(printf '\033[43m')
+BG_BLUE=$(printf '\033[44m')
+BG_MAGENTA=$(printf '\033[45m')
+BG_CYAN=$(printf '\033[46m')
+BG_WHITE=$(printf '\033[47m')
+
+# Check if input is coming from a pipe or redirect
+if [ -t 0 ]; then
+    echo "Error: No input provided. Please pipe or redirect Markdown text to md2ansi."
+    echo "Usage: cat file.md | md2ansi"
+    echo "       echo \"# Heading\" | md2ansi"
+    exit 1
+fi
+
+# Read all input from stdin
+input=$(cat)
+
+# Process the input line by line
+echo "$input" | while IFS= read -r line || [[ -n "$line" ]]; do
+    # Skip blank lines but preserve them in output
+    if [[ -z "$line" ]]; then
+        printf "\n"
+        continue
+    fi
+
+    # Headings (up to 6 levels)
+    if [[ "$line" =~ ^#\ +(.+)$ ]]; then
+        printf "${BOLD}${CYAN}${BASH_REMATCH[1]}${RESET}"
+    elif [[ "$line" =~ ^##\ +(.+)$ ]]; then
+        printf "%s%s%s%s\n" "${BOLD}" "${CYAN}" "${BASH_REMATCH[1]}" "${RESET}"
+    elif [[ "$line" =~ ^###\ +(.+)$ ]]; then
+        echo -e "${BOLD}${CYAN}${BASH_REMATCH[1]}${RESET}"
+    elif [[ "$line" =~ ^####\ +(.+)$ ]]; then
+        echo -e "${BOLD}${CYAN}${BASH_REMATCH[1]}${RESET}"
+    elif [[ "$line" =~ ^#####\ +(.+)$ ]]; then
+        echo -e "${BOLD}${CYAN}${BASH_REMATCH[1]}${RESET}"
+    elif [[ "$line" =~ ^######\ +(.+)$ ]]; then
+        echo -e "${BOLD}${CYAN}${BASH_REMATCH[1]}${RESET}"
+
+    # Unordered lists
+    elif [[ "$line" =~ ^[*+-]\ +(.+)$ ]]; then
+        printf "  %s•%s %s\n" "${YELLOW}" "${RESET}" "${BASH_REMATCH[1]}"
+
+    # Ordered lists
+    elif [[ "$line" =~ ^[0-9]+\.\ +(.+)$ ]]; then
+        num="${line%%.*}"
+        printf "  %s%s.%s %s\n" "${YELLOW}" "${num}" "${RESET}" "${BASH_REMATCH[1]}"
+
+    # Blockquotes
+    elif [[ "$line" =~ ^\>\ +(.+)$ ]]; then
+        printf "%s%s│%s %s%s%s\n" "${BG_BLACK}" "${GREEN}" "${RESET}" "${GREEN}" "${BASH_REMATCH[1]}" "${RESET}"
+
+    # Code blocks (single line with backticks)
+    elif [[ "$line" =~ ^\ *\`\`\`(.*)$ ]]; then
+        printf "%s%s %s %s\n" "${DIM}" "${BG_BLACK}" "${BASH_REMATCH[1]}" "${RESET}"
+
+    # Horizontal rule
+    elif [[ "$line" =~ ^(\*{3,}|-{3,}|_{3,})$ ]]; then
+        hr=$(printf '%*s' "$(tput cols)" '' | tr ' ' '-')
+        printf "%s%s%s%s\n" "${DIM}" "${YELLOW}" "${hr}" "${RESET}"
+
+    # Regular text with inline formatting
+    else
+        # Start with the original line
+        formatted_line="$line"
+        
+        # Process inline code first (to avoid issues with other formatting inside code)
+        # We need to be careful with backticks in sed
+        formatted_line=$(echo "$formatted_line" | sed -E "s/\`([^\`]+)\`/${BG_BLACK}${WHITE}\1${RESET}/g")
+        
+        # Replace bold patterns
+        formatted_line=$(echo "$formatted_line" | sed -E "s/(\*\*|__)([^\*_]+)(\*\*|__)/${BOLD}\2${RESET}/g")
+        
+        # Replace italic patterns (after bold to avoid confusion)
+        formatted_line=$(echo "$formatted_line" | sed -E "s/(\*|_)([^\*_]+)(\*|_)/${ITALIC}\2${RESET}/g")
+        
+        # Highlight links
+        formatted_line=$(echo "$formatted_line" | sed -E "s/\[([^\]]+)\]\(([^\)]+)\)/${UNDERLINE}${BLUE}\1${RESET} (${DIM}\2${RESET})/g")
+        
+        printf "%s\n" "$formatted_line"
+    fi
+done
+
+exit 0

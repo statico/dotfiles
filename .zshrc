@@ -404,8 +404,12 @@ fi
 # AI helper for general knowledge, like "what is http code 401"
 ask() {
   local model="${OLLAMA_MODEL:-llama3.2}"
-  local prompt="You are a helpful assistant.\nAnswer this question.\nBe very brief."
-  ollama run "$model" "$prompt\n\n$*"
+  local prompt="You are a helpful assistant.\nAnswer this question.\nBe very brief. Markdown is allowed."
+  if [ -t 1 ]; then
+    ollama run "$model" "$prompt\n\n$*" | md2ansi
+  else
+    ollama run "$model" "$prompt\n\n$*"
+  fi
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
@@ -425,6 +429,18 @@ cmd() {
   rm -f "$tmp"
   echo -e "\n\x1b[32m$cmd\x1b[0m\n"
   echo -n "$cmd" | pbcopy
+}
+
+# AI helper that accepts stdin
+gpt() {
+  local content=$(cat)
+  local model="${OLLAMA_MODEL:-llama3.2}"
+  local prompt="You are a helpful assistant. Your response should be concise and to the point. For the content below, you need to: ${1-summarize, explain, or otherwise help with the content.}\n\n$content"
+  if [ -t 1 ]; then
+    ollama run "$model" "$prompt\n\n$*" | md2ansi
+  else
+    ollama run "$model" "$prompt\n\n$*"
+  fi
 }
 
 # AI helper to generate commit messages. The prompt is taken from Aider (https://github.com/Aider-AI/aider/blob/main/aider/prompts.py). This is faster since it doesn't need to load all of Aider or check for updates.
