@@ -122,7 +122,6 @@ alias ZshRehash='. ~/.zshrc'
 alias a='aider'
 alias aag='agg'
 alias agg='_agg () { rg --group $@ | less }; _agg'
-alias ask='_ask () { ollama run "${OLLAMA_MODEL:-llama3.2}" "You are a helpful assistant.\nAnswer this question.\nBe very brief.\n\n$*" }; _ask'
 alias aurl='adb shell am start -a "android.intent.action.VIEW" -d'
 alias b='bat'
 alias bc='bc -l'
@@ -402,6 +401,30 @@ if [ -e /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then
 fi
 
 # FUNCTIONS {{{1
+
+# AI Helpers
+ask() {
+  local model="${OLLAMA_MODEL:-llama3.2}"
+  local prompt="You are a helpful assistant.\nAnswer this question.\nBe very brief."
+  ollama run "$model" "$prompt\n\n$*"
+}
+
+cmd() {
+  local tmp=$(mktemp)
+  local model="${OLLAMA_MODEL:-llama3.2}"
+  local prompt="Give me the exact macOS command line syntax for this description. Provide only the command, no explanations or markdown."
+  ollama run "$model" "$prompt\n\n$*" >"$tmp"
+  cmd=$(cat "$tmp" \
+    | sed 's/^```bash//g' \
+    | sed 's/^```//g' \
+    | sed 's/```$//g' \
+    | sed '/^$/d' \
+    | perl -lape's/^`(.+)`$/$1/g' \
+    | perl -lape's/^\$\s+//g' \
+  )
+  echo -e "\n\x1b[32m$cmd\x1b[0m\n"
+  echo -n "$cmd" | pbcopy
+}
 
 # Generate passwords
 randpass() {
