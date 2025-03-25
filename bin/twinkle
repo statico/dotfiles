@@ -44,7 +44,7 @@ fi
 
 # Array of color codes (normal and bold variants)
 colors=(
-    "\033[0;30m" "\033[1;30m"  # black
+    "\033[1;30m"  # bright black only
     "\033[0;34m" "\033[1;34m"  # blue
     "\033[0;36m" "\033[1;36m"  # cyan
     "\033[0;37m" "\033[1;37m"  # white
