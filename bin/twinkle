@@ -1,0 +1,91 @@
+#!/bin/bash
+
+# Parse command line arguments
+delay=${1:-100}  # Default to 100ms if no argument provided
+delay=$(bc <<< "scale=3; $delay/1000")  # Convert ms to seconds
+
+# Function to show cursor
+show_cursor() {
+    printf "\033[?25h"
+}
+
+# Hide cursor and set up trap to show it on exit
+printf "\033[?25l"
+trap show_cursor EXIT
+
+# Read all input into an array
+declare -a lines
+while IFS= read -r line; do
+    lines+=("$line")
+done
+
+# Store the original text and create an array of non-whitespace positions
+text=""
+declare -a positions=()
+current_pos=0
+for line in "${lines[@]}"; do
+    text+="$line"$'\n'
+    for ((i=0; i<${#line}; i++)); do
+        if [[ ! "${line:$i:1}" =~ [[:space:]] ]]; then
+            positions+=("$current_pos")
+        fi
+        ((current_pos++))
+    done
+    ((current_pos++)) # Account for newline
+done
+
+# Check if we have any non-whitespace characters
+if [ ${#positions[@]} -eq 0 ]; then
+    echo "Error: Input contains only whitespace"
+    exit 1
+fi
+
+# Array of color codes (normal and bold variants)
+colors=(
+    "\033[0;30m" "\033[1;30m"  # black
+    "\033[0;34m" "\033[1;34m"  # blue
+    "\033[0;36m" "\033[1;36m"  # cyan
+    "\033[0;37m" "\033[1;37m"  # white
+)
+
+# Initialize color state array
+declare -a color_states
+for ((i=0; i<${#text}; i++)); do
+    color_states[$i]=""
+done
+
+# Function to print the text with a twinkling character
+print_twinkling() {
+    local pos=$1
+    local color=$2
+    local char="${text:$pos:1}"
+    printf "%b%s" "$color" "$char"
+}
+
+# Clear screen once at the start
+clear
+
+# Main loop
+while true; do
+    # Move cursor to home position
+    printf "\033[H"
+
+    # Get random position and color
+    random_pos=${positions[$RANDOM % ${#positions[@]}]}
+    random_color=${colors[$RANDOM % ${#colors[@]}]}
+
+    # Update the color state for this position
+    color_states[$random_pos]=$random_color
+
+    # Print the text with all colored characters
+    for ((i=0; i<${#text}; i++)); do
+        if [[ -n "${color_states[$i]}" ]]; then
+            print_twinkling "$i" "${color_states[$i]}"
+        else
+            printf "%s" "${text:$i:1}"
+        fi
+    done
+
+    sleep "$delay"
+done
+
