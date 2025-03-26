@@ -59,7 +59,7 @@ if [ -w ~/.zsh_history -o -w ~ ]; then
 fi
 
 # Shush, brew.
-HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_ENV_HINTS=1
 
 # APPLICATION CUSTOMIZATIONS {{{1
 
