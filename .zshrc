@@ -465,25 +465,6 @@ Reply only with the one-line commit message, without any additional text, explan
   git log --oneline --decorate -n 1
 }
 
-# AI helper to git stash with an LLM-generated message.
-unalias gh
-gh() {
-  local model="${OLLAMA_MODEL:-llama3.2}"
-  local prompt="You are an expert software engineer. \
-Summarize the changes made in the following git diff output: \
-\
-\n\n<content>\n \
-$(git diff)\n$(git diff --cached)\n \
-</content>\n\n \
-\
-Respond with a single line of text."
-  echo $prompt
-  echo
-  local msg=$(ollama run "$model" "$prompt")
-  echo $msg
-  # git stash -q -m "$msg" && git stash list | head -n1
-}
-
 # Generate passwords
 randpass() {
   local len=${1:-32}
