@@ -894,7 +894,7 @@ fi
 
 # FZF {{{1
 
-for dir in ~/.fzf /usr/share/fzf /usr/local/opt/fzf/shell /opt/homebrew/opt/fzf/shell ~/.zsh-completions-fzf ; do
+for dir in ~/.fzf /usr/share/fzf /usr/local/opt/fzf/shell /opt/homebrew/opt/fzf/shell ; do
   if [ -e $dir ]; then
     [ -e $dir/completion.zsh ] && source $dir/completion.zsh
     [ -e $dir/key-bindings.zsh ] && source $dir/key-bindings.zsh

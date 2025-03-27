@@ -39,11 +39,6 @@ if ! which git >/dev/null ; then
   exit 1
 fi
 
-if ! which curl >/dev/null ; then
-  echo "Error: curl is not installed"
-  exit 1
-fi
-
 if [ -d "$basedir/.git" ]; then
   echo "Updating dotfiles using existing git..."
   cd "$basedir"
@@ -59,12 +54,6 @@ cd "$basedir"
 echo "Updating common Zsh completions..."
 rm -rf .zsh-completions ~/.zcompdump
 git clone --quiet --depth=1 https://github.com/zsh-users/zsh-completions .zsh-completions
-(
-  mkdir -p ~/.zsh-completions-fzf
-  cd ~/.zsh-completions-fzf
-  curl -O https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh
-  curl -O https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh
-)
 
 echo "Creating symlinks..."
 for item in .* ; do
