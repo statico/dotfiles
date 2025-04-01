@@ -681,7 +681,7 @@ bindkey -e
 
 # One keystroke to cd ..
 bindkey -s '\eu' '\eq^Ucd ..; ls^M'
-bindkey -s '¨' '\eq^Ucd ..; ls^M'
+#bindkey -s '¨' '\eq^Ucd ..; ls^M'
 
 # Smart less-adder
 bindkey -s "\el" "^E 2>&1|less^M"
