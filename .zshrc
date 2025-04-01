@@ -238,6 +238,7 @@ alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
 alias p1='patch -p1'
 alias p='pnpm'
+alias pg_dump_cleanup="sed -e '/^$/d' -e '/^--/d' -e '/^SET/d'"
 alias pi='pnpm install'
 alias pkgcat='lsbom -f -l -s -pf'
 alias pkginstall='sudo installer -target / -pkg'
