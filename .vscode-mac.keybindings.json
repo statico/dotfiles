@@ -473,5 +473,9 @@
   {
     "key": "cmd+y",
     "command": "aichat.newfollowupaction"
+  },
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
   }
 ]

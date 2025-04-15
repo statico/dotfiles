@@ -216,7 +216,7 @@ alias gt='git tag'
 alias gu='git unstage'
 alias gun='git unstage'
 alias gundo='git undo'
-alias gup='git up'
+alias gup='git up "$(git branch --show-current)"'
 alias gus='git unstage'
 alias gvc='vim `git diff --name-only --diff-filter=U`'
 alias gvm='vim `git diff --name-only --diff-filter=M`'
@@ -680,8 +680,8 @@ zle -N self-insert url-quote-magic
 bindkey -e
 
 # One keystroke to cd ..
-bindkey -s '\eu' '\eq^Ucd ..; ls^M'
-#bindkey -s '¨' '\eq^Ucd ..; ls^M'
+bindkey -s '\eu' '\eq^Ucd ..; ls^M^U^U'
+#bindkey -s '¨' '\eq^Ucd ..; ls^M^U^U'
 
 # Smart less-adder
 bindkey -s "\el" "^E 2>&1|less^M"
