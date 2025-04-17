@@ -4,7 +4,12 @@
 #
 # Displays a big horizontal rule in the terminal with an optional header.
 
-w="$(tput cols)"
+if [ which tput >/dev/null 2>&1 ]; then
+  w="$(tput cols)"
+else
+  w=60
+fi
+
 color='30;1'
 char='━'
 title="$(echo $* | tr a-z A-Z )"
