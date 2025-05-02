@@ -400,6 +400,11 @@ if [ -e /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then
   alias tailscale='/Applications/Tailscale.app/Contents/MacOS/Tailscale'
 fi
 
+# Default to nslookup if host is missing (Alpine linux)
+if ! _has host ; then
+  alias host=nslookup
+fi
+
 # FUNCTIONS {{{1
 
 # AI helper for general knowledge, like "what is http code 401"
