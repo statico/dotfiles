@@ -29,7 +29,9 @@ _versionof() {
 
 # ENVIRONMENT VARIABLES {{{1
 
-if _has less; then
+if _has bat ; then
+  export PAGER=bat
+elif _has less; then
   export PAGER=less
   export LESS='-Ri'
 fi
