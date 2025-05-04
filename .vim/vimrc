@@ -518,6 +518,7 @@ au BufNewFile,BufRead COMMIT_EDITMSG setlocal nolist nonumber
 au BufNewFile,BufRead Makefile setlocal nolist
 au BufNewFile,BufRead dist/* set ft=text
 au BufNewFile,BufRead Caddyfile setlocal nolist ts=4 sw=4 noet
+au BufNewFile,BufRead *crontabs* setf crontab
 
 au FileType gitcommit setlocal nolist ts=4 sts=4 sw=4 noet
 au FileType inform7 setlocal nolist tw=0 ts=4 sw=4 noet foldlevel=999
