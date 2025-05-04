@@ -123,7 +123,7 @@ alias ZshInstall='~/.dotfiles/install.zsh && ZR'
 alias ZshRehash='. ~/.zshrc'
 alias a='aider'
 alias aag='agg'
-alias agg='_agg () { rg --group $@ | less }; _agg'
+alias agg='_agg () { rg --group $@ | $PAGER }; _agg'
 alias aurl='adb shell am start -a "android.intent.action.VIEW" -d'
 alias b='bat'
 alias bc='bc -l'
@@ -248,7 +248,7 @@ alias pkgls='ls /var/db/receipts/'
 alias pt='pstree -pul'
 alias rake='noglob rake'
 alias randnum='python -S -c "import random; print(random.SystemRandom().randrange(10**7,10**8))"'
-alias rgg='_rgg () { rg --color always --heading $@ | less }; _rgg'
+alias rgg='_rgg () { rg --color always --heading $@ | $PAGER }; _rgg'
 alias ri='ri -f ansi'
 alias rls='screen -ls'
 alias rrg='rgg'
@@ -691,8 +691,8 @@ bindkey -s '\eu' '\eq^Ucd ..; ls^M^U^U'
 #bindkey -s '¨' '\eq^Ucd ..; ls^M^U^U'
 
 # Smart less-adder
-bindkey -s "\el" "^E 2>&1|less^M"
-bindkey -s "¬" "^E 2>&1|less^M"
+bindkey -s "\el" "^E 2>&1|$PAGER^M"
+bindkey -s "¬" "^E 2>&1|$PAGER^M"
 
 # This lets me use ^Z to toggle between open text editors.
 bindkey -s '^Z' '^Ufg^M'
