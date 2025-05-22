@@ -183,7 +183,7 @@
   {
     "key": "ctrl+e",
     "command": "extension.goto-previous-buffer",
-    "when": "editorTextFocus"
+    "when": "editorTextFocus && vim.mode == 'Normal'"
   },
   {
     "key": "shift+cmd+c",
