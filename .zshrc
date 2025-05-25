@@ -177,7 +177,7 @@ alias gfixup='git rebase -i HEAD~10'
 alias gfrb='git fetch && git rebase origin/main'
 alias gfrbc='grbc'
 alias gg='git checkout -'
-alias ggg='aider -m "/commit"'
+alias ggg='git add --all :/ ; aider --no-check-update -m "/commit"'
 alias ggg-='git undo && ggg'
 alias gh='git stash'
 alias ghl='git stash list'
@@ -410,46 +410,14 @@ fi
 
 # FUNCTIONS {{{1
 
-# AI helper for general knowledge, like "what is http code 401"
-ask() {
-  local model="${OLLAMA_MODEL:-llama3.2}"
-  local prompt="You are a helpful assistant.\nAnswer this question.\nBe very brief. Markdown is allowed."
-  if [ -t 1 ]; then
-    ollama run "$model" "$prompt\n\n$*" | md2ansi
-  else
-    ollama run "$model" "$prompt\n\n$*"
-  fi
-}
-
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
 cmd() {
-  local tmp=$(mktemp)
-  local model="${OLLAMA_MODEL:-llama3.2}"
-  local prompt="Give me the exact macOS command line syntax for this description. Provide only the command, no explanations or markdown."
-  ollama run "$model" "$prompt\n\n$*" >"$tmp"
-  cmd=$(cat "$tmp" \
-    | sed 's/^```bash//g' \
-    | sed 's/^```//g' \
-    | sed 's/```$//g' \
-    | sed '/^$/d' \
-    | perl -lape's/^`(.+)`$/$1/g' \
-    | perl -lape's/^\$\s+//g' \
-  )
-  rm -f "$tmp"
+  if ! _has llm; then
+    echo "llm tool not installed, run 'uv tool install llm'"
+  fi
+  local cmd="$(llm -x "Show me a macOS command line command for the following: $*")"
   echo -e "\n\x1b[32m$cmd\x1b[0m\n"
   echo -n "$cmd" | pbcopy
-}
-
-# AI helper that accepts stdin
-gpt() {
-  local content=$(cat)
-  local model="${OLLAMA_MODEL:-llama3.2}"
-  local prompt="You are a helpful assistant. Your response should be concise and to the point. For the content below, you need to: ${1-summarize, explain, or otherwise help with the content.}\n\n$content"
-  if [ -t 1 ]; then
-    ollama run "$model" "$prompt\n\n$*" | md2ansi
-  else
-    ollama run "$model" "$prompt\n\n$*"
-  fi
 }
 
 # Generate passwords
@@ -822,17 +790,22 @@ randomcolorprompt() {
   colorprompt "38;5;$color"
 }
 
+# Just show our prompt character with colors.
+# Add an extra line between commands for better copying into docs.
 shortprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
-  unfunction precmd &>/dev/null
+  precmd() { echo }
   PS1="%{[${__prompt_mode}m%}$%{[0m%} "
 }
 
+# Just show `$` as a prompt character, no color.
+# Add an extra line between commands for better copying into docs.
 simpleprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
   unfunction precmd &>/dev/null
+  precmd() { echo }
   PS1="$ "
 }
 
