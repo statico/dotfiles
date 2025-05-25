@@ -432,6 +432,9 @@
     "command": "runCommands",
     "args": {
       "commands": [
+        // {
+        //   "command": "git.commitAll"
+        // }
         {
           "command": "cursor.generateGitCommitMessage"
         },
@@ -440,10 +443,6 @@
         }
       ]
     }
-  },
-  {
-    "key": "cmd+shift+y",
-    "command": "workbench.action.joinAllGroups"
   },
   {
     "key": "ctrl+l",
@@ -477,5 +476,14 @@
   {
     "key": "cmd+i",
     "command": "composerMode.agent"
+  },
+  {
+    "key": "ctrl+cmd+e",
+    "command": "testing.runAll"
+  },
+  {
+    "key": "shift+cmd+y",
+    "command": "composer.closeComposerTab",
+    "when": "composerFocused || focusedView =~ /^workbench.panel.aichat.view/"
   }
 ]
