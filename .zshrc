@@ -122,7 +122,6 @@ alias ZU='~/.dotfiles/install.zsh && ZR'
 alias ZshInstall='~/.dotfiles/install.zsh && ZR'
 alias ZshRehash='. ~/.zshrc'
 alias a='aider'
-alias ask='_ask () { llm "$*" }; _ask'
 alias aurl='adb shell am start -a "android.intent.action.VIEW" -d'
 alias b='bat'
 alias bc='bc -l'
@@ -408,6 +407,15 @@ if ! _has host ; then
 fi
 
 # FUNCTIONS {{{1
+
+# Generic helper to ask an LLM about anything
+ask() {
+  if _has md2term ; then
+    llm "$*" | md2term
+  else
+    llm "$*"
+  fi
+}
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
 cmd() {
