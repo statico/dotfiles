@@ -38,6 +38,8 @@ fi
 
 if [ "$TERM_PROGRAM" = "vscode" ]; then
   export EDITOR=code VISUAL=less
+  # Cursor agents get hung up with git commands sometimes
+  export GIT_PAGER=cat
 elif _has vim; then
   export EDITOR=vim VISUAL=vim
 elif _has vi; then
@@ -816,7 +818,10 @@ simpleprompt() {
   PS1="$ "
 }
 
-if [ -n "$SUDO_USER" ]; then
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+  # Use simple prompt for Cursor & LLMs
+  simpleprompt
+elif [ -n "$SUDO_USER" ]; then
   colorprompt '33;1'
 else
   colorprompt
