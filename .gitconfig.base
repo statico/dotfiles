@@ -12,6 +12,7 @@
 	defaultBranch = main
 [log]
 	decorate = short
+	follow = true
 [fetch]
 	prune = true
 	output = compact
