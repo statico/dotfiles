@@ -77,7 +77,6 @@
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true
   },
-  "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "git.path": "/usr/local/bin/git",
