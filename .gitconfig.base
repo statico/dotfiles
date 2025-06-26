@@ -81,6 +81,7 @@
 	unstage = reset HEAD
 	untracked = ls-files --others --exclude-standard
 	up = pull --rebase origin
+	wt = worktree
 	yesterday = diff --stat 'HEAD@{yesterday}' 'HEAD@{midnight}'
 [color]
 	diff = auto
