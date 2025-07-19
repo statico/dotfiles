@@ -193,6 +193,7 @@ alias gll='git quicklog-long'
 alias gls='git log --show-signature'
 alias gm='git merge'
 alias gmm='git merge --no-edit main'
+alias gmnc='git merge --no-commit'
 alias gmom='git merge --no-edit origin/main'
 alias gmt='git mergetool'
 alias gn='git newb'
@@ -210,6 +211,7 @@ alias grba='git rebase --abort'
 alias grbc='GIT_EDITOR=true git rebase --continue'
 alias grbi='git rebase -i'
 alias grbs='git rebase --skip'
+alias grm='git reset main'
 alias gs='git show -p'
 alias gsm='git submodule'
 alias gsmu='git submodule update --init --recursive'
@@ -712,6 +714,16 @@ setopt notify
 
 # PROMPT AWESOMENESS {{{1
 
+# Since we're setting precmd here, we might also add our hook that updates the
+# iTerm title bar with the current directory.
+if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+  _terminal-precmd() {
+    echo -ne "\033]0;${PWD##*/}\007"
+  }
+else
+  _terminal-precmd() {}
+fi
+
 # Turn on prompt substitution.
 setopt PROMPT_SUBST
 
@@ -773,6 +785,7 @@ colorprompt() {
 
   bindkey "^L" clear-screen-and-precmd
   precmd() {
+    _terminal-precmd
     print -P $__first_prompt_line
   }
   PS1=${(j::)line2}
@@ -789,7 +802,9 @@ uncolorprompt() {
     "%n $__sigil "
   )
   bindkey "^L" clear-screen
-  unfunction precmd &>/dev/null
+  precmd() {
+    _terminal-precmd
+  }
   PS1=${(j::)temp}
 }
 
@@ -803,7 +818,10 @@ randomcolorprompt() {
 shortprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
-  precmd() { echo }
+  precmd() {
+    _terminal-precmd
+    echo
+  }
   PS1="%{[${__prompt_mode}m%}$%{[0m%} "
 }
 
@@ -813,7 +831,10 @@ simpleprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
   unfunction precmd &>/dev/null
-  precmd() { echo }
+  precmd() {
+    _terminal-precmd
+    echo
+  }
   PS1="$ "
 }
 
