@@ -363,10 +363,6 @@
     "command": "workbench.explorer.fileView.focus"
   },
   {
-    "key": "ctrl+shift+\\",
-    "command": "workbench.action.openQuickChat.copilot"
-  },
-  {
     "key": "alt+cmd+left",
     "command": "workbench.action.moveEditorLeftInGroup"
   },
@@ -409,15 +405,6 @@
     "command": "git.closeAllUnmodifiedEditors"
   },
   {
-    "key": "ctrl+l",
-    "command": "workbench.action.chat.newChat",
-    "when": "chatIsEnabled && inChat"
-  },
-  {
-    "key": "ctrl+cmd+i",
-    "command": "-workbench.action.chat.open"
-  },
-  {
     "key": "shift+cmd+r",
     "command": "-workbench.action.reloadWindow",
     "when": "isDevelopment"
@@ -445,11 +432,6 @@
     }
   },
   {
-    "key": "ctrl+l",
-    "command": "-workbench.action.chat.newChat",
-    "when": "chatIsEnabled && inChat"
-  },
-  {
     "key": "cmd+e",
     "command": "-actions.findWithSelection"
   },
@@ -466,14 +448,6 @@
     "command": "git.push"
   },
   {
-    "key": "cmd+y",
-    "command": "-aichat.newfollowupaction"
-  },
-  {
-    "key": "cmd+y",
-    "command": "aichat.newfollowupaction"
-  },
-  {
     "key": "cmd+i",
     "command": "composerMode.agent"
   },
@@ -482,8 +456,7 @@
     "command": "testing.runAll"
   },
   {
-    "key": "shift+cmd+y",
-    "command": "composer.closeComposerTab",
-    "when": "composerFocused || focusedView =~ /^workbench.panel.aichat.view/"
+    "key": "cmd+e",
+    "command": "composerMode.background"
   }
 ]
