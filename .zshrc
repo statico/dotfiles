@@ -103,6 +103,8 @@ _force_prepend_to_path() {
 _force_prepend_to_path /usr/local/sbin
 _force_prepend_to_path /usr/local/bin
 _force_prepend_to_path ~/bin
+_prepend_to_path ~/go/bin
+_prepend_to_path ~/.local/bin
 _append_to_path /usr/sbin
 
 # Add Homebrew early
