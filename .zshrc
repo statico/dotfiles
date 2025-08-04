@@ -276,6 +276,8 @@ alias yeshist='HISTFILE=~/.zsh_history'
 alias youtube-dl='yt-dlp'
 alias yrd='yarn remove -D'
 alias ytdl='yt-dlp'
+alias ytdl-audio='yt-dlp -x'
+alias ytdl-subtitles='yt-dlp --write-sub --write-auto-sub --skip-download'
 
 # Interactive/verbose commands.
 alias mv='mv -i'
