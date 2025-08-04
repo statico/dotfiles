@@ -177,7 +177,6 @@ alias gfrbc='grbc'
 alias gg='git checkout -'
 alias ggg='git add --all :/ ; aider --no-check-update -m "/commit"'
 alias ggg-='git undo && ggg'
-alias gh='git stash'
 alias ghl='git stash list'
 alias ghp='git stash pop'
 alias ghs='git stash save'
@@ -567,6 +566,19 @@ randomize() {
   for arg in $(printf "%s\n" "$@" | sort -R); do
     echo "$arg"
   done
+}
+
+quote-clipboard() {
+  local content=$(pbpaste)
+
+  # Check if content already starts with "> "
+  if [[ "${content:0:2}" == "> " ]]; then
+    echo "Content already quoted"
+  else
+    # Add "> " to each line
+    echo "$content" | sed 's/^/> /' | pbcopy
+    echo "Added quotes to clipboard content"
+  fi
 }
 
 # ZSH-SPECIFIC COMPLETION {{{1
