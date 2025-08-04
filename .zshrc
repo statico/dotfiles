@@ -27,6 +27,11 @@ _versionof() {
   fi
 }
 
+_inside_ai_coding_tool() {
+  # Seems to detect Cursor inline terminals as of July 2025
+  [[ -n "$COMPOSER_NO_INTERACTION" ]]
+}
+
 # ENVIRONMENT VARIABLES {{{1
 
 if _has less; then
@@ -34,10 +39,10 @@ if _has less; then
   export LESS='-Ri'
 fi
 
-if [ "$TERM_PROGRAM" = "vscode" ]; then
-  export EDITOR=code VISUAL=less
-  # Cursor agents get hung up with git commands sometimes
+if _inside_ai_coding_tool ; then
   export GIT_PAGER=cat
+elif [ "$TERM_PROGRAM" = "vscode" ]; then
+  export EDITOR=code VISUAL=less
 elif _has vim; then
   export EDITOR=vim VISUAL=vim
 elif _has vi; then
@@ -855,8 +860,7 @@ simpleprompt() {
   PS1="$ "
 }
 
-if [ "$TERM_PROGRAM" = "vscode" ]; then
-  # Use simple prompt for Cursor & LLMs
+if _inside_ai_coding_tool ; then
   simpleprompt
 elif [ -n "$SUDO_USER" ]; then
   colorprompt '33;1'
