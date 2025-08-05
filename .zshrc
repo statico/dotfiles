@@ -423,20 +423,34 @@ fi
 
 # Generic helper to ask an LLM about anything
 ask() {
+  if [ $# = 0 ]; then
+    echo "usage: ask <some question>"
+    return 1
+  fi
   if ! _has llm; then
     echo "llm tool not installed, run 'uv tool install llm'"
     return
   fi
-  llm -s "We are on the command line for a system identified as $(uname -a). Answer the following question. Be brief and concise." "$*"
+  local formatter=cat
+  if _has glow; then
+    formatter=glow
+  elif _has md2term; then
+    formatter=md2term
+  fi
+  llm -s "We are on the command line for a system identified as \`$(uname -a)\`. Answer the following question. Be brief and concise." "$*" | $formatter
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
 cmd() {
+  if [ $# = 0 ]; then
+    echo "usage: cmd <some command description>"
+    return 1
+  fi
   if ! _has llm; then
     echo "llm tool not installed, run 'uv tool install llm'"
     return
   fi
-  local cmd=(llm "We are on the command line for a system identified as $(uname -a). Show me a macOS command line comand for the following in a code block. Be brief and concise." "$*")
+  local cmd=$(llm -x -s "We are on the command line for a system identified as \`$(uname -a)\`. Show me a command line comand for the following in a code block. Be brief and concise." "$*")
   echo -e "\n\x1b[32m$cmd\x1b[0m\n"
   echo -n "$cmd" | pbcopy
 }
@@ -580,7 +594,6 @@ ggg() {
   git status && \
   hr committing && \
   local msg=$(llm -x -s 'Summarize this git diff and produce a single sentence in a code block we can use for a commit message' -f <(git diff ; git diff --cached) | tr -d '\n') && \
-  echo "$msg" && \
   git commit -m "$msg" && \
   hr results && \
   git --no-pager quicklog && \
