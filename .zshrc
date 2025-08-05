@@ -452,7 +452,16 @@ cmd() {
   fi
   local cmd=$(llm -x -s "We are on the command line for a system identified as \`$(uname -a)\`. Show me a command line comand for the following in a code block. Be brief and concise." "$*")
   echo -e "\n\x1b[32m$cmd\x1b[0m\n"
-  echo -n "$cmd" | pbcopy
+  
+  # Ask for confirmation (default to yes)
+  echo -n "Run this command? [Y/n] "
+  read -r response
+  # If response is empty (just pressed enter) or starts with y/Y, run the command
+  if [[ -z "$response" || "$response" =~ ^[Yy] ]]; then
+    eval "$cmd"
+  else
+    echo "Command not executed."
+  fi
 }
 
 # Generate passwords
