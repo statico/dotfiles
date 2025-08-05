@@ -185,7 +185,6 @@ alias gfrb='git fetch && git rebase origin/main'
 alias gfrbc='grbc'
 alias gg='git checkout -'
 alias ggg-='git undo && ggg'
-alias ggg='git add --all :/ ; aider --no-check-update -m "/commit"'
 alias ghl='git stash list'
 alias ghp='git stash pop'
 alias ghs='git stash save'
@@ -424,19 +423,20 @@ fi
 
 # Generic helper to ask an LLM about anything
 ask() {
-  if _has md2term ; then
-    llm "$*" | md2term
-  else
-    llm "$*"
+  if ! _has llm; then
+    echo "llm tool not installed, run 'uv tool install llm'"
+    return
   fi
+  llm -s "We are on the command line for a system identified as $(uname -a). Answer the following question. Be brief and concise." "$*"
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
 cmd() {
   if ! _has llm; then
     echo "llm tool not installed, run 'uv tool install llm'"
+    return
   fi
-  local cmd="$(llm -x "Show me a macOS command line command for the following: $*")"
+  local cmd=(llm "We are on the command line for a system identified as $(uname -a). Show me a macOS command line comand for the following in a code block. Be brief and concise." "$*")
   echo -e "\n\x1b[32m$cmd\x1b[0m\n"
   echo -n "$cmd" | pbcopy
 }
@@ -560,6 +560,28 @@ sci() {
   git status && \
   hr committing && \
   ( [ $# = 0 ] && git ci || git ci -m "$*" ) && \
+  hr results && \
+  git --no-pager quicklog && \
+  hr done
+}
+
+# Commit all using a generated commit message
+ggg() {
+  if ! git status --porcelain | grep -q . ; then
+    echo "Nothing to commit."
+    return 1
+  fi
+  if ! _has llm; then
+    echo "llm tool not installed, run 'uv tool install llm'"
+    return 1
+  fi
+  git add -A && \
+  hr staging && \
+  git status && \
+  hr committing && \
+  local msg=$(llm -x -s 'Summarize this git diff and produce a single sentence in a code block we can use for a commit message' -f <(git diff ; git diff --cached) | tr -d '\n') && \
+  echo "$msg" && \
+  git commit -m "$msg" && \
   hr results && \
   git --no-pager quicklog && \
   hr done
