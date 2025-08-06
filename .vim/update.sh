@@ -19,7 +19,6 @@ plugins=(
   junegunn/limelight.vim
   qpkorr/vim-bufkill
   scrooloose/nerdtree
-  tikhomirov/vim-glsl
   tpope/vim-commentary
   tpope/vim-endwise
   tpope/vim-eunuch
@@ -33,13 +32,9 @@ plugins=(
 
   # Syntax (polyglot being the most important)
   alampros/vim-styled-jsx
-  ledger/vim-ledger
   sheerun/vim-polyglot
-  statico/vim-inform7
 
   # Colors
-  arcticicestudio/nord-vim
-  ntk148v/vim-horizon
   tomasr/molokai
 )
 
