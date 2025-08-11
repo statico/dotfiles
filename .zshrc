@@ -245,7 +245,7 @@ alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "00 00[0-2]"'
-alias netwhat='_netwhat() { lsof -P -i:$* }; _netwhat'
+alias netwhat='_netwhat() { lsof -P -i:$* | sed 1d }; _netwhat'
 alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
 alias o=ollama
