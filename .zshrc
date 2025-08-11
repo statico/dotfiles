@@ -191,7 +191,7 @@ alias ghs='git stash save'
 alias ghsp='git stash save --patch'
 alias ghw='git stash show -p'
 alias gist='gist -p -c'
-alias gitignoregen='_gitignoregen () { curl -sL "https://www.toptal.com/developers/gitignore/api/$1" }; _gitignoregen'
+alias gitignoregen='_gitignoregen() { curl -sL "https://www.toptal.com/developers/gitignore/api/$1" }; _gitignoregen'
 alias gk='gitk &>/dev/null'
 alias gl1='git log -n 1'
 alias gl='git quicklog -n 10'
@@ -237,7 +237,7 @@ alias i4='sed "s/^/    /"'
 alias icat='imgcat'
 alias ils='imgls'
 alias iurl='xcrun simctl openurl booted'
-alias jqi='_jqi () { echo "" | fzf --print-query --preview "cat $@ | jq {q}" }; _jqi'
+alias jqi='_jqi() { echo "" | fzf --print-query --preview "cat $@ | jq {q}" }; _jqi'
 alias k='tree -h'
 alias l="ls -lh"
 alias lg='l --git'
@@ -245,6 +245,7 @@ alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "00 00[0-2]"'
+alias netwhat='_netwhat() { lsof -P -i:$* }; _netwhat'
 alias nohist='HISTFILE='
 alias notifydone='terminal-notifier -message Done.'
 alias o=ollama
@@ -258,7 +259,7 @@ alias pkgls='ls /var/db/receipts/'
 alias pt='pstree -pul'
 alias rake='noglob rake'
 alias randnum='python -S -c "import random; print(random.SystemRandom().randrange(10**7,10**8))"'
-alias rgg='_rgg () { rg --color always --heading $@ | $PAGER }; _rgg'
+alias rgg='_rgg() { rg --color always --heading $@ | $PAGER }; _rgg'
 alias ri='ri -f ansi'
 alias rls='screen -ls'
 alias rrg='rgg'
@@ -366,13 +367,6 @@ fi
 # Try to get some version of tac
 if ! _has tac && _has gtac ; then
   alias tac=gtac
-fi
-
-# What's using that TCP port?
-if [ "$(uname -s)" = "Darwin" ]; then
-  alias netwhat='sudo lsof -Pni tcp'
-else
-  alias netwhat='lsof -i +c 40'
 fi
 
 # Let me know when commands are done by prepending `;b` to things.
