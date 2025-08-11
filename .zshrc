@@ -618,6 +618,11 @@ randomize() {
   done
 }
 
+# pastes when used as a source, copies when used as a destination, like `clip | jq | clip`
+clip () {
+  [ -t 0 ] && pbpaste || pbcopy
+}
+
 quote-clipboard() {
   local content=$(pbpaste)
 
