@@ -444,7 +444,7 @@ cmd() {
     echo "llm tool not installed, run 'uv tool install llm'"
     return
   fi
-  local cmd=$(llm -x -s "We are on the command line for a system identified as \`$(uname -a)\`. Show me a command line comand for the following in a code block. Be brief and concise." "$*")
+  local cmd=$(llm -x -s "We are on the command line for a system identified as \`$(uname -a)\`. Show me a command line command for the following in a code block. Be brief and concise." "$*")
 
   # Insert the command into the command line buffer
   print -z "$cmd"
