@@ -615,7 +615,7 @@ clip () {
   [ -t 0 ] && pbpaste || pbcopy
 }
 
-quote-clipboard() {
+quote_clipboard() {
   local content=$(pbpaste)
 
   # Check if content already starts with "> "
@@ -773,14 +773,27 @@ setopt notify
 
 # PROMPT AWESOMENESS {{{1
 
-# Since we're setting precmd here, we might also add our hook that updates the
-# iTerm title bar with the current directory.
 if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
-  _terminal-precmd() {
-    echo -ne "\033]0;${PWD##*/}\007"
+  # Update the iTerm title bar with the current command and reset it to the
+  # current directory when the command is done.
+  preexec() {
+    echo -ne "\033]0;$1\007"
+  }
+  _terminal_precmd() {
+    echo -ne "\033]0;$(basename "$PWD")\007"
+  }
+elif [ -n "$TMUX" ]; then
+  # Update the tmux title bar with the current command and reset it to the
+  # current directory when the command is done.
+  preexec() {
+    printf '\033]2;%s\033\\' "$1"
+  }
+  _terminal_precmd() {
+    printf '\033]2;%s\033\\' "$(basename "$PWD")"
   }
 else
-  _terminal-precmd() {}
+  preexec() {}
+  _terminal_precmd() {}
 fi
 
 # Turn on prompt substitution.
@@ -844,7 +857,7 @@ colorprompt() {
 
   bindkey "^L" clear-screen-and-precmd
   precmd() {
-    _terminal-precmd
+    _terminal_precmd
     print -P $__first_prompt_line
   }
   PS1=${(j::)line2}
@@ -862,7 +875,7 @@ uncolorprompt() {
   )
   bindkey "^L" clear-screen
   precmd() {
-    _terminal-precmd
+    _terminal_precmd
   }
   PS1=${(j::)temp}
 }
@@ -878,7 +891,7 @@ shortprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
   precmd() {
-    _terminal-precmd
+    _terminal_precmd
     echo
   }
   PS1="%{[${__prompt_mode}m%}$%{[0m%} "
@@ -891,7 +904,7 @@ simpleprompt() {
   bindkey "^L" clear-screen
   unfunction precmd &>/dev/null
   precmd() {
-    _terminal-precmd
+    _terminal_precmd
     echo
   }
   PS1="$ "
