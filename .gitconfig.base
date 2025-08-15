@@ -28,6 +28,7 @@
 	prompt = false
 [merge]
 	conflictStyle = diff3
+	edit = false
 [mergetool]
 	prompt = false
 	keepBackup = false
