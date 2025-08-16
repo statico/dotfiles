@@ -275,8 +275,7 @@ alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias urls="grep -Eo 'https?://[^ ]+' | sed 's/[^a-zA-Z0-9/:?&._=-]//g'"
-alias vb=VBoxManage
-alias vh=VBoxHeadless
+alias ve='source .venv/bin/activate'
 alias vimsql="vim -c 'set ft=sql'"
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias wip='git add -A ; git commit --all --no-verify -m WIP'
