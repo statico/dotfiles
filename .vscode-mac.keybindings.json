@@ -459,13 +459,13 @@
     "key": "shift+cmd+y",
     "command": "composer.closeComposerTab",
     "when": "composerFocused || focusedView =~ /^workbench.panel.aichat.view/"
-  },
-  {
+},
+{
     "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
         "text": "\\\r\n"
     },
     "when": "terminalFocus"
-  }
+}
 ]
