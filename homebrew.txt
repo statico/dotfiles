@@ -1,6 +1,7 @@
 autojump
 coreutils
 eza
+fswatch
 fzf
 git
 jq
