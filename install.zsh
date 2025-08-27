@@ -51,7 +51,7 @@ fi
 
 cd "$basedir"
 
-echo "⚡ Updating common Zsh completions..."
+echo "⚡Updating common Zsh completions..."
 rm -rf .zsh-completions ~/.zcompdump
 git clone --quiet --depth=1 https://github.com/zsh-users/zsh-completions .zsh-completions
 
