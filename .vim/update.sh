@@ -71,7 +71,7 @@ for repo in ${plugins[@]}; do
   (
     git clone --depth=1 -q "https://github.com/$repo" "$dest"
     rm -rf "$dest/.git"
-    echo "└─ Cloned $repo"
+    echo "╰─ Cloned $repo"
     [ "$plugin" = "onehalf" ] && (mv "$dest" "$dest.TEMP" && mv "$dest.TEMP/vim" "$dest" && rm -rf "$dest.TEMP")
   ) &
 done
