@@ -110,3 +110,8 @@ export PS1='\[\033[01;32m\]\u\[\033[00m\]@\[\033[01;32m\]\h\[\033[00m\]\[\033[01
 if [ -e ~/.bashlocal ]; then
     . ~/.bashlocal
 fi
+
+# LM Studio won't stop updating my rc files: https://github.com/lmstudio-ai/lms/issues/232
+# Added by LM Studio CLI (lms)
+# End of LM Studio CLI section
+

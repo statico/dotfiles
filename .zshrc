@@ -965,5 +965,9 @@ fi
 
 # }}} Done.
 
+# LM Studio won't stop updating my rc files: https://github.com/lmstudio-ai/lms/issues/232
+# Added by LM Studio CLI (lms)
+# End of LM Studio CLI section
+
 # Don't end with errors.
 true
