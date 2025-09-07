@@ -17,7 +17,6 @@ plugins=(
   junegunn/fzf.vim
   junegunn/goyo.vim
   junegunn/limelight.vim
-  madox2/vim-ai
   qpkorr/vim-bufkill
   scrooloose/nerdtree
   tpope/vim-commentary
