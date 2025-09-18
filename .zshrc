@@ -604,7 +604,7 @@ gco() {
 }
 
 dance() {
-  perl -e'$|++;@x=qw[/ | \\  |];$_=0;do{print"\e[9D:D-$x[$_++%4]-<"}while(sleep $|)'
+  perl -e'$|++;@x=qw[🯅 🯆 🯇 🯈];$_=0;do{print"\e[9D$x[$_++%4] ";sleep 1}while(1)'
 }
 
 randomize() {
