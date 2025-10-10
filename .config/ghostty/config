@@ -4,5 +4,7 @@ theme = Arcoiris
 cursor-style = block
 cursor-style-blink = false
 font-family = Iosevka Term Medium
+font-style-bold = false
 font-size = 16
+bold-color = bright
 
