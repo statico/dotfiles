@@ -29,7 +29,7 @@ _versionof() {
 
 _inside_ai_coding_tool() {
   # Seems to detect Cursor inline terminals as of July 2025
-  [[ -n "$COMPOSER_NO_INTERACTION" ]]
+  [[ -n "$COMPOSER_NO_INTERACTION" || -n "$CLAUDECODE" ]]
 }
 
 # ENVIRONMENT VARIABLES {{{1

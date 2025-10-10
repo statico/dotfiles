@@ -11,6 +11,13 @@ function symlink() {
   src="$1"
   dest="$2"
 
+  # Create parent directory if it doesn't exist
+  dest_dir=$(dirname "$dest")
+  if [ ! -d "$dest_dir" ]; then
+    echo "→ Creating directory $dest_dir"
+    mkdir -p "$dest_dir"
+  fi
+
   if [ -e "$dest" ]; then
     if [ -L "$dest" ]; then
       if [ ! -e "$dest" ]; then
@@ -58,7 +65,7 @@ git clone --quiet --depth=1 https://github.com/zsh-users/zsh-completions .zsh-co
 echo "→ Creating symlinks..."
 for item in .* ; do
   case "$item" in
-    .|..|.git)
+    .|..|.git|.config)
       continue
       ;;
     *)
@@ -66,8 +73,16 @@ for item in .* ; do
       ;;
   esac
 done
+
 symlink "$basedir/.vim/vimrc" "$HOME/.vimrc"
 symlink "$basedir/.vim/gvimrc" "$HOME/.gvimrc"
+
+for item in .config/*/* ; do
+  if [ -f "$item" ]; then
+    rel_path=${item#.config/}
+    symlink "$basedir/$item" "$HOME/.config/$rel_path"
+  fi
+done
 
 if [ "$(uname -s)" = "Darwin" ]; then
   vscodepath="$HOME/Library/Application Support/Code/User"

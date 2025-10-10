@@ -434,7 +434,7 @@ colorscheme molokai
 let g:seoul256_background = 233
 if !has('gui_running')
   let g:solarized_termcolors = 256
-  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
+  if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal" || $TERM == "xterm-ghostty"
     set t_Co=256
   elseif has("terminfo")
     colorscheme default
