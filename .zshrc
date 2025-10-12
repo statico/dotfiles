@@ -841,6 +841,11 @@ noblinkroot() {
 # command: A command to run, like '$(_versionof node)'
 #
 colorprompt() {
+  if _inside_ai_coding_tool ; then
+    simpleprompt
+    return
+  fi
+
   __prompt_mode=${1:-0}
   __extra="$2"
   local -a line1
@@ -913,9 +918,7 @@ simpleprompt() {
   PS1="$ "
 }
 
-if _inside_ai_coding_tool ; then
-  simpleprompt
-elif [ -n "$SUDO_USER" ]; then
+if [ -n "$SUDO_USER" ]; then
   colorprompt '33;1'
 else
   colorprompt
