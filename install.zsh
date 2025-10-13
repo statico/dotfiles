@@ -178,8 +178,21 @@ fi
 
 if [ ! -e "$HOME/.zshlocal" ]; then
   color=$((22 + RANDOM % 209))
-  echo -e "# If you want a different color, run ~/bin/256-colors.sh and replace $color below:\ncolorprompt \"38;5;$color\"" >"$HOME/.zshlocal"
-  echo "◉ Chose a random prompt color. Edit $HOME/.zshlocal to change it."
+  cat <<EOF >"$HOME/.zshlocal"
+__current_git_branch() {
+  if git rev-parse --git-dir > /dev/null 2>&1; then
+    echo " \$(git branch --show-current 2>/dev/null) "
+  fi
+}
+
+__node_version() {
+  echo "⬣ \$(node --version 2>/dev/null) "
+}
+
+# If you want a different color, run ~/bin/256-colors.sh and replace $color below:
+colorprompt "38;5;$color" "\\\$(__current_git_branch) \\\$(__node_version)"
+EOF
+  echo "◉ Random prompt color is $color. Edit $HOME/.zshlocal to change it."
 fi
 
 echo "✓ Done."
