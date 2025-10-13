@@ -9,7 +9,9 @@ font-family = Iosevka Term Medium
 font-style-bold = false
 font-size = 16
 bold-color = bright
+
 keybind = global:ctrl+backquote=toggle_quick_terminal
+quick-terminal-animation-duration = 0.1
 
 # https://github.com/ghostty-org/ghostty/discussions/2812
 shell-integration-features = no-cursor
