@@ -452,10 +452,6 @@
     "command": "composerMode.agent"
   },
   {
-    "key": "ctrl+cmd+e",
-    "command": "testing.runAll"
-  },
-  {
     "key": "shift+cmd+y",
     "command": "composer.closeComposerTab",
     "when": "composerFocused || focusedView =~ /^workbench.panel.aichat.view/"
