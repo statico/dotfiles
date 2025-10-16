@@ -190,7 +190,7 @@ __node_version() {
 }
 
 # If you want a different color, run ~/bin/256-colors.sh and replace $color below:
-colorprompt "38;5;$color" "\\\$(__current_git_branch) \\\$(__node_version)"
+colorprompt "38;5;$color" "\\\$(__current_git_branch)\\\$(__node_version)"
 EOF
   echo "◉ Random prompt color is $color. Edit $HOME/.zshlocal to change it."
 fi
