@@ -14,5 +14,6 @@ keybind = global:ctrl+backquote=toggle_quick_terminal
 quick-terminal-animation-duration = 0.1
 
 # https://github.com/ghostty-org/ghostty/discussions/2812
-shell-integration-features = no-cursor
+# Also fix TERM when using SSH
+shell-integration-features = no-cursor, ssh-env
 
