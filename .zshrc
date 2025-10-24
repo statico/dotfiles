@@ -434,7 +434,7 @@ ask() {
   elif _has md2term; then
     formatter=md2term
   fi
-  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\`. Answer the following question. Be brief and concise."
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\`. Answer the following question. Be brief and concise."
   llm prompt -s "$system_prompt" "$*" | $formatter
 }
 
@@ -458,7 +458,7 @@ ask-web() {
   elif _has md2term; then
     formatter=md2term
   fi
-  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\`. Search the web and answer the following question. Be brief and concise."
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\`. Search the web and answer the following question. Be brief and concise."
   llm prompt -T web_search -s "$system_prompt" "$*" | $formatter
 }
 
@@ -472,7 +472,7 @@ cmd() {
     echo "llm tool not installed, run 'uv tool install llm'"
     return
   fi
-  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` using shell \`$SHELL\`. Show me a command line command for the following in a code block. Be brief and concise."
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\` using shell \`$SHELL\`. Show me a command line command for the following in a code block. Be brief and concise."
   local cmd
   cmd=$(llm prompt -x -s "$system_prompt" "$*")
 
