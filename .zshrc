@@ -434,7 +434,12 @@ ask() {
   elif _has md2term; then
     formatter=md2term
   fi
-  llm -s "We are on the command line for a system identified as \`$(uname -a)\`. Answer the following question. Be brief and concise." "$*" | $formatter
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\`. Answer the following question. Be brief and concise."
+  if llm tools list | grep -q web_search; then
+    llm prompt -T web_search -s "$system_prompt" "$*" | $formatter
+  else
+    llm prompt -s "$system_prompt" "$*" | $formatter
+  fi
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
@@ -447,7 +452,13 @@ cmd() {
     echo "llm tool not installed, run 'uv tool install llm'"
     return
   fi
-  local cmd=$(llm -x -s "We are on the command line for a system identified as \`$(uname -a)\`. Show me a command line command for the following in a code block. Be brief and concise." "$*")
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\`. Show me a command line command for the following in a code block. Be brief and concise."
+  local cmd
+  if llm tools list | grep -q web_search; then
+    cmd=$(llm prompt -x -T web_search -s "$system_prompt" "$*")
+  else
+    cmd=$(llm prompt -x -s "$system_prompt" "$*")
+  fi
 
   # Insert the command into the command line buffer
   print -z "$cmd"
