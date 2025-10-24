@@ -452,7 +452,7 @@ cmd() {
     echo "llm tool not installed, run 'uv tool install llm'"
     return
   fi
-  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\`. Show me a command line command for the following in a code block. Be brief and concise."
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` using shell \`$SHELL\`. Show me a command line command for the following in a code block. Be brief and concise."
   local cmd
   if llm tools list | grep -q web_search; then
     cmd=$(llm prompt -x -T web_search -s "$system_prompt" "$*")
