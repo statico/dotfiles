@@ -401,7 +401,7 @@
     "command": "typescript.restartTsServer"
   },
   {
-    "key": "ctrl+shift+cmd+o",
+    "key": "ctrl+cmd+u",
     "command": "git.closeAllUnmodifiedEditors"
   },
   {
