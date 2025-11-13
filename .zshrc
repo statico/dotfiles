@@ -248,6 +248,7 @@ alias lg='l --git'
 alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
+alias md='glow -p'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "00 00[0-2]"'
 alias netwhat='_netwhat() { lsof -P -i:$* | sed 1d }; _netwhat'
 alias nohist='HISTFILE='
@@ -1004,3 +1005,8 @@ fi
 
 # Don't end with errors.
 true
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/ian/.lmstudio/bin"
+# End of LM Studio CLI section
+

@@ -115,3 +115,8 @@ fi
 # Added by LM Studio CLI (lms)
 # End of LM Studio CLI section
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/ian/.lmstudio/bin"
+# End of LM Studio CLI section
+
