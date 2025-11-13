@@ -430,12 +430,12 @@ ask() {
   fi
   local formatter=cat
   if _has glow; then
-    formatter=glow
+    formatter="glow -p"
   elif _has md2term; then
     formatter=md2term
   fi
   local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\`. Answer the following question. Be brief and concise."
-  llm prompt -s "$system_prompt" "$*" | $formatter
+  llm prompt -s "$system_prompt" "$*" | eval $formatter
 }
 
 # Ask an LLM with WebSearch tool enabled
@@ -454,12 +454,12 @@ ask-web() {
   fi
   local formatter=cat
   if _has glow; then
-    formatter=glow
+    formatter="glow -p"
   elif _has md2term; then
     formatter=md2term
   fi
   local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\`. Search the web and answer the following question. Be brief and concise."
-  llm prompt -T web_search -s "$system_prompt" "$*" | $formatter
+  llm prompt -T web_search -s "$system_prompt" "$*" | eval $formatter
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
