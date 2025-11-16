@@ -12,6 +12,9 @@ bold-color = bright
 
 keybind = global:ctrl+backquote=toggle_quick_terminal
 quick-terminal-animation-duration = 0.1
+quick-terminal-size = 60%
+
+initial-window = false
 
 # https://github.com/ghostty-org/ghostty/discussions/2812
 # Also fix TERM when using SSH
