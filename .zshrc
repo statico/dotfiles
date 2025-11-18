@@ -441,7 +441,8 @@ ask() {
 }
 
 # Ask an LLM with WebSearch tool enabled
-ask-web() {
+# (I suggest `llm install llm-tools-exa` and getting a key from exa.ai)
+askw() {
   if [ $# = 0 ]; then
     echo "usage: ask-web <some question>"
     return 1
