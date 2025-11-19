@@ -420,7 +420,7 @@ fi
 
 # FUNCTIONS {{{1
 
-# Generic helper to ask an LLM about anything
+# Generic helper to ask an LLM about anything - install glow for best results
 ask() {
   if [ $# = 0 ]; then
     echo "usage: ask <some question>"
@@ -432,7 +432,7 @@ ask() {
   fi
   local formatter=cat
   if _has glow; then
-    formatter="glow -p"
+    formatter=glow
   elif _has md2term; then
     formatter=md2term
   fi
@@ -457,7 +457,7 @@ askw() {
   fi
   local formatter=cat
   if _has glow; then
-    formatter="glow -p"
+    formatter=glow
   elif _has md2term; then
     formatter=md2term
   fi
@@ -475,7 +475,7 @@ cmd() {
     echo "llm tool not installed, run 'uv tool install llm'"
     return
   fi
-  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\` using shell \`$SHELL\`. Show me a command line command for the following in a code block. Be brief and concise."
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\` using shell \`$SHELL\`. Show me a command line command for the following in a code block. Be brief and concise. No comments."
   local cmd
   cmd=$(llm prompt -x -s "$system_prompt" "$*")
 
