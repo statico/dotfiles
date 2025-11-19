@@ -421,6 +421,7 @@ fi
 # FUNCTIONS {{{1
 
 # Generic helper to ask an LLM about anything - install glow for best results
+# Requires `llm`: https://llm.datasette.io/en/stable/
 ask() {
   if [ $# = 0 ]; then
     echo "usage: ask <some question>"
@@ -441,6 +442,7 @@ ask() {
 }
 
 # Ask an LLM with WebSearch tool enabled
+# Requires `llm`: https://llm.datasette.io/en/stable/
 # (I suggest `llm install llm-tools-exa` and getting a key from exa.ai)
 askw() {
   if [ $# = 0 ]; then
@@ -466,6 +468,7 @@ askw() {
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
+# Requires `llm`: https://llm.datasette.io/en/stable/
 cmd() {
   if [ $# = 0 ]; then
     echo "usage: cmd <some command description>"
