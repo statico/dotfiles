@@ -280,7 +280,7 @@ alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias urls="grep -Eo 'https?://[^ ]+' | sed 's/[^a-zA-Z0-9/:?&._=-]//g'"
-alias ve='source .venv/bin/activate'
+alias ve='source .venv/bin/activate ; rehash'
 alias vimsql="vim -c 'set ft=sql'"
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
 alias wip='git add -A ; git commit --all --no-verify -m WIP'
@@ -1014,4 +1014,3 @@ true
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/ian/.lmstudio/bin"
 # End of LM Studio CLI section
-
