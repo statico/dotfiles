@@ -20,7 +20,7 @@ A random prompt color is picked at first install. Edit `.zshlocal` for details.
 
 ### Installation
 
-1. `curl -sL https://statico.link/zsh | zsh`
+1. `curl -sL statico.link/zsh | zsh` (redirects to the `install.zsh` file in this repo)
 1. `chsh` or otherwise set your shell to use [Zsh](http://www.zsh.org/)
 1. Restart your shell
 
