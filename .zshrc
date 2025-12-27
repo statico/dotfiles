@@ -112,6 +112,11 @@ if [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# bun
+[ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
+export BUN_INSTALL="$HOME/.bun"
+_append_to_path "$BUN_INSTALL/bin"
+
 # ALIASES {{{1
 
 alias Ac='sudo apt autoclean'
@@ -177,6 +182,7 @@ alias gdc='git diff --cached'
 alias gdd='git difftool'
 alias gdt='git difftool'
 alias gdw='git diff -w'
+alias gdwd='git diff --word-diff'
 alias gec='code $(git diff-index --name-only HEAD)'
 alias gf='git fetch'
 alias gfa='git fetch --all'
@@ -224,8 +230,8 @@ alias grbs='git rebase --skip'
 alias grm='git reset main'
 alias gs='git show -p'
 alias gsm='git submodule'
-alias gsmu='git submodule update --init --recursive'
 alias gsmo='git branch -f main origin/main'
+alias gsmu='git submodule update --init --recursive'
 alias gss='git show -p --stat'
 alias gt='git tag'
 alias gu='git unstage'
@@ -262,6 +268,7 @@ alias pi='pnpm install'
 alias pkgcat='lsbom -f -l -s -pf'
 alias pkginstall='sudo installer -target / -pkg'
 alias pkgls='ls /var/db/receipts/'
+alias pnpm-update-everything='pnpm up --latest ; pnpm update ; pnpm self-update ; pnpm install'
 alias pt='pstree -pul'
 alias rake='noglob rake'
 alias randnum='python -S -c "import random; print(random.SystemRandom().randrange(10**7,10**8))"'
