@@ -496,7 +496,7 @@ cmd() {
 # Generate passwords
 randpass() {
   local len=${1:-32}
-  openssl rand -base64 256 | tr -d '\n/+='| cut -c -$len
+  python3 -c "import secrets; print(secrets.token_urlsafe(32))"
 }
 
 # Latest file in a directory or that matches a pattern.
