@@ -58,6 +58,10 @@ fi
 
 cd "$basedir"
 
+echo "→ Cleaning up dead symlinks..."
+find "$HOME" -maxdepth 1 -type l ! -exec test -e {} \; -delete
+[ -d "$bindir" ] && find "$bindir" -maxdepth 1 -type l ! -exec test -e {} \; -delete
+
 echo "⚡Updating common Zsh completions..."
 rm -rf .zsh-completions ~/.zcompdump
 git clone --quiet --depth=1 https://github.com/zsh-users/zsh-completions .zsh-completions
