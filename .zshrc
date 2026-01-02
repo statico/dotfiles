@@ -671,6 +671,11 @@ quote_clipboard() {
   fi
 }
 
+dedent() {
+  pbpaste | sed 's/^[[:space:]]*//' | pbcopy
+  echo "Removed leading whitespace from clipboard content"
+}
+
 # ZSH-SPECIFIC COMPLETION {{{1
 
 # Add new Zsh Completions repo
