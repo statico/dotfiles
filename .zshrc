@@ -591,13 +591,6 @@ makecommand() {
   vix $cmd
 }
 
-rxvt-title() {
-  echo -n "]2;$*"
-}
-
-screen-title() {
-  echo -n "k$*\\"
-}
 
 # Commit what's been staged, use args as message.
 gc() {
@@ -821,28 +814,14 @@ setopt notify
 
 # PROMPT AWESOMENESS {{{1
 
-if [ "$TERM_PROGRAM" = "iTerm.app" ]; then
-  # Update the iTerm title bar with the current command and reset it to the
-  # current directory when the command is done.
-  preexec() {
-    echo -ne "\033]0;$1\007"
-  }
-  _terminal_precmd() {
-    echo -ne "\033]0;$(basename "$PWD")\007"
-  }
-elif [ -n "$TMUX" ]; then
-  # Update the tmux title bar with the current command and reset it to the
-  # current directory when the command is done.
-  preexec() {
-    printf '\033]2;%s\033\\' "$1"
-  }
-  _terminal_precmd() {
-    printf '\033]2;%s\033\\' "$(basename "$PWD")"
-  }
-else
-  preexec() {}
-  _terminal_precmd() {}
-fi
+# Update the terminal title with the current command (preexec) and reset it
+# to the current directory when the command is done (_terminal_precmd).
+preexec() {
+  terminal-title "$1"
+}
+_terminal_precmd() {
+  terminal-title "$(basename "$PWD")"
+}
 
 # Turn on prompt substitution.
 setopt PROMPT_SUBST

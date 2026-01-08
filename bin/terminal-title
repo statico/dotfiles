@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+#
+# Usage: terminal-title <title>
+#
+# Sets the terminal title. Detects iTerm, Ghostty, or tmux and uses the
+# appropriate escape sequence.
+
+title="$*"
+
+if [ -n "$TMUX" ]; then
+  # tmux pane title
+  printf '\033]2;%s\033\\' "$title"
+elif [ "$TERM_PROGRAM" = "iTerm.app" ]; then
+  # iTerm2
+  printf '\033]0;%s\007' "$title"
+elif [ "$TERM_PROGRAM" = "ghostty" ] || [ -n "$GHOSTTY_RESOURCES_DIR" ]; then
+  # Ghostty
+  printf '\033]0;%s\007' "$title"
+else
+  # Generic xterm-compatible (rxvt, xterm, etc.)
+  printf '\033]2;%s\007' "$title"
+fi
