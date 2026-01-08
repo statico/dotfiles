@@ -697,7 +697,12 @@ zstyle ':completion:*' use-perl true
 zstyle :compinstall filename '/Users/ian/.zshrc'
 
 autoload -Uz compinit
-compinit -u
+# Only regenerate compinit dump once per day
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 # End of lines added by compinstall
 # ---------------------------------------------
 
