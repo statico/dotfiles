@@ -821,12 +821,17 @@ setopt notify
 
 # Update the terminal title with the current command (preexec) and reset it
 # to the current directory when the command is done (_terminal_precmd).
-preexec() {
-  terminal-title "$1"
-}
-_terminal_precmd() {
-  terminal-title "$(basename "$PWD")"
-}
+if _has terminal-title ; then
+  preexec() {
+    terminal-title "$1"
+  }
+  _terminal_precmd() {
+    terminal-title "$(basename "$PWD")"
+  }
+else
+  preexec() {}
+  _terminal_precmd() {}
+fi
 
 # Turn on prompt substitution.
 setopt PROMPT_SUBST
