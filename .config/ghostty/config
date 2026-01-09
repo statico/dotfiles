@@ -22,3 +22,4 @@ working-directory = home
 # Also fix TERM when using SSH
 shell-integration-features = no-cursor, ssh-env
 
+keybind = shift+enter=text:\x1b\r
