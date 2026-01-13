@@ -971,10 +971,16 @@ if [ -e "$HOME/.ssh/config" -a ! -e "$HOME/.ssh/skip-host-aliases" ]; then
   done
 fi
 
-# Fix SSH auth socket location so agent forwarding works with tmux.
-if test "$SSH_AUTH_SOCK" && [ ! -e ~/.ssh/ssh_auth_sock ] ; then
-  ln -sf $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
-fi
+# Refresh SSH_AUTH_SOCK from tmux before each command so agent forwarding works.
+_refresh_ssh_auth_sock() {
+  if [[ -n "$TMUX" ]]; then
+    local new_sock=$(tmux show-environment 2>/dev/null | grep "^SSH_AUTH_SOCK" | cut -d= -f2)
+    if [[ -n "$new_sock" && -S "$new_sock" ]]; then
+      export SSH_AUTH_SOCK="$new_sock"
+    fi
+  fi
+}
+preexec_functions+=(_refresh_ssh_auth_sock)
 
 # FZF {{{1
 
