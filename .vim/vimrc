@@ -49,7 +49,7 @@ nmap k gk
 nnoremap ' `
 
 " You don't know what you're missing if you don't use this.
-nmap <C-e> :e#<CR>
+nnoremap <C-e> :e#<CR>
 
 " Move between open buffers.
 nmap <C-n> :bnext<CR>
