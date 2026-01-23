@@ -929,7 +929,6 @@ pcall(function()
           '--stdin-file-path',
           '$FILENAME',
         },
-        require_cwd = true,
       },
     },
     format_on_save = {
@@ -937,6 +936,11 @@ pcall(function()
       lsp_fallback = true,
     },
   })
+
+  -- Map <leader>f to conform formatting
+  vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
+    require('conform').format({ async = true, lsp_fallback = true })
+  end, { desc = 'Format buffer' })
 end)
 
 -- Completion (nvim-cmp)
