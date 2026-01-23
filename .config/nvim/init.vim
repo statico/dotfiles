@@ -75,10 +75,18 @@ call plug#end()
 " OPTIONS
 " ----------------------------------------------------------------------------
 
+" Leader key (must be set before mappings that use it)
+let mapleader = ','
+let maplocalleader = ','
+
 " Enable true color support (required for modern colorschemes)
 if has('termguicolors')
   set termguicolors
 endif
+
+" Line numbers
+set number                  " Show line numbers
+set relativenumber          " Show relative line numbers by default
 
 " File handling
 set autoread                " Reload files changed outside vim
@@ -116,7 +124,7 @@ set showmatch               " Highlight matching braces/parens
 set scroll=4                " Lines to scroll with ^U/^D
 set scrolloff=15            " Keep cursor away from top/bottom
 set sidescrolloff=3         " Keep cursor away from left/right edges
-set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:│  " Unicode chars for UI elements
+set fillchars=vert:│,stl:\ ,stlnc:\ ,fold:-,diff:│  " Unicode chars for UI elements (│ for window borders)
 
 " Folding
 silent! set foldmethod=marker  " Use braces by default for folding
@@ -237,16 +245,12 @@ nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
 
-" Use the space key to toggle folds
-nnoremap <space> za
-vnoremap <space> zf
-
 " Resize panes when window/terminal gets resized
 autocmd VimResized * :wincmd =
 
 " Search for the word under the cursor (using Telescope)
-nmap <M-k>    <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') }) else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
-nmap <Esc>k   <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') }) else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap <M-k>    <cmd>Telescope grep_string<CR>
+nmap <Esc>k   <cmd>Telescope grep_string<CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window via bufkill.vim
 nmap <Esc>w :BD<CR>
@@ -293,21 +297,20 @@ function! CurrentFileDir()
    return "e " . expand("%:p:h") . "/"
 endfunction
 
-" Test Telescope/fzf setup
-command! TestTelescope lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').find_files() else print('Telescope not installed. Run :PlugInstall') end
 
 " ----------------------------------------------------------------------------
 " PLUGIN SETTINGS
 " ----------------------------------------------------------------------------
 
 " Telescope (replaces FZF)
-" These mappings will work even if telescope isn't loaded (pcall handles errors)
-nmap ; <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').find_files() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
-nmap <Leader>r <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').tags() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
-nmap <Leader>b <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').buffers() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
-nmap <Leader>t <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').find_files() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
-nmap <Leader>a <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').live_grep() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
-nmap <Leader>c <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').colorscheme() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap ; <cmd>Telescope find_files<CR>
+nmap <Leader>r <cmd>Telescope tags<CR>
+nmap <Leader>b <cmd>Telescope buffers<CR>
+nmap <Leader>t <cmd>Telescope find_files<CR>
+nmap <Leader>a <cmd>Telescope live_grep<CR>
+nmap <Leader>c <cmd>Telescope colorscheme<CR>
+nmap <Leader>gh <cmd>Telescope git_commits<CR>
+nmap <Leader>gb <cmd>Telescope git_branches<CR>
 
 " Git signs navigation (replaces GitGutter)
 nmap ]g <cmd>lua pcall(function() require('gitsigns').next_hunk() end)<CR>
@@ -533,45 +536,17 @@ end)
 
 -- Telescope (replaces fzf.vim)
 pcall(function()
-  local telescope = require('telescope')
-  
-  telescope.setup({
+  require('telescope').setup({
     defaults = {
-      mappings = {
-        i = {
-          ['<C-u>'] = false,
-          ['<C-d>'] = false,
-        },
-      },
-      file_ignore_patterns = {
-        '^.git/',
-        '^node_modules/',
-        '^.DS_Store',
-      },
+      file_ignore_patterns = { '^.git/', '^node_modules/', '^.DS_Store' },
     },
     pickers = {
       find_files = {
         find_command = { 'rg', '--files', '--follow', '--hidden', '-g', '!{.git,node_modules}/*' },
       },
-      live_grep = {
-        additional_args = { '--hidden' },
-      },
-    },
-    extensions = {
-      fzf = {
-        fuzzy = true,
-        override_generic_sorter = true,
-        override_file_sorter = true,
-        case_mode = 'smart_case',
-      },
     },
   })
-  
-  -- Load fzf-native extension for faster sorting (if available)
-  local ok, _ = pcall(telescope.load_extension, 'fzf')
-  if not ok then
-    vim.notify('telescope-fzf-native not loaded - run :PlugInstall and restart', vim.log.levels.WARN)
-  end
+  pcall(require('telescope').load_extension, 'fzf')
 end)
 
 -- lualine (statusline)
