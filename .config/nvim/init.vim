@@ -2,82 +2,132 @@
 " Updated with modern plugins - 2025
 
 " ----------------------------------------------------------------------------
-" PLUGIN MANAGER: vim-plug
+" PLUGIN MANAGER: lazy.nvim
 " ----------------------------------------------------------------------------
 
-" Install vim-plug if not present
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+" Leader key (must be set before lazy so mappings are correct)
+let mapleader = ','
+let maplocalleader = ','
 
-call plug#begin('~/.local/share/nvim/plugged')
+" Bootstrap and setup lazy.nvim
+lua << LAZY_EOF
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-" File Explorer (replaces NERDTree)
-Plug 'nvim-tree/nvim-tree.lua'
-Plug 'nvim-tree/nvim-web-devicons'
+require("lazy").setup({
+  -- File Explorer (replaces NERDTree)
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = { "NvimTreeToggle", "NvimTreeFindFile" },
+  },
 
-" Fuzzy Finder (replaces fzf.vim)
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+  -- Fuzzy Finder (replaces fzf.vim)
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    cmd = "Telescope",
+  },
 
-" Statusline (replaces powerline/lightline)
-Plug 'nvim-lualine/lualine.nvim'
+  -- Statusline (replaces powerline/lightline)
+  "nvim-lualine/lualine.nvim",
 
-" Git (replaces vim-gitgutter)
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'tpope/vim-fugitive'
+  -- Git (replaces vim-gitgutter)
+  "lewis6991/gitsigns.nvim",
+  "tpope/vim-fugitive",
 
-" Syntax Highlighting (replaces vim-polyglot)
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-Plug 'windwp/nvim-ts-autotag'
-" Load textobjects AFTER treesitter (dependency order)
-Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'on': [] }
+  -- Syntax Highlighting (replaces vim-polyglot)
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+  },
+  "windwp/nvim-ts-autotag",
+  "nvim-treesitter/nvim-treesitter-textobjects",
 
-" LSP and Completion (replaces supertab)
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'L3MON4D3/LuaSnip'
-Plug 'saadparwaiz1/cmp_luasnip'
+  -- LSP and Completion (replaces supertab)
+  "neovim/nvim-lspconfig",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lua",
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+    },
+    event = "InsertEnter",
+  },
 
-" Search improvements (replaces incsearch.vim)
-Plug 'kevinhwang91/nvim-hlslens'
+  -- Formatting
+  "stevearc/conform.nvim",
 
-" Still excellent plugins (keep these)
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sleuth'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'qpkorr/vim-bufkill'
-Plug 'wellle/targets.vim'
+  -- Keybinding discovery
+  "folke/which-key.nvim",
 
-" Focus/writing mode
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+  -- Auto-pairs
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    dependencies = { "hrsh7th/nvim-cmp" },
+  },
 
-" Colors
-Plug 'tomasr/molokai'
-Plug 'lancewilhelm/horizon-extended.nvim'
+  -- Search improvements (replaces incsearch.vim)
+  "kevinhwang91/nvim-hlslens",
 
-call plug#end()
+  -- Still excellent plugins (keep these)
+  "tpope/vim-commentary",
+  "tpope/vim-endwise",
+  "tpope/vim-eunuch",
+  "tpope/vim-repeat",
+  "tpope/vim-sleuth",
+  "tpope/vim-surround",
+  "tpope/vim-unimpaired",
+  "qpkorr/vim-bufkill",
+  "wellle/targets.vim",
+
+  -- Focus/writing mode
+  "junegunn/goyo.vim",
+  "junegunn/limelight.vim",
+
+  -- Colors
+  "tomasr/molokai",
+  "lancewilhelm/horizon-extended.nvim",
+}, {
+  install = {
+    colorscheme = { "horizon-extended", "molokai" },
+  },
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  change_detection = {
+    notify = false,
+  },
+})
+LAZY_EOF
 
 " ----------------------------------------------------------------------------
 " OPTIONS
 " ----------------------------------------------------------------------------
 
-" Leader key (must be set before mappings that use it)
-let mapleader = ','
-let maplocalleader = ','
 
 " Enable true color support (required for modern colorschemes)
 if has('termguicolors')
@@ -259,6 +309,9 @@ nmap <M-w>  :BD<CR>
 " Quickly fix spelling errors choosing the first result
 nmap <Leader>z z=1<CR><CR>
 
+" Show which-key popup
+nmap <Leader><Leader> <cmd>WhichKey<CR>
+
 " These are things that I mistype and want ignored.
 nmap Q  <silent>
 nmap q: <silent>
@@ -305,7 +358,6 @@ endfunction
 " Telescope (replaces FZF)
 nmap ; <cmd>Telescope find_files<CR>
 nmap <Leader>r <cmd>Telescope tags<CR>
-nmap <Leader>b <cmd>Telescope buffers<CR>
 nmap <Leader>t <cmd>Telescope find_files<CR>
 nmap <Leader>a <cmd>Telescope live_grep<CR>
 nmap <Leader>c <cmd>Telescope colorscheme<CR>
@@ -315,6 +367,11 @@ nmap <Leader>gb <cmd>Telescope git_branches<CR>
 " Git signs navigation (replaces GitGutter)
 nmap ]g <cmd>lua pcall(function() require('gitsigns').next_hunk() end)<CR>
 nmap [g <cmd>lua pcall(function() require('gitsigns').prev_hunk() end)<CR>
+
+" Diagnostic navigation
+nmap ]d <cmd>lua vim.diagnostic.goto_next()<CR>
+nmap [d <cmd>lua vim.diagnostic.goto_prev()<CR>
+nmap <Leader>e <cmd>lua vim.diagnostic.open_float()<CR>
 
 " ----------------------------------------------------------------------------
 " FILE TYPE TRIGGERS
@@ -610,6 +667,39 @@ pcall(function()
           ['if'] = '@function.inner',
           ['ac'] = '@class.outer',
           ['ic'] = '@class.inner',
+          ['aa'] = '@parameter.outer',
+          ['ia'] = '@parameter.inner',
+          ['ab'] = '@block.outer',
+          ['ib'] = '@block.inner',
+        },
+      },
+      move = {
+        enable = true,
+        set_jumps = true,
+        goto_next_start = {
+          [']m'] = '@function.outer',
+          [']]'] = '@class.outer',
+        },
+        goto_next_end = {
+          [']M'] = '@function.outer',
+          [']['] = '@class.outer',
+        },
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+          ['[['] = '@class.outer',
+        },
+        goto_previous_end = {
+          ['[M'] = '@function.outer',
+          ['[]'] = '@class.outer',
+        },
+      },
+      swap = {
+        enable = true,
+        swap_next = {
+          ['<leader>a'] = '@parameter.inner',
+        },
+        swap_previous = {
+          ['<leader>A'] = '@parameter.inner',
         },
       },
     },
@@ -621,9 +711,30 @@ pcall(function()
   end)
 end)
 
--- nvim-ts-autotag (replaces closetag.vim)
+-- nvim-ts-autotag (replaces closetag.vim - auto-closes HTML/XML/JSX tags)
 pcall(function()
-  require('nvim-ts-autotag').setup()
+  require('nvim-ts-autotag').setup({
+    filetypes = {
+      'html',
+      'javascript',
+      'typescript',
+      'javascriptreact',
+      'typescriptreact',
+      'svelte',
+      'vue',
+      'tsx',
+      'jsx',
+      'rescript',
+      'xml',
+      'php',
+      'markdown',
+      'astro',
+      'glimmer',
+      'handlebars',
+      'hbs',
+    },
+    skip_tag_on_closing = false, -- Don't skip closing tag when typing >
+  })
 end)
 
 -- hlslens (replaces incsearch.vim)
@@ -656,14 +767,46 @@ pcall(function()
   })
 end)
 
+-- Configure diagnostics
+vim.diagnostic.config({
+  virtual_text = {
+    severity = { min = vim.diagnostic.severity.WARN },
+    source = 'always',
+    prefix = '●',
+  },
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = 'rounded',
+    source = 'always',
+    header = '',
+    prefix = '',
+  },
+})
+
+-- Define diagnostic signs
+local signs = {
+  { name = 'DiagnosticSignError', text = '●' },
+  { name = 'DiagnosticSignWarn', text = '●' },
+  { name = 'DiagnosticSignHint', text = '●' },
+  { name = 'DiagnosticSignInfo', text = '●' },
+}
+
+for _, sign in ipairs(signs) do
+  vim.fn.sign_define(sign.name, {
+    texthl = sign.name,
+    text = sign.text,
+    numhl = '',
+  })
+end
+
 -- Mason (LSP installer)
 pcall(function()
   require('mason').setup()
   require('mason-lspconfig').setup({
-    -- Only include servers that mason-lspconfig recognizes
-    -- Note: TypeScript server (ts_ls) should be installed manually via :Mason
-    -- Search for "typescript-language-server" in Mason UI
-    ensure_installed = { 'lua_ls', 'pyright' },
+    ensure_installed = { 'lua_ls', 'pyright', 'tsserver' },
   })
 end)
 
@@ -698,32 +841,156 @@ pcall(function()
   })
   vim.lsp.enable('pyright')
 
-  -- TypeScript/JavaScript LSP (ts_ls replaces deprecated tsserver)
-  vim.lsp.config('ts_ls', {
+  -- TypeScript/JavaScript LSP
+  vim.lsp.config('tsserver', {
     capabilities = capabilities,
+    settings = {
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+      javascript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+    },
   })
-  vim.lsp.enable('ts_ls')
+  vim.lsp.enable('tsserver')
 
   -- LSP key mappings
   vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
-      local opts = { buffer = ev.buf }
-      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-      vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-      vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+      local opts = { buffer = ev.buf, desc = 'LSP' }
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, vim.tbl_extend('force', opts, { desc = 'Go to declaration' }))
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, vim.tbl_extend('force', opts, { desc = 'Go to definition' }))
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, vim.tbl_extend('force', opts, { desc = 'Hover' }))
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, vim.tbl_extend('force', opts, { desc = 'Go to implementation' }))
+      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, vim.tbl_extend('force', opts, { desc = 'Signature help' }))
+      vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, vim.tbl_extend('force', opts, { desc = 'Add workspace folder' }))
+      vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, vim.tbl_extend('force', opts, { desc = 'Remove workspace folder' }))
       vim.keymap.set('n', '<space>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-      end, opts)
-      vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-      vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      end, vim.tbl_extend('force', opts, { desc = 'List workspace folders' }))
+      vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, vim.tbl_extend('force', opts, { desc = 'Type definition' }))
+      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = 'Rename' }))
+      vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, vim.tbl_extend('force', opts, { desc = 'Code action' }))
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, vim.tbl_extend('force', opts, { desc = 'References' }))
+      vim.keymap.set('n', '<leader>f', function()
+        vim.lsp.buf.format({ async = true })
+      end, vim.tbl_extend('force', opts, { desc = 'Format' }))
     end,
+  })
+
+  -- Format on save
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = vim.api.nvim_create_augroup('FormatOnSave', {}),
+    callback = function(ev)
+      local client = vim.lsp.get_active_clients({ bufnr = ev.buf })[1]
+      if client and client.supports_method('textDocument/formatting') then
+        vim.lsp.buf.format({ async = false, bufnr = ev.buf })
+      end
+    end,
+  })
+end)
+
+-- which-key (keybinding discovery)
+pcall(function()
+  require('which-key').setup({
+    plugins = {
+      marks = true,
+      registers = true,
+      spelling = {
+        enabled = true,
+      },
+      presets = {
+        operators = true,
+        motions = true,
+        text_objects = true,
+        windows = true,
+        nav = true,
+        z = true,
+        g = true,
+      },
+    },
+    window = {
+      border = 'rounded',
+      position = 'bottom',
+      margin = { 1, 0, 1, 0 },
+      padding = { 2, 2, 2, 2 },
+    },
+  })
+end)
+
+-- nvim-autopairs
+pcall(function()
+  local npairs = require('nvim-autopairs')
+  npairs.setup({
+    check_ts = true,
+    ts_config = {
+      lua = { 'string' },
+      javascript = { 'template_string' },
+    },
+  })
+
+  -- Integrate with cmp
+  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  local cmp = require('cmp')
+  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+end)
+
+-- conform.nvim (formatting)
+pcall(function()
+  require('conform').setup({
+    formatters_by_ft = {
+      lua = { 'stylua' },
+      python = { 'black', 'isort' },
+      javascript = { 'biome' },
+      typescript = { 'biome' },
+      javascriptreact = { 'biome' },
+      typescriptreact = { 'biome' },
+      json = { 'biome' },
+      jsonc = { 'biome' },
+      css = { 'biome' },
+      yaml = { 'prettier' },
+      markdown = { 'prettier' },
+      html = { 'prettier' },
+      scss = { 'prettier' },
+      sh = { 'shfmt' },
+    },
+    formatters = {
+      biome = {
+        command = 'biome',
+        args = {
+          'check',
+          '--formatter-enabled=true',
+          '--linter-enabled=false',
+          '--organize-imports-enabled=true',
+          '--write',
+          '--stdin-file-path',
+          '$FILENAME',
+        },
+        require_cwd = true, -- Looks for biome.json in project root
+      },
+    },
+    format_on_save = {
+      timeout_ms = 500,
+      lsp_fallback = true,
+    },
   })
 end)
 
@@ -769,6 +1036,24 @@ pcall(function()
     }, {
       { name = 'buffer' },
       { name = 'path' },
+      { name = 'nvim_lua' },
+    }),
+  })
+
+  -- Command line completion
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' },
+    },
+  })
+
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' },
+    }, {
+      { name = 'cmdline' },
     }),
   })
 end)
