@@ -5,6 +5,7 @@ fswatch
 fzf
 git
 jq
+neovim
 pv
 ripgrep
 terminal-notifier

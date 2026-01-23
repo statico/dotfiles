@@ -107,12 +107,9 @@ for item in bin/* ; do
 done
 
 if [ -n "$VSCODE_REMOTE_CONTAINERS_SESSION" ]; then
-  # We must be setting up a VS Code remote dev container, so I probably won't use Vim.
-  echo "◉ VS Code remote environment detected. Skipping Vim setup."
+  # We must be setting up a VS Code remote dev container, so I probably won't use Neovim.
+  echo "◉ VS Code remote environment detected. Skipping Neovim setup."
 else
-  echo "◉ Setting up vim plugins..."
-  .vim/update.sh
-  
   if which nvim >/dev/null 2>&1 ; then
     echo "◉ Setting up neovim plugins..."
     .config/nvim/update.sh

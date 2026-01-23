@@ -1,6 +1,6 @@
 FROM alpine
 
-RUN apk update && apk add git zsh bash vim exa ripgrep fzf tzdata ncurses nodejs
+RUN apk update && apk add git zsh bash neovim exa ripgrep fzf tzdata ncurses nodejs
 RUN addgroup demo \
       && adduser --system --shell /bin/zsh -g demo demo \
       && cp /usr/share/zoneinfo/UTC /etc/localtime
