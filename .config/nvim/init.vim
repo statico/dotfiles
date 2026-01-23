@@ -925,15 +925,11 @@ pcall(function()
       biome = {
         command = 'biome',
         args = {
-          'check',
-          '--formatter-enabled=true',
-          '--linter-enabled=false',
-          '--organize-imports-enabled=true',
-          '--write',
+          'format',
           '--stdin-file-path',
           '$FILENAME',
         },
-        require_cwd = true, -- Looks for biome.json in project root
+        require_cwd = true,
       },
     },
     format_on_save = {
