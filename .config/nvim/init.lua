@@ -448,29 +448,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
 vim.cmd([[abbr conosle console]])
 vim.cmd([[abbr comopnent component]])
 
---------------------------------------------------------------------------------
--- GUI SETTINGS (Neovide)
---------------------------------------------------------------------------------
-
-if vim.g.neovide then
-  vim.o.guifont = 'Iosevka Term Medium:h16'
-  vim.g.neovide_cursor_animation_length = 0.05
-  vim.g.neovide_cursor_trail_length = 0.1
-
-  vim.o.title = true
-  vim.o.titlestring = 'Neovide | ' .. vim.fn.substitute(vim.fn.getcwd(), vim.env.HOME, '~', '')
-  vim.o.cursorline = true
-  vim.o.scrolloff = 15
-  vim.o.sidescrolloff = 6
-
-  -- Gutter color: make SignColumn blend in
-  vim.api.nvim_create_autocmd('ColorScheme', {
-    callback = function()
-      vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
-    end,
-  })
-end
-
 -- Make tildes less visible
 vim.api.nvim_set_hl(0, 'EndOfBuffer', { link = 'Comment' })
 
