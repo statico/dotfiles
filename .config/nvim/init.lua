@@ -115,7 +115,7 @@ require('lazy').setup({
   'lancewilhelm/horizon-extended.nvim',
 }, {
   install = {
-    colorscheme = { 'horizon-extended', 'molokai' },
+    colorscheme = { 'molokai', 'horizon-extended' },
   },
   checker = {
     enabled = true,
@@ -459,30 +459,15 @@ vim.api.nvim_set_hl(0, 'PmenuSel', { ctermfg = 'black', ctermbg = 'magenta' })
 --------------------------------------------------------------------------------
 
 local function setup_colorscheme()
-  local ok, horizon = pcall(require, 'horizon-extended')
-  if ok and horizon then
-    horizon.setup({
-      style = 'neo',
-      transparent = false,
-      terminal_colors = true,
-      enable_italics = true,
-      show_end_of_buffer = false,
-      underline = false,
-      undercurl = true,
-    })
-    vim.cmd('colorscheme horizon-extended')
-    return true
-  else
-    pcall(function() vim.cmd('colorscheme molokai') end)
-    return false
-  end
+  pcall(function() vim.cmd('colorscheme molokai') end)
+  return true
 end
 
 setup_colorscheme()
 
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
-    if vim.g.colors_name ~= 'horizon-extended' then
+    if vim.g.colors_name ~= 'molokai' then
       setup_colorscheme()
     end
   end,
