@@ -848,20 +848,6 @@ setopt notify
 
 # PROMPT AWESOMENESS {{{1
 
-# Update the terminal title with the current command (preexec) and reset it
-# to the current directory when the command is done (_terminal_precmd).
-if _has terminal-title ; then
-  preexec() {
-    terminal-title "$1"
-  }
-  _terminal_precmd() {
-    terminal-title "$(basename "$PWD")"
-  }
-else
-  preexec() {}
-  _terminal_precmd() {}
-fi
-
 # Turn on prompt substitution.
 setopt PROMPT_SUBST
 
@@ -928,7 +914,6 @@ colorprompt() {
 
   bindkey "^L" clear-screen-and-precmd
   precmd() {
-    _terminal_precmd
     print -P $__first_prompt_line
   }
   PS1=${(j::)line2}
@@ -945,9 +930,7 @@ uncolorprompt() {
     "%n $__sigil "
   )
   bindkey "^L" clear-screen
-  precmd() {
-    _terminal_precmd
-  }
+  precmd() {}
   PS1=${(j::)temp}
 }
 
@@ -962,7 +945,6 @@ shortprompt() {
   __prompt_mode=${__prompt_mode:-0}
   bindkey "^L" clear-screen
   precmd() {
-    _terminal_precmd
     echo
   }
   PS1="%{[${__prompt_mode}m%}$%{[0m%} "
@@ -975,7 +957,6 @@ simpleprompt() {
   bindkey "^L" clear-screen
   unfunction precmd &>/dev/null
   precmd() {
-    _terminal_precmd
     echo
   }
   PS1="$ "
