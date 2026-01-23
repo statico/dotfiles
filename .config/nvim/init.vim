@@ -1,5 +1,5 @@
 " Neovim Configuration
-" Base setup - build from here
+" Updated with modern plugins - 2025
 
 " ----------------------------------------------------------------------------
 " PLUGIN MANAGER: vim-plug
@@ -14,30 +14,56 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Functionality
-Plug 'airblade/vim-gitgutter'
-Plug 'docunext/closetag.vim'
-Plug 'ervandew/supertab'
-Plug 'haya14busa/incsearch.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'qpkorr/vim-bufkill'
-Plug 'scrooloose/nerdtree'
+" File Explorer (replaces NERDTree)
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'nvim-tree/nvim-web-devicons'
+
+" Fuzzy Finder (replaces fzf.vim)
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+" Statusline (replaces powerline/lightline)
+Plug 'nvim-lualine/lualine.nvim'
+
+" Git (replaces vim-gitgutter)
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'tpope/vim-fugitive'
+
+" Syntax Highlighting (replaces vim-polyglot)
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'windwp/nvim-ts-autotag'
+" Load textobjects AFTER treesitter (dependency order)
+Plug 'nvim-treesitter/nvim-treesitter-textobjects', { 'on': [] }
+
+" LSP and Completion (replaces supertab)
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+" Search improvements (replaces incsearch.vim)
+Plug 'kevinhwang91/nvim-hlslens'
+
+" Still excellent plugins (keep these)
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'qpkorr/vim-bufkill'
 Plug 'wellle/targets.vim'
 
-" Syntax (polyglot being the most important)
-Plug 'alampros/vim-styled-jsx'
-Plug 'sheerun/vim-polyglot'
+" Focus/writing mode
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 " Colors
 Plug 'tomasr/molokai'
@@ -49,21 +75,117 @@ call plug#end()
 " OPTIONS
 " ----------------------------------------------------------------------------
 
-colorscheme horizon-extended
+" Enable true color support (required for modern colorschemes)
+if has('termguicolors')
+  set termguicolors
+endif
+
+" File handling
+set autoread                " Reload files changed outside vim
+set autowrite               " Write on :next/:prev/^Z
+set directory-=.            " Don't store temp files in cwd
+set fileformats=unix,dos,mac  " Prefer Unix line endings
+set nobackup                " No backup files
+set nowritebackup           " No backup while editing
+set suffixes+=.pyc          " Ignore .pyc in tab completion
+
+" Indentation
+set expandtab               " Use spaces instead of tabs
+set shiftround              " Round indent to multiple of shiftwidth
+set shiftwidth=2            " Default indent size
+set softtabstop=2           " Spaces feel like tabs
+set tabstop=2               " Tab width
+set copyindent              " Copy indent structure from previous line
+
+" Text formatting
+set formatoptions=tcqn1     " t=autowrap text, c=autowrap comments, q=gq formats comments, n=autowrap lists, 1=break before single-letter words
+set textwidth=0             " No automatic line wrapping
+set linebreak               " Break long lines by word, not char
+set showbreak=              " Show wrapped line prefix
+
+" Search
+set ignorecase              " Case insensitive search
+set smartcase               " Case sensitive when search contains uppercase
+set infercase               " Completion recognizes capitalization
+
+" Display
+set list                    " Show whitespace (see listchars)
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·  " Unicode chars for whitespace
+set matchtime=2             " Tenths of second to highlight matching paren
+set showmatch               " Highlight matching braces/parens
+set scroll=4                " Lines to scroll with ^U/^D
+set scrolloff=15            " Keep cursor away from top/bottom
+set sidescrolloff=3         " Keep cursor away from left/right edges
+set fillchars=vert:\ ,stl:\ ,stlnc:\ ,fold:-,diff:│  " Unicode chars for UI elements
+
+" Folding
+silent! set foldmethod=marker  " Use braces by default for folding
+set commentstring=\ \ #%s   " Comment string for folds
+
+" Completion
+set wildmenu                " Show completion menu
+set wildmode=list:longest,full  " List all, then complete
+set wildignore=*.class,*.o,*~,*.pyc,.git,node_modules  " Ignore in tab completion
+
+" History
+set history=200             " Command history lines
+
+" Security
+set nomodeline              " Disable modelines (security)
+
+" Visual/audio
+set visualbell              " Visual bell instead of beep
+set t_vb=                   " No terminal bell
+
+" Session
+set sessionoptions-=options  " Don't save runtimepath in sessions
+
+" Swapfile messages
+set shortmess+=A            " Don't prompt when swapfile exists
+
+" Essential for filetype plugins
+filetype plugin indent on
+
+" Colorscheme will be set in Lua config section after plugins load
 
 " ----------------------------------------------------------------------------
 " KEY MAPPINGS
 " ----------------------------------------------------------------------------
 
-nmap \e :NERDTreeToggle<CR>
-nmap \l :setlocal number! relativenumber!<CR>:setlocal number?<CR>
+" File explorer (replaces NERDTree)
+nmap \e <cmd>lua pcall(function() require('nvim-tree.api').tree.toggle() end)<CR>
+nmap \F <cmd>lua pcall(function() require('nvim-tree.api').tree.find_file({ open = true, focus = true }) end)<CR>
+
+" Format options
+nmap \A :set formatoptions+=a<CR>:echo "autowrap enabled"<CR>
+nmap \a :set formatoptions-=a<CR>:echo "autowrap disabled"<CR>
+nmap \b :set nocin tw=80<CR>:set formatoptions+=a<CR>
+
+" Tab settings
+nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+
+" Other toggles
+nmap \l :setlocal number! relativenumber!<CR>:setlocal number?<CR>
 nmap \o :set paste!<CR>:set paste?<CR>
 nmap \q :nohlsearch<CR>
 nmap \s :setlocal invspell<CR>
-nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
 nmap \u :setlocal list!<CR>:setlocal list?<CR>
 nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
+nmap \x :cclose<CR>
+nmap \z :w<CR>:!open %<CR><CR>
+
+" Git (replaces GitGutter toggle)
+nmap \g <cmd>lua pcall(function() require('gitsigns').toggle() end)<CR>
+
+" Sorting
+nmap \i vip:sort<CR>
+
+" Writing mode (replaces ProseMode)
+nmap \p <cmd>Goyo<CR>
+nmap \W mt:Goyo<CR>'tzz
 
 " Turn off linewise keys. Normally, the `j' and `k' keys move the cursor down
 " one entire line. with line wrapping on, this can cause the cursor to
@@ -86,8 +208,8 @@ nmap <C-p> :bprev<CR>
 " Emacs-like bindings in normal mode
 nmap <C-x>0 <C-w>c
 nmap <C-x>1 <C-w>o
-nmap <C-x>1 <C-w>s
-nmap <C-x>1 <C-w>v
+nmap <C-x>2 <C-w>s
+nmap <C-x>3 <C-w>v
 nmap <C-x>o <C-w><C-w>
 nmap <M-o>  <C-w><C-w>
 
@@ -115,9 +237,16 @@ nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
 
-" Search for the word under the cursor in the current directory
-nmap <M-k>    :Rg <C-R><C-W><CR>
-nmap <Esc>k   :Rg <C-R><C-W><CR>
+" Use the space key to toggle folds
+nnoremap <space> za
+vnoremap <space> zf
+
+" Resize panes when window/terminal gets resized
+autocmd VimResized * :wincmd =
+
+" Search for the word under the cursor (using Telescope)
+nmap <M-k>    <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') }) else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap <Esc>k   <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').grep_string({ search = vim.fn.expand('<cword>') }) else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
 
 " Alt-W to delete a buffer and remove it from the list but keep the window via bufkill.vim
 nmap <Esc>w :BD<CR>
@@ -125,6 +254,11 @@ nmap <M-w>  :BD<CR>
 
 " Quickly fix spelling errors choosing the first result
 nmap <Leader>z z=1<CR><CR>
+
+" These are things that I mistype and want ignored.
+nmap Q  <silent>
+nmap q: <silent>
+nmap K  <silent>
 
 " Make the cursor stay on the same line when window switching
 function! KeepCurrentLine(motion)
@@ -150,101 +284,34 @@ command! W w
 command! TEOL %s/\s\+$//
 command! CLEAN retab | TEOL
 
+" Close all buffers except this one
+command! BufCloseOthers %bd|e#
+
+" Typing `$c` on the command line expands to `:e` + the current path
+cnoremap $c e <C-\>eCurrentFileDir()<CR>
+function! CurrentFileDir()
+   return "e " . expand("%:p:h") . "/"
+endfunction
+
+" Test Telescope/fzf setup
+command! TestTelescope lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').find_files() else print('Telescope not installed. Run :PlugInstall') end
+
 " ----------------------------------------------------------------------------
 " PLUGIN SETTINGS
 " ----------------------------------------------------------------------------
 
-" FZF (replaces Ctrl-P, FuzzyFinder and Command-T)
-nmap ; :Files<CR>
-nmap <Leader>r :Tags<CR>
-nmap <Leader>b :Buffers<CR>
-nmap <Leader>t :Files<CR>
-nmap <Leader>a :Rg!<CR>
-nmap <Leader>c :Colors<CR>
-" let $FZF_DEFAULT_COMMAND = 'rg --files --follow -g "!{.git,node_modules}/*" 2>/dev/null'
-" command! -bang -nargs=* Rg
-"   \ call fzf#vim#grep(
-"   \   'rg --column --line-number --no-heading --color=always --smart-case -g "!{*.lock,*-lock.json}" '.shellescape(<q-args>), 1,
-"   \   <bang>0 ? fzf#vim#with_preview('up:40%')
-"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"   \   <bang>0)
+" Telescope (replaces FZF)
+" These mappings will work even if telescope isn't loaded (pcall handles errors)
+nmap ; <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').find_files() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap <Leader>r <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').tags() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap <Leader>b <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').buffers() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap <Leader>t <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').find_files() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap <Leader>a <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').live_grep() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
+nmap <Leader>c <cmd>lua if pcall(require, 'telescope.builtin') then require('telescope.builtin').colorscheme() else vim.notify('Telescope not installed. Run :PlugInstall', vim.log.levels.ERROR) end<CR>
 
-" " FZF color scheme updater from https://github.com/junegunn/fzf.vim/issues/59
-" function! s:update_fzf_colors()
-"   let rules =
-"   \ { 'fg':      [['Normal',       'fg']],
-"     \ 'bg':      [['Normal',       'bg']],
-"     \ 'hl':      [['String',       'fg']],
-"     \ 'fg+':     [['CursorColumn', 'fg'], ['Normal', 'fg']],
-"     \ 'bg+':     [['CursorColumn', 'bg']],
-"     \ 'hl+':     [['String',       'fg']],
-"     \ 'info':    [['PreProc',      'fg']],
-"     \ 'prompt':  [['Conditional',  'fg']],
-"     \ 'pointer': [['Exception',    'fg']],
-"     \ 'marker':  [['Keyword',      'fg']],
-"     \ 'spinner': [['Label',        'fg']],
-"     \ 'header':  [['Comment',      'fg']] }
-"   let cols = []
-"   for [name, pairs] in items(rules)
-"     for pair in pairs
-"       let code = synIDattr(synIDtrans(hlID(pair[0])), pair[1])
-"       if !empty(name) && code != ''
-"         call add(cols, name.':'.code)
-"         break
-"       endif
-"     endfor
-"   endfor
-"   let s:orig_fzf_default_opts = get(s:, 'orig_fzf_default_opts', $FZF_DEFAULT_OPTS)
-"   let $FZF_DEFAULT_OPTS = s:orig_fzf_default_opts .
-"         \ (empty(cols) ? '' : (' --color='.join(cols, ',')))
-" endfunction
-
-" augroup _fzf
-"   autocmd!
-"   autocmd VimEnter,ColorScheme * call <sid>update_fzf_colors()
-" augroup END
-
-" More space with NERDTree
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeMarkBookmarks = 0
-let g:NERDTreeAutoDeleteBuffer = 1
-let g:NERDTreeStatusLine = -1
-
-" GitGutter styling to use · instead of +/-
-let g:gitgutter_sign_added = '▎'
-let g:gitgutter_sign_modified = '▎'
-let g:gitgutter_sign_removed = '▎'
-let g:gitgutter_sign_modified_removed = '•'
-nmap ]g :GitGutterNextHunk<CR>
-nmap [g :GitGutterPrevHunk<CR>
-augroup VimDiff
-  autocmd!
-  autocmd VimEnter,FilterWritePre * if &diff | GitGutterDisable | endif
-augroup END
-
-" SuperTab
-let g:SuperTabLongestEnhanced = 1
-let g:SuperTabLongestHighlight = 1
-au Filetype typescript let b:SuperTabDefaultCompletionType = "<C-x><C-o>"
-
-" csv.vim
-let g:csv_delim_test = ',|'
-let g:csv_no_conceal = 1
-highlight link CSVDelimiter Delimiter
-highlight link CSVColumnHeaderEven Type
-highlight link CSVColumnHeaderOdd Type
-
-" Use incsearch.vim to highlight as I search
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-" Highlight YAML frontmatter in Markdown files
-let g:vim_markdown_frontmatter = 1
-
-" Goyo and Limelight integration
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+" Git signs navigation (replaces GitGutter)
+nmap ]g <cmd>lua pcall(function() require('gitsigns').next_hunk() end)<CR>
+nmap [g <cmd>lua pcall(function() require('gitsigns').prev_hunk() end)<CR>
 
 " ----------------------------------------------------------------------------
 " FILE TYPE TRIGGERS
@@ -301,7 +368,49 @@ au FileType markdown syn sync fromstart
 au Filetype gitcommit setlocal tw=80
 au Filetype csv setlocal nocursorline
 
+" Disable gitsigns in diff mode
+au VimEnter,FilterWritePre * if &diff | lua pcall(function() require('gitsigns').toggle_signs(false) end) | endif
+
+" Goyo and Limelight integration
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" Custom mode for distraction-free editing (replaces ProseMode)
+function! ProseMode()
+  call goyo#execute(0, [])
+  set spell noci nosi noai nolist noshowmode noshowcmd
+  set complete+=s
+  colorscheme horizon-extended
+endfunction
+command! ProseMode call ProseMode()
+
 augroup END
+
+" ----------------------------------------------------------------------------
+" ABBREVIATIONS
+" ----------------------------------------------------------------------------
+
+" I can't spell :(
+abbr conosle console
+abbr comopnent component
+
+" Debugging helpers
+autocmd BufEnter *.py iabbr xxx print('XXX
+autocmd BufEnter *.py iabbr yyy print('YYY
+autocmd BufEnter *.py iabbr zzz print('ZZZ
+autocmd BufEnter *.coffee iabbr xxx console.log 'XXX',
+autocmd BufEnter *.coffee iabbr yyy console.log 'YYY',
+autocmd BufEnter *.coffee iabbr zzz console.log 'ZZZ',
+autocmd BufEnter *.js iabbr xxx console.log('XXX',
+autocmd BufEnter *.js iabbr yyy console.log('YYY',
+autocmd BufEnter *.js iabbr zzz console.log('ZZZ',
+autocmd BufEnter *.ts iabbr xxx console.log('XXX',
+autocmd BufEnter *.ts iabbr yyy console.log('YYY',
+autocmd BufEnter *.ts iabbr zzz console.log('ZZZ',
+autocmd BufEnter *.rb iabbr xxx puts "XXX
+autocmd BufEnter *.rb iabbr yyy puts "YYY
+autocmd BufEnter *.rb iabbr zzz puts "ZZZ
+autocmd BufEnter *.rb iabbr ppp require 'pp'; pp
 
 " ----------------------------------------------------------------------------
 " GUI-SPECIFIC SETTINGS (for Neovide)
@@ -333,12 +442,18 @@ if has('gui_running')
     autocmd!
     autocmd ColorScheme * hi SignColumn guibg=NONE
 
-    " FZF uses ctermfg for some colors. Ew.
+    " Telescope uses ctermfg for some colors. Ew.
     autocmd ColorScheme * hi Number ctermfg=7
     autocmd ColorScheme * hi Conditional ctermfg=7
     autocmd ColorScheme * hi Special ctermfg=7
   augroup END
 endif
+
+" Make the damned tildes less visible
+highlight link EndOfBuffer Comment
+
+" Make menu selections visible
+highlight PmenuSel ctermfg=black ctermbg=magenta
 
 " ----------------------------------------------------------------------------
 " HOST-SPECIFIC CONFIG
@@ -351,3 +466,335 @@ endif
 
 " Some plugin seems to search for something at startup, so this fixes that.
 silent! nohlsearch
+
+" ----------------------------------------------------------------------------
+" LUA CONFIGURATION (for modern plugins)
+" ----------------------------------------------------------------------------
+
+lua << EOF
+-- Set colorscheme (after plugins are loaded)
+-- Try to setup and load horizon-extended
+local function setup_colorscheme()
+  local ok, horizon = pcall(require, 'horizon-extended')
+  if ok and horizon then
+    -- Setup with custom options
+    horizon.setup({
+      style = 'neo',
+      transparent = false,
+      terminal_colors = true,
+      enable_italics = true,
+      show_end_of_buffer = false,
+      underline = false,
+      undercurl = true,
+    })
+    vim.cmd('colorscheme horizon-extended')
+    return true
+  else
+    -- Fallback to molokai
+    pcall(function()
+      vim.cmd('colorscheme molokai')
+    end)
+    return false
+  end
+end
+
+-- Set colorscheme immediately
+setup_colorscheme()
+
+-- Also set it on VimEnter in case plugins weren't loaded yet
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    if vim.g.colors_name ~= 'horizon-extended' then
+      setup_colorscheme()
+    end
+  end,
+})
+
+-- Safely load plugins (only if they're installed)
+-- nvim-tree (replaces NERDTree)
+pcall(function()
+  require('nvim-tree').setup({
+    view = {
+      width = 30,
+      side = 'left',
+    },
+    renderer = {
+      icons = {
+        show = {
+          git = true,
+        },
+      },
+    },
+    filters = {
+      dotfiles = false,
+    },
+  })
+end)
+
+-- Telescope (replaces fzf.vim)
+pcall(function()
+  local telescope = require('telescope')
+  
+  telescope.setup({
+    defaults = {
+      mappings = {
+        i = {
+          ['<C-u>'] = false,
+          ['<C-d>'] = false,
+        },
+      },
+      file_ignore_patterns = {
+        '^.git/',
+        '^node_modules/',
+        '^.DS_Store',
+      },
+    },
+    pickers = {
+      find_files = {
+        find_command = { 'rg', '--files', '--follow', '--hidden', '-g', '!{.git,node_modules}/*' },
+      },
+      live_grep = {
+        additional_args = { '--hidden' },
+      },
+    },
+    extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = 'smart_case',
+      },
+    },
+  })
+  
+  -- Load fzf-native extension for faster sorting (if available)
+  local ok, _ = pcall(telescope.load_extension, 'fzf')
+  if not ok then
+    vim.notify('telescope-fzf-native not loaded - run :PlugInstall and restart', vim.log.levels.WARN)
+  end
+end)
+
+-- lualine (statusline)
+pcall(function()
+  require('lualine').setup({
+    options = {
+      theme = 'auto',
+      component_separators = { left = '|', right = '|' },
+      section_separators = { left = '', right = '' },
+      disabled_filetypes = {
+        statusline = { 'NvimTree' },
+      },
+    },
+    sections = {
+      lualine_a = { 'mode' },
+      lualine_b = { 'branch', 'diff', 'diagnostics' },
+      lualine_c = { 'filename' },
+      lualine_x = { 'encoding', 'fileformat', 'filetype' },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' },
+    },
+  })
+end)
+
+-- gitsigns (replaces vim-gitgutter)
+pcall(function()
+  require('gitsigns').setup({
+    signs = {
+      add = { text = '▎' },
+      change = { text = '▎' },
+      delete = { text = '▎' },
+      topdelete = { text = '▎' },
+      changedelete = { text = '•' },
+    },
+  })
+end)
+
+-- treesitter (replaces vim-polyglot)
+pcall(function()
+  require('nvim-treesitter.configs').setup({
+    ensure_installed = {
+      'lua', 'vim', 'vimdoc', 'query',
+      'javascript', 'typescript', 'html', 'css', 'json',
+      'markdown', 'python', 'bash', 'yaml', 'ruby',
+      'xml', 'glsl', 'coffee', 'sass', 'less',
+    },
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+      enable = true,
+    },
+    indent = {
+      enable = true,
+    },
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true,
+        keymaps = {
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+        },
+      },
+    },
+  })
+  
+  -- Load textobjects after treesitter is set up
+  pcall(function()
+    require('nvim-treesitter-textobjects').setup()
+  end)
+end)
+
+-- nvim-ts-autotag (replaces closetag.vim)
+pcall(function()
+  require('nvim-ts-autotag').setup()
+end)
+
+-- hlslens (replaces incsearch.vim)
+pcall(function()
+  require('hlslens').setup({
+    calm_down = true,
+    nearest_only = true,
+    nearest_float_when = 'always',
+  })
+  
+  -- Setup keybindings for hlslens
+  local kopts = { noremap = true, silent = true }
+  
+  -- Use hlslens bindings that work with search
+  vim.keymap.set({'n', 'x'}, 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.keymap.set({'n', 'x'}, 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.keymap.set('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.keymap.set('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.keymap.set('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  vim.keymap.set('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+  
+  -- Auto-start hlslens when searching
+  vim.api.nvim_create_autocmd('CmdlineEnter', {
+    pattern = {'/', '?'},
+    callback = function()
+      vim.schedule(function()
+        require('hlslens').start()
+      end)
+    end,
+  })
+end)
+
+-- Mason (LSP installer)
+pcall(function()
+  require('mason').setup()
+  require('mason-lspconfig').setup({
+    -- Only include servers that mason-lspconfig recognizes
+    -- Note: TypeScript server (ts_ls) should be installed manually via :Mason
+    -- Search for "typescript-language-server" in Mason UI
+    ensure_installed = { 'lua_ls', 'pyright' },
+  })
+end)
+
+-- LSP setup with custom configurations (using Neovim 0.11+ vim.lsp.config API)
+pcall(function()
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+  -- Lua LSP with custom settings
+  vim.lsp.config('lua_ls', {
+    settings = {
+      Lua = {
+        runtime = { version = 'LuaJIT' },
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
+      },
+    },
+    capabilities = capabilities,
+  })
+  vim.lsp.enable('lua_ls')
+
+  -- Python LSP with custom settings
+  vim.lsp.config('pyright', {
+    settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+        },
+      },
+    },
+    capabilities = capabilities,
+  })
+  vim.lsp.enable('pyright')
+
+  -- TypeScript/JavaScript LSP (ts_ls replaces deprecated tsserver)
+  vim.lsp.config('ts_ls', {
+    capabilities = capabilities,
+  })
+  vim.lsp.enable('ts_ls')
+
+  -- LSP key mappings
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+      local opts = { buffer = ev.buf }
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+      vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+      vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+      vim.keymap.set('n', '<space>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, opts)
+      vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+      vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    end,
+  })
+end)
+
+-- Completion (nvim-cmp)
+pcall(function()
+  local cmp = require('cmp')
+  local luasnip = require('luasnip')
+
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+    }, {
+      { name = 'buffer' },
+      { name = 'path' },
+    }),
+  })
+end)
+EOF
