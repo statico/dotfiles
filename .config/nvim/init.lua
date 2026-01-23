@@ -210,7 +210,8 @@ local map = vim.keymap.set
 
 -- File explorer
 map('n', '\\e', '<cmd>lua pcall(function() require("nvim-tree.api").tree.toggle() end)<CR>')
-map('n', '\\F', '<cmd>lua pcall(function() require("nvim-tree.api").tree.find_file({ open = true, focus = true }) end)<CR>')
+map('n', '\\F',
+  '<cmd>lua pcall(function() require("nvim-tree.api").tree.find_file({ open = true, focus = true }) end)<CR>')
 
 -- Format options
 map('n', '\\A', ':set formatoptions+=a<CR>:echo "autowrap enabled"<CR>')
@@ -692,6 +693,9 @@ pcall(function()
         runtime = { version = 'LuaJIT' },
         workspace = { checkThirdParty = false },
         telemetry = { enable = false },
+        diagnostics = {
+          globals = { 'vim' },
+        },
       },
     },
     capabilities = capabilities,
