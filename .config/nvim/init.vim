@@ -53,10 +53,12 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
   },
-  "windwp/nvim-ts-autotag",
-  "nvim-treesitter/nvim-treesitter-textobjects",
+  {
+    "windwp/nvim-ts-autotag",
+    event = "VeryLazy",
+    opts = {},
+  },
 
   -- LSP and Completion (replaces supertab)
   "neovim/nvim-lspconfig",
@@ -658,57 +660,7 @@ pcall(function()
     indent = {
       enable = true,
     },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true,
-        keymaps = {
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['ab'] = '@block.outer',
-          ['ib'] = '@block.inner',
-        },
-      },
-      move = {
-        enable = true,
-        set_jumps = true,
-        goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
-        },
-        goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
-        },
-        goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
-    },
   })
-  
-  -- Load textobjects after treesitter is set up
-  pcall(function()
-    require('nvim-treesitter-textobjects').setup()
-  end)
 end)
 
 -- nvim-ts-autotag (replaces closetag.vim - auto-closes HTML/XML/JSX tags)
@@ -806,7 +758,7 @@ end
 pcall(function()
   require('mason').setup()
   require('mason-lspconfig').setup({
-    ensure_installed = { 'lua_ls', 'pyright', 'tsserver' },
+    ensure_installed = { 'lua_ls', 'pyright', 'ts_ls' },
   })
 end)
 
@@ -927,11 +879,8 @@ pcall(function()
         g = true,
       },
     },
-    window = {
+    win = {
       border = 'rounded',
-      position = 'bottom',
-      margin = { 1, 0, 1, 0 },
-      padding = { 2, 2, 2, 2 },
     },
   })
 end)
