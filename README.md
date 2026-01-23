@@ -4,7 +4,7 @@
 
 These are my dotfiles. There are many like them, but these are mine. This started around 2001 or so when I used many different operating systems and environments. Now I mostly use macOS and Linux but still keep the environment in sync.
 
-![CleanShot 2021-10-01 at 20 15 23@2x](https://user-images.githubusercontent.com/137158/135730113-495868f0-e4ad-4e8a-a10e-7f07be402e9d.png)
+<img width="2898" height="1668" alt="CleanShot 2026-01-22 at 21 42 05@2x" src="https://github.com/user-attachments/assets/c238bfa8-3223-47c8-a016-92a8b58f4105" />
 
 Favorite font at the moment: [Iosevka Term](https://typeof.net/Iosevka/)
 
