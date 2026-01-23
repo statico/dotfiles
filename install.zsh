@@ -112,6 +112,13 @@ if [ -n "$VSCODE_REMOTE_CONTAINERS_SESSION" ]; then
 else
   echo "◉ Setting up vim plugins..."
   .vim/update.sh
+  
+  if which nvim >/dev/null 2>&1 ; then
+    echo "◉ Setting up neovim plugins..."
+    .config/nvim/update.sh
+  else
+    echo "◉ Skipping neovim setup because nvim isn't installed."
+  fi
 fi
 
 if [ -e "$HOME/Library" ]; then

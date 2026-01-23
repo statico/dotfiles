@@ -43,6 +43,8 @@ if _inside_ai_coding_tool ; then
   export GIT_PAGER=cat
 elif [ "$TERM_PROGRAM" = "vscode" ]; then
   export EDITOR=code VISUAL=less
+elif _has nvim; then
+  export EDITOR=nvim VISUAL=nvim
 elif _has vim; then
   export EDITOR=vim VISUAL=vim
 elif _has vi; then
@@ -128,6 +130,7 @@ alias Arp='sudo apt remove --purge'
 alias As='apt search'
 alias SC='vim ~/.ssh/config'
 alias VU='~/.vim/update.sh'
+alias NVU='~/.config/nvim/update.sh'
 alias ZL='vim -o ~/.zshlocal ~/.zshrc && ZR'
 alias ZR='echo "Restarting zsh..." && exec zsh -l'
 alias ZU='~/.dotfiles/install.zsh && ZR'
@@ -239,8 +242,14 @@ alias gun='git unstage'
 alias gundo='git undo'
 alias gup='git up "$(git branch --show-current)"'
 alias gus='git unstage'
-alias gvc='vim `git diff --name-only --diff-filter=U`'
-alias gvm='vim `git diff --name-only --diff-filter=M`'
+gvc() {
+  local editor=$(_editor)
+  $editor `git diff --name-only --diff-filter=U`
+}
+gvm() {
+  local editor=$(_editor)
+  $editor `git diff --name-only --diff-filter=M`
+}
 alias gz='git undo'
 alias h='heroku'
 alias i4='sed "s/^/    /"'
@@ -312,6 +321,11 @@ if [ -n "$VSCODE_IPC_HOOK_CLI" ]; then
   alias vi=code
   alias vim=code
   alias gvim=code
+elif _has nvim; then
+  alias vi=nvim
+  alias vim=nvim
+  vs() { nvim +"NERDTree $1" }
+  gvs() { nvim +"NERDTree $1" }
 elif _has vim; then
   alias vi=vim
   vs() { vim +"NERDTree $1" }
@@ -524,22 +538,37 @@ yr() {
 
 # ack is really useful. I usually look for code and then edit all of the files
 # containing that code. Changing `ack' to `vack' does this for me.
+_editor() {
+  if _has nvim; then
+    echo nvim
+  elif _has vim; then
+    echo vim
+  else
+    echo vi
+  fi
+}
 if _has rg; then
   vack() {
-    vim `rg --color=never -l $@`
+    local editor=$(_editor)
+    $editor `rg --color=never -l $@`
   }
 elif _has ag; then
   vack() {
-    vim `ag --nocolor -l $@`
+    local editor=$(_editor)
+    $editor `ag --nocolor -l $@`
   }
 else
   vack() {
-    vim `ack -l $@`
+    local editor=$(_editor)
+    $editor `ack -l $@`
   }
 fi
 alias vag=vack
 alias vrg=vack
-vgg() { vim `gg -l $@` }
+vgg() {
+  local editor=$(_editor)
+  $editor `gg -l $@`
+}
 
 # Quick commands to sync CWD between terminals.
 pin() {
@@ -885,7 +914,7 @@ colorprompt() {
   local -a line1
   line1=(
     "%{[${__prompt_mode}m%}%n@%m:%~"
-    "%(1j.%{[36;1m%} ● %j jobs%{[0m%}.)"
+    "%(1j.%{[36;1m%} ◝ %j jobs%{[0m%}.)"
     "%(?..%{[31;1m%} ▲ error %?%{[0m%})"
     "%{[30;1m%} ${__extra} %{[0m%}"
   )
@@ -1011,13 +1040,5 @@ fi
 
 # }}} Done.
 
-# LM Studio won't stop updating my rc files: https://github.com/lmstudio-ai/lms/issues/232
-# Added by LM Studio CLI (lms)
-# End of LM Studio CLI section
-
 # Don't end with errors.
 true
-
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/ian/.lmstudio/bin"
-# End of LM Studio CLI section

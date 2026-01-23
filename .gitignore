@@ -12,6 +12,9 @@
 .vim/bundle/*/doc/tags-??
 .vimlocal
 .zsh-completions
+.config/nvim/plugged/
+.config/nvim/plugin/
+.config/nvim/pack/
 .aider*
 .claude
 CLAUDE.local.md
