@@ -1013,14 +1013,9 @@ preexec_functions+=(_refresh_ssh_auth_sock)
 
 # FZF {{{1
 
-for dir in ~/.fzf /usr/share/fzf /usr/local/opt/fzf/shell /opt/homebrew/opt/fzf/shell ; do
-  if [ -e $dir ]; then
-    [ -e $dir/completion.zsh ] && source $dir/completion.zsh
-    [ -e $dir/key-bindings.zsh ] && source $dir/key-bindings.zsh
-    [ -e $dir/../bin ] && _append_to_path $dir/../bin
-    break
-  fi
-done
+if _has fzf; then
+  source <(fzf --zsh)
+fi
 
 if _has rg; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
