@@ -49,6 +49,10 @@ require('lazy').setup({
   -- Git
   'lewis6991/gitsigns.nvim',
   'tpope/vim-fugitive',
+  {
+    'sindrets/diffview.nvim',
+    cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewFileHistory' },
+  },
 
   -- Syntax Highlighting
   {
@@ -236,6 +240,16 @@ map('n', '\\z', ':w<CR>:!open %<CR><CR>')
 
 -- Git toggle
 map('n', '\\g', '<cmd>lua pcall(function() require("gitsigns").toggle() end)<CR>')
+
+-- Diffview toggle (git changes sidebar)
+map('n', '\\d', function()
+  local lib = require('diffview.lib')
+  if lib.get_current_view() then
+    vim.cmd('DiffviewClose')
+  else
+    vim.cmd('DiffviewOpen')
+  end
+end)
 
 -- Sorting
 map('n', '\\i', 'vip:sort<CR>')
