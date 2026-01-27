@@ -9,7 +9,7 @@
 
 # Returns whether the given command is executable or aliased.
 _has() {
-  return $( whence $1 &>/dev/null )
+  whence $1 &>/dev/null
 }
 
 # Returns whether the given statement executed cleanly. Try to avoid this
@@ -37,18 +37,6 @@ _inside_ai_coding_tool() {
 if _has less; then
   export PAGER=less
   export LESS='-Ri'
-fi
-
-if _inside_ai_coding_tool ; then
-  export GIT_PAGER=cat
-elif [ "$TERM_PROGRAM" = "vscode" ]; then
-  export EDITOR=code VISUAL=less
-elif _has nvim; then
-  export EDITOR=nvim VISUAL=nvim
-elif _has vim; then
-  export EDITOR=vim VISUAL=vim
-elif _has vi; then
-  export EDITOR=vi VISUAL=vi
 fi
 
 # Overridable locale support.
@@ -118,6 +106,35 @@ fi
 [ -s "~/.bun/_bun" ] && source "~/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 _append_to_path "$BUN_INSTALL/bin"
+
+# EDITOR SETUP {{{1
+# Now that PATH is set up, determine which editor to use
+
+if _inside_ai_coding_tool ; then
+  export GIT_PAGER=cat
+  if _has nvim; then
+    export EDITOR=nvim
+    export VISUAL=nvim
+  elif _has vim; then
+    export EDITOR=vim
+    export VISUAL=vim
+  elif _has vi; then
+    export EDITOR=vi
+    export VISUAL=vi
+  fi
+elif [ "$TERM_PROGRAM" = "vscode" ]; then
+  export EDITOR=code
+  export VISUAL=less
+elif _has nvim; then
+  export EDITOR=nvim
+  export VISUAL=nvim
+elif _has vim; then
+  export EDITOR=vim
+  export VISUAL=vim
+elif _has vi; then
+  export EDITOR=vi
+  export VISUAL=vi
+fi
 
 # ALIASES {{{1
 

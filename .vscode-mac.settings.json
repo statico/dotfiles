@@ -211,9 +211,6 @@
   "godotTools.editorPath.godot3": "/Applications/Godot.app/Contents/MacOS/Godot",
   "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot",
   "github.copilot.editor.enableAutoCompletions": true,
-  "arduino.logLevel": "verbose",
-  "arduino.path": "/opt/homebrew/bin/arduino-cli",
-  "arduino.commandPath": "/opt/homebrew/bin/arduino-cli",
   "workbench.editor.wrapTabs": true,
   "window.density.editorTabHeight": "compact",
   "typescript.tsserver.maxTsServerMemory": 15000,
@@ -250,7 +247,6 @@
   "editor.formatOnSave": true,
   "cursor.composer.collapsePaneInputBoxPills": true,
   "workbench.layoutControl.enabled": false,
-  // "workbench.colorTheme": "Horizon Default",
   "window.newWindowDimensions": "maximized",
   "window.newWindowProfile": "Default",
   "chat.editor.fontSize": 14,
@@ -270,13 +266,5 @@
   "baml.bamlPanelOpen": false,
   "workbench.panel.defaultLocation": "right",
   "editor.accessibilitySupport": "off",
-  "roo-cline.allowedCommands": [
-    "npm test",
-    "npm install",
-    "tsc",
-    "git log",
-    "git diff",
-    "git show"
-  ],
-  "roo-cline.deniedCommands": []
+  "workbench.secondarySideBar.defaultVisibility": "hidden"
 }
