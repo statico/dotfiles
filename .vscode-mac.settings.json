@@ -1,36 +1,40 @@
 {
-  "workbench.activityBar.orientation": "vertical",
-  "python.formatting.provider": "black",
+  "[gdscript]": {
+    "editor.defaultFormatter": "EddieDover.gdscript-formatter-linter"
+  },
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "baml.bamlPanelOpen": false,
   "breadcrumbs.enabled": true,
-  "dotfiles.installCommand": "~/.dotfiles/install.zsh",
-  "dotfiles.repository": "https://github.com/statico/dotfiles",
-  "dotfiles.targetPath": "~/.dotfiles",
+  "chat.editor.fontSize": 14,
+  "cursor.composer.collapsePaneInputBoxPills": true,
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "cursor.cpp.disabledLanguages": [
+    "scminput",
+    "csv"
+  ],
+  "debug.javascript.autoAttachFilter": "disabled",
+  "debug.onTaskErrors": "showErrors",
   "editor.acceptSuggestionOnCommitCharacter": false,
   "editor.acceptSuggestionOnEnter": "smart",
+  "editor.accessibilitySupport": "off",
+  "editor.autoClosingBrackets": "never",
+  "editor.autoClosingQuotes": "never",
+  "editor.autoSurround": "never",
   "editor.bracketPairColorization.enabled": true,
   "editor.cursorBlinking": "solid",
   "editor.cursorStyle": "line",
   "editor.fontFamily": "Iosevka Term",
   "editor.fontLigatures": true,
+  "editor.fontSize": 15,
+  "editor.formatOnSave": true,
   "editor.glyphMargin": false,
+  "editor.guides.indentation": false,
+  "editor.inlineSuggest.enabled": true,
+  "editor.lineHeight": 1.2,
+  "editor.lineNumbers": "on",
+  "editor.minimap.enabled": false,
   "editor.minimap.renderCharacters": false,
   "editor.parameterHints.enabled": false,
   "editor.quickSuggestions": {
@@ -40,14 +44,22 @@
   },
   "editor.renderWhitespace": "none",
   "editor.scrollbar.verticalScrollbarSize": 8,
+  "editor.showFoldingControls": "never",
   "editor.suggest.localityBonus": true,
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
+  "editor.tabSize": 2,
   "editor.tokenColorCustomizations": {
     "[Nord]": {
       "comments": "#616e88"
     }
   },
+  "editor.unicodeHighlight.allowedCharacters": {
+    "–": true,
+    "‘": true,
+    "’": true
+  },
+  "editor.unicodeHighlight.invisibleCharacters": false,
   "editor.wordBasedSuggestionsMode": "currentDocument",
   "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
   "editor.wordWrap": "on",
@@ -59,6 +71,9 @@
       "severity": "warn"
     }
   ],
+  "explorer.autoRevealExclude": {
+    "**/dist": true
+  },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "extensions.ignoreRecommendations": true,
@@ -67,12 +82,13 @@
     ".env.local": "shellscript"
   },
   "files.exclude": {
-    "**/__pycache__": true,
     "**/.next": true,
     "**/.venv": true,
+    "**/__pycache__": true,
     "**/node_modules": true,
     "**/yarn.lock": true
   },
+  "files.trimTrailingWhitespace": true,
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -81,190 +97,182 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
+  "git.mergeEditor": true,
+  "git.openRepositoryInParentFolders": "never",
   "git.path": "/usr/local/bin/git",
+  "git.useEditorAsCommitInput": false,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false,
+    "yaml": false
+  },
+  "godotTools.documentation.displayMinimap": false,
+  "godotTools.documentation.pageScale": 125,
+  "godotTools.editorPath.godot3": "/Applications/Godot.app/Contents/MacOS/Godot",
+  "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot",
+  "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot",
+  "html.autoClosingTags": false,
+  "html.autoCreateQuotes": false,
+  "javascript.autoClosingTags": false,
   "javascript.suggest.completeJSDocs": false,
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "markdown.copyFiles.destination": {
+    "images/${fileName}": ""
+  },
   "markdown.preview.fontSize": 16,
+  "outline.collapseItems": "alwaysCollapse",
   "php.suggest.basic": false,
+  "python.formatting.provider": "black",
   "references.preferredLocation": "view",
   "remote.containers.dotfiles.installCommand": "~/.dotfiles/install.zsh",
   "remote.containers.dotfiles.repository": "https://github.com/statico/dotfiles",
   "remote.containers.dotfiles.targetPath": "~/.dotfiles",
   "rest-client.enableTelemetry": false,
   "rest-client.fontSize": 13,
+  "rust-analyzer.cargo.extraEnv": {
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib",
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0"
+  },
+  "rust-analyzer.check.extraEnv": {
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib",
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0"
+  },
+  "rust-analyzer.inlayHints.chainingHints.enable": false,
+  "rust-analyzer.inlayHints.closingBraceHints.enable": false,
+  "rust-analyzer.inlayHints.parameterHints.enable": false,
+  "rust-analyzer.inlayHints.renderColons": false,
+  "rust-analyzer.inlayHints.typeHints.enable": false,
+  "rust-analyzer.runnables.extraEnv": {
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib",
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0"
+  },
+  "rust-analyzer.server.extraEnv": {
+    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib",
+    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0"
+  },
   "scrolloff.scrolloff": 10,
   "search.exclude": {
-    "**/*.{png,jpeg,jpg}": true,
     "**/*.js.snap": true,
     "**/*.ts.snap": true,
+    "**/*.{png,jpeg,jpg}": true,
     "**/yaml.lock": true
   },
+  "security.promptForLocalFileProtocolHandling": false,
+  "svelte.enable-ts-plugin": true,
   "telemetry.telemetryLevel": "off",
   "terminal.external.osxExec": "iTerm.app",
+  "terminal.integrated.enableImages": true,
   "terminal.integrated.fontWeight": "400",
   "terminal.integrated.fontWeightBold": "normal",
+  "terminal.integrated.macOptionIsMeta": true,
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.tabs.enabled": false,
+  "typescript.autoClosingTags": false,
   "typescript.disableAutomaticTypeAcquisition": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.jsxAttributeCompletionStyle": "none",
   "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsserver.log": "off",
+  "typescript.tsserver.maxTsServerMemory": 15000,
+  "typescript.tsserver.web.typeAcquisition.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "update.showReleaseNotes": false,
+  "vim.argumentObjectClosingDelimiters": [
+    ")",
+    "]",
+    "\""
+  ],
+  "vim.easymotion": true,
+  "vim.easymotionDimBackground": false,
   "vim.foldfix": false,
   "vim.leader": ",",
   "vim.neovimPath": "/opt/homebrew/bin/nvim",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["j"],
-      "commands": ["cursorDown"]
+      "before": [
+        "j"
+      ],
+      "commands": [
+        "cursorDown"
+      ]
     },
     {
-      "before": ["k"],
-      "commands": ["cursorUp"]
+      "before": [
+        "k"
+      ],
+      "commands": [
+        "cursorUp"
+      ]
     },
     {
-      "before": [";"],
-      "commands": ["workbench.action.quickOpen"]
+      "before": [
+        ";"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
     },
     {
-      "before": ["leader", "w"],
-      "after": ["leader", "leader", "w"]
+      "after": [
+        "leader",
+        "leader",
+        "w"
+      ],
+      "before": [
+        "leader",
+        "w"
+      ]
     },
     {
-      "before": ["leader", "b"],
-      "after": ["leader", "leader", "b"]
+      "after": [
+        "leader",
+        "leader",
+        "b"
+      ],
+      "before": [
+        "leader",
+        "b"
+      ]
     },
     {
-      "before": ["leader", "s"],
-      "after": ["leader", "leader", "s"]
+      "after": [
+        "leader",
+        "leader",
+        "s"
+      ],
+      "before": [
+        "leader",
+        "s"
+      ]
     }
   ],
-  "workbench.startupEditor": "none",
-  "terminal.integrated.macOptionIsMeta": true,
-  "editor.lineHeight": 1.2,
-  "debug.javascript.autoAttachFilter": "disabled",
-  "git.useEditorAsCommitInput": false,
   "window.commandCenter": false,
-  "zenMode.fullScreen": false,
-  "vim.argumentObjectClosingDelimiters": [")", "]", "\""],
-  "typescript.preferences.jsxAttributeCompletionStyle": "none",
-  "workbench.editor.tabCloseButton": "off",
-  "git.mergeEditor": true,
-  "[css]": {
-    "editor.formatOnSave": false,
-    "editor.formatOnPaste": false
-  },
+  "window.density.editorTabHeight": "compact",
   "window.nativeTabs": true,
-  "editor.inlineSuggest.enabled": true,
-  "github.copilot.enable": {
-    "*": true,
-    "yaml": false,
-    "plaintext": false,
-    "markdown": true
-  },
-  "editor.autoSurround": "never",
-  "editor.autoClosingQuotes": "never",
-  "editor.autoClosingBrackets": "never",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "editor.minimap.enabled": false,
-  "git.openRepositoryInParentFolders": "never",
-  "editor.showFoldingControls": "never",
-  "editor.guides.indentation": false,
-  "editor.lineNumbers": "on",
-  "update.showReleaseNotes": false,
-  "editor.fontSize": 15,
-  "explorer.autoRevealExclude": {
-    "**/dist": true
-  },
-  "vim.easymotion": true,
-  "vim.easymotionDimBackground": false,
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
+  "window.newWindowDimensions": "maximized",
+  "window.newWindowProfile": "Default",
+  "workbench.activityBar.location": "hidden",
+  "workbench.activityBar.orientation": "vertical",
   "workbench.colorCustomizations": {
     "[Horizon Default]": {
-      "sideBar.border": "#272833",
-      "terminal.border": "#272833",
+      "list.inactiveSelectionBackground": "#353645",
       "panel.border": "#272833",
-      "sideBar.foreground": "#d5d8dae0",
       "quickInputList.focusBackground": "#383949",
-      "list.inactiveSelectionBackground": "#353645"
+      "sideBar.border": "#272833",
+      "sideBar.foreground": "#d5d8dae0",
+      "terminal.border": "#272833"
     },
     "tab.activeBorder": "#00ffff",
     "tab.activeBorderTop": "#00000000"
   },
-  "outline.collapseItems": "alwaysCollapse",
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "workbench.activityBar.location": "hidden",
-  "godot_tools.editor_path": "/Applications/Godot.app/Contents/MacOS/Godot",
   "workbench.editor.tabActionCloseVisibility": false,
-  "html.autoCreateQuotes": false,
-  "editor.unicodeHighlight.allowedCharacters": {
-    "’": true,
-    "‘": true,
-    "–": true
-  },
-  "terminal.integrated.enableImages": true,
-  "markdown.copyFiles.destination": {
-    "images/${fileName}": ""
-  },
-  "files.trimTrailingWhitespace": true,
-  "debug.onTaskErrors": "showErrors",
-  "godotTools.editorPath.godot3": "/Applications/Godot.app/Contents/MacOS/Godot",
-  "godotTools.editorPath.godot4": "/Applications/Godot.app/Contents/MacOS/Godot",
-  "github.copilot.editor.enableAutoCompletions": true,
+  "workbench.editor.tabCloseButton": "off",
   "workbench.editor.wrapTabs": true,
-  "window.density.editorTabHeight": "compact",
-  "typescript.tsserver.maxTsServerMemory": 15000,
-  "typescript.tsserver.log": "off",
-  "typescript.tsserver.web.typeAcquisition.enabled": false,
-  "rust-analyzer.runnables.extraEnv": {
-    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
-    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
-  },
-  "rust-analyzer.server.extraEnv": {
-    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
-    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
-  },
-  "rust-analyzer.cargo.extraEnv": {
-    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
-    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
-  },
-  "rust-analyzer.check.extraEnv": {
-    "LIBTORCH": "/Users/ian/dev/libtorch/2.5.0",
-    "DYLD_LIBRARY_PATH": "/Users/ian/dev/libtorch/2.5.0/lib"
-  },
-  "rust-analyzer.inlayHints.parameterHints.enable": false,
-  "rust-analyzer.inlayHints.typeHints.enable": false,
-  "rust-analyzer.inlayHints.chainingHints.enable": false,
-  "rust-analyzer.inlayHints.closingBraceHints.enable": false,
-  "chat.editing.alwaysSaveWithGeneratedChanges": true,
-  "rust-analyzer.inlayHints.renderColons": false,
-  "cursor.cpp.disabledLanguages": ["scminput", "csv"],
-  "editor.unicodeHighlight.invisibleCharacters": false,
-  "[gdscript]": {
-    "editor.defaultFormatter": "EddieDover.gdscript-formatter-linter"
-  },
-  "security.promptForLocalFileProtocolHandling": false,
-  "editor.formatOnSave": true,
-  "cursor.composer.collapsePaneInputBoxPills": true,
   "workbench.layoutControl.enabled": false,
-  "window.newWindowDimensions": "maximized",
-  "window.newWindowProfile": "Default",
-  "chat.editor.fontSize": 14,
-  "godotTools.documentation.displayMinimap": false,
-  "godotTools.documentation.pageScale": 125,
-  "svelte.enable-ts-plugin": true,
-  "editor.tabSize": 2,
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  },
-  "html.autoClosingTags": false,
-  "javascript.autoClosingTags": false,
-  "typescript.autoClosingTags": false,
-  "terminal.integrated.scrollback": 10000,
-  "terminal.integrated.tabs.enabled": false,
-  "cursor.composer.shouldChimeAfterChatFinishes": true,
-  "baml.bamlPanelOpen": false,
   "workbench.panel.defaultLocation": "right",
-  "editor.accessibilitySupport": "off",
-  "workbench.secondarySideBar.defaultVisibility": "hidden"
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.startupEditor": "none",
+  "zenMode.fullScreen": false
 }

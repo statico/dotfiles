@@ -1,197 +1,196 @@
-// Place your key bindings in this file to overwrite the defaults
 [
   {
-    "key": "ctrl+w",
-    "command": "-workbench.action.switchWindow"
+    "command": "-workbench.action.switchWindow",
+    "key": "ctrl+w"
   },
   {
-    "key": "cmd+[",
     "command": "-editor.action.outdentLines",
-    "when": "editorTextFocus && !editorReadonly"
-  },
-  {
     "key": "cmd+[",
-    "command": "workbench.action.navigateBack"
-  },
-  {
-    "key": "ctrl+-",
-    "command": "-workbench.action.navigateBack"
-  },
-  {
-    "key": "cmd+]",
-    "command": "-editor.action.indentLines",
     "when": "editorTextFocus && !editorReadonly"
   },
   {
+    "command": "workbench.action.navigateBack",
+    "key": "cmd+["
+  },
+  {
+    "command": "-workbench.action.navigateBack",
+    "key": "ctrl+-"
+  },
+  {
+    "command": "-editor.action.indentLines",
     "key": "cmd+]",
-    "command": "workbench.action.navigateForward"
+    "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+-",
-    "command": "-workbench.action.navigateForward"
+    "command": "workbench.action.navigateForward",
+    "key": "cmd+]"
   },
   {
-    "key": "ctrl+h",
+    "command": "-workbench.action.navigateForward",
+    "key": "ctrl+shift+-"
+  },
+  {
     "command": "-deleteLeft",
+    "key": "ctrl+h",
     "when": "textInputFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+h",
-    "command": "workbench.action.navigateLeft"
+    "command": "workbench.action.navigateLeft",
+    "key": "ctrl+h"
   },
   {
-    "key": "ctrl+l",
-    "command": "workbench.action.navigateRight"
+    "command": "workbench.action.navigateRight",
+    "key": "ctrl+l"
   },
   {
-    "key": "ctrl+c",
     "command": "workbench.action.closeQuickOpen",
+    "key": "ctrl+c",
     "when": "inQuickOpen"
   },
   {
-    "key": "escape",
     "command": "-workbench.action.closeQuickOpen",
+    "key": "escape",
     "when": "inQuickOpen"
   },
   {
-    "key": "f8",
     "command": "-editor.action.marker.nextInFiles",
+    "key": "f8",
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+r",
     "command": "editor.action.rename",
+    "key": "ctrl+shift+r",
     "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
   },
   {
-    "key": "f2",
     "command": "-editor.action.rename",
+    "key": "f2",
     "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+shift+cmd+n",
-    "command": "editor.action.marker.nextInFiles"
+    "command": "editor.action.marker.nextInFiles",
+    "key": "ctrl+shift+cmd+n"
   },
   {
-    "key": "ctrl+cmd+n",
-    "command": "editor.action.marker.next"
+    "command": "editor.action.marker.next",
+    "key": "ctrl+cmd+n"
   },
   {
-    "key": "ctrl+shift+cmd+p",
     "command": "editor.action.marker.prevInFiles",
+    "key": "ctrl+shift+cmd+p",
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "shift+f8",
     "command": "-editor.action.marker.prevInFiles",
+    "key": "shift+f8",
     "when": "editorFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+cmd+p",
-    "command": "editor.action.marker.prev"
+    "command": "editor.action.marker.prev",
+    "key": "ctrl+cmd+p"
   },
   {
-    "key": "cmd+1",
-    "command": "workbench.files.action.focusFilesExplorer"
+    "command": "workbench.files.action.focusFilesExplorer",
+    "key": "cmd+1"
   },
   {
-    "key": "ctrl+shift+space",
     "command": "editor.action.triggerParameterHints",
+    "key": "ctrl+shift+space",
     "when": "editorHasSignatureHelpProvider && editorTextFocus"
   },
   {
-    "key": "shift+cmd+space",
     "command": "-editor.action.triggerParameterHints",
+    "key": "shift+cmd+space",
     "when": "editorHasSignatureHelpProvider && editorTextFocus"
   },
   {
-    "key": "shift+cmd+n",
-    "command": "-workbench.action.newWindow"
+    "command": "-workbench.action.newWindow",
+    "key": "shift+cmd+n"
   },
   {
-    "key": "cmd+r",
     "command": "renameFile",
+    "key": "cmd+r",
     "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
   },
   {
-    "key": "enter",
     "command": "-renameFile",
+    "key": "enter",
     "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
   },
   {
-    "key": "shift+cmd+n",
-    "command": "explorer.newFile"
+    "command": "explorer.newFile",
+    "key": "shift+cmd+n"
   },
   {
-    "key": "shift+alt+cmd+n",
-    "command": "workbench.action.newWindow"
+    "command": "workbench.action.newWindow",
+    "key": "shift+alt+cmd+n"
   },
   {
-    "key": "ctrl+n",
-    "command": "-workbench.action.files.newUntitledFile"
+    "command": "-workbench.action.files.newUntitledFile",
+    "key": "ctrl+n"
   },
   {
+    "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
     "key": "ctrl+p",
-    "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
     "when": "inFilesPicker && inQuickOpen"
   },
   {
+    "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
     "key": "ctrl+e",
-    "command": "-workbench.action.quickOpenNavigateNextInFilePicker",
     "when": "inFilesPicker && inQuickOpen"
   },
   {
-    "key": "ctrl+shift+p",
     "command": "-workbench.action.quickOpenNavigatePreviousInFilePicker",
+    "key": "ctrl+shift+p",
     "when": "inFilesPicker && inQuickOpen"
   },
   {
-    "key": "ctrl+shift+n",
-    "command": "explorer.newFile"
+    "command": "explorer.newFile",
+    "key": "ctrl+shift+n"
   },
   {
-    "key": "ctrl+shift+n",
-    "command": "-workbench.action.newWindow"
+    "command": "-workbench.action.newWindow",
+    "key": "ctrl+shift+n"
   },
   {
-    "key": "ctrl+n",
     "command": "workbench.action.quickOpenSelectNext",
+    "key": "ctrl+n",
     "when": "inQuickOpen"
   },
   {
-    "key": "ctrl+p",
     "command": "workbench.action.quickOpenSelectPrevious",
+    "key": "ctrl+p",
     "when": "inQuickOpen"
   },
   {
-    "key": "ctrl+e",
-    "command": "-workbench.action.quickOpen"
+    "command": "-workbench.action.quickOpen",
+    "key": "ctrl+e"
   },
   {
-    "key": "ctrl+p",
     "command": "workbench.action.quickOpen",
+    "key": "ctrl+p",
     "when": "!inQuickOpen"
   },
   {
-    "key": "ctrl+k p",
-    "command": "-workbench.action.files.copyPathOfActiveFile"
+    "command": "-workbench.action.files.copyPathOfActiveFile",
+    "key": "ctrl+k p"
   },
   {
-    "key": "ctrl+w",
     "command": "-extension.vim_ctrl+w",
+    "key": "ctrl+w",
     "when": "editorTextFocus && vim.active && vim.use<C-w> && !inDebugRepl"
   },
   {
-    "key": "ctrl+e",
     "command": "-extension.vim_ctrl+e",
+    "key": "ctrl+e",
     "when": "editorTextFocus && vim.active && vim.use<C-e> && !inDebugRepl"
   },
   {
-    "key": "ctrl+w",
-    "command": "extension.vim_ctrl+w"
+    "command": "extension.vim_ctrl+w",
+    "key": "ctrl+w"
   },
   {
-    "key": "ctrl+e",
-    "command": "extension.vim_ctrl+e"
+    "command": "extension.vim_ctrl+e",
+    "key": "ctrl+e"
   }
 ]
