@@ -267,6 +267,7 @@
     "tab.activeBorder": "#00ffff",
     "tab.activeBorderTop": "#00000000"
   },
+  "workbench.colorTheme": "Horizon Default",
   "workbench.editor.tabActionCloseVisibility": false,
   "workbench.editor.tabCloseButton": "off",
   "workbench.editor.wrapTabs": true,

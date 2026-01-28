@@ -764,10 +764,10 @@ pcall(function()
     formatters_by_ft = {
       lua = { 'stylua' },
       python = { 'black', 'isort' },
-      javascript = { 'biome' },
-      typescript = { 'biome' },
-      javascriptreact = { 'biome' },
-      typescriptreact = { 'biome' },
+      javascript = { 'oxc', stop_after_first = true },
+      typescript = { 'oxc', stop_after_first = true },
+      javascriptreact = { 'oxc', stop_after_first = true },
+      typescriptreact = { 'oxc', stop_after_first = true },
       json = { 'biome' },
       jsonc = { 'biome' },
       css = { 'biome' },
@@ -781,6 +781,11 @@ pcall(function()
       biome = {
         command = 'biome',
         args = { 'format', '--stdin-file-path', '$FILENAME' },
+      },
+      oxc = {
+        command = 'oxc',
+        args = { 'format', '--stdin-filename', '$FILENAME' },
+        stdin = true,
       },
     },
     format_on_save = {
