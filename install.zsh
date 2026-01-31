@@ -18,6 +18,11 @@ function symlink() {
     mkdir -p "$dest_dir"
   fi
 
+  # If dest already resolves to src (e.g., via a symlinked parent dir), skip
+  if [ -e "$dest" ] && [ "$(realpath "$src")" = "$(realpath "$dest")" ]; then
+    return 0
+  fi
+
   if [ -e "$dest" ]; then
     if [ -L "$dest" ]; then
       if [ ! -e "$dest" ]; then
