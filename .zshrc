@@ -157,6 +157,7 @@ alias a='aider'
 alias aurl='adb shell am start -a "android.intent.action.VIEW" -d'
 alias b='bat'
 alias bc='bc -l'
+alias bi='bun install'
 alias c=claude
 alias ca=cursor-agent
 alias cc='claude -c'
