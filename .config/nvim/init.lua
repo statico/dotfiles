@@ -585,8 +585,8 @@ pcall(function()
     ensure_installed = {
       'lua', 'vim', 'vimdoc', 'query',
       'javascript', 'typescript', 'html', 'css', 'json',
-      'markdown', 'python', 'bash', 'yaml', 'ruby',
-      'xml', 'glsl', 'sass', 'scss',
+      'markdown', 'markdown_inline', 'python', 'bash', 'yaml', 'ruby',
+      'xml', 'glsl', 'sass', 'scss', 'mermaid',
     },
     sync_install = false,
     auto_install = true,
