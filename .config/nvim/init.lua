@@ -446,7 +446,7 @@ pcall(function()
       vim.wo.signcolumn = 'yes'
     end,
     plugins = {
-      twilight = { enabled = true },
+      twilight = { enabled = false },
       gitsigns = { enabled = false },
     },
   })
