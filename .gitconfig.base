@@ -3,7 +3,7 @@
 # name/email/signingkey.
 # 
 [core]
-	editor = vim
+	editor = nvim
 	pager = less -FRX
 	excludesfile = ~/.gitignore
 [gist]
