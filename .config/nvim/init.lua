@@ -65,14 +65,6 @@ require('lazy').setup({
     opts = {},
   },
 
-  -- Markdown rendering
-  {
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-    ft = { 'markdown' },
-    opts = {},
-  },
-
   -- LSP and Completion
   'neovim/nvim-lspconfig',
   'williamboman/mason.nvim',
@@ -446,10 +438,12 @@ pcall(function()
       vim.opt.scrolloff = 15
       vim.wo.number = false
       vim.wo.relativenumber = false
+      vim.wo.signcolumn = 'no'
     end,
     on_close = function()
       vim.wo.number = true
       vim.wo.relativenumber = true
+      vim.wo.signcolumn = 'yes'
     end,
     plugins = {
       twilight = { enabled = true },
