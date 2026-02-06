@@ -119,8 +119,14 @@ require('lazy').setup({
   'wellle/targets.vim',
 
   -- Focus/writing mode
-  'junegunn/goyo.vim',
-  'junegunn/limelight.vim',
+  {
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+  },
+  {
+    'folke/twilight.nvim',
+    cmd = 'Twilight',
+  },
 
   -- Colors
   'tomasr/molokai',
@@ -273,8 +279,8 @@ end)
 map('n', '\\i', 'vip:sort<CR>')
 
 -- Writing mode
-map('n', '\\p', '<cmd>Goyo<CR>')
-map('n', '\\W', "mt:Goyo<CR>'tzz")
+map('n', '\\p', '<cmd>ZenMode<CR>')
+map('n', '\\W', '<cmd>Twilight<CR>')
 
 -- Visual line movement (j/k move by screen line, not file line)
 map('n', 'j', 'gj')
@@ -433,16 +439,24 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'FilterWritePre' }, {
   end,
 })
 
--- Goyo and Limelight integration
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoEnter',
-  command = 'Limelight',
-})
-
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'GoyoLeave',
-  command = 'Limelight!',
-})
+-- Zen mode (with twilight integration)
+pcall(function()
+  require('zen-mode').setup({
+    on_open = function()
+      vim.opt.scrolloff = 15
+      vim.wo.number = false
+      vim.wo.relativenumber = false
+    end,
+    on_close = function()
+      vim.wo.number = true
+      vim.wo.relativenumber = true
+    end,
+    plugins = {
+      twilight = { enabled = true },
+      gitsigns = { enabled = false },
+    },
+  })
+end)
 
 -- Debugging abbreviations
 vim.api.nvim_create_autocmd('BufEnter', {
