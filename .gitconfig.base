@@ -4,7 +4,7 @@
 # 
 [core]
 	editor = nvim
-	pager = less -FRX
+	pager = delta
 	excludesfile = ~/.gitignore
 [gist]
 	private = yes
@@ -24,6 +24,12 @@
 	enabled = true
 [stash]
 	showStat = true
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	side-by-side = true
 [difftool]
 	prompt = false
 [merge]
@@ -89,11 +95,6 @@
 	status = auto
 	branch = auto
 	ui = auto
-[color "diff"]
-	meta = blue
-	frag = black
-	old = red
-	new = green
 [color "status"]
 	added = green
 	changed = yellow

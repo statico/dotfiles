@@ -4,6 +4,7 @@ eza
 fswatch
 fzf
 git
+git-delta
 jq
 neovim
 pv
