@@ -30,6 +30,7 @@
 	navigate = true
 	line-numbers = true
 	side-by-side = true
+	tabs = 2
 [difftool]
 	prompt = false
 [merge]
