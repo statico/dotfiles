@@ -539,9 +539,20 @@ end)
 
 -- Telescope
 pcall(function()
+  local actions = require('telescope.actions')
   require('telescope').setup({
     defaults = {
       file_ignore_patterns = { '^.git/', '^node_modules/', '^.DS_Store' },
+      mappings = {
+        i = {
+          ['<C-c>'] = actions.close,
+          ['<C-u>'] = false, -- restore default readline clear-line
+          ['<C-w>'] = false, -- restore default readline delete-word
+          ['<C-h>'] = false, -- restore default readline backspace
+          ['<C-a>'] = function() vim.cmd('normal! 0') end, -- readline beginning-of-line
+          ['<C-e>'] = function() vim.cmd('normal! $') end, -- readline end-of-line
+        },
+      },
     },
     pickers = {
       find_files = {
