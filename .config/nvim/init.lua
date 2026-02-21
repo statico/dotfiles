@@ -199,6 +199,9 @@ opt.wildignore = { '*.class', '*.o', '*~', '*.pyc', '.git', 'node_modules' }
 -- History
 opt.history = 200
 
+-- Use system clipboard for all yank/delete/paste
+opt.clipboard = 'unnamedplus'
+
 -- Security
 opt.modeline = false
 
