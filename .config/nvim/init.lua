@@ -178,7 +178,7 @@ opt.smartcase = true
 opt.infercase = true
 
 -- Display
-opt.list = true
+opt.list = false
 opt.listchars = { tab = '» ', extends = '›', precedes = '‹', nbsp = '·', trail = '·' }
 opt.matchtime = 2
 opt.showmatch = true
@@ -242,7 +242,8 @@ map('n', '\\a', ':set formatoptions-=a<CR>:echo "autowrap disabled"<CR>')
 map('n', '\\b', ':set nocin tw=80<CR>:set formatoptions+=a<CR>')
 
 -- Tab settings
-map('n', '\\M', ':set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>')
+map('n', '\\M', ':set noexpandtab tabstop=4 softtabstop=4 shiftwidth=4<CR>')
+map('n', '\\N', ':set noexpandtab tabstop=2 softtabstop=2 shiftwidth=2<CR>')
 map('n', '\\T', ':set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>')
 map('n', '\\m', ':set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>')
 map('n', '\\t', ':set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>')
@@ -254,6 +255,7 @@ map('n', '\\q', ':nohlsearch<CR>')
 map('n', '\\s', ':setlocal invspell<CR>')
 map('n', '\\u', ':setlocal list!<CR>:setlocal list?<CR>')
 map('n', '\\w', ':setlocal wrap!<CR>:setlocal wrap?<CR>')
+map('n', '\\R', ':source $MYVIMRC<CR>:echo "init.lua reloaded"<CR>')
 map('n', '\\x', ':cclose<CR>')
 map('n', '\\z', ':w<CR>:!open %<CR><CR>')
 
@@ -571,8 +573,8 @@ pcall(function()
   require('lualine').setup({
     options = {
       theme = 'onedark',
-      component_separators = { left = '|', right = '|' },
-      section_separators = { left = '', right = '' },
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '\u{e0b0}', right = '\u{e0b2}' },
       disabled_filetypes = {
         statusline = { 'NvimTree' },
       },
@@ -581,7 +583,16 @@ pcall(function()
       lualine_a = { 'mode' },
       lualine_b = { 'branch', 'diff', 'diagnostics' },
       lualine_c = { 'filename' },
-      lualine_x = { 'encoding', 'fileformat', 'filetype' },
+      lualine_x = {
+        function()
+          if vim.bo.expandtab then
+            return 'spaces:' .. vim.bo.shiftwidth
+          else
+            return 'tab:' .. vim.bo.tabstop
+          end
+        end,
+        'encoding', 'fileformat', 'filetype',
+      },
       lualine_y = { 'progress' },
       lualine_z = { 'location' },
     },
