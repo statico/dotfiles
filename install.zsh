@@ -65,7 +65,7 @@ cd "$basedir"
 
 if [ "$(uname -s)" = "Darwin" ] && which brew >/dev/null 2>&1; then
   echo "◉ Installing Homebrew packages..."
-  brew install $(cat homebrew.txt)
+  brew install --quiet $(cat homebrew.txt)
 fi
 
 echo "→ Cleaning up dead symlinks..."
