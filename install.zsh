@@ -63,6 +63,11 @@ fi
 
 cd "$basedir"
 
+if [ "$(uname -s)" = "Darwin" ] && which brew >/dev/null 2>&1; then
+  echo "◉ Installing Homebrew packages..."
+  brew install $(cat homebrew.txt)
+fi
+
 echo "→ Cleaning up dead symlinks..."
 find "$HOME" -maxdepth 1 -type l ! -exec test -e {} \; -delete
 [ -d "$bindir" ] && find "$bindir" -maxdepth 1 -type l ! -exec test -e {} \; -delete
