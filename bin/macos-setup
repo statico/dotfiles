@@ -13,9 +13,6 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15
 # Disable press-and-hold for diacritic selector (enables key repeat everywhere)
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-# Turn off dictation
-defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
-
 # Dark mode
 defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
 
@@ -36,5 +33,9 @@ defaults write com.apple.dock mru-spaces -bool false
 
 # Turn off dictation auto-enable
 defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
+
+# Disable auto-correction and auto-capitalization
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
 echo "Done. Some changes require a logout or restart to take effect."
