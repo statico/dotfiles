@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+basedir="$(cd "$(dirname "$0")/.." && pwd)"
+is_tart_vm=false
+if [ "$(sysctl -n hw.model 2>/dev/null)" = "VirtualMac2,1" ]; then
+  is_tart_vm=true
+fi
+
 echo "Configuring macOS defaults..."
 
 # Disable natural scrolling (old-style scroll direction)
@@ -25,8 +31,12 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 # Full keyboard access (tab through all UI controls)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
 
-# Dock: auto-hide
-defaults write com.apple.dock autohide -bool true
+# Dock: auto-hide (except in Tart VMs where screen space isn't limited)
+if $is_tart_vm; then
+  defaults write com.apple.dock autohide -bool false
+else
+  defaults write com.apple.dock autohide -bool true
+fi
 
 # Don't rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
@@ -37,5 +47,13 @@ defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
 # Disable auto-correction and auto-capitalization
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+# Disable Tips notifications
+defaults write com.apple.tips notificationsAllowed -bool false
+
+# In Tart VMs, set desktop to solid grey
+if $is_tart_vm; then
+  osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$basedir/grey.png\""
+fi
 
 echo "Done. Some changes require a logout or restart to take effect."
