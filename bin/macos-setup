@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "Configuring macOS defaults..."
+
+# Disable natural scrolling (old-style scroll direction)
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+# Key repeat: fastest rate, shortest delay
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+# Disable press-and-hold for diacritic selector (enables key repeat everywhere)
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# Turn off dictation
+defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
+
+# Dark mode
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+
+# Disable sticky keys
+defaults write com.apple.universalaccess stickyKey -bool false
+
+# Show all file extensions in Finder
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Full keyboard access (tab through all UI controls)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
+
+# Dock: auto-hide
+defaults write com.apple.dock autohide -bool true
+
+# Don't rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# Turn off dictation auto-enable
+defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
+
+echo "Done. Some changes require a logout or restart to take effect."

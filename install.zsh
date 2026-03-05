@@ -132,6 +132,9 @@ if [ -e "$HOME/Library" ]; then
   echo "⌨ Adding extra keybindings to macOS..."
   mkdir -p "$HOME/Library/KeyBindings"
   symlink "$basedir/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+
+  echo "⚙ Applying macOS defaults..."
+  "$basedir/bin/macos-setup"
 fi
 
 echo "◉ Setting up git..."
