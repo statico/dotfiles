@@ -51,6 +51,12 @@ defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 # Disable Tips notifications
 defaults write com.apple.tips notificationsAllowed -bool false
 
+# Terminal.app: use Option as Meta key (for both profiles)
+defaults write com.apple.Terminal "Default Window Settings" -string "Basic"
+defaults write com.apple.Terminal "Startup Window Settings" -string "Basic"
+/usr/libexec/PlistBuddy -c "Set :Window\ Settings:Basic:useOptionAsMetaKey true" ~/Library/Preferences/com.apple.Terminal.plist 2>/dev/null || \
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Basic:useOptionAsMetaKey bool true" ~/Library/Preferences/com.apple.Terminal.plist
+
 # In Tart VMs, set desktop to solid grey
 if $is_tart_vm; then
   osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$basedir/grey.png\""
