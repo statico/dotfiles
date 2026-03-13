@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 basedir="$(cd "$(dirname "$0")/.." && pwd)"
 is_tart_vm=false
@@ -7,59 +7,67 @@ if [ "$(sysctl -n hw.model 2>/dev/null)" = "VirtualMac2,1" ]; then
   is_tart_vm=true
 fi
 
+# Best-effort: log failures but keep going
+try() {
+  if ! "$@" 2>&1; then
+    echo "  warning: failed: $*" >&2
+  fi
+}
+
 echo "Configuring macOS defaults..."
 
 # Disable natural scrolling (old-style scroll direction)
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+try defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # Key repeat: fastest rate, shortest delay
-defaults write NSGlobalDomain KeyRepeat -int 2
-defaults write NSGlobalDomain InitialKeyRepeat -int 15
+try defaults write NSGlobalDomain KeyRepeat -int 2
+try defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
 # Disable press-and-hold for diacritic selector (enables key repeat everywhere)
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+try defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Dark mode
-defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
+try defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
 
 # Disable sticky keys
-defaults write com.apple.universalaccess stickyKey -bool false
+try defaults write com.apple.universalaccess stickyKey -bool false
 
 # Show all file extensions in Finder
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+try defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
 # Full keyboard access (tab through all UI controls)
-defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
+try defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
 
 # Dock: auto-hide (except in Tart VMs where screen space isn't limited)
 if $is_tart_vm; then
-  defaults write com.apple.dock autohide -bool false
+  try defaults write com.apple.dock autohide -bool false
 else
-  defaults write com.apple.dock autohide -bool true
+  try defaults write com.apple.dock autohide -bool true
 fi
 
 # Don't rearrange Spaces based on most recent use
-defaults write com.apple.dock mru-spaces -bool false
+try defaults write com.apple.dock mru-spaces -bool false
 
 # Turn off dictation auto-enable
-defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
+try defaults write com.apple.HIToolbox AppleDictationAutoEnable -int 0
 
 # Disable auto-correction and auto-capitalization
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
-defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+try defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+try defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
 # Disable Tips notifications
-defaults write com.apple.tips notificationsAllowed -bool false
+try defaults write com.apple.tips notificationsAllowed -bool false
 
 # Terminal.app: use Option as Meta key (for both profiles)
-defaults write com.apple.Terminal "Default Window Settings" -string "Basic"
-defaults write com.apple.Terminal "Startup Window Settings" -string "Basic"
+try defaults write com.apple.Terminal "Default Window Settings" -string "Basic"
+try defaults write com.apple.Terminal "Startup Window Settings" -string "Basic"
 /usr/libexec/PlistBuddy -c "Set :Window\ Settings:Basic:useOptionAsMetaKey true" ~/Library/Preferences/com.apple.Terminal.plist 2>/dev/null || \
-  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Basic:useOptionAsMetaKey bool true" ~/Library/Preferences/com.apple.Terminal.plist
+  /usr/libexec/PlistBuddy -c "Add :Window\ Settings:Basic:useOptionAsMetaKey bool true" ~/Library/Preferences/com.apple.Terminal.plist 2>/dev/null || \
+  echo "  warning: failed to set Option as Meta key" >&2
 
 # In Tart VMs, set desktop to solid grey
 if $is_tart_vm; then
-  osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$basedir/grey.png\""
+  try osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$basedir/grey.png\""
 fi
 
 echo "Done. Some changes require a logout or restart to take effect."
