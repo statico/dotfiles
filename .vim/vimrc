@@ -215,6 +215,8 @@ set list                    " Show whitespace as special chars - see listchars
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:· " Unicode characters for various things
 set matchtime=2             " Tenths of second to hilight matching paren
 set nomodeline              " teh hackerz!!!1
+set nomodelineexpr          " No expression eval in modelines
+set noexrc                  " No auto-sourcing of ./.vimrc from cwd
 silent! set mouse=nvc       " Use the mouse, but not in insert mode
 set nobackup                " No backups left after done editing
 set nonumber                " No line numbers to start

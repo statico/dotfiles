@@ -204,6 +204,8 @@ opt.clipboard = 'unnamedplus'
 
 -- Security
 opt.modeline = false
+opt.modelineexpr = false
+opt.exrc = false
 
 -- Visual/audio
 opt.visualbell = true
