@@ -16,6 +16,7 @@
 .config/nvim/plugin/
 .config/nvim/pack/
 .config/nvim/lazy-lock.json
+.config/nvim/nvim.log
 .aider*
 .claude
 CLAUDE.local.md

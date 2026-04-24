@@ -68,6 +68,11 @@ if [ "$(uname -s)" = "Darwin" ] && which brew >/dev/null 2>&1; then
   brew install --quiet $(cat homebrew.txt)
 fi
 
+if which npm >/dev/null 2>&1; then
+  echo "◉ Installing global npm packages..."
+  npm install --global --silent tree-sitter-cli
+fi
+
 echo "→ Cleaning up dead symlinks..."
 find "$HOME" -maxdepth 1 -type l ! -exec test -e {} \; -delete
 [ -d "$bindir" ] && find "$bindir" -maxdepth 1 -type l ! -exec test -e {} \; -delete

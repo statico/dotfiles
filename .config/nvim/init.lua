@@ -54,10 +54,17 @@ require('lazy').setup({
     cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewFileHistory' },
   },
 
-  -- Syntax Highlighting
+  -- Syntax highlighting (parsers; highlighting itself is built-in on nvim 0.12+)
   {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
+    'romus204/tree-sitter-manager.nvim',
+    opts = {
+      ensure_installed = {
+        'lua', 'vim', 'vimdoc', 'query',
+        'javascript', 'typescript', 'tsx', 'html', 'css', 'json',
+        'markdown', 'markdown_inline', 'python', 'bash', 'yaml', 'ruby',
+        'xml', 'glsl', 'scss', 'mermaid',
+      },
+    },
   },
   {
     'windwp/nvim-ts-autotag',
@@ -610,26 +617,6 @@ pcall(function()
       delete = { text = '▎' },
       topdelete = { text = '▎' },
       changedelete = { text = '•' },
-    },
-  })
-end)
-
--- treesitter
-pcall(function()
-  require('nvim-treesitter.configs').setup({
-    ensure_installed = {
-      'lua', 'vim', 'vimdoc', 'query',
-      'javascript', 'typescript', 'html', 'css', 'json',
-      'markdown', 'markdown_inline', 'python', 'bash', 'yaml', 'ruby',
-      'xml', 'glsl', 'sass', 'scss', 'mermaid',
-    },
-    sync_install = false,
-    auto_install = true,
-    highlight = {
-      enable = true,
-    },
-    indent = {
-      enable = true,
     },
   })
 end)
