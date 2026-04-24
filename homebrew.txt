@@ -13,6 +13,7 @@ terminal-notifier
 tmux
 trash
 tree
+tree-sitter-cli
 xz
 zsh
 zsh-completions
