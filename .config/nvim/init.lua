@@ -55,16 +55,11 @@ require('lazy').setup({
   },
 
   -- Syntax highlighting (parsers; highlighting itself is built-in on nvim 0.12+)
+  -- Parsers are installed by ./parsers.sh, not at startup, so we don't pay for
+  -- async installs on every launch (they couldn't finish before nvim exited).
   {
     'romus204/tree-sitter-manager.nvim',
-    opts = {
-      ensure_installed = {
-        'lua', 'vim', 'vimdoc', 'query',
-        'javascript', 'typescript', 'tsx', 'html', 'css', 'json',
-        'markdown', 'markdown_inline', 'python', 'bash', 'yaml', 'ruby',
-        'xml', 'glsl', 'scss', 'mermaid',
-      },
-    },
+    opts = {},
   },
   {
     'windwp/nvim-ts-autotag',

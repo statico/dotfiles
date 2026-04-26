@@ -70,3 +70,8 @@ else
 fi
 
 echo "╰─ Plugin update complete"
+
+# Install/refresh tree-sitter parsers synchronously so they actually land
+# in ~/.local/share/nvim/site/parser/ instead of being re-attempted at every
+# nvim startup.
+"$(dirname "$0")/parsers.sh"
