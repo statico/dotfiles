@@ -7,6 +7,8 @@ RUN addgroup demo \
 
 WORKDIR /home/demo
 USER demo
+ENV NPM_CONFIG_PREFIX=/home/demo/.npm-global
+ENV PATH=/home/demo/.npm-global/bin:$PATH
 ADD --chown=demo ./ .dotfiles/
 RUN .dotfiles/install.zsh
 
