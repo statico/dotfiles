@@ -21,3 +21,4 @@
 .claude
 CLAUDE.local.md
 .cursor/
+nvim.log
