@@ -16,9 +16,12 @@ local config = require('tree-sitter-manager.config')
 vim.fn.mkdir(config.cfg.parser_dir, 'p')
 vim.fn.mkdir(config.cfg.query_dir, 'p')
 
-local pending = 0
 local failed = {}
 
+-- Install serially: parallel installs cause shared dependencies (e.g. ecma,
+-- typescript) to be re-cloned and re-built once per dependent parser, since
+-- installer.install does not dedupe in-flight work. Sequential lets each
+-- finished parser short-circuit the next one's dep checks.
 for _, lang in ipairs(langs) do
   local already
   if installer.is_only_query(lang) then
@@ -27,22 +30,16 @@ for _, lang in ipairs(langs) do
     already = vim.uv.fs_stat(util.ppath(lang)) ~= nil
   end
   if not already then
-    pending = pending + 1
+    local done = false
+    local result_success = false
     installer.install(lang, function(success)
-      if not success then table.insert(failed, lang) end
-      pending = pending - 1
+      result_success = success
+      done = true
     end)
-  end
-end
-
-if pending == 0 then
-  print('all parsers already installed')
-else
-  print('waiting on ' .. pending .. ' parser install(s)...')
-  local done = vim.wait(600000, function() return pending == 0 end, 200)
-  if not done then
-    io.stderr:write('timeout: ' .. pending .. ' install(s) still pending\n')
-    vim.cmd('cq')
+    local ok_wait = vim.wait(300000, function() return done end, 100)
+    if not ok_wait or not result_success then
+      table.insert(failed, lang)
+    end
   end
 end
 
