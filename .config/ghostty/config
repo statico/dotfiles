@@ -26,4 +26,4 @@ unfocused-split-opacity = 1
 
 keybind = shift+enter=text:\x1b\r
 
-keybind = cmd+shift+i=prompt_surface_title
+keybind = cmd+shift+i=prompt_tab_title
