@@ -320,6 +320,7 @@ alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
 alias urls="grep -Eo 'https?://[^ ]+' | sed 's/[^a-zA-Z0-9/:?&._=-]//g'"
+alias v='viu -w 50'
 alias ve='source .venv/bin/activate ; rehash'
 alias vimsql="vim -c 'set ft=sql'"
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
@@ -483,7 +484,7 @@ ask() {
     formatter=md2term
   fi
   local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\`. Answer the following question. Be brief and concise."
-  llm prompt -s "$system_prompt" "$*" | eval $formatter
+  llm prompt -o max_tokens 4096 -s "$system_prompt" "$*" | eval $formatter
 }
 
 # Ask an LLM with WebSearch tool enabled
@@ -509,7 +510,7 @@ askw() {
     formatter=md2term
   fi
   local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\`. Search the web and answer the following question. Be brief and concise."
-  llm prompt -T web_search -s "$system_prompt" "$*" | eval $formatter
+  llm prompt -T web_search -o max_tokens 4096 -s "$system_prompt" "$*" | eval $formatter
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
@@ -525,7 +526,7 @@ cmd() {
   fi
   local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\` using shell \`$SHELL\`. Show me a command line command for the following in a code block. Be brief and concise. No comments."
   local cmd
-  cmd=$(llm prompt -x -s "$system_prompt" "$*")
+  cmd=$(llm prompt -x -o max_tokens 4096 -s "$system_prompt" "$*")
 
   # Insert the command into the command line buffer
   print -z "$cmd"
