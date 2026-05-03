@@ -468,7 +468,16 @@ fi
 
 # AI coding agent sandbox with https://nono.sh
 sb() {
-  nono run --profile ${1:-claude-code} -- claude --dangerously-skip-permissions
+  local profile
+  local -a nono_args
+  if [ $# -eq 0 ] || [[ $1 == -* ]]; then
+    profile=claude-code
+    nono_args=(--allow-cwd)
+  else
+    profile=$1
+    shift
+  fi
+  nono run --profile $profile $nono_args -- claude --dangerously-skip-permissions $@
 }
 
 # Generic helper to ask an LLM about anything - install glow for best results
