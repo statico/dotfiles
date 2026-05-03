@@ -466,6 +466,11 @@ fi
 
 # FUNCTIONS {{{1
 
+# AI coding agent sandbox with https://nono.sh
+sb() {
+  nono run --profile ${1:-claude-code} -- claude --dangerously-skip-permissions
+}
+
 # Generic helper to ask an LLM about anything - install glow for best results
 # Requires `llm`: https://llm.datasette.io/en/stable/
 ask() {
