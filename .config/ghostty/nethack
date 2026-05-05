@@ -1,0 +1,25 @@
+# Ghostty config for playing NetHack on alt.org.
+#
+# Launch with:
+#     ghostty --config-file=~/.confg/ghostyy/nethack
+
+font-family            = PT Mono
+font-style             = Bold
+font-style-bold        = Bold
+font-style-italic      = Italic
+font-style-bold-italic = Bold Italic
+font-size              = 20
+font-feature           = -liga, -calt
+
+theme            = Argonaut
+cursor-style     = block
+window-padding-x = 8
+window-padding-y = 8
+
+initial-window = true
+window-width  = 143
+window-height = 39
+
+term = xterm-256color
+
+command = ssh nao
