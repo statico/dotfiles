@@ -20,6 +20,11 @@ initial-window = true
 window-width  = 143
 window-height = 39
 
+macos-icon = retro
+
 term = xterm-256color
 
-command = ssh nao
+command = /bin/sh -c "ssh nao"
+wait-after-command = false
+confirm-close-surface = false
+quit-after-last-window-closed = true

@@ -288,7 +288,7 @@ alias ll="l -a"
 alias lt='ls -lt'
 alias ltr='ls -ltr'
 alias md='glow -p'
-alias nao='ghostty --config-file=~/.config/ghostty/nethack'
+alias nao='open -na Ghostty --args --config-file=$HOME/.config/ghostty/nethack'
 alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "00 00[0-2]"'
 alias netopen='lsof -iTCP -sTCP:LISTEN -P'
 alias netwhat='_netwhat() { lsof -P -i:$* | sed 1d }; _netwhat'
