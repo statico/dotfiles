@@ -775,6 +775,18 @@ fi
 # End of lines added by compinstall
 # ---------------------------------------------
 
+# Completion for sb() — completes first arg with nono profile names.
+_sb() {
+  if (( CURRENT == 2 )); then
+    local -a profiles
+    profiles=(~/.config/nono/profiles/*.json(N:t:r))
+    _describe 'nono profile' profiles
+  else
+    _files
+  fi
+}
+compdef _sb sb
+
 # Ignore useless files, like .pyc.
 zstyle ':completion:*:(all-|)files' ignored-patterns '(|*/).pyc'
 
