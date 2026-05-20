@@ -738,6 +738,19 @@ dedent() {
   echo "Removed leading whitespace from clipboard content"
 }
 
+# Extract URLs from unstructured text (stdin or args).
+urls() {
+  local input
+  if (( $# > 0 )); then
+    input="$*"
+  else
+    input="$(cat)"
+  fi
+  print -r -- "$input" | grep -oE '(https?|ftp|file)://[^[:space:]<>"'\''`]+' \
+    | sed -E 's/[.,;:!?)\]}>]+$//' \
+    | awk '!seen[$0]++'
+}
+
 # ZSH-SPECIFIC COMPLETION {{{1
 
 # Add new Zsh Completions repo
