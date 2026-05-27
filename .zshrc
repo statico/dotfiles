@@ -320,7 +320,6 @@ alias stt='git status -uall'
 alias t='tmux attach'
 alias tree="tree -F -A -I CVS"
 alias tt='tail -n 9999'
-alias urls="grep -Eo 'https?://[^ ]+' | sed 's/[^a-zA-Z0-9/:?&._=-]//g'"
 alias v='viu -w 50'
 alias ve='source .venv/bin/activate ; rehash'
 alias vimsql="vim -c 'set ft=sql'"
