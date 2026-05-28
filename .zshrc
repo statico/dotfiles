@@ -477,7 +477,7 @@ sb() {
     profile=$1
     shift
   fi
-  nono run --profile $profile $nono_args -- claude --dangerously-skip-permissions $@
+  nono run --profile $profile $nono_args -- env DISABLE_AUTOUPDATER=1 claude --dangerously-skip-permissions $@
 }
 
 # Generic helper to ask an LLM about anything - install glow for best results
