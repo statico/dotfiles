@@ -8,6 +8,7 @@ git-delta
 jq
 neovim
 pv
+rdap
 ripgrep
 terminal-notifier
 tmux
