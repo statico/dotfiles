@@ -324,7 +324,7 @@ alias v='viu -w 50'
 alias ve='source .venv/bin/activate ; rehash'
 alias vimsql="vim -c 'set ft=sql'"
 alias wgetdir='wget -r -l1 -P035 -nd --no-parent'
-alias whois='echo you want rdap now'
+alias whois='echo whois is deprecated, try: rdap'
 alias wip='git add -A ; git commit --all --no-verify -m WIP'
 alias x='bat'
 alias yad='yarn add -D'
