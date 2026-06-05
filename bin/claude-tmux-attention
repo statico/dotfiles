@@ -1,0 +1,24 @@
+#!/bin/sh
+# Signal the tmux window/pane running Claude Code that it needs attention.
+#
+# Called from a Claude Code `Notification` hook (see ~/.claude/settings.json).
+# Sets two passive markers that .tmux.conf renders as a slate-blue 〈◆〉:
+#
+#   * window list  -> a silent BEL sets `window_bell_flag`; tmux clears it
+#                     automatically when you select the window.
+#   * pane border  -> a pane-local `@attn` option; .tmux.conf clears it when
+#                     you switch to that pane (after-select-pane hook).
+#
+# Nothing here grabs focus, raises a window, or rings the terminal: with
+# `bell-action none` / `visual-bell off`, tmux only flips a flag. The markers
+# just appear in the status bar for you to notice whenever you look.
+
+[ -n "$TMUX_PANE" ] || exit 0
+
+# Pane-border marker (cleared on after-select-pane in .tmux.conf).
+tmux set -p -t "$TMUX_PANE" @attn 1 2>/dev/null
+
+# Window-list marker via a silent bell (auto-clears on window select).
+tty=$(tmux display -p -t "$TMUX_PANE" '#{pane_tty}' 2>/dev/null) || exit 0
+[ -n "$tty" ] && printf '\a' > "$tty"
+exit 0
