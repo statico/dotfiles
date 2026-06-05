@@ -25,6 +25,46 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Obsidian vault location is host-specific (different on each machine, or
+-- absent entirely). Probe $OBSIDIAN_VAULT and a few common paths; return the
+-- first that actually exists, or nil. Used to enable obsidian.nvim only when
+-- there's a vault, so machines without notes don't see a startup error.
+local function obsidian_vault()
+  local candidates = { '~/dev/notes', '~/Obsidian/Notes' }
+  -- $OBSIDIAN_VAULT wins, but add it via insert — a nil first element in a
+  -- table literal makes a hole that stops ipairs() before it checks the rest.
+  if vim.env.OBSIDIAN_VAULT and vim.env.OBSIDIAN_VAULT ~= '' then
+    table.insert(candidates, 1, vim.env.OBSIDIAN_VAULT)
+  end
+  for _, path in ipairs(candidates) do
+    local expanded = vim.fn.expand(path)
+    if vim.fn.isdirectory(expanded) == 1 then
+      return expanded
+    end
+  end
+  return nil
+end
+
+-- Resolve the vault once at startup so cond, the keymap, and the workspace
+-- path all agree. A plain boolean/string is more predictable for lazy than a
+-- cond function it evaluates later.
+local obsidian_path = obsidian_vault()
+
+-- Bind <C-]> to follow-link in every markdown buffer, but only when a vault
+-- exists (otherwise obsidian.nvim never loads and :Obsidian wouldn't exist).
+-- Registered here at startup — not in the plugin's config — so the mapping is
+-- in place before the first markdown buffer triggers lazy-loading. (Doing it
+-- in config misses that first buffer, whose FileType event already fired.)
+if obsidian_path then
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'markdown',
+    callback = function(ev)
+      vim.keymap.set('n', '<C-]>', '<cmd>Obsidian follow_link<cr>',
+        { buffer = ev.buf, desc = 'Obsidian: follow link under cursor' })
+    end,
+  })
+end
+
 require('lazy').setup({
   -- File Explorer
   {
@@ -125,6 +165,27 @@ require('lazy').setup({
   -- Colors
   'tomasr/molokai',
   'lancewilhelm/horizon-extended.nvim',
+
+  -- Obsidian notes: follow [[wikilinks]] with <C-]>.
+  -- Only loads when obsidian_vault() finds a real vault (see helper above), so
+  -- hosts without a notes directory get no plugin and no error.
+  {
+    'obsidian-nvim/obsidian.nvim',
+    version = '*',
+    ft = 'markdown',
+    cond = obsidian_path ~= nil,
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      workspaces = {
+        { name = 'notes', path = obsidian_path },
+      },
+      -- Don't hijack <CR>/gf globally; <C-]> is bound at startup (above).
+      legacy_commands = false,
+      -- We only want link navigation, not inline rendering. Disabling the UI
+      -- leaves markdown displayed as-is and suppresses the conceallevel warning.
+      ui = { enable = false },
+    },
+  },
 }, {
   install = {
     colorscheme = { 'molokai', 'horizon-extended' },
