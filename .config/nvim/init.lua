@@ -61,6 +61,30 @@ if obsidian_path then
     callback = function(ev)
       vim.keymap.set('n', '<C-]>', '<cmd>Obsidian follow_link<cr>',
         { buffer = ev.buf, desc = 'Obsidian: follow link under cursor' })
+      -- Toggle the checkbox on the current line from anywhere on it.
+      vim.keymap.set('n', '<Leader>x', '<cmd>Obsidian toggle_checkbox<cr>',
+        { buffer = ev.buf, desc = 'Obsidian: toggle checkbox on line' })
+      -- The UI's concealed rendering (wikilinks, etc.) needs conceallevel >= 1,
+      -- and obsidian.nvim warns if it's lower. Scope it to markdown buffers.
+      vim.opt_local.conceallevel = 2
+      -- Autosave, like a native notes app — but only for files actually inside
+      -- the vault, not every markdown buffer. Write on insert-leave, any edit,
+      -- or when leaving the buffer/losing focus. `silent update` only writes if
+      -- there are unsaved changes, so it's cheap to fire often.
+      local fname = vim.api.nvim_buf_get_name(ev.buf)
+      if fname:sub(1, #obsidian_path) == obsidian_path then
+        vim.api.nvim_create_autocmd(
+          { 'InsertLeave', 'TextChanged', 'FocusLost', 'BufLeave' },
+          {
+            buffer = ev.buf,
+            callback = function()
+              if vim.bo[ev.buf].modifiable and not vim.bo[ev.buf].readonly
+                 and vim.bo[ev.buf].buftype == '' then
+                vim.cmd('silent update')
+              end
+            end,
+          })
+      end
     end,
   })
 end
@@ -181,9 +205,13 @@ require('lazy').setup({
       },
       -- Don't hijack <CR>/gf globally; <C-]> is bound at startup (above).
       legacy_commands = false,
-      -- We only want link navigation, not inline rendering. Disabling the UI
-      -- leaves markdown displayed as-is and suppresses the conceallevel warning.
-      ui = { enable = false },
+      -- Inline markdown rendering (concealed wikilinks, checkboxes, etc.).
+      ui = { enable = true },
+      -- Don't auto-inject/manage YAML frontmatter on every note we touch.
+      frontmatter = { enabled = false },
+      -- Only cycle checkboxes between unchecked and done, not the default
+      -- { " ", "~", "!", ">", "x" } set of intermediate states.
+      checkbox = { order = { ' ', 'x' } },
     },
   },
 }, {
@@ -214,6 +242,18 @@ opt.relativenumber = true
 
 -- File handling
 opt.autoread = true
+-- autoread only reloads when nvim happens to run a filesystem check, which it
+-- rarely does on its own. Nudge it with :checktime whenever we regain focus,
+-- switch buffers, or sit idle. nvim won't clobber a buffer we've modified — it
+-- warns instead — so this only reloads files we haven't changed ourselves.
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' }, {
+  group = vim.api.nvim_create_augroup('auto_reload', { clear = true }),
+  callback = function()
+    if vim.fn.mode() ~= 'c' and vim.fn.getcmdwintype() == '' then
+      vim.cmd('checktime')
+    end
+  end,
+})
 opt.autowrite = true
 opt.directory:remove('.')
 opt.fileformats = { 'unix', 'dos', 'mac' }
