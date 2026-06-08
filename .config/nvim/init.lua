@@ -64,6 +64,9 @@ if obsidian_path then
       -- Toggle the checkbox on the current line from anywhere on it.
       vim.keymap.set('n', '<Leader>x', '<cmd>Obsidian toggle_checkbox<cr>',
         { buffer = ev.buf, desc = 'Obsidian: toggle checkbox on line' })
+      -- Open a fresh unchecked checkbox below the current line (insert mode).
+      vim.keymap.set('n', '<Leader>o', 'o- [ ] ',
+        { buffer = ev.buf, desc = 'Obsidian: new checkbox below' })
       -- The UI's concealed rendering (wikilinks, etc.) needs conceallevel >= 1,
       -- and obsidian.nvim warns if it's lower. Scope it to markdown buffers.
       vim.opt_local.conceallevel = 2
