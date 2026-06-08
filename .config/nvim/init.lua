@@ -133,8 +133,8 @@ require('lazy').setup({
 
   -- LSP and Completion
   'neovim/nvim-lspconfig',
-  'williamboman/mason.nvim',
-  'williamboman/mason-lspconfig.nvim',
+  'mason-org/mason.nvim',
+  'mason-org/mason-lspconfig.nvim',
   {
     'hrsh7th/nvim-cmp',
     dependencies = {
