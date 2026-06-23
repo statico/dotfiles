@@ -471,9 +471,12 @@ fi
 sb() {
   local profile
   local -a nono_args
+  # Suppress nono's on-exit "save these denials to your profile?" prompt for all
+  # paths. Only filters the suggestion; does not grant access or hide diagnostics.
+  nono_args=(--suppress-save-prompt /)
   if [ $# -eq 0 ] || [[ $1 == -* ]]; then
     profile=claude-code
-    nono_args=(--allow-cwd)
+    nono_args+=(--allow-cwd)
   else
     profile=$1
     shift
