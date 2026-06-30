@@ -23,6 +23,7 @@ working-directory = home
 shell-integration-features = no-cursor, ssh-env
 
 unfocused-split-opacity = 1
+split-divider-color = #5e81ac
 
 keybind = shift+enter=text:\x1b\r
 
