@@ -450,6 +450,11 @@ map('n', 'q:', '<Nop>', { silent = true })
 
 -- Telescope mappings
 map('n', ';', '<cmd>Telescope find_files<CR>')
+map('n', '<Leader>;', function()
+  require('telescope.builtin').find_files({
+    find_command = { 'rg', '--files', '--follow', '--hidden', '--no-ignore', '-g', '!{.git,node_modules}/*' },
+  })
+end)
 map('n', '<Leader>r', '<cmd>Telescope tags<CR>')
 map('n', '<Leader>t', '<cmd>Telescope find_files<CR>')
 map('n', '<Leader>a', '<cmd>Telescope live_grep<CR>')
