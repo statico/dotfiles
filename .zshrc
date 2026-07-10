@@ -302,6 +302,7 @@ alias pg_dump_cleanup="sed -e '/^$/d' -e '/^--/d' -e '/^SET/d'"
 alias pkgcat='lsbom -f -l -s -pf'
 alias pkginstall='sudo installer -target / -pkg'
 alias pkgls='ls /var/db/receipts/'
+alias playwright='npx @playwright/mcp@latest --headless --isolated --browser chrome --port 8931'
 alias pnpm-update-everything='pnpm up --latest ; pnpm update ; pnpm self-update ; pnpm install'
 alias pt='pstree -pul'
 alias rake='noglob rake'
@@ -1086,3 +1087,8 @@ fi
 
 # Don't end with errors.
 true
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/ian/.lmstudio/bin"
+# End of LM Studio CLI section
+
