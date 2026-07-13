@@ -55,8 +55,9 @@ if [ -w ~/.zsh_history -o -w ~ ]; then
   HISTFILE=~/.zsh_history
 fi
 
-# Shush, brew.
+# Annoyances
 export HOMEBREW_NO_ENV_HINTS=1
+export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1
 
 # APPLICATION CUSTOMIZATIONS {{{1
 
