@@ -1,0 +1,197 @@
+#!/usr/bin/env bash
+#
+# llmcurl - minimal LLM CLI over a single curl request. No Python, no SDK.
+#
+# Picks a provider based on which API key is set in the environment (first
+# match wins, or override with LLMCURL_PROVIDER):
+#
+#   ANTHROPIC_API_KEY   -> Anthropic Messages API        (default model: claude-opus-4-8)
+#   GEMINI_API_KEY      -> Google Gemini generateContent (default model: gemini-flash-latest)
+#   GOOGLE_API_KEY      -> (alias for GEMINI_API_KEY)
+#   OPENROUTER_API_KEY  -> OpenRouter chat completions   (default model: ~anthropic/claude-opus-latest)
+#   OPENAI_API_KEY      -> OpenAI chat completions        (default model: gpt-5.6)
+#
+# Defaults prefer evergreen aliases (gemini-flash-latest, ~anthropic/claude-opus-latest,
+# gpt-5.6) so they keep working as new versions ship. Anthropic has no evergreen alias
+# for the 4.6+ generation, so claude-opus-4-8 is pinned and will need a one-line bump
+# when a newer Opus ships.
+#
+# Override the default model per provider with *_MODEL env vars (e.g.
+# ANTHROPIC_MODEL, GEMINI_MODEL, OPENROUTER_MODEL, OPENAI_MODEL) or with -m.
+#
+# Usage:
+#   llmcurl [-s SYSTEM_PROMPT] [-m MODEL] [-t MAX_TOKENS] [PROMPT...]
+#   echo "explain this" | llmcurl -s "be brief"
+#
+# Requires: curl, jq.
+
+set -euo pipefail
+
+system=""
+model=""
+max_tokens=4096
+
+usage() {
+  sed -n '3,28p' "$0" | sed 's/^# \{0,1\}//'
+  exit "${1:-0}"
+}
+
+while getopts ":s:m:t:h" opt; do
+  case "$opt" in
+    s) system=$OPTARG ;;
+    m) model=$OPTARG ;;
+    t) max_tokens=$OPTARG ;;
+    h) usage 0 ;;
+    *) usage 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [ $# -gt 0 ]; then
+  prompt=$*
+else
+  prompt=$(cat)
+fi
+
+if [ -z "$prompt" ]; then
+  echo "llmcurl: empty prompt" >&2
+  exit 1
+fi
+
+if ! command -v jq >/dev/null 2>&1; then
+  echo "llmcurl: jq is required (brew install jq)" >&2
+  exit 1
+fi
+if ! command -v curl >/dev/null 2>&1; then
+  echo "llmcurl: curl is required" >&2
+  exit 1
+fi
+
+pick_provider() {
+  case "${LLMCURL_PROVIDER:-}" in
+    anthropic|gemini|openrouter|openai) echo "$LLMCURL_PROVIDER" ;;
+    "")
+      if [ -n "${ANTHROPIC_API_KEY:-}" ]; then echo anthropic
+      elif [ -n "${GEMINI_API_KEY:-${GOOGLE_API_KEY:-}}" ]; then echo gemini
+      elif [ -n "${OPENROUTER_API_KEY:-}" ]; then echo openrouter
+      elif [ -n "${OPENAI_API_KEY:-}" ]; then echo openai
+      else echo ""; fi ;;
+    *) echo "" ;;
+  esac
+}
+
+emit() {
+  # $1 = extracted text, $2 = raw response (for error mining)
+  local text=$1 raw=$2
+  local err
+  err=$(printf '%s' "$raw" | jq -r '.error.message // empty' 2>/dev/null || true)
+  if [ -n "$err" ]; then
+    echo "llmcurl: $err" >&2
+    exit 1
+  fi
+  if [ -z "$text" ]; then
+    echo "llmcurl: no response text from API:" >&2
+    printf '%s\n' "$raw" >&2
+    exit 1
+  fi
+  printf '%s\n' "$text"
+}
+
+# Load per-project env files from the current directory, in order, so later
+# files override earlier ones: shared.env -> secrets.env -> personal.env -> .env.
+# Regular files are sourced directly. Named pipes (e.g. 1Password shared
+# environment files) are read with a timeout guard so the script can't hang
+# forever if no writer (1Password) is attached, then the captured content is
+# sourced. Uses allexport so bare `KEY=val` lines (no `export`) are exported;
+# -e/-u are temporarily disabled so a missing var or non-zero line won't abort.
+_fifo_timeout=${LLMCURL_FIFO_TIMEOUT:-10}
+for _envfile in shared.env secrets.env personal.env .env; do
+  if [ -f "./$_envfile" ]; then
+    set +eu
+    set -a
+    . "./$_envfile"
+    set +a
+    set -eu
+  elif [ -p "./$_envfile" ]; then
+    _fifo_tmp=$(mktemp 2>/dev/null) || continue
+    if timeout "$_fifo_timeout" cat "./$_envfile" > "$_fifo_tmp" 2>/dev/null; then
+      set +eu
+      set -a
+      . "$_fifo_tmp"
+      set +a
+      set -eu
+    else
+      echo "llmcurl: ./$_envfile is a named pipe but produced no data within ${_fifo_timeout}s (is 1Password unlocked and serving it?)" >&2
+    fi
+    rm -f "$_fifo_tmp"
+  fi
+done
+
+provider=$(pick_provider)
+if [ -z "$provider" ]; then
+  echo "llmcurl: no API key found. Set one of ANTHROPIC_API_KEY, GEMINI_API_KEY," >&2
+  echo "         GOOGLE_API_KEY, OPENROUTER_API_KEY, or OPENAI_API_KEY." >&2
+  for _envfile in shared.env secrets.env personal.env .env; do
+    if [ -e "./$_envfile" ] && [ ! -f "./$_envfile" ] && [ ! -p "./$_envfile" ]; then
+      _type=$(stat -f '%HT' "./$_envfile" 2>/dev/null || echo 'non-regular file')
+      echo "         (./$_envfile is a ${_type}, not a regular file or named pipe - skipped.)" >&2
+    fi
+  done
+  exit 1
+fi
+
+case "$provider" in
+  anthropic)
+    m=${model:-${ANTHROPIC_MODEL:-claude-opus-4-8}}
+    body=$(jq -n --arg m "$m" --argjson t "$max_tokens" --arg s "$system" --arg p "$prompt" \
+      '{model:$m, max_tokens:$t, messages:[{role:"user",content:$p}]}
+       | if ($s|length)>0 then . + {system:$s} else . end')
+    resp=$(curl -sS https://api.anthropic.com/v1/messages \
+      -H "x-api-key: $ANTHROPIC_API_KEY" \
+      -H "anthropic-version: 2023-06-01" \
+      -H "content-type: application/json" \
+      -d "$body")
+    emit "$(printf '%s' "$resp" | jq -r '.content[0].text // empty')" "$resp"
+    ;;
+
+  gemini)
+    key=${GEMINI_API_KEY:-$GOOGLE_API_KEY}
+    m=${model:-${GEMINI_MODEL:-gemini-flash-latest}}
+    body=$(jq -n --arg s "$system" --arg p "$prompt" \
+      '{contents:[{parts:[{text:$p}]}]}
+       | if ($s|length)>0 then . + {systemInstruction:{parts:[{text:$s}]}} else . end')
+    resp=$(curl -sS \
+      "https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent" \
+      -H "x-goog-api-key: $key" \
+      -H "content-type: application/json" \
+      -d "$body")
+    emit "$(printf '%s' "$resp" | jq -r '.candidates[0].content.parts[0].text // empty')" "$resp"
+    ;;
+
+  openrouter)
+    m=${model:-${OPENROUTER_MODEL:-~anthropic/claude-opus-latest}}
+    body=$(jq -n --arg m "$m" --argjson t "$max_tokens" --arg s "$system" --arg p "$prompt" \
+      '{model:$m, max_tokens:$t, messages:[]}
+       | if ($s|length)>0 then .messages += [{role:"system",content:$s}] else . end
+       | .messages += [{role:"user",content:$p}]')
+    resp=$(curl -sS https://openrouter.ai/api/v1/chat/completions \
+      -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+      -H "content-type: application/json" \
+      -d "$body")
+    emit "$(printf '%s' "$resp" | jq -r '.choices[0].message.content // empty')" "$resp"
+    ;;
+
+  openai)
+    m=${model:-${OPENAI_MODEL:-gpt-5.6}}
+    # GPT-5.x reasoning models reject max_tokens; use max_completion_tokens.
+    body=$(jq -n --arg m "$m" --argjson t "$max_tokens" --arg s "$system" --arg p "$prompt" \
+      '{model:$m, max_completion_tokens:$t, messages:[]}
+       | if ($s|length)>0 then .messages += [{role:"system",content:$s}] else . end
+       | .messages += [{role:"user",content:$p}]')
+    resp=$(curl -sS https://api.openai.com/v1/chat/completions \
+      -H "Authorization: Bearer $OPENAI_API_KEY" \
+      -H "content-type: application/json" \
+      -d "$body")
+    emit "$(printf '%s' "$resp" | jq -r '.choices[0].message.content // empty')" "$resp"
+    ;;
+esac

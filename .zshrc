@@ -487,15 +487,16 @@ sb() {
 }
 
 # Generic helper to ask an LLM about anything - install glow for best results
-# Requires `llm`: https://llm.datasette.io/en/stable/
+# Uses ~/bin/llmcurl (plain curl + jq; picks a provider from ANTHROPIC_API_KEY,
+# GEMINI_API_KEY/GOOGLE_API_KEY, OPENROUTER_API_KEY, or OPENAI_API_KEY).
 ask() {
   if [ $# = 0 ]; then
     echo "usage: ask <some question>"
     return 1
   fi
-  if ! _has llm; then
-    echo "llm tool not installed, run 'uv tool install llm'"
-    return
+  if ! _has llmcurl; then
+    echo "llmcurl not installed (~/bin/llmcurl)"
+    return 1
   fi
   local formatter=cat
   if _has glow; then
@@ -504,7 +505,7 @@ ask() {
     formatter=md2term
   fi
   local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\`. Answer the following question. Be brief and concise."
-  llm prompt -o max_tokens 4096 -s "$system_prompt" "$*" | eval $formatter
+  llmcurl -s "$system_prompt" "$*" | eval $formatter
 }
 
 # Ask an LLM with WebSearch tool enabled
@@ -534,22 +535,33 @@ askw() {
 }
 
 # AI helper for command line syntax, like "list subprocesses of pid 1234"
-# Requires `llm`: https://llm.datasette.io/en/stable/
+# Uses ~/bin/llmcurl (plain curl + jq; see `ask` above for provider setup).
 cmd() {
   if [ $# = 0 ]; then
     echo "usage: cmd <some command description>"
     return 1
   fi
-  if ! _has llm; then
-    echo "llm tool not installed, run 'uv tool install llm'"
-    return
+  if ! _has llmcurl; then
+    echo "llmcurl not installed (~/bin/llmcurl)"
+    return 1
   fi
-  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\` using shell \`$SHELL\`. Show me a command line command for the following in a code block. Be brief and concise. No comments."
-  local cmd
-  cmd=$(llm prompt -x -o max_tokens 4096 -s "$system_prompt" "$*")
+  local system_prompt="We are on the command line for a system identified as \`$(uname -a)\` with locale \`$LANG\` using shell \`$SHELL\`. Show me a command line command for the following. Output ONLY the raw shell command with no explanation, no markdown, and no code fences."
+  local out
+  out=$(llmcurl -s "$system_prompt" "$*")
+
+  # Strip any stray markdown code-fence lines the model may have added.
+  local -a lines filtered=()
+  lines=("${(f)out}")
+  for l in $lines; do
+    [[ "$l" == '```'* ]] && continue
+    filtered+=("$l")
+  done
+  out="${(F)filtered}"
+  out="${out#"${out%%[![:space:]]*}"}"
+  out="${out%"${out##*[![:space:]]}"}"
 
   # Insert the command into the command line buffer
-  print -z "$cmd"
+  print -z "$out"
 }
 
 # Generate passwords
