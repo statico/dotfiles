@@ -719,12 +719,14 @@ ggg() {
 
 # Fix the daily onslaught of dependabot warnings
 fixit() {
+  # Skip anything published in the last 24h
+  local cooldown=--config.minimum-release-age=1440
   git checkout main && \
   git pull --rebase origin && \
-  pnpm up --latest && \
-  pnpm update && \
+  pnpm up --latest $cooldown && \
+  pnpm update $cooldown && \
   pnpm self-update && \
-  pnpm install && \
+  pnpm install $cooldown && \
   git add -A && \
   git commit -m "${*:-Update dependencies}" && \
   git push origin && \
