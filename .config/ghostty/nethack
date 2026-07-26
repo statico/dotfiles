@@ -19,6 +19,7 @@ window-padding-x = 8
 window-padding-y = 8
 
 initial-window = true
+window-save-state = never
 window-width  = 143
 window-height = 39
 

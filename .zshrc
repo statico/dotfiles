@@ -717,6 +717,21 @@ ggg() {
   hr done
 }
 
+# Fix the daily onslaught of dependabot warnings
+fixit() {
+  git checkout main && \
+  git pull --rebase origin && \
+  pnpm up --latest && \
+  pnpm update && \
+  pnpm self-update && \
+  pnpm install && \
+  git add -A && \
+  git commit -m "${*:-Update dependencies}" && \
+  git push origin && \
+  git show -- package.json | cat && \
+  echo "done"
+}
+
 # Interactive git checkout with most recent branches last
 gco() {
   _fzf_git_each_ref --no-multi | xargs git checkout
