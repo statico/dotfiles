@@ -367,8 +367,8 @@ map('n', '\\R', ':source $MYVIMRC<CR>:echo "init.lua reloaded"<CR>')
 map('n', '\\x', ':cclose<CR>')
 map('n', '\\z', ':w<CR>:!open %<CR><CR>')
 
--- Git toggle
-map('n', '\\g', '<cmd>lua pcall(function() require("gitsigns").toggle() end)<CR>')
+-- Git hunk preview (inline)
+map('n', '\\g', '<cmd>lua pcall(function() require("gitsigns").preview_hunk_inline() end)<CR>')
 
 -- Diffview toggle (git changes sidebar)
 map('n', '\\d', function()
