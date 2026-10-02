@@ -811,16 +811,22 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*' use-perl true
 zstyle :compinstall filename '/Users/ian/.zshrc'
-
-autoload -Uz compinit
-# Only regenerate compinit dump once per day
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-  compinit
-else
-  compinit -C
-fi
 # End of lines added by compinstall
 # ---------------------------------------------
+
+# compinit lives outside the compinstall block so compinstall can't clobber it.
+# Dump goes in ~/.cache/zsh so it (and its .$HOST.$$ temp files) stay out of ~.
+# Full rescan only when the dump is over 24h old; -C trusts it otherwise.
+autoload -Uz compinit
+_zcompdump=~/.cache/zsh/zcompdump
+mkdir -p ${_zcompdump:h}
+_stale=( $_zcompdump(N.mh+24) )  # empty if fresh; missing file counts as stale below
+if [[ ! -f $_zcompdump || -n $_stale ]]; then
+  compinit -d $_zcompdump && touch $_zcompdump  # compinit only rewrites if files changed
+else
+  compinit -C -d $_zcompdump
+fi
+unset _zcompdump _stale
 
 # Completion for sb() — completes first arg with nono profile names.
 _sb() {
