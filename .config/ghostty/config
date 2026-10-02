@@ -18,6 +18,8 @@ initial-window = false
 
 working-directory = home
 
+macos-icon = official
+
 # https://github.com/ghostty-org/ghostty/discussions/2812
 # Also fix TERM when using SSH
 shell-integration-features = no-cursor, ssh-env
