@@ -295,7 +295,7 @@ alias nerdcrap='cat /dev/urandom | xxd | grep --color=never --line-buffered -E "
 alias netopen='lsof -iTCP -sTCP:LISTEN -P'
 alias netwhat='_netwhat() { lsof -P -i:$* | sed 1d }; _netwhat'
 alias nohist='HISTFILE='
-alias notifydone='terminal-notifier -message Done.'
+alias notifydone='terminal-notifier -sound Quack -message Done.'
 alias o=ollama
 alias p1='patch -p1'
 alias p='pnpm'
@@ -303,7 +303,7 @@ alias pg_dump_cleanup="sed -e '/^$/d' -e '/^--/d' -e '/^SET/d'"
 alias pkgcat='lsbom -f -l -s -pf'
 alias pkginstall='sudo installer -target / -pkg'
 alias pkgls='ls /var/db/receipts/'
-alias playwright='npx @playwright/mcp@latest --headless --isolated --browser chrome --port 8931'
+alias playwright='mkdir -p /tmp/.playwright && cd /tmp/.playwright && npx @playwright/mcp@latest --headless --isolated --browser chrome --port 8931 --host 127.0.0.1'
 alias pnpm-update-everything='pnpm up --latest ; pnpm update ; pnpm self-update ; pnpm install'
 alias pt='pstree -pul'
 alias rake='noglob rake'
