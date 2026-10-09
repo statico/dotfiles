@@ -27,7 +27,10 @@ for _, lang in ipairs(langs) do
   if installer.is_only_query(lang) then
     already = vim.uv.fs_stat(util.qpath(lang)) ~= nil
   else
+    -- Also require queries: a parser without highlights.scm still disables
+    -- regex syntax, leaving the buffer with no highlighting at all.
     already = vim.uv.fs_stat(util.ppath(lang)) ~= nil
+      and vim.uv.fs_stat(util.qpath(lang)) ~= nil
   end
   if not already then
     local done = false
