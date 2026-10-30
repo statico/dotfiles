@@ -58,6 +58,7 @@ fi
 # Annoyances
 export HOMEBREW_NO_ENV_HINTS=1
 export CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1
+export CLAUDE_AUTOCOMPACT_PCT_OVERRIDE=20
 
 # APPLICATION CUSTOMIZATIONS {{{1
 
@@ -473,17 +474,17 @@ fi
 sb() {
   local profile
   local -a nono_args
-  # Suppress nono's on-exit "save these denials to your profile?" prompt for all
-  # paths. Only filters the suggestion; does not grant access or hide diagnostics.
-  nono_args=(--suppress-save-prompt /)
+  # -s: no banner/summary/status lines. NONO_NO_SAVE_PROMPT (below): no "save
+  # these denials to your profile?" prompt. Denials are still enforced.
+  nono_args=(-s --no-diagnostics --no-rollback-prompt)
   if [ $# -eq 0 ] || [[ $1 == -* ]]; then
-    profile=claude-code
+    profile=nolabs-ai/claude
     nono_args+=(--allow-cwd)
   else
     profile=$1
     shift
   fi
-  nono run --profile $profile $nono_args -- env DISABLE_AUTOUPDATER=1 claude --dangerously-skip-permissions $@
+  NONO_NO_SAVE_PROMPT=1 nono run --profile $profile $nono_args -- env DISABLE_AUTOUPDATER=1 claude --dangerously-skip-permissions $@
 }
 
 # Generic helper to ask an LLM about anything - install glow for best results
