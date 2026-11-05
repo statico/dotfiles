@@ -166,9 +166,9 @@ alias aurl='adb shell am start -a "android.intent.action.VIEW" -d'
 alias b='bat'
 alias bc='bc -l'
 alias bi='bun install'
-alias c='claude --permission-mode acceptEdits'
+alias c='claude --permission-mode auto'
 alias ca=cursor-agent
-alias cc='claude -c --permission-mode acceptEdits'
+alias cc='claude -c --permission-mode auto'
 alias co-='git checkout -'
 alias com='git checkout main'
 alias cr2lf="perl -pi -e 's/\x0d/\x0a/gs'"
@@ -476,15 +476,14 @@ sb() {
   local -a nono_args
   # -s: no banner/summary/status lines. NONO_NO_SAVE_PROMPT (below): no "save
   # these denials to your profile?" prompt. Denials are still enforced.
-  nono_args=(-s --no-diagnostics --no-rollback-prompt)
+  nono_args=(-s --no-diagnostics --no-rollback-prompt --allow-cwd)
   if [ $# -eq 0 ] || [[ $1 == -* ]]; then
     profile=nolabs-ai/claude
-    nono_args+=(--allow-cwd)
   else
     profile=$1
     shift
   fi
-  NONO_NO_SAVE_PROMPT=1 nono run --profile $profile $nono_args -- env DISABLE_AUTOUPDATER=1 claude --dangerously-skip-permissions $@
+  NONO_NO_SAVE_PROMPT=1 nono run --profile $profile $nono_args -- env DISABLE_AUTOUPDATER=1 claude --dangerously-skip-permissions "$@"
 }
 
 # Generic helper to ask an LLM about anything - install glow for best results
