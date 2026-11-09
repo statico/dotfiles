@@ -36,7 +36,7 @@ _inside_ai_coding_tool() {
 
 if _has less; then
   export PAGER=less
-  export LESS='-Ri'
+  export LESS='-FRi'
 fi
 
 # Overridable locale support.
@@ -114,6 +114,7 @@ _append_to_path "$BUN_INSTALL/bin"
 
 if _inside_ai_coding_tool ; then
   export GIT_PAGER=cat
+  export GH_PAGER=cat
   if _has nvim; then
     export EDITOR=nvim
     export VISUAL=nvim
