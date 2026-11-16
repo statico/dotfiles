@@ -188,6 +188,7 @@ alias f2k9='f2k -9'
 alias f2k='f2 | xargs -t kill'
 alias f3="awk '{print \$3}'"
 alias f='fg'
+alias fixit='claude -p "fix dependabot and push"'
 alias g='git'
 alias gA='git add --all :/'
 alias ga='git add'
@@ -719,7 +720,7 @@ ggg() {
 }
 
 # Fix the daily onslaught of dependabot warnings
-fixit() {
+update-deps() {
   # Skip anything published in the last 24h
   local cooldown=--config.minimum-release-age=1440
   git checkout main && \
